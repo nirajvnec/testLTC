@@ -1,3 +1,58 @@
+public class DisposableBase : IDisposable
+{
+    private bool _disposed = false;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                // Dispose managed resources here.
+            }
+
+            // Dispose unmanaged resources here if any.
+
+            _disposed = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    ~DisposableBase()
+    {
+        Dispose(false);
+    }
+}
+
+public class DerivedClass : DisposableBase
+{
+    private SomeResource _resource;
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            // Dispose of any local managed resources specific to this derived class.
+            if (_resource != null)
+            {
+                _resource.Dispose();
+                _resource = null;
+            }
+        }
+
+        base.Dispose(disposing); // Ensure base disposal is also called.
+    }
+}
+
+
+
+
+
 public async Task<List<TreeViewItem>> SaveZipAndExtract(IFormFile file) 
 {
     // Save the file

@@ -1,3 +1,16 @@
+using System.Windows;
+
+public static class WindowExtensions
+{
+    public static void ShowAndDisposeWhenClosed(this Window window)
+    {
+        window.Closed += (sender, e) => window.Close();
+        window.Show();
+    }
+}
+
+
+
 public static class FormExtensions
 {
     public static DialogResult ShowDialogAndDispose(this Form form)

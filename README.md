@@ -1,3 +1,24 @@
+using System.Windows.Forms;
+
+public static class FolderBrowserDialogExtensions
+{
+    public static DialogResult ShowAndDispose(this FolderBrowserDialog dialog)
+    {
+        try
+        {
+            return dialog.ShowDialog();
+        }
+        finally
+        {
+            dialog.Dispose();
+        }
+    }
+}
+
+
+
+
+
 using Microsoft.Win32;
 
 public static class DialogExtensions

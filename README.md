@@ -11,6 +11,14 @@ public static class FormExtensions
 
 
 
+var myForm = new MyDialogForm();
+if (myForm.ShowDialogAndDispose() == DialogResult.OK)
+{
+    // process results
+}
+
+
+
 using System.Windows.Forms;
 
 public static class FormExtensions
@@ -23,7 +31,8 @@ public static class FormExtensions
 }
 
 
-
+YourForm formInstance = new YourForm();
+formInstance.ShowAndDisposeWhenClosed();
 
 
 

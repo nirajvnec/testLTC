@@ -1,3 +1,39 @@
+public static class FormExtensions
+{
+    public static DialogResult ShowDialogAndDispose(this Form form)
+    {
+        using (form)
+        {
+            return form.ShowDialog();
+        }
+    }
+}
+
+
+
+using System.Windows.Forms;
+
+public static class FormExtensions
+{
+    public static void ShowAndDisposeWhenClosed(this Form form)
+    {
+        form.FormClosed += (sender, e) => form.Dispose();
+        form.Show();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 public class DisposableBase : IDisposable
 {
     private bool _disposed = false;

@@ -1,3 +1,11 @@
+MyForm form = new MyForm();
+FormHandler.SafeShow(form);
+
+dialogResult result = FormHandler.SafeShowDialog(form);
+
+
+
+
 public static class FormHandler
 {
     public static void SafeShow(Form form)
@@ -48,6 +56,15 @@ public static class FormHandler
         }
     }
 }
+
+
+MyWindow window = new MyWindow();
+WindowHandler.SafeShow(window);
+
+// or
+
+bool? result = WindowHandler.SafeShowDialog(window);
+
 
 using System;
 using System.Windows;

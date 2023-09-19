@@ -1,3 +1,117 @@
+public static class FormHandler
+{
+    public static void SafeShow(Form form)
+    {
+        try
+        {
+            form.Show();
+        }
+        catch (System.ComponentModel.Win32Exception e)
+        {
+            if (e.Message.Contains("Cannot create a window handle"))
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                // Reattempt to show the form after garbage collection
+                form.Show();
+            }
+            else
+            {
+                // Handle other Win32 exceptions or rethrow
+                throw;
+            }
+        }
+    }
+
+    public static DialogResult SafeShowDialog(Form form)
+    {
+        try
+        {
+            return form.ShowDialog();
+        }
+        catch (System.ComponentModel.Win32Exception e)
+        {
+            if (e.Message.Contains("Cannot create a window handle"))
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                // Reattempt to show the form as dialog after garbage collection
+                return form.ShowDialog();
+            }
+            else
+            {
+                // Handle other Win32 exceptions or rethrow
+                throw;
+            }
+        }
+    }
+}
+
+using System;
+using System.Windows;
+using System.ComponentModel;
+
+public static class WindowHandler
+{
+    public static void SafeShow(Window window)
+    {
+        try
+        {
+            window.Show();
+        }
+        catch (Win32Exception e)
+        {
+            if (e.Message.Contains("Cannot create a window handle"))
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                // Reattempt to show the window after garbage collection
+                window.Show();
+            }
+            else
+            {
+                // Handle other Win32 exceptions or rethrow
+                throw;
+            }
+        }
+    }
+
+    public static bool? SafeShowDialog(Window window)
+    {
+        try
+        {
+            return window.ShowDialog();
+        }
+        catch (Win32Exception e)
+        {
+            if (e.Message.Contains("Cannot create a window handle"))
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                // Reattempt to show the window as dialog after garbage collection
+                return window.ShowDialog();
+            }
+            else
+            {
+                // Handle other Win32 exceptions or rethrow
+                throw;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 using System.Windows.Forms;
 
 public static class FolderBrowserDialogExtensions

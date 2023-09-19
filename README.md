@@ -1,3 +1,36 @@
+using Microsoft.Win32;
+
+public static class DialogExtensions
+{
+    public static bool? ShowAndDispose(this OpenFileDialog dialog)
+    {
+        try
+        {
+            return dialog.ShowDialog();
+        }
+        finally
+        {
+            dialog.Dispose();
+        }
+    }
+
+    public static bool? ShowAndDispose(this SaveFileDialog dialog)
+    {
+        try
+        {
+            return dialog.ShowDialog();
+        }
+        finally
+        {
+            dialog.Dispose();
+        }
+    }
+}
+
+
+
+
+
 using System.Windows;
 
 public static class WindowExtensions

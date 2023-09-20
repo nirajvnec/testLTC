@@ -8,6 +8,46 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         
+        // Try to get the control of the given type
+        var control = GetControlByType<MyUserControl>(this);
+        
+        if (control != null)
+        {
+            if (!control.Visible)
+            {
+                control.Visible = true;
+                MessageBox.Show("The control of the given type was not visible, but now it is!");
+            }
+            else
+            {
+                MessageBox.Show("The control of the given type is already visible.");
+            }
+        }
+        else
+        {
+            MessageBox.Show("The control of the given type does not exist.");
+        }
+    }
+
+    private T GetControlByType<T>(Control parent) where T : Control
+    {
+        return parent.Controls.OfType<T>().FirstOrDefault();
+    }
+}
+
+
+
+
+using System;
+using System.Linq;
+using System.Windows.Forms;
+
+public partial class MainForm : Form
+{
+    public MainForm()
+    {
+        InitializeComponent();
+        
         // Check if the control of the given type exists
         bool controlExists = DoesControlExistByType<MyUserControl>(this);
         

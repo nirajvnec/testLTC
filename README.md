@@ -1,4 +1,35 @@
 using System;
+using System.Linq;
+using System.Windows.Forms;
+
+public partial class MainForm : Form
+{
+    public MainForm()
+    {
+        InitializeComponent();
+        
+        // Check if the control of the given type exists
+        bool controlExists = DoesControlExistByType<MyUserControl>(this);
+        
+        if (controlExists)
+        {
+            MessageBox.Show("The control of the given type exists!");
+        }
+        else
+        {
+            MessageBox.Show("The control of the given type does not exist.");
+        }
+    }
+
+    private bool DoesControlExistByType<T>(Control parent) where T : Control
+    {
+        return parent.Controls.OfType<T>().Any();
+    }
+}
+
+
+
+using System;
 using System.Windows.Forms;
 
 public partial class MainForm : Form

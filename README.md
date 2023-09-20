@@ -7,6 +7,52 @@ public partial class MainForm : Form
     public MainForm()
     {
         InitializeComponent();
+
+        TabPage tabPage = FindControlByName(this, "query_builder_tab") as TabPage;
+
+        if (tabPage != null)
+        {
+            var control = FindControlByType<CtlCalculationReportFormat>(tabPage);
+            if (control == null)
+            {
+                var newControl = new CtlCalculationReportFormat();
+                tabPage.Controls.Add(newControl);
+                MessageBox.Show("Added the control to the tab page!");
+            }
+            else
+            {
+                MessageBox.Show("The control of the given type already exists in the tab page.");
+            }
+        }
+        else
+        {
+            MessageBox.Show("The tab page with the specified name does not exist.");
+        }
+    }
+
+    private Control FindControlByName(Control parent, string controlName)
+    {
+        return parent.Controls.Find(controlName, true).FirstOrDefault();
+    }
+
+    private T FindControlByType<T>(Control parent) where T : Control
+    {
+        return parent.Controls.OfType<T>().FirstOrDefault();
+    }
+}
+
+
+
+
+using System;
+using System.Linq;
+using System.Windows.Forms;
+
+public partial class MainForm : Form
+{
+    public MainForm()
+    {
+        InitializeComponent();
         
         // Try to get the control of the given type
         var control = GetControlByType<MyUserControl>(this);

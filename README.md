@@ -13,6 +13,54 @@ public partial class MainForm : Form
         if (tabPage != null)
         {
             var control = FindControlByType<CtlCalculationReportFormat>(tabPage);
+
+            if (control != null)
+            {
+                // If the control exists, toggle its visibility.
+                control.Visible = !control.Visible;
+
+                string status = control.Visible ? "visible" : "hidden";
+                MessageBox.Show($"The control is now {status}.");
+            }
+            else
+            {
+                MessageBox.Show("The control of the given type does not exist in the tab page.");
+            }
+        }
+        else
+        {
+            MessageBox.Show("The tab page with the specified name does not exist.");
+        }
+    }
+
+    private Control FindControlByName(Control parent, string controlName)
+    {
+        return parent.Controls.Find(controlName, true).FirstOrDefault();
+    }
+
+    private T FindControlByType<T>(Control parent) where T : Control
+    {
+        return parent.Controls.OfType<T>().FirstOrDefault();
+    }
+}
+
+
+
+using System;
+using System.Linq;
+using System.Windows.Forms;
+
+public partial class MainForm : Form
+{
+    public MainForm()
+    {
+        InitializeComponent();
+
+        TabPage tabPage = FindControlByName(this, "query_builder_tab") as TabPage;
+
+        if (tabPage != null)
+        {
+            var control = FindControlByType<CtlCalculationReportFormat>(tabPage);
             if (control == null)
             {
                 var newControl = new CtlCalculationReportFormat();

@@ -1,3 +1,55 @@
+using System;
+using System.Windows.Forms;
+
+public partial class MainForm : Form
+{
+    private bool isUserControlVisible = false;
+    private UserControl myUserControl;
+
+    public MainForm()
+    {
+        InitializeComponent();
+
+        CreateMyUserControl();
+
+        toggleButton.Text = "Show UserControl";
+        toggleButton.Click += ToggleButtonClick;
+
+        myUserControl.Visible = false; // Make sure UserControl starts hidden
+    }
+
+    private void CreateMyUserControl()
+    {
+        myUserControl = new MyUserControl(); // Assuming MyUserControl is the type of your UserControl
+        myUserControl.Visible = false;
+        this.Controls.Add(myUserControl); // You might want to set its location and other properties before adding it
+    }
+
+    private void ToggleButtonClick(object sender, EventArgs e)
+    {
+        isUserControlVisible = !isUserControlVisible; // Toggle the state
+
+        if (isUserControlVisible)
+        {
+            if (myUserControl.IsDisposed)
+            {
+                CreateMyUserControl(); // Recreate the UserControl if it's disposed
+            }
+
+            myUserControl.Visible = true;
+            toggleButton.Text = "Hide UserControl";
+        }
+        else
+        {
+            myUserControl.Visible = false;
+            myUserControl.Dispose(); // Dispose of the UserControl when it's hidden
+            toggleButton.Text = "Show UserControl";
+        }
+    }
+}
+
+
+
 MyForm form = new MyForm();
 FormHandler.SafeShow(form);
 

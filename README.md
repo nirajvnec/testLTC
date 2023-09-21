@@ -1,3 +1,27 @@
+public partial class LoadingForm : Form
+{
+    public LoadingForm()
+    {
+        InitializeComponent();
+
+        // To prevent closing the form using Alt+F4 or Close button
+        this.FormClosing += LoadingForm_FormClosing;
+    }
+
+    private void LoadingForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        // This ensures that the form can't be closed by the user.
+        if (e.CloseReason == CloseReason.UserClosing)
+        {
+            e.Cancel = true;
+        }
+    }
+}
+
+
+
+
+
 
 namespace YourNamespace
 {

@@ -1,3 +1,87 @@
+
+namespace YourNamespace
+{
+    partial class LoadingForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.pictureBoxSpinner = new System.Windows.Forms.PictureBox();
+            this.labelLoadingText = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSpinner)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // pictureBoxSpinner
+            // 
+            this.pictureBoxSpinner.Image = global::YourNamespace.Properties.Resources.spinner; // Assuming you've added spinner.gif to your project resources
+            this.pictureBoxSpinner.Location = new System.Drawing.Point(90, 30);
+            this.pictureBoxSpinner.Name = "pictureBoxSpinner";
+            this.pictureBoxSpinner.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxSpinner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxSpinner.TabIndex = 0;
+            this.pictureBoxSpinner.TabStop = false;
+            // 
+            // labelLoadingText
+            // 
+            this.labelLoadingText.AutoSize = true;
+            this.labelLoadingText.Location = new System.Drawing.Point(115, 140);
+            this.labelLoadingText.Name = "labelLoadingText";
+            this.labelLoadingText.Size = new System.Drawing.Size(50, 13);
+            this.labelLoadingText.TabIndex = 1;
+            this.labelLoadingText.Text = "Loading...";
+            // 
+            // LoadingForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 181);
+            this.Controls.Add(this.labelLoadingText);
+            this.Controls.Add(this.pictureBoxSpinner);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "LoadingForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Please wait...";
+            this.TopMost = true;
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSpinner)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
+        #endregion
+
+        private System.Windows.Forms.PictureBox pictureBoxSpinner;
+        private System.Windows.Forms.Label labelLoadingText;
+    }
+}
+
+
+
+
 using System;
 using System.Linq;
 using System.Windows.Forms;

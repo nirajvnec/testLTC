@@ -1,3 +1,28 @@
+
+
+
+
+private void loadingTimer_Tick(object sender, EventArgs e)
+{
+    loadingTimer.Stop();
+    
+    if (_loadingForm != null && !_loadingForm.IsDisposed)
+    {
+        if (_loadingForm.InvokeRequired)
+        {
+            _loadingForm.Invoke((MethodInvoker)delegate
+            {
+                _loadingForm.Close();
+            });
+        }
+        else
+        {
+            _loadingForm.Close();
+        }
+    }
+}
+
+
 public partial class MainForm : Form
 {
     private LoadingForm _loadingForm;

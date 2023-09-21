@@ -1,3 +1,54 @@
+public partial class MainForm : Form
+{
+    private LoadingForm _loadingForm;
+
+    public MainForm()
+    {
+        InitializeComponent();
+    }
+
+    private void ShowLoadingForm()
+    {
+        // Initialize the loading form
+        _loadingForm = new LoadingForm();
+
+        // Start the timer
+        loadingTimer.Start();
+
+        // Show the loading form modally
+        _loadingForm.ShowDialog(this);
+    }
+
+    private void loadingTimer_Tick(object sender, EventArgs e)
+    {
+        // Stop the timer
+        loadingTimer.Stop();
+
+        // Close the loading form
+        if (_loadingForm != null && !_loadingForm.IsDisposed)
+        {
+            _loadingForm.Close();
+        }
+    }
+
+    // Assume this is triggered when you want to start showing the loading screen
+    private void buttonStartLoading_Click(object sender, EventArgs e)
+    {
+        ShowLoadingForm();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 public partial class LoadingForm : Form
 {
     public LoadingForm()

@@ -1,3 +1,14 @@
+this.pictureBoxSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
+this.pictureBoxSpinner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+this.pictureBoxSpinner.Image = Image.FromFile(imagePath);
+this.pictureBoxSpinner.BringToFront();
+this.pictureBoxSpinner.Visible = true;
+this.pictureBoxSpinner.Refresh();
+
+
+
+
+
 string imagePath = Path.Combine(Application.StartupPath, "images", "hourglass.png");
 bool fileExists = File.Exists(imagePath);
 // Set a breakpoint here and inspect `fileExists`

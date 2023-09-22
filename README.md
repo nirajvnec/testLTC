@@ -1,3 +1,30 @@
+this.pictureBoxSpinner.Image = Image.FromFile(Path.Combine(Application.StartupPath, "images", "hourglass.png"));
+this.pictureBoxSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
+
+// Remove these lines:
+// this.pictureBoxSpinner.Location = new System.Drawing.Point(90, 30);
+// this.pictureBoxSpinner.Size = new System.Drawing.Size(100, 100);
+
+
+this.labelLoadingText.Dock = System.Windows.Forms.DockStyle.Bottom;
+this.labelLoadingText.TextAlign = ContentAlignment.MiddleCenter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public partial class LoadingForm : Form
 {
     public LoadingForm()
@@ -7,6 +34,14 @@ public partial class LoadingForm : Form
         pictureBoxLoading.Image = Image.FromFile(Path.Combine(Application.StartupPath, "images", "hourglass.png"));
     }
 }
+
+
+
+
+
+
+
+
 
 
 using System.Drawing;

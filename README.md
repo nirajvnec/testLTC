@@ -1,3 +1,9 @@
+string imagePath = Path.Combine(Application.StartupPath, "images", "hourglass.png");
+bool fileExists = File.Exists(imagePath);
+// Set a breakpoint here and inspect `fileExists`
+
+
+
 this.pictureBoxSpinner.Image = Image.FromFile(Path.Combine(Application.StartupPath, "images", "hourglass.png"));
 this.pictureBoxSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
 

@@ -1,3 +1,8 @@
+
+loadingForm.StartPosition = FormStartPosition.CenterScreen;
+loadingForm.Show();
+
+
 private void InitializeComponent()
 {
     this.pictureBoxSpinner = new System.Windows.Forms.PictureBox();

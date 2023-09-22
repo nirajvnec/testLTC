@@ -26,7 +26,7 @@ private void InitializeComponent()
     ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSpinner)).EndInit();
 }
 
-
+private System.Windows.Forms.PictureBox pictureBoxSpinner;
 public LoadingForm()
 {
     InitializeComponent();

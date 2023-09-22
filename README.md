@@ -1,3 +1,9 @@
+yourForm.ControlBox = true; // This keeps the title bar.
+yourForm.MaximizeBox = false;
+yourForm.MinimizeBox = false;
+
+
+
 
 loadingForm.StartPosition = FormStartPosition.CenterScreen;
 loadingForm.Show();

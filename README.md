@@ -1,3 +1,53 @@
+private void InitializeComponent()
+{
+    this.pictureBoxSpinner = new System.Windows.Forms.PictureBox();
+
+    // 
+    // pictureBoxSpinner
+    // 
+    this.pictureBoxSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
+    this.pictureBoxSpinner.Location = new System.Drawing.Point(0, 0);
+    this.pictureBoxSpinner.Name = "pictureBoxSpinner";
+    this.pictureBoxSpinner.Size = new System.Drawing.Size(800, 450);  // Adjust this size if your form has different dimensions
+    this.pictureBoxSpinner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+    this.pictureBoxSpinner.TabIndex = 0;
+    this.pictureBoxSpinner.TabStop = false;
+
+    // 
+    // LoadingForm
+    // 
+    this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+    this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+    this.ClientSize = new System.Drawing.Size(800, 450);  // Again, adjust to your desired form size
+    this.Controls.Add(this.pictureBoxSpinner);
+    this.Name = "LoadingForm";
+    this.Text = "Please Wait...";
+
+    ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSpinner)).EndInit();
+}
+
+
+public LoadingForm()
+{
+    InitializeComponent();
+
+    string imagePath = Path.Combine(Application.StartupPath, "images", "hourglass.png");
+    if (File.Exists(imagePath))
+    {
+        this.pictureBoxSpinner.Image = Image.FromFile(imagePath);
+    }
+    else
+    {
+        MessageBox.Show("Image not found!");
+    }
+}
+
+
+
+
+
+
+
 this.pictureBoxSpinner.Dock = System.Windows.Forms.DockStyle.Fill;
 this.pictureBoxSpinner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 this.pictureBoxSpinner.Image = Image.FromFile(imagePath);

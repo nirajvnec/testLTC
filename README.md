@@ -1,3 +1,21 @@
+protected override CreateParams CreateParams
+{
+    get
+    {
+        const int CS_NOCLOSE = 0x200;
+        CreateParams cp = base.CreateParams;
+        cp.ClassStyle |= CS_NOCLOSE;
+        return cp;
+    }
+}
+
+
+
+
+
+
+
+
 yourForm.ControlBox = true; // This keeps the title bar.
 yourForm.MaximizeBox = false;
 yourForm.MinimizeBox = false;

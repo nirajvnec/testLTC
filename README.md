@@ -1,3 +1,17 @@
+public partial class LoadingForm : Form
+{
+    public LoadingForm()
+    {
+        InitializeComponent();
+
+        pictureBoxLoading.Image = Image.FromFile(Path.Combine(Application.StartupPath, "images", "hourglass.png"));
+    }
+}
+
+
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 
 

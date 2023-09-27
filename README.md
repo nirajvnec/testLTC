@@ -1,11 +1,62 @@
-protected override CreateParams CreateParams
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+public static class StringExtensions
 {
-    get
+    public static List<string> AddSpacesBeforeCapitalLetters(this List<string> inputList)
     {
-        const int CS_NOCLOSE = 0x200;
-        CreateParams cp = base.CreateParams;
-        cp.ClassStyle |= CS_NOCLOSE;
-        return cp;
+        if (inputList == null)
+            throw new ArgumentNullException(nameof(inputList));
+
+        var resultList = new List<string>();
+
+        foreach (var input in inputList)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                StringBuilder result = new StringBuilder();
+                result.Append(input[0]);
+
+                for (int i = 1; i < input.Length; i++)
+                {
+                    if (char.IsUpper(input[i]))
+                    {
+                        result.Append(' ');
+                    }
+                    result.Append(input[i]);
+                }
+
+                resultList.Add(result.ToString());
+            }
+            else
+            {
+                resultList.Add(input);
+            }
+        }
+
+        return resultList;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        List<string> words = new List<string>
+        {
+            "READWRITE",
+            "READRUN",
+            "READONLY",
+            "SOMETHINGELSE"
+        };
+
+        List<string> spacedWords = words.AddSpacesBeforeCapitalLetters();
+
+        foreach (string spacedWord in spacedWords)
+        {
+            Console.WriteLine(spacedWord);
+        }
     }
 }
 

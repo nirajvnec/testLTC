@@ -1,34 +1,38 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-public static class ListExtensions
+public static class StringExtensions
 {
-    public static List<string> AddSpaceBeforeCapitalLetters(this List<string> inputList)
+    public static string InsertSpaceBeforeUppercase(this string input)
     {
-        if (inputList == null)
-            throw new ArgumentNullException(nameof(inputList));
+        if (string.IsNullOrEmpty(input))
+            return input;
 
-        return inputList.Select(input => System.Text.RegularExpressions.Regex.Replace(input, "([A-Z])", " $1").Trim()).ToList();
+        StringBuilder result = new StringBuilder(input.Length * 2);
+        result.Append(input[0]);
+
+        for (int i = 1; i < input.Length; i++)
+        {
+            if (char.IsUpper(input[i]) && (i != 0 && !char.IsUpper(input[i - 1]) || (i < input.Length - 1 && !char.IsUpper(input[i + 1]))))
+                result.Append(' ');
+
+            result.Append(input[i]);
+        }
+
+        return result.ToString();
     }
 }
 
-class Program
+public class Program
 {
-    static void Main()
+    public static void Main()
     {
-        List<string> inputList = new List<string>
+        var strings = new[] {"READRUN", "READONLY", "READWRITE"};
+        
+        foreach(var str in strings)
         {
-            "READRUN",
-            "READONLY",
-            "READWRITE"
-        };
-
-        List<string> resultList = inputList.AddSpaceBeforeCapitalLetters();
-
-        foreach (string result in resultList)
-        {
-            Console.WriteLine(result);
+            Console.WriteLine(str.InsertSpaceBeforeUppercase());
         }
     }
 }

@@ -1,41 +1,42 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 public static class StringExtensions
 {
-    public static List<string> AddSpacesBeforeCapitalLetters(this List<string> inputList)
+    public static string AddSpaceBeforeCapitalLetters(this string input)
     {
-        if (inputList == null)
-            throw new ArgumentNullException(nameof(inputList));
-
-        var resultList = new List<string>();
-
-        foreach (var input in inputList)
+        if (string.IsNullOrEmpty(input))
         {
-            if (!string.IsNullOrEmpty(input))
-            {
-                StringBuilder result = new StringBuilder();
-                result.Append(input[0]);
-
-                for (int i = 1; i < input.Length; i++)
-                {
-                    if (char.IsUpper(input[i]))
-                    {
-                        result.Append(' ');
-                    }
-                    result.Append(input[i]);
-                }
-
-                resultList.Add(result.ToString());
-            }
-            else
-            {
-                resultList.Add(input);
-            }
+            return input;
         }
 
-        return resultList;
+        StringBuilder result = new StringBuilder();
+        foreach (char c in input)
+        {
+            // Check if the character is uppercase
+            if (char.IsUpper(c))
+            {
+                // Add a space before the uppercase letter
+                if (result.Length > 0)
+                {
+                    result.Append(' ');
+                }
+            }
+            // Append the character to the result
+            result.Append(c);
+        }
+
+        return result.ToString();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        string input = "READONLY";
+        string result = input.AddSpaceBeforeCapitalLetters();
+        Console.WriteLine(result); // Output: "READ ONLY"
     }
 }
 

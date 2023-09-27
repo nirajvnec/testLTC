@@ -1,32 +1,38 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 
-public static class StringExtensions
+public static class ListExtensions
 {
-    public static string AddSpaceBeforeCapitalLetters(this string input)
+    public static List<string> AddSpaceBeforeCapitalLetters(this List<string> inputList)
     {
-        if (string.IsNullOrEmpty(input))
-        {
-            return input;
-        }
+        if (inputList == null)
+            throw new ArgumentNullException(nameof(inputList));
 
-        StringBuilder result = new StringBuilder();
-        foreach (char c in input)
+        List<string> resultList = new List<string>();
+
+        foreach (string input in inputList)
         {
-            // Check if the character is uppercase
-            if (char.IsUpper(c))
+            StringBuilder result = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(input))
             {
-                // Add a space before the uppercase letter
-                if (result.Length > 0)
+                result.Append(input[0]);
+
+                for (int i = 1; i < input.Length; i++)
                 {
-                    result.Append(' ');
+                    if (char.IsUpper(input[i]))
+                    {
+                        result.Append(' ');
+                    }
+                    result.Append(input[i]);
                 }
             }
-            // Append the character to the result
-            result.Append(c);
+
+            resultList.Add(result.ToString());
         }
 
-        return result.ToString();
+        return resultList;
     }
 }
 
@@ -34,9 +40,19 @@ class Program
 {
     static void Main()
     {
-        string input = "READONLY";
-        string result = input.AddSpaceBeforeCapitalLetters();
-        Console.WriteLine(result); // Output: "READ ONLY"
+        List<string> inputList = new List<string>
+        {
+            "READRUN",
+            "READONLY",
+            "READWRITE"
+        };
+
+        List<string> resultList = inputList.AddSpaceBeforeCapitalLetters();
+
+        foreach (string result in resultList)
+        {
+            Console.WriteLine(result);
+        }
     }
 }
 

@@ -22,6 +22,18 @@ public static class StringExtensions
 
         return result.ToString();
     }
+
+    using System.Collections.Generic;
+using System.Linq;
+
+public static class ListExtensions
+{
+    public static List<string> TransformList(this List<string> list)
+    {
+        return list.Select(str => str.InsertSpaceBeforeUppercase()).ToList();
+    }
+}
+
 }
 
 public class Program

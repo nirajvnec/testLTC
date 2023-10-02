@@ -1,3 +1,7 @@
+Hi Santosh, 
+This is not a realistic scenario. It is the limitation of the application. If the User Object Count reaches 10000 and the Handle count also goes more than 12500 32-bit application, Please create a release note that this is the limitation beyond which the Windows form application will crash.
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

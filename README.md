@@ -1,3 +1,5 @@
+this.Load += async (sender, e) => await Form_Loaded(sender, e);
+
 public partial class FrmLoadingReportsIndicator : Form
 {
     private System.Windows.Forms.Label lblStatus = new System.Windows.Forms.Label();

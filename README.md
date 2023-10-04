@@ -1,3 +1,7 @@
+sub.Click += async (sender, e) => await file_recent_docs_submenu_click(sender, e);
+
+
+
 private async Task LoadReportDefAsync(string fileName)
 {
     CsReportDef report_def = await OpenReportDefFromFileAsync(fileName);

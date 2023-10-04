@@ -1,3 +1,49 @@
+private void LoadReportDef(string fileName)
+{
+    Task.Run(async () => 
+    {
+        CsReportDef report_def = await OpenReportDefFromFileAsync(fileName);
+
+        if (report_def.CalculationMethod != null)
+        {
+            if (report_def.CalculationMethod.SupportsWhatIf && 
+                !CsSessionData.GetInstance().IsErcNtcsUserConsent)
+            {
+                if (m_global_cache != null && 
+                    m_global_cache.ConfigDoc != null)
+                {
+                    ctlCalcReportFormat.ShowErcNtcsMessage(m_global_cache.ConfigDoc.ErcNtcsLdprHelpLink);
+                }
+            }
+        }
+
+        CsRegistryHelper.SetOption("DefaultFolder", Path.GetDirectoryName(fileName));
+        DslMarsSwitch.CalculationFormatReset(ctlCalcReportFormat.GetSelectedMethod(), report_def.CalculationMethod); // Renamed here
+        ctlCalcReportFormat.ResetDerivationCriteria();
+        UpdateRecentDocRegistry(fileName, RECENT_DOCS_REG);
+
+        try
+        {
+            m_busy_form = new FrmBusyStatus(backgroundWorker, report_def);
+            m_busy_form.Status = "Loading report...";
+            await m_busy_form.ShowDialogAsync(this); // Assuming there's an async version
+            CsSessionData.GetInstance().LoadedReportName = 
+                string.IsNullOrWhiteSpace(report_def.ReportFileName) ? 
+                report_def.ReportName : 
+                report_def.ReportFileName;
+            Text = MARS_ENQUIRY_TOOL_STUB + "- " + CsSessionData.GetInstance().LoadedReportName;
+        }
+        catch (Exception ex)
+        {
+            CsReportRunException exception = new CsReportRunException(ex.Message, ex, report_def.ToString(), report_def.ReportName);
+            CsMarsErrorHelper.GetInstance().ShowError(exception, "Error populating from report definition", false);
+        }
+    });
+}
+
+
+
+
 sub.Click += async (sender, e) => await file_recent_docs_submenu_click(sender, e);
 
 

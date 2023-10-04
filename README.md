@@ -1,3 +1,46 @@
+public partial class FrmLoadingReportsIndicator : Form
+{
+    private System.Windows.Forms.Label lblStatus = new System.Windows.Forms.Label();
+    private System.Windows.Forms.ProgressBar progressBar = new System.Windows.Forms.ProgressBar();
+
+    public FrmLoadingReportsIndicator()
+    {
+        InitializeComponent();
+        this.StartPosition = FormStartPosition.CenterParent;
+    }
+
+    private void InitializeComponent()
+    {
+        this.lblStatus.Location = new System.Drawing.Point(12, 9);
+        this.lblStatus.Name = "lblStatus";
+        this.lblStatus.Size = new System.Drawing.Size(260, 23);
+        this.lblStatus.TabIndex = 0;
+        this.lblStatus.Text = "Status";
+
+        this.progressBar.Location = new System.Drawing.Point(12, 35);
+        this.progressBar.Name = "progressBar";
+        this.progressBar.Size = new System.Drawing.Size(260, 23);
+        this.progressBar.TabIndex = 1;
+
+        this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        this.ClientSize = new System.Drawing.Size(284, 70);
+        this.Controls.Add(this.progressBar);
+        this.Controls.Add(this.lblStatus);
+        this.Name = "FrmLoadingReportsIndicator";
+        this.Text = "Loading...";
+    }
+
+    public void UpdateStatus(string text, int progress)
+    {
+        lblStatus.Text = text;
+        progressBar.Value = progress;
+    }
+}
+
+
+
+
 private void LoadReportDef(string fileName)
 {
     Task.Run(async () => 

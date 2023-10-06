@@ -1,3 +1,68 @@
+public partial class MainForm : Form
+{
+    private Panel panelBusyIndicator;
+    private Label lblPleaseWait;
+
+    public MainForm()
+    {
+        InitializeComponent();
+        InitializeBusyIndicator();
+    }
+
+    private void InitializeBusyIndicator()
+    {
+        // Initialize panel
+        panelBusyIndicator = new Panel
+        {
+            Size = new Size(200, 100), // Adjust size as needed
+            BackColor = Color.FromArgb(128, 255, 255, 255), // Semi-transparent white
+            Visible = false
+        };
+
+        // Initialize label
+        lblPleaseWait = new Label
+        {
+            Text = "Please wait...",
+            AutoSize = true,
+            Location = new Point((panelBusyIndicator.Width - lblPleaseWait.Width) / 2, 
+                                 (panelBusyIndicator.Height - lblPleaseWait.Height) / 2)
+        };
+
+        // Add label to panel
+        panelBusyIndicator.Controls.Add(lblPleaseWait);
+
+        // Add panel to form
+        this.Controls.Add(panelBusyIndicator);
+    }
+
+    private async void btnLoadData_Click(object sender, EventArgs e)
+    {
+        // Position the busy indicator panel in the center of the MainForm
+        panelBusyIndicator.Location = new Point(
+            (this.ClientSize.Width - panelBusyIndicator.Width) / 2,
+            (this.ClientSize.Height - panelBusyIndicator.Height) / 2);
+
+        // Show busy indicator
+        panelBusyIndicator.Visible = true;
+        panelBusyIndicator.Enabled = false; // Disables the panel so the form is still interactive
+
+        // Simulate a long-running operation
+        await Task.Run(() => LoadData());
+
+        // Hide busy indicator
+        panelBusyIndicator.Visible = false;
+    }
+
+    private void LoadData()
+    {
+        // Simulate a delay to represent a long-running task.
+        System.Threading.Thread.Sleep(5000);
+    }
+}
+
+
+
+
 this.Load += async (sender, e) => await Form_Loaded(sender, e);
 
 public partial class FrmLoadingReportsIndicator : Form

@@ -1,3 +1,38 @@
+public partial class YourForm : Form 
+{
+    public YourForm()
+    {
+        InitializeComponent();
+        this.openToolStripMenuItem.Click += async (sender, e) => await FileOpenMenuAsync(sender, e);
+    }
+
+    private async Task FileOpenMenuAsync(object sender, EventArgs e)
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+
+        if (openFileDialog.ShowDialog() == DialogResult.OK) 
+        {
+            string fileName = openFileDialog.FileName;
+
+            // Assuming that ReadFileContentAsync is a method that reads file content asynchronously
+            string content = await ReadFileContentAsync(fileName);
+
+            // Do something with the content...
+        }
+    }
+
+    private async Task<string> ReadFileContentAsync(string fileName) 
+    {
+        using (StreamReader reader = new StreamReader(fileName))
+        {
+            return await reader.ReadToEndAsync();
+        }
+    }
+}
+
+
+
+
 private void InitializeBusyIndicator()
 {
     // Initialize panel

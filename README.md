@@ -14,6 +14,68 @@ public partial class MainForm : Form
         // Initialize panel
         panelBusyIndicator = new Panel
         {
+            Size = new Size(200, 100),
+            BackColor = Color.FromArgb(128, 0, 0, 0), // semi-transparent black
+        };
+
+        // Initialize label with "Please wait..." text
+        lblPleaseWait = new Label
+        {
+            Text = "Please wait...",
+            ForeColor = Color.White, // making text visible against semi-transparent black background
+            AutoSize = false,
+            Size = panelBusyIndicator.Size,
+            TextAlign = ContentAlignment.MiddleCenter,
+        };
+
+        panelBusyIndicator.Controls.Add(lblPleaseWait);
+        this.Controls.Add(panelBusyIndicator);
+    }
+
+    private async void btnLoadData_Click(object sender, EventArgs e)
+    {
+        panelBusyIndicator.BringToFront(); // bring panel to the front
+
+        panelBusyIndicator.Location = new Point(
+            (this.ClientSize.Width - panelBusyIndicator.Width) / 2,
+            (this.ClientSize.Height - panelBusyIndicator.Height) / 2);
+
+        panelBusyIndicator.Visible = true;
+        panelBusyIndicator.Enabled = false;
+
+        await Task.Run(() => LoadData());
+
+        panelBusyIndicator.Visible = false;
+    }
+
+    private void LoadData()
+    {
+        System.Threading.Thread.Sleep(5000);
+    }
+}
+
+
+
+
+
+
+
+public partial class MainForm : Form
+{
+    private Panel panelBusyIndicator;
+    private Label lblPleaseWait;
+
+    public MainForm()
+    {
+        InitializeComponent();
+        InitializeBusyIndicator();
+    }
+
+    private void InitializeBusyIndicator()
+    {
+        // Initialize panel
+        panelBusyIndicator = new Panel
+        {
             Size = new Size(200, 100), // Adjust size as needed
             BackColor = Color.FromArgb(128, 255, 255, 255), // Semi-transparent white
             Visible = false

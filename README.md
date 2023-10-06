@@ -1,3 +1,37 @@
+private void InitializeBusyIndicator()
+{
+    // Initialize panel
+    panelBusyIndicator = new Panel
+    {
+        Size = new Size(200, 100),
+        BackColor = Color.FromArgb(50, 255, 255, 224), // semi-transparent yellow-white
+        Visible = false
+    };
+
+    panelBusyIndicator.Paint += PanelBusyIndicator_Paint; // Add this line
+
+    // The rest of your code remains the same...
+}
+
+// Add this method to your form’s code
+private void PanelBusyIndicator_Paint(object sender, PaintEventArgs e)
+{
+    Control control = sender as Control;
+    if (control != null)
+    {
+        using (Pen pen = new Pen(Color.Red, 2)) // Set the border color and width here
+        {
+            e.Graphics.DrawRectangle(pen, 0, 0, control.Width - 1, control.Height - 1);
+        }
+    }
+}
+
+
+
+
+
+
+
 public partial class MainForm : Form
 {
     private Panel panelBusyIndicator;

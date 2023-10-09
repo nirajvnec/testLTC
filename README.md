@@ -1,3 +1,77 @@
+using System.Collections.Concurrent;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Threading.Tasks;
+
+// ... Other necessary using directives and namespace, class definitions...
+
+public void SetRiskTypeAttributes(StringCollection attributes)
+{
+    // Assuming this is thread-safe or making it thread-safe is needed.
+    CsAttributeList positionAttributes = globalCache.AttributesDoc.GetPositionAttributes();
+
+    CsBreakdownCollection positionAttributeBreakdowns = CsBreakdownCollection.AttributeBreakdowns(positionAttributes);
+    
+    // Using a ConcurrentBag to ensure thread-safety
+    ConcurrentBag<CtlDragDropItem> safeListItems = new ConcurrentBag<CtlDragDropItem>(ListItems.Cast<CtlDragDropItem>());
+
+    var tempPositionBreakdown = positionAttributeBreakdowns.Cast<CsBreakdown>()
+                                                           .Select(b => b.DisplayText)
+                                                           .Except(safeListItems.Select(i => i.Text.ToUpper()))
+                                                           .ToArray();
+
+    if (tempPositionBreakdown.Any())
+    {
+        var safePositionBreakdowns = new ConcurrentBag<CsBreakdown>(positionAttributeBreakdowns.Cast<CsBreakdown>()
+                                                                                              .Where(b => tempPositionBreakdown.Contains(b.DisplayText)));
+
+        Parallel.ForEach(safePositionBreakdowns, breakdown =>
+        {
+            AddDragDropBreakdownItem(breakdown); // Ensure this method is thread-safe
+        });
+    }
+    
+    CsBreakdownCollection sensitivityBreakdowns = CsBreakdownCollection.SensitivityAttributeBreakdowns(attributes);
+
+    var tempSensitivity = sensitivityBreakdowns.Cast<CsBreakdown>()
+                                               .Select(b => b.DisplayText)
+                                               .Except(safeListItems.Select(i => i.DisplayText))
+                                               .ToArray();
+
+    if (tempSensitivity.Any())
+    {
+        var safeSensitivityBreakdowns = new ConcurrentBag<CsBreakdown>(sensitivityBreakdowns.Cast<CsBreakdown>()
+                                                                                           .Where(b => tempSensitivity.Contains(b.DisplayText)));
+        
+        Parallel.ForEach(safeSensitivityBreakdowns, breakdown =>
+        {
+            AddDragDropBreakdownItem(breakdown); // Ensure this method is thread-safe
+        });
+    }
+
+    // Added new section with thread-safety
+    var safeAttributes = new ConcurrentBag<string>();
+    Parallel.ForEach(positionAttributeBreakdowns.Cast<CsBreakdown>(), breakdown =>
+    {
+        var attribute = globalCache.AttributesDoc.GetAttribute(breakdown.AttributeName);
+        safeAttributes.Add(attribute.AttributeName);
+    });
+
+    // Corrected this line to use the attributes parameter
+    RemoveMissingAttributeBreakdowns(attributes); 
+    attributes.AddRange(safeAttributes.ToArray());
+}
+
+// Make sure the methods RemoveMissingAttributeBreakdowns and AddDragDropBreakdownItem are thread-safe or are made thread-safe
+
+
+
+
+
+
+
+
+
 public void UpdateUI(Control new_item)
 {
     if (label_area_panel.InvokeRequired)

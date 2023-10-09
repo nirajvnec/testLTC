@@ -1,3 +1,50 @@
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+// ... Other necessary using directives and namespace, class definitions...
+
+public class YourControlClass : Control // Replace with your actual base class
+{
+    private Label item_label = new Label();
+
+    public override string Text 
+    { 
+        get 
+        {
+            if (this.InvokeRequired)
+            {
+                return (string)this.Invoke(new Func<string>(() => this.Text));
+            }
+            else
+            {
+                return item_label.Text;
+            }
+        }
+        set 
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action<string>((s) => this.Text = s), value);
+            }
+            else
+            {
+                item_label.Text = value;
+            }
+        }
+    }
+}
+
+// ... The rest of your previous code ...
+
+
+
+
+
+
 using System.Collections.Concurrent;
 using System.Collections.Specialized;
 using System.Linq;

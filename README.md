@@ -1,3 +1,21 @@
+if (this.lbl_area_panel.InvokeRequired)
+{
+    this.lbl_area_panel.Invoke((MethodInvoker)delegate
+    {
+        this.lbl_area_panel.Controls.Add(new_item);
+    });
+}
+else
+{
+    this.lbl_area_panel.Controls.Add(new_item);
+}
+
+
+
+
+
+
+
 private async Task UpdateAvailableAttributesAsync()
 {
     try

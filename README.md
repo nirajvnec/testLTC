@@ -1,3 +1,22 @@
+private readonly ReaderWriterLockSlim rwLock = new ReaderWriterLockSlim();
+
+public bool FindBreakdownByName(string breakdownAttributeName)
+{
+    rwLock.EnterReadLock();
+    try
+    {
+        var breakdown = items.FirstOrDefault(existingItem => existingItem.Breakdown.DisplayText.Equals(breakdownAttributeName, StringComparison.OrdinalIgnoreCase));
+        return breakdown != null;
+    }
+    finally
+    {
+        rwLock.ExitReadLock();
+    }
+}
+
+
+
+
 if (this.lbl_area_panel.InvokeRequired)
 {
     this.lbl_area_panel.Invoke((MethodInvoker)delegate

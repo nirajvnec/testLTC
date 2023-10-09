@@ -1,3 +1,27 @@
+public void UpdateUI(Control new_item)
+{
+    if (new_item == null || label_area_panel == null)
+    {
+        return;
+    }
+
+    void AddControl()
+    {
+        label_area_panel.Controls.Add(new_item);
+    }
+
+    if (label_area_panel.InvokeRequired)
+    {
+        label_area_panel.BeginInvoke((MethodInvoker)delegate { AddControl(); });
+    }
+    else
+    {
+        AddControl();
+    }
+}
+
+
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Specialized;

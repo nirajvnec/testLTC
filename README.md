@@ -1,3 +1,21 @@
+public void UpdateUI(Control new_item)
+{
+    if (label_area_panel.InvokeRequired)
+    {
+        label_area_panel.BeginInvoke((MethodInvoker)delegate 
+        {
+            label_area_panel.Controls.Add(new_item);
+        });
+    }
+    else
+    {
+        label_area_panel.Controls.Add(new_item);
+    }
+}
+
+
+
+
 using System;
 using System.Collections.Concurrent;
 using System.Linq;

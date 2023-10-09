@@ -1,17 +1,23 @@
 private readonly ReaderWriterLockSlim rwLock = new ReaderWriterLockSlim();
 
-rwLock.EnterReadLock();
-        try
-        {
-            var breakdown = this.Cast<CtlDragDropBreakdown>().FirstOrDefault(existingItem => 
-                existingItem.Breakdown.DisplayText.Equals(breakdownAttributeName, StringComparison.OrdinalIgnoreCase));
-            return breakdown != null;
-        }
-        finally
-        {
-            rwLock.ExitReadLock();
-        }
+public bool FindBreakdownByName(string breakdownAttributeName)
+{
+    this.rwLock.EnterReadLock();
+    CtlDragDropBreakdown[] snapshot;
+    try
+    {
+        snapshot = this.Cast<CtlDragDropBreakdown>().ToArray();
+    }
+    finally
+    {
+        this.rwLock.ExitReadLock();
+    }
 
+    var breakdown = snapshot.FirstOrDefault(existingItem =>
+        existingItem.Breakdown.DisplayText.Equals(breakdownAttributeName, StringComparison.OrdinalIgnoreCase));
+    
+    return breakdown != null;
+}
 
 if (this.lbl_area_panel.InvokeRequired)
 {

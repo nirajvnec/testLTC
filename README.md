@@ -1,3 +1,39 @@
+using System;
+using System.Collections.Concurrent;
+using System.Linq;
+
+public class CtlDragDropBreakdown
+{
+    public Breakdown Breakdown { get; set; }
+}
+
+public class Breakdown
+{
+    public string DisplayText { get; set; }
+}
+
+public class BreakdownManager
+{
+    private readonly ConcurrentBag<CtlDragDropBreakdown> items = new ConcurrentBag<CtlDragDropBreakdown>();
+
+    public bool FindBreakdownByName(string breakdownAttributeName)
+    {
+        var breakdown = items.FirstOrDefault(existingItem =>
+            existingItem.Breakdown.DisplayText.Equals(breakdownAttributeName, StringComparison.OrdinalIgnoreCase));
+        return breakdown != null;
+    }
+
+    public void AddBreakdown(CtlDragDropBreakdown breakdown)
+    {
+        items.Add(breakdown);
+    }
+
+    // Potentially other methods to modify and access the 'items' collection
+}
+
+
+
+
 private readonly ReaderWriterLockSlim rwLock = new ReaderWriterLockSlim();
 
 public bool FindBreakdownByName(string breakdownAttributeName)

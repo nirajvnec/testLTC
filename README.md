@@ -1,3 +1,18 @@
+try 
+{
+    var context = new ApplicationContext(new FrmMain());
+    Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
+    Application.Run(context);
+} 
+catch (Exception ex) 
+{
+    Console.WriteLine(ex.Message); // Print the exception message to the console, or handle it as needed
+}
+
+
+
+
+
 public void UpdateUI(Control new_item)
 {
     if (new_item == null || label_area_panel == null)

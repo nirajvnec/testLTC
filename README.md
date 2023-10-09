@@ -1,3 +1,45 @@
+private async Task AddBreakdownsToReportAsync(CtlDragDropList.DragDropItemCollection breakdownitems, CS.Mars.ReportDef.CsTableFormat table, CsReportDef.TableDimensionEnum dimension, CsReportDef report_def, CsETGlobalCache global_cache, bool checkScenarioExpression, bool isBreakdownHidden = false)
+{ 
+    foreach (CtlDragDropBreakdown drag_drop_breakdown in breakdownitems) 
+    { 
+        drag_drop_breakdown.Breakdown.IsBreakdownHidden = isBreakdownHidden ? "true" : null; 
+        
+        if (checkScenarioExpression && drag_drop_breakdown.Data is CsBreakdownScenarioExpression) 
+        { 
+            await drag_drop_breakdown.Breakdown.PopulateReportDefAsync(report_def, table, dimension, global_cache); 
+        } 
+        else if (!checkScenarioExpression && !(drag_drop_breakdown.Data is CsBreakdownScenarioExpression)) 
+        { 
+            if (drag_drop_breakdown.Breakdown.WantDisplayName) 
+            { 
+                if (drag_drop_breakdown.Breakdown.WantNodeNameDisplayName) 
+                {
+                    // I think some code is missing here, as the if statement is empty
+                }
+            } 
+            
+            drag_drop_breakdown.Breakdown.WantDisplayName = false; 
+            string subreport_name = drag_drop_breakdown.Breakdown.SubreportName; 
+            drag_drop_breakdown.Breakdown.SubreportName = subreport_name + "_NODE_NAME"; 
+            
+            await drag_drop_breakdown.Breakdown.PopulateReportDefAsync(report_def, table, dimension, global_cache); 
+            
+            drag_drop_breakdown.Breakdown.WantDisplayName = true; // assuming t_h_ was a typo and meant to reset WantDisplayName
+            drag_drop_breakdown.Breakdown.SubreportName = subreport_name; 
+        } 
+        else if (drag_drop_breakdown.Data is CsBreakdownCobDate && report_def.CalculationMethod is CsCalcMethod) 
+        { 
+            report_def.BreakdownLevel = dimension.ToString();
+            continue; 
+        } 
+        
+        await drag_drop_breakdown.Breakdown.PopulateReportDefAsync(report_def, table, dimension, global_cache);
+    } 
+}
+
+
+
+
 try 
 {
     var context = new ApplicationContext(new FrmMain());

@@ -1,3 +1,56 @@
+private async Task UpdateAvailableAttributesAsync()
+{
+    try
+    {
+        CsAttributeList attributeList; // Assuming the initialization or declaration elsewhere
+        StringCollection riskTypes = other_filter_grid.Empty 
+            ? other_filter_grid.GetRiskTypes(1) 
+            : other_filter_grid.GetRiskTypes();
+
+        var riskTypeValidation = new RiskTypeValidation(m_report_def_helper, riskTypes);
+
+        string errorMsg = riskTypeValidation.GetCommonAttributesForRiskTypes(
+            other_filter_grid.IcEditMode,
+            cob_datepicker.Value,
+            m_global_cache.IsDstRefMethodSelected,
+            ref attributeList);
+
+        riskTypeValidation.AddSensitivityAttributeIfContainScenario(attributeList, m_global_cache);
+        StringCollection attributeNames = attributeList.AttributeNames;
+
+        if (!this.InvokeRequired)
+        {
+            if (!DslMarsSwitch.IsRefMethodDisabled)
+            {
+                ctlCalcReportFormat.SetRiskTypeAttributes(attributeNames);
+                ctlCalcReportFormat.SetSearched();
+            }
+        }
+        else
+        {
+            if (MslMarsSwitch.IsRefMethodDisabled)
+            {
+                ctlCalcReportFormat.SetRiskTypeAttributes(attributeNames);
+                ctlCalcReportFormat.SetSearched();
+            }
+
+            await Task.Run(() =>
+            {
+                if (!Ds1MarsSwitch.IsRefMethodDisabled)
+                    ctlCalcReportFormat.SetRiskTypeAttributes(attributeNames);
+            });
+        }
+    }
+    catch (Exception ex)
+    {
+        // Handle exception here
+        Console.WriteLine(ex.Message); // Replace with actual exception handling
+    }
+}
+
+
+
+
 public partial class YourForm : Form 
 {
     public YourForm()

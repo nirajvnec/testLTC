@@ -1,53 +1,75 @@
-private HashSet<string> cachedSensitivities = new HashSet<string>();
-private HashSet<string> cachedPositionAttributes = new HashSet<string>();
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 
-
-public void SetRiskTypeAttributes(Specialized.StringCollection attributes)
+public class YourClass // NOTE: Replace with the actual name of your class
 {
-    CsAttributeList positionAttributes = globalCache.AttributesDoc.GetPositionAttributes();
-    CsBreakdownCollection sensitivityBreakdowns = CsBreakdownCollection.SensitivityAttributeBreakdowns(attributes);
+    private HashSet<string> cachedSensitivities = new HashSet<string>();
+    private HashSet<string> cachedPositionAttributes = new HashSet<string>();
 
-    var currentSensitivities = new HashSet<string>(sensitivityBreakdowns.Cast<CsBreakdown>().Select(b => b.DisplayText.ToUpper()));
-
-    var newSensitivities = currentSensitivities.Except(cachedSensitivities).ToList();
-
-    for (int i = 0; i < newSensitivities.Count; i++)
+    public void SetRiskTypeAttributes(Specialized.StringCollection attributes)
     {
-        var breakdown = sensitivityBreakdowns.Cast<CsBreakdown>().FirstOrDefault(b => b.DisplayText.ToUpper() == newSensitivities[i]);
-        if (breakdown != null)
+        CsAttributeList positionAttributes = globalCache.AttributesDoc.GetPositionAttributes();
+        CsBreakdownCollection sensitivityBreakdowns = CsBreakdownCollection.SensitivityAttributeBreakdowns(attributes);
+
+        var currentSensitivities = new HashSet<string>(sensitivityBreakdowns.Cast<CsBreakdown>().Select(b => b.DisplayText.ToUpper()));
+
+        var newSensitivities = currentSensitivities.Except(cachedSensitivities).ToList();
+
+        for (int i = 0; i < newSensitivities.Count; i++)
         {
-            AddDragDropBreakdownItem(breakdown);
-            cachedSensitivities.Add(newSensitivities[i]);
+            var breakdown = sensitivityBreakdowns.Cast<CsBreakdown>().FirstOrDefault(b => b.DisplayText.ToUpper() == newSensitivities[i]);
+            if (breakdown != null)
+            {
+                AddDragDropBreakdownItem(breakdown);
+                cachedSensitivities.Add(newSensitivities[i]);
+            }
         }
-    }
 
-    CsBreakdownCollection positionAttributeBreakdowns = CsBreakdownCollection.AttributeBreakdowns(positionAttributes);
+        CsBreakdownCollection positionAttributeBreakdowns = CsBreakdownCollection.AttributeBreakdowns(positionAttributes);
 
-    var currentPositionAttributes = new HashSet<string>(positionAttributeBreakdowns.Cast<CsBreakdown>().Select(b => b.DisplayText.ToUpper()));
+        var currentPositionAttributes = new HashSet<string>(positionAttributeBreakdowns.Cast<CsBreakdown>().Select(b => b.DisplayText.ToUpper()));
 
-    var newPositionAttributes = currentPositionAttributes.Except(cachedPositionAttributes).ToList();
+        var newPositionAttributes = currentPositionAttributes.Except(cachedPositionAttributes).ToList();
 
-    for (int i = 0; i < newPositionAttributes.Count; i++)
-    {
-        var breakdown = positionAttributeBreakdowns.Cast<CsBreakdown>().FirstOrDefault(b => b.DisplayText.ToUpper() == newPositionAttributes[i]);
-        if (breakdown != null)
+        for (int i = 0; i < newPositionAttributes.Count; i++)
         {
-            AddDragDropBreakdownItem(breakdown);
-            cachedPositionAttributes.Add(newPositionAttributes[i]);
+            var breakdown = positionAttributeBreakdowns.Cast<CsBreakdown>().FirstOrDefault(b => b.DisplayText.ToUpper() == newPositionAttributes[i]);
+            if (breakdown != null)
+            {
+                AddDragDropBreakdownItem(breakdown);
+                cachedPositionAttributes.Add(newPositionAttributes[i]);
+            }
         }
+
+        var attrList = positionAttributeBreakdowns.Cast<CsBreakdown>()
+                                                .Select(breakdown => globalCache.AttributesDoc.GetAttribute(breakdown.AttributeName))
+                                                .ToList();
+
+        for (int i = 0; i < attrList.Count; i++)
+        {
+            attributes.Add(attrList[i].AttributeName);
+        }
+
+        this.RemoveMissingAttributeBreakdowns(attributes);
     }
 
-    var attrList = positionAttributeBreakdowns.Cast<CsBreakdown>()
-                                              .SelectMany(breakdown => globalCache.AttributesDoc.GetAttribute(breakdown.AttributeName))
-                                              .ToList();
+    // Other methods and members of your class...
 
-    for (int i = 0; i < attrList.Count; i++)
+    // Sample implementation of AddDragDropBreakdownItem, replace with your actual implementation
+    private void AddDragDropBreakdownItem(CsBreakdown breakdown)
     {
-        attributes.Add(attrList[i].AttributeName);
+        // Your implementation here
     }
 
-    this.RemoveMissingAttributeBreakdowns(attributes);
-}
+    // Sample implementation of RemoveMissingAttributeBreakdowns, replace with your actual implementation
+    private void RemoveMissingAttributeBreakdowns(Specialized.StringCollection attributes)
+    {
+        // Your implementation here
+    }
+
+    // Placeholder for CsAttributeList, Cs
 
 
 

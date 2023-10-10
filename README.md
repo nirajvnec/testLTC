@@ -1,3 +1,143 @@
+namespace YourNamespace
+{
+    partial class FrmFilter
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.cboRole = new System.Windows.Forms.ComboBox();
+            this.cboCalculationMethod = new System.Windows.Forms.ComboBox();
+            this.cboBreakDownCategory = new System.Windows.Forms.ComboBox();
+            this.SuspendLayout();
+            // 
+            // cboRole
+            // 
+            this.cboRole.FormattingEnabled = true;
+            this.cboRole.Location = new System.Drawing.Point(12, 12);
+            this.cboRole.Name = "cboRole";
+            this.cboRole.Size = new System.Drawing.Size(260, 28);
+            this.cboRole.TabIndex = 0;
+            // 
+            // cboCalculationMethod
+            // 
+            this.cboCalculationMethod.FormattingEnabled = true;
+            this.cboCalculationMethod.Location = new System.Drawing.Point(12, 46);
+            this.cboCalculationMethod.Name = "cboCalculationMethod";
+            this.cboCalculationMethod.Size = new System.Drawing.Size(260, 28);
+            this.cboCalculationMethod.TabIndex = 1;
+            // 
+            // cboBreakDownCategory
+            // 
+            this.cboBreakDownCategory.FormattingEnabled = true;
+            this.cboBreakDownCategory.Location = new System.Drawing.Point(12, 80);
+            this.cboBreakDownCategory.Name = "cboBreakDownCategory";
+            this.cboBreakDownCategory.Size = new System.Drawing.Size(260, 28);
+            this.cboBreakDownCategory.TabIndex = 2;
+            // 
+            // FrmFilter
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LightGray;
+            this.ClientSize = new System.Drawing.Size(284, 121);
+            this.Controls.Add(this.cboBreakDownCategory);
+            this.Controls.Add(this.cboCalculationMethod);
+            this.Controls.Add(this.cboRole);
+            this.Name = "FrmFilter";
+            this.Text = "Filter";
+            this.ResumeLayout(false);
+        }
+
+        #endregion
+
+        private System.Windows.Forms.ComboBox cboRole;
+        private System.Windows.Forms.ComboBox cboCalculationMethod;
+        private System.Windows.Forms.ComboBox cboBreakDownCategory;
+    }
+}
+
+
+
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
+
+namespace YourNamespace
+{
+    public partial class FrmFilter : Form
+    {
+        public FrmFilter()
+        {
+            InitializeComponent();
+
+            // Add Selection Change event handlers
+            this.cboRole.SelectedIndexChanged += async (sender, e) => await CboRole_SelectedIndexChanged(sender, e);
+            this.cboCalculationMethod.SelectedIndexChanged += async (sender, e) => await CboCalculationMethod_SelectedIndexChanged(sender, e);
+            this.cboBreakDownCategory.SelectedIndexChanged += async (sender, e) => await CboBreakDownCategory_SelectedIndexChanged(sender, e);
+        }
+
+        private async Task CboRole_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Do something asynchronously when the Role combo box selection changes
+            await Task.Delay(500); // Example delay - replace with actual async operations
+            Console.WriteLine("Role Selected Index Changed");
+        }
+
+        private async Task CboCalculationMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Do something asynchronously when the Calculation Method combo box selection changes
+            await Task.Delay(500); // Example delay - replace with actual async operations
+            Console.WriteLine("Calculation Method Selected Index Changed");
+        }
+
+        private async Task CboBreakDownCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Do something asynchronously when the Break Down Category combo box selection changes
+            await Task.Delay(500); // Example delay - replace with actual async operations
+            Console.WriteLine("Break Down Category Selected Index Changed");
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            LinearGradientBrush linearGradientBrush = 
+                new LinearGradientBrush(this.ClientRectangle, Color.LightSkyBlue, Color.LightGray, 45F);
+
+            e.Graphics.FillRectangle(linearGradientBrush, this.ClientRectangle);
+
+            base.OnPaint(e);
+        }
+    }
+}
+
+
+
+
 recentReportDefinitionsToolStripMenuItem.DropDownItems.Clear();
 
 for (int i = 0; i < Math.Min(current_recent_docs_limit, items.Keys.Count); i++) 

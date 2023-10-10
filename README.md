@@ -1,3 +1,21 @@
+private async Task AddBreakDownsAsync(CtlDragDropBreakdown breakdown, ConcurrentBag<CtlDragDropBreakdown> breakdownBag, bool ignoreValidation = false) 
+{
+    try 
+    {
+        // Assuming AddAsync is an existing async method on breakdownBag
+        await Task.Run(() => breakdownBag.Add(breakdown));
+    } 
+    catch (Exception ex) 
+    {
+        CsMarsErrorHelper.GetInstance().ShowError(ex, "Error adding breakdown");
+    }
+}
+
+
+
+
+
+
 foreach (CtlDragDropItem drag_drop_item in m_drag_drop_items)
 {
     if (drag_drop_item == null)

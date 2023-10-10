@@ -1,3 +1,54 @@
+public void SetRiskTypeAttributes(Specialized.StringCollection attributes)
+{
+    CsAttributeList positionAttributes = globalCache.AttributesDoc.GetPositionAttributes();
+    CsBreakdownCollection sensitivityBreakdowns = CsBreakdownCollection.SensitivityAttributeBreakdowns(attributes);
+
+    var currentSensitivities = new HashSet<string>(sensitivityBreakdowns.Cast<CsBreakdown>().Select(b => b.DisplayText.ToUpper()));
+
+    var newSensitivities = currentSensitivities.Except(cachedSensitivities).ToList();
+
+    for (int i = 0; i < newSensitivities.Count; i++)
+    {
+        var breakdown = sensitivityBreakdowns.Cast<CsBreakdown>().FirstOrDefault(b => b.DisplayText.ToUpper() == newSensitivities[i]);
+        if (breakdown != null)
+        {
+            AddDragDropBreakdownItem(breakdown);
+            cachedSensitivities.Add(newSensitivities[i]);
+        }
+    }
+
+    CsBreakdownCollection positionAttributeBreakdowns = CsBreakdownCollection.AttributeBreakdowns(positionAttributes);
+
+    var currentPositionAttributes = new HashSet<string>(positionAttributeBreakdowns.Cast<CsBreakdown>().Select(b => b.DisplayText.ToUpper()));
+
+    var newPositionAttributes = currentPositionAttributes.Except(cachedPositionAttributes).ToList();
+
+    for (int i = 0; i < newPositionAttributes.Count; i++)
+    {
+        var breakdown = positionAttributeBreakdowns.Cast<CsBreakdown>().FirstOrDefault(b => b.DisplayText.ToUpper() == newPositionAttributes[i]);
+        if (breakdown != null)
+        {
+            AddDragDropBreakdownItem(breakdown);
+            cachedPositionAttributes.Add(newPositionAttributes[i]);
+        }
+    }
+
+    var attrList = positionAttributeBreakdowns.Cast<CsBreakdown>()
+                                              .SelectMany(breakdown => globalCache.AttributesDoc.GetAttribute(breakdown.AttributeName))
+                                              .ToList();
+
+    for (int i = 0; i < attrList.Count; i++)
+    {
+        attributes.Add(attrList[i].AttributeName);
+    }
+
+    this.RemoveMissingAttributeBreakdowns(attributes);
+}
+
+
+
+
+
 private async Task AddBreakDownsAsync(CtlDragDropBreakdown breakdown, ConcurrentBag<CtlDragDropBreakdown> breakdownBag, bool ignoreValidation = false) 
 {
     try 

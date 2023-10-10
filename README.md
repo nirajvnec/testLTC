@@ -1,3 +1,25 @@
+recentReportDefinitionsToolStripMenuItem.DropDownItems.Clear();
+
+for (int i = 0; i < Math.Min(current_recent_docs_limit, items.Keys.Count); i++) 
+{
+    if (items["file" + Convert.ToString(items.Keys.Count - i, 10)] != null) 
+    { 
+        menu_index++;
+
+        ToolStripItem subItem = new ToolStripMenuItem(Convert.ToString(menu_index, 10) + " " + items["file" + Convert.ToString(items.Keys.Count - i, 10)]);
+        subItem.Tag = items["file" + Convert.ToString(items.Keys.Count - i, 10)]; 
+        recentReportDefinitionsToolStripMenuItem.DropDownItems.Add(subItem); 
+
+        subItem.Click += async (sender, e) => 
+        { 
+            await file_recent_docs_submenu_Click(sender, e); 
+        };
+    } 
+}
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;

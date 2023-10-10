@@ -1,3 +1,7 @@
+private HashSet<string> cachedSensitivities = new HashSet<string>();
+private HashSet<string> cachedPositionAttributes = new HashSet<string>();
+
+
 public void SetRiskTypeAttributes(Specialized.StringCollection attributes)
 {
     CsAttributeList positionAttributes = globalCache.AttributesDoc.GetPositionAttributes();

@@ -1,3 +1,36 @@
+foreach (CtlDragDropItem drag_drop_item in m_drag_drop_items)
+{
+    if (drag_drop_item == null)
+    {
+        continue; // skip to the next iteration if drag_drop_item is null
+    }
+
+    if (drag_drop_item.Header == null || current_heading == null)
+    {
+        continue; // skip to the next iteration if Header or current_heading is null
+    }
+
+    if ((drag_drop_item.Header.ToUpper() == current_heading.ToUpper() ||
+         (current_heading == CsBreakDownHeading.HEADING_ALL + CsBreakDownHeading.HEADING_SUFFIX)) &&
+        !drag_drop_item.Disabled && 
+        !drag_drop_item.IsDraggedAway &&
+        drag_drop_item.Header.ToString() != CsBreakDownHeading.HEADING_VARANALYSIS + CsBreakDownHeading.HEADING_SUFFIX &&
+        drag_drop_item.Header.ToString() != CsBreakDownHeading.HEADING_IRCANALYSIS + CsBreakDownHeading.HEADING_SUFFIX)
+    {
+        drag_drop_item.Top = label_top;
+        label_top += SIZE_ITEM_SPACING + drag_drop_item.Height; // assuming this is what you intended
+        // item_found_in_header = true;  // uncomment and assign this variable appropriately
+        drag_drop_item.Visible = true; // assuming there is a Visible property
+    }
+    else
+    {
+        // add appropriate handling for the else case
+    }
+}
+ 
+
+
+
 private async Task AddBreakdownsToReportAsync(CtlDragDropList.DragDropItemCollection breakdownitems, CS.Mars.ReportDef.CsTableFormat table, CsReportDef.TableDimensionEnum dimension, CsReportDef report_def, CsETGlobalCache global_cache, bool checkScenarioExpression, bool isBreakdownHidden = false)
 { 
     foreach (CtlDragDropBreakdown drag_drop_breakdown in breakdownitems) 

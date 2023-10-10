@@ -31,6 +31,141 @@ namespace YourNamespace
             this.cboRole = new System.Windows.Forms.ComboBox();
             this.cboCalculationMethod = new System.Windows.Forms.ComboBox();
             this.cboBreakDownCategory = new System.Windows.Forms.ComboBox();
+            this.btnProceed = new System.Windows.Forms.Button();
+            this.lblRole = new System.Windows.Forms.Label();
+            this.lblCalculationMethod = new System.Windows.Forms.Label();
+            this.lblBreakDownCategory = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // cboRole
+            // 
+            this.cboRole.FormattingEnabled = true;
+            this.cboRole.Location = new System.Drawing.Point(16, 35);
+            this.cboRole.Name = "cboRole";
+            this.cboRole.Size = new System.Drawing.Size(260, 28);
+            this.cboRole.TabIndex = 0;
+            // 
+            // cboCalculationMethod
+            // 
+            this.cboCalculationMethod.FormattingEnabled = true;
+            this.cboCalculationMethod.Location = new System.Drawing.Point(16, 79);
+            this.cboCalculationMethod.Name = "cboCalculationMethod";
+            this.cboCalculationMethod.Size = new System.Drawing.Size(260, 28);
+            this.cboCalculationMethod.TabIndex = 1;
+            // 
+            // cboBreakDownCategory
+            // 
+            this.cboBreakDownCategory.FormattingEnabled = true;
+            this.cboBreakDownCategory.Location = new System.Drawing.Point(16, 123);
+            this.cboBreakDownCategory.Name = "cboBreakDownCategory";
+            this.cboBreakDownCategory.Size = new System.Drawing.Size(260, 28);
+            this.cboBreakDownCategory.TabIndex = 2;
+            // 
+            // btnProceed
+            // 
+            this.btnProceed.Enabled = false;
+            this.btnProceed.Location = new System.Drawing.Point(100, 157);
+            this.btnProceed.Name = "btnProceed";
+            this.btnProceed.Size = new System.Drawing.Size(100, 35);
+            this.btnProceed.TabIndex = 3;
+            this.btnProceed.Text = "Proceed";
+            this.btnProceed.UseVisualStyleBackColor = true;
+            // 
+            // lblRole
+            // 
+            this.lblRole.AutoSize = true;
+            this.lblRole.Location = new System.Drawing.Point(12, 12);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new System.Drawing.Size(40, 20);
+            this.lblRole.TabIndex = 4;
+            this.lblRole.Text = "Role";
+            // 
+            // lblCalculationMethod
+            // 
+            this.lblCalculationMethod.AutoSize = true;
+            this.lblCalculationMethod.Location = new System.Drawing.Point(12, 56);
+            this.lblCalculationMethod.Name = "lblCalculationMethod";
+            this.lblCalculationMethod.Size = new System.Drawing.Size(147, 20);
+            this.lblCalculationMethod.TabIndex = 5;
+            this.lblCalculationMethod.Text = "Calculation Method";
+            // 
+            // lblBreakDownCategory
+            // 
+            this.lblBreakDownCategory.AutoSize = true;
+            this.lblBreakDownCategory.Location = new System.Drawing.Point(12, 100);
+            this.lblBreakDownCategory.Name = "lblBreakDownCategory";
+            this.lblBreakDownCategory.Size = new System.Drawing.Size(159, 20);
+            this.lblBreakDownCategory.TabIndex = 6;
+            this.lblBreakDownCategory.Text = "Break Down Category";
+            // 
+            // FrmFilter
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LightGray;
+            this.ClientSize = new System.Drawing.Size(300, 204);
+            this.Controls.Add(this.lblBreakDownCategory);
+            this.Controls.Add(this.lblCalculationMethod);
+            this.Controls.Add(this.lblRole);
+            this.Controls.Add(this.btnProceed);
+            this.Controls.Add(this.cboBreakDownCategory);
+            this.Controls.Add(this.cboCalculationMethod);
+            this.Controls.Add(this.cboRole);
+            this.Name = "FrmFilter";
+            this.Text = "Filter";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
+        #endregion
+
+        private System.Windows.Forms.ComboBox cboRole;
+        private System.Windows.Forms.ComboBox cboCalculationMethod;
+        private System.Windows.Forms.ComboBox cboBreakDownCategory;
+        private System.Windows.Forms.Button btnProceed;
+        private System.Windows.Forms.Label lblRole;
+        private System.Windows.Forms.Label lblCalculationMethod;
+        private System.Windows.Forms.Label lblBreakDownCategory;
+    }
+}
+
+
+
+
+
+namespace YourNamespace
+{
+    partial class FrmFilter
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.cboRole = new System.Windows.Forms.ComboBox();
+            this.cboCalculationMethod = new System.Windows.Forms.ComboBox();
+            this.cboBreakDownCategory = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // cboRole

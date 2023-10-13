@@ -1,3 +1,15 @@
+| Column Name  | Data Type   | Allow Nulls |
+|--------------|-------------|-------------|
+| EmployeeID   | INT         | No          |
+| FirstName    | NVARCHAR    | Yes         |
+| LastName     | NVARCHAR    | No          |
+| DateOfBirth  | DATETIME    | Yes         |
+| Position     | NVARCHAR    | Yes         |
+
+
+
+
+
 | Column Name   | Data Types     | Allow Nulls |
 |---------------|----------------|-------------|
 | EmpID         | INT            | No          |

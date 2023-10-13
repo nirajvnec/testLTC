@@ -1,4 +1,74 @@
 using System;
+using System.Linq;
+using System.Xml.Linq;
+using OfficeOpenXml;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        string filePath = "path/to/your/xmlfile.xml";  // Replace with the actual file path
+        string excelFilePath = "path/to/your/excelfile.xlsx";  // Replace with the desired Excel file path
+
+        XDocument doc;
+        try
+        {
+            doc = XDocument.Load(filePath);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error reading the XML file: {ex.Message}");
+            return;
+        }
+
+        var attributesByCategory = doc.Descendants("Attribute")
+            .GroupBy(x => (string)x.Attribute("category"))
+            .Select(g => new AttributeByCategory
+            {
+                Category = g.Key,
+                Name = string.Join(", ", g.Select(x => (string)x.Attribute("name"))),
+                Count = g.Count()
+            }).ToList();
+
+        // Create Excel file
+        using (ExcelPackage package = new ExcelPackage(new FileInfo(excelFilePath)))
+        {
+            ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Attributes by Category");
+
+            // Headers
+            worksheet.Cells[1, 1].Value = "Category";
+            worksheet.Cells[1, 2].Value = "Names";
+            worksheet.Cells[1, 3].Value = "Count";
+
+            // Data
+            int row = 2;
+            foreach (var attr in attributesByCategory)
+            {
+                worksheet.Cells[row, 1].Value = attr.Category;
+                worksheet.Cells[row, 2].Value = attr.Name;
+                worksheet.Cells[row, 3].Value = attr.Count;
+                row++;
+            }
+
+            package.Save();
+        }
+
+        Console.WriteLine("Data written to Excel file successfully!");
+    }
+
+    public class AttributeByCategory
+    {
+        public string Category { get; set; }
+        public string Name { get; set; }
+        public int Count { get; set; }
+    }
+}
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;

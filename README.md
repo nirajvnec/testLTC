@@ -1,3 +1,14 @@
+| Column Name   | Data Types     | Allow Nulls |
+|---------------|----------------|-------------|
+| EmpID         | INT            | No          |
+| FName         | NVARCHAR(50)   | Yes         |
+| LName         | NVARCHAR(50)   | No          |
+| DOB           | DATE           | Yes         |
+| Job_Position  | NVARCHAR(50)   | Yes         |
+
+
+
+
 using System;
 using System.Linq;
 using System.Xml.Linq;

@@ -1,3 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        string filePath = "path/to/your/xmlfile.xml"; // Replace with the actual file path
+
+        XDocument doc;
+        try
+        {
+            doc = XDocument.Load(filePath);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error reading the XML file: {ex.Message}");
+            return;
+        }
+
+        var attributesByCategory = doc.Descendants("Attribute")
+            .GroupBy(x => (string)x.Attribute("category"))
+            .Select(g => new AttributeByCategory
+            {
+                Category = g.Key,
+                Name = string.Join(", ", g.Select(x => (string)x.Attribute("name"))),
+                Count = g.Count()
+            }).ToList();
+
+        foreach (var attr in attributesByCategory)
+        {
+            Console.WriteLine($"Category: {attr.Category}, Names: {attr.Name}, Count: {attr.Count}");
+        }
+    }
+
+    public class AttributeByCategory
+    {
+        public string Category { get; set; }
+        public string Name { get; set; }
+        public int Count { get; set; }
+    }
+}
+
+
+
+
+
+
 namespace YourNamespace
 {
     partial class FrmFilter

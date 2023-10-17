@@ -1,3 +1,17 @@
+var filteredAttributes = doc.Descendants("Attribute")
+            .Where(x => (string)x.Attribute("category") == filterCategory)
+            .ToList();
+
+        XDocument filteredDoc = new XDocument(
+            new XElement("Replies",
+                new XElement("Attributes", filteredAttributes)));
+
+        // Save the filtered XML document
+        filteredDoc.Save(filteredXmlFilePath);
+
+
+
+
 | Column Name  | Data Type   | Allow Nulls |
 |--------------|-------------|-------------|
 | EmployeeID   | INT         | No          |

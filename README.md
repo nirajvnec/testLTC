@@ -1,3 +1,13 @@
+<div className="d-flex justify-content-center">
+    <button className="btn btn-secondary me-2" onClick={() => setStep(1)}>
+        Back
+    </button>
+    <button className="btn btn-primary" onClick={() => setStep(3)}>
+        Next
+    </button>
+</div>
+
+
 var filteredAttributes = doc.Descendants("Attribute")
             .Where(x => (string)x.Attribute("category") == filterCategory)
             .ToList();

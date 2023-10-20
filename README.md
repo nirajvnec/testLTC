@@ -1,3 +1,6 @@
+
+<button onClick={() => fetchPost(1)}>Fetch Post</button>
+
 import axios, { AxiosResponse } from 'axios';
 
 interface Post {

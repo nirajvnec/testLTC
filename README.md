@@ -1,3 +1,24 @@
+import axios from 'axios';
+
+interface IData {
+  // Define the shape of the data you expect to receive from the API
+  id: number;
+  name: string;
+  // Add more fields as needed
+}
+
+async function fetchData(): Promise<void> {
+  try {
+    const response = await axios.get<IData>('https://api.example.com/data');
+    console.log('Data:', response.data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+fetchData();
+
+
 // If you're using Node.js, first require Axios
 // const axios = require('axios');
 

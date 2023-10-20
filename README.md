@@ -1,3 +1,33 @@
+import axios, { AxiosResponse } from 'axios';
+
+interface Post {
+    userId: number;
+    id: number;
+    title: string;
+    body: string;
+}
+
+async function getPost(id: number): Promise<void> {
+    try {
+        const url: string = `https://jsonplaceholder.typicode.com/posts/${id}`;
+        const response: AxiosResponse<Post> = await axios.get<Post>(url);
+        console.log(response.data);
+    } catch (error) {
+        console.error('There was an error!', error);
+    }
+}
+
+getPost(1); // Fetch post with ID 1
+    
+
+
+
+
+
+body: string;
+
+
+
 import axios from 'axios';
 
 interface IData {

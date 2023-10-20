@@ -1,3 +1,24 @@
+// If you're using Node.js, first require Axios
+// const axios = require('axios');
+
+// Making a GET request to an API endpoint
+axios.get('https://api.example.com/data')
+  .then(response => {
+    // Handle success
+    console.log('Data:', response.data);
+  })
+  .catch(error => {
+    // Handle error
+    console.error('Error:', error);
+  })
+  .finally(() => {
+    // Always executed
+    console.log('Request completed');
+  });
+
+
+
+
 <div className="d-flex justify-content-center">
     <button className="btn btn-secondary me-2" onClick={() => setStep(1)}>
         Back

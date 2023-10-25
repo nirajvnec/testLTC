@@ -1,3 +1,40 @@
+using System.Xml;
+
+public static class StringExtensions
+{
+    public static XmlDocument FilterXmlByCategory(this string xmlString, string category)
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.LoadXml(xmlString);
+
+        XmlDocument newDoc = new XmlDocument();
+        XmlElement root = newDoc.CreateElement("Replies");
+        newDoc.AppendChild(root);
+
+        // Select all nodes with the specified category
+        XmlNodeList nodes = doc.SelectNodes($"//Attribute_breakdown[@category='{category}']");
+
+        foreach (XmlNode node in nodes)
+        {
+            XmlNode importedNode = newDoc.ImportNode(node, true);
+            root.AppendChild(importedNode);
+        }
+
+        return newDoc;
+    }
+}
+
+
+
+string xmlString = @"<Replies> ... </Replies>";
+XmlDocument filteredDoc = xmlString.FilterXmlByCategory("OTHERS");
+
+
+
+
+
+
+
 
 <button onClick={() => fetchPost(1)}>Fetch Post</button>
 

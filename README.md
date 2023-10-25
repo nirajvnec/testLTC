@@ -1,3 +1,31 @@
+using System.Xml;
+
+public static class StringExtensions
+{
+    public static XmlDocument FilterXmlByCategory(this string xmlString, string category)
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.LoadXml(xmlString);
+
+        XmlDocument newDoc = new XmlDocument();
+        XmlElement root = newDoc.CreateElement("Replies");
+        newDoc.AppendChild(root);
+
+        // XPath query to select "Attribute breakdown" elements with the specified category
+        XmlNodeList nodes = doc.SelectNodes($"//*[local-name()='Attribute breakdown' and @category='{category}']");
+
+        foreach (XmlNode node in nodes)
+        {
+            XmlNode importedNode = newDoc.ImportNode(node, true);
+            root.AppendChild(importedNode);
+        }
+
+        return newDoc;
+    }
+}
+
+
+
 XmlNodeList nodes = doc.SelectNodes("//*[local-name()='Attribute breakdown']");
 
 

@@ -1,3 +1,7 @@
+XmlNodeList nodes = doc.SelectNodes("//*[local-name()='Attribute breakdown']");
+
+
+
 using System.Xml;
 
 public static class StringExtensions

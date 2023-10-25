@@ -1,3 +1,8 @@
+XmlNodeList nodes = doc.SelectNodes($"//Attribute breakdown[@category='{category}']");
+
+
+
+
 using System.Xml;
 
 public static class StringExtensions

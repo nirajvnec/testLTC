@@ -11,6 +11,34 @@ public static class StringExtensions
         XmlElement root = newDoc.CreateElement("Replies");
         newDoc.AppendChild(root);
 
+        foreach (XmlNode node in doc.GetElementsByTagName("Attribute breakdown"))
+        {
+            if (node.Attributes["category"] != null && node.Attributes["category"].Value == category)
+            {
+                XmlNode importedNode = newDoc.ImportNode(node, true);
+                root.AppendChild(importedNode);
+            }
+        }
+
+        return newDoc;
+    }
+}
+
+
+
+using System.Xml;
+
+public static class StringExtensions
+{
+    public static XmlDocument FilterXmlByCategory(this string xmlString, string category)
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.LoadXml(xmlString);
+
+        XmlDocument newDoc = new XmlDocument();
+        XmlElement root = newDoc.CreateElement("Replies");
+        newDoc.AppendChild(root);
+
         // XPath query to select "Attribute breakdown" elements with the specified category
         XmlNodeList nodes = doc.SelectNodes($"//*[local-name()='Attribute breakdown' and @category='{category}']");
 

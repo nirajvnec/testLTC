@@ -1,3 +1,19 @@
+public interface IThreadSafeJsonReader
+{
+    List<string> GetValuesFromKeys(string filePath, params string[] keys);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 class Program
 {
     static void Main()

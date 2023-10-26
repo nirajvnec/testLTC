@@ -1,3 +1,25 @@
+class Program
+{
+    static void Main()
+    {
+        IJsonService jsonService = new JsonService();
+        List<string> values = jsonService.GetValuesFromKeys("path_to_your_file.json", "2ND LEVEL SUPPORT READ WRITE", "READ WRITE");
+
+        foreach (var value in values)
+        {
+            Console.WriteLine(value);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;

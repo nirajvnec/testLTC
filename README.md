@@ -1,3 +1,45 @@
+using System.Xml;
+using System.Collections.Generic;
+using System.Linq;
+
+public static class StringExtensions
+{
+    public static XmlDocument FilterXmlByMultipleCategories(this string xmlString, List<string> categories)
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.LoadXml(xmlString);
+
+        XmlDocument newDoc = new XmlDocument();
+        XmlElement root = newDoc.CreateElement("Replies");
+        newDoc.AppendChild(root);
+
+        foreach (XmlNode node in doc.GetElementsByTagName("Attribute"))
+        {
+            var categoryAttribute = node.Attributes["category"];
+            if (categoryAttribute != null && categories.Contains(categoryAttribute.Value))
+            {
+                XmlNode importedNode = newDoc.ImportNode(node, true);
+                root.AppendChild(importedNode);
+            }
+        }
+
+        return newDoc;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public interface IThreadSafeJsonReader
 {
     List<string> GetValuesFromKeys(string filePath, params string[] keys);

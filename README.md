@@ -1,4 +1,23 @@
+namespace YourNamespace;
+
+public interface IJsonService
+{
+    Task<List<string>> GetValuesFromKeysAsync(string filePath, params string[] keys);
+}
+
+
+
+
+
+
+
+
+
 using System.Xml;
+
+
+
+
 
 public static class StringExtensions
 {

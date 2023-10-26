@@ -1,3 +1,32 @@
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.IO;
+
+public class JsonService : IJsonService
+{
+    public List<string> GetValuesFromKeys(string filePath, params string[] keys)
+    {
+        string json = File.ReadAllText(filePath);
+        JObject obj = JObject.Parse(json);
+        
+        List<string> values = new List<string>();
+        foreach (var key in keys)
+        {
+            if (obj["Global"][key] != null)
+            {
+                values.AddRange(obj["Global"][key].ToObject<List<string>>());
+            }
+        }
+        
+        return values;
+    }
+}
+
+
+
+
+
+
 namespace YourNamespace;
 
 public interface IJsonService

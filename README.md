@@ -1,3 +1,105 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+using Newtonsoft.Json;
+
+public record UserPermission(
+    string TechIDValue,
+    string RightName,
+    string ScopeValueSet,
+    string AttributeName,
+    string AttributeValue
+);
+
+public interface ILinkRepository
+{
+    Dictionary<string, Dictionary<string, List<Dictionary<string, string>>>> GetAllLinks();
+}
+
+public class JsonLinkRepository : ILinkRepository
+{
+    private readonly string _filePath;
+
+    public JsonLinkRepository(string filePath)
+    {
+        _filePath = filePath;
+    }
+
+    public Dictionary<string, Dictionary<string, List<Dictionary<string, string>>>> GetAllLinks()
+    {
+        var jsonString = File.ReadAllText(_filePath);
+        return JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<Dictionary<string, string>>>>>(jsonString);
+    }
+}
+
+public interface ILinkFilter
+{
+    IEnumerable<string> FilterLinks(UserPermission permission, IEnumerable<Dictionary<string, string>> links);
+}
+
+public class PermissionBasedLinkFilter : ILinkFilter
+{
+    private readonly Dictionary<string, Func<UserPermission, string, bool>> _filterMap = new()
+    {
+        ["READ WRITE"] = (permission, link) => 
+        {
+            return !(!permission.AttributeValue.Contains("MARS_UPLOAD_TOOL") && link.Contains("mars-upload-tool/"));
+        }
+    };
+
+    public IEnumerable<string> FilterLinks(UserPermission permission, IEnumerable<Dictionary<string, string>> links)
+    {
+        if (_filterMap.TryGetValue(permission.RightName, out var filterFunc))
+        {
+            return links.Where(link => filterFunc(permission, link["link"])).Select(link => link["link"]);
+        }
+        
+        return links.Select(link => link["link"]);
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        ILinkRepository linkRepo = new JsonLinkRepository("links.json");
+        ILinkFilter linkFilter = new PermissionBasedLinkFilter();
+        
+        var allLinks = linkRepo.GetAllLinks();
+        List<UserPermission> permissions = GetPermissions();
+
+        var validRights = new[] 
+        {
+            "READ WRITE"  
+        };
+
+        var filteredLinks = permissions
+            .Where(p => validRights.Contains(p.RightName))
+            .SelectMany(p => linkFilter.FilterLinks(p, allLinks["Global"][p.RightName]));
+
+        foreach (var link in filteredLinks)
+        {
+            Console.WriteLine(link);
+        }
+    }
+
+    private static List<UserPermission> GetPermissions()
+    {
+        // Mocked data for example
+        return new List<UserPermission>
+        {
+            new UserPermission("SomeValue", "READ WRITE", "SomeScope", "SomeAttribute", "SomeValue")
+        };
+    }
+}
+
+
+
+
+
+
+
 using System.Xml;
 using System.Collections.Generic;
 using System.Linq;

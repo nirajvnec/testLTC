@@ -1,6 +1,87 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+
+public interface IUserPermissionFilter
+{
+    Task<IEnumerable<string>> GetLinksForUserAsync(List<UserPermission> userPermissions, string filePath);
+}
+
+public class UserPermissionService : IUserPermissionFilter
+{
+    private readonly SemaphoreSlim semaphore = new(1, 1);
+
+    private readonly Dictionary<string, Func<UserPermission, string, bool>> _filterMap = new()
+    {
+        ["READ WRITE"] = (permission, link) => 
+        {
+            bool marsUploadToolCondition = !(link.Contains("mars-upload-tool/") && !permission.AttributeValue.Contains("MARS_UPLOAD_TOOL"));
+            bool marsCrdDslReportCondition = !(link.Contains("mars-crd-dsl-report") && !permission.AttributeValue.Contains("MARSCRDDSLREPORT"));
+            return marsUploadToolCondition && marsCrdDslReportCondition;
+        },
+        ["READ ONLY"] = (permission, link) => 
+        {
+            return !(link.Contains("/rrp/") && !permission.AttributeValue.Contains("REPORTS_RRP"));
+        }
+    };
+
+    public async Task<IEnumerable<string>> GetLinksForUserAsync(List<UserPermission> userPermissions, string filePath)
+    {
+        await semaphore.WaitAsync();
+        
+        try
+        {
+            string jsonContent = await File.ReadAllTextAsync(filePath);
+            var linkJson = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, List<Link>>>>(jsonContent);
+
+            var validLinks = new List<string>();
+            
+            foreach (var userPermission in userPermissions)
+            {
+                foreach (var right in linkJson["Global"].Keys)
+                {
+                    if (_filterMap.TryGetValue(right, out var filterFunc))
+                    {
+                        foreach (var link in linkJson["Global"][right])
+                        {
+                            if (filterFunc(userPermission, link.Route))
+                            {
+                                validLinks.Add(link.Route);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return validLinks.Distinct(); // Removing duplicates as multiple userPermissions might yield the same links.
+        }
+        finally
+        {
+            semaphore.Release();
+        }
+    }
+}
+
+public record UserPermission(string TechIDValue, string RightName, string ScopeValueSet, string AttributeName, string AttributeValue);
+
+public record Link(string Route, string Scope, string IsSwissLink, string IsGlobalLink);
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;

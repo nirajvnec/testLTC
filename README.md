@@ -1,5 +1,95 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+
+public interface IUserPermissionFilter
+{
+    Task<IEnumerable<string>> GetLinksForUserAsync(UserPermission userPermission, string filePath);
+}
+
+public record Link(string Link, string Scope, string IsSwissLink, string IsGlobalLink);
+public record UserPermission(string TechIDValue, string RightName, string ScopeValueSet, string AttributeName, string AttributeValue);
+
+public class UserPermissionFilter : IUserPermissionFilter
+{
+    private static readonly SemaphoreSlim semaphore = new(1);
+
+    private readonly Dictionary<string, Func<UserPermission, string, bool>> _filterMap = new()
+    {
+        ["READ WRITE"] = (permission, link) =>
+        {
+            bool marsUploadToolCondition = !(link.Contains("mars-upload-tool/") && !permission.AttributeValue.Contains("MARS_UPLOAD_TOOL"));
+            bool marsCrdDslReportCondition = !(link.Contains("mars-crd-dsl-report") && !permission.AttributeValue.Contains("MARSCRDDSLREPORT"));
+            return marsUploadToolCondition && marsCrdDslReportCondition;
+        },
+        ["READ ONLY"] = (permission, link) => 
+        {
+            return !(link.Contains("/rrp/") && !permission.AttributeValue.Contains("REPORTS_RRP"));
+        }
+    };
+
+    public async Task<IEnumerable<string>> GetLinksForUserAsync(UserPermission userPermission, string filePath)
+    {
+        await semaphore.WaitAsync();
+        
+        try
+        {
+            string jsonContent = await File.ReadAllTextAsync(filePath);
+            var linkJson = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, List<Link>>>>(jsonContent);
+
+            var validLinks = new List<string>();
+            
+            foreach (var right in linkJson["Global"].Keys)
+            {
+                if (_filterMap.TryGetValue(right, out var filterFunc))
+                {
+                    foreach (var link in linkJson["Global"][right])
+                    {
+                        if (filterFunc(userPermission, link.Link))
+                        {
+                            validLinks.Add(link.Link);
+                        }
+                    }
+                }
+            }
+
+            return validLinks;
+        }
+        finally
+        {
+            semaphore.Release();
+        }
+    }
+}
+
+// Client code
+public async Task ClientCode(IUserPermissionFilter filter)
+{
+    var userPermission = new UserPermission("someTechId", "READ WRITE", "someScope", "someAttribute", "MARS_UPLOAD_TOOL");
+    var links = await filter.GetLinksForUserAsync(userPermission, "path_to_file.json");
+
+    foreach (var link in links)
+    {
+        Console.WriteLine(link);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Newtonsoft.Json;

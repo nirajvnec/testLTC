@@ -1,3 +1,8 @@
+
+
+
+git config --global --unset credential.helper
+
 using System;
 using System.Collections.Generic;
 using System.IO;

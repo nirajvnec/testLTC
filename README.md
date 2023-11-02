@@ -1,3 +1,10 @@
+git fetch origin
+git log
+git fetch --all
+
+
+
+
 git fsck --full
 
 

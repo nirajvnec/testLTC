@@ -1,3 +1,18 @@
+$branches = git branch --all | Where-Object { $_ -notmatch "HEAD" }
+foreach ($branch in $branches) {
+    Write-Host "Checking against $branch"
+    git merge-base feature/MRT_GUI_ET_IRT $branch
+}
+
+
+
+git merge-base feature/MRT_GUI_ET_IRT master
+
+
+git merge-base feature/MRT_GUI_ET_IRT other_branch
+
+
+
 git show e635cc6ea5d63822bd139dbad3ca706927e6a01a
 
 

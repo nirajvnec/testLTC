@@ -1,3 +1,8 @@
+
+$sortedOrigins[1].Branch
+
+
+
 git fetch
 
 $branches = git branch -a | ForEach-Object { $_.trim() } | Where-Object { $_ -ne "*feature/MRT_GUI_ET_IRT*" -and $_ -notlike '*remotes/origin/HEAD*' }

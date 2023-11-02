@@ -3,6 +3,18 @@ $branches = git branch -r | Where-Object { $_ -notlike "*$targetBranch*" }
 
 foreach ($branch in $branches) {
     $commonCommit = git merge-base $targetBranch $branch.Trim()
+    if ($commonCommit -eq (git rev-parse $targetBranch)) {
+        Write-Host "$branch branched from $targetBranch at commit $commonCommit"
+    }
+}
+
+
+
+$targetBranch = "feature/MRT_GUI_ET_IRT"
+$branches = git branch -r | Where-Object { $_ -notlike "*$targetBranch*" }
+
+foreach ($branch in $branches) {
+    $commonCommit = git merge-base $targetBranch $branch.Trim()
     Write-Host "$branch branched from commit $commonCommit"
 }
 

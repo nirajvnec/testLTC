@@ -1,3 +1,13 @@
+$targetBranch = "feature/MRT_GUI_ET_IRT"
+$branches = git branch -r | Where-Object { $_ -notlike "*$targetBranch*" }
+
+foreach ($branch in $branches) {
+    $commonCommit = git merge-base $targetBranch $branch.Trim()
+    Write-Host "$branch branched from commit $commonCommit"
+}
+
+
+
 $branches = git branch -a | Where-Object { $_ -notmatch "HEAD" } | ForEach-Object { $_.trim().Replace('*', '').Replace('remotes/origin/', '') }
 foreach ($branch in $branches) {
     Write-Host "Checking against $branch"

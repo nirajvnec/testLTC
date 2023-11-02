@@ -1,3 +1,6 @@
+
+git log master --oneline | grep abc1234
+
 git checkout -b master origin/master
 git merge-base feature/MRT_GUI_ET_IRT master
 

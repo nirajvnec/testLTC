@@ -1,3 +1,4 @@
+git log master --oneline | findstr e635cc6ea5d63822bd139dbad3ca706927e6a01a
 
 git log master --oneline | grep abc1234
 

@@ -1,3 +1,4 @@
+$sortedOrigins = $possibleOrigins | Sort-Object Date -Ascending
 
 $sortedOrigins[1].Branch
 

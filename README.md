@@ -1,3 +1,9 @@
+git checkout -b master origin/master
+git merge-base feature/MRT_GUI_ET_IRT master
+
+
+
+
 git fetch
 git branch -a
 git checkout -b master origin/master

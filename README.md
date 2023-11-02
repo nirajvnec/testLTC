@@ -1,3 +1,12 @@
+$branches = git branch -a | Where-Object { $_ -notmatch "HEAD" } | ForEach-Object { $_.trim().Replace('*', '').Replace('remotes/origin/', '') }
+foreach ($branch in $branches) {
+    Write-Host "Checking against $branch"
+    git merge-base feature/MRT_GUI_ET_IRT $branch
+}
+
+
+
+
 $branches = git branch | Where-Object { $_ -notmatch "HEAD" } | ForEach-Object { $_.trim().Replace('*', '') }
 foreach ($branch in $branches) {
     Write-Host "Checking against $branch"

@@ -2,6 +2,54 @@
 git fetch
 
 # Get a list of all branches, excluding the specific ones mentioned
+$branches = git branch -a | ForEach-Object { $_.trim() } | Where-Object { $_ -notlike '*remotes/origin/HEAD*' -and $_ -notlike '*feature/MRT_GUI_ET_IRT*' }
+
+$possibleOrigins = @()
+
+foreach ($branch in $branches) {
+    # For diagnostic purposes
+    Write-Host "Processing branch: $branch"
+
+    # Try-catch block to handle potential errors
+    try {
+        $mergeBase = git merge-base refs/remotes/origin/feature/MRT_GUI_ET_IRT $branch
+        if ($mergeBase) {
+            $date = git show -s --format=%ci $mergeBase
+            $possibleOrigins += [PSCustomObject]@{
+                Branch   = $branch
+                MergeBase= $mergeBase
+                Date     = $date
+            }
+        }
+    } catch {
+        Write-Host "Error processing branch: $branch"
+    }
+}
+
+# Sort by date descending
+$sortedOrigins = $possibleOrigins | Sort-Object Date -Descending
+
+# Now the first item in the sorted list should be the branch created just before feature/MRT_GUI_ET_IRT.
+$previousBranch = $sortedOrigins[0].Branch
+
+Write-Host "The branch created just before feature/MRT_GUI_ET_IRT is: $previousBranch"
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Fetch all branches
+git fetch
+
+# Get a list of all branches, excluding the specific ones mentioned
 $branches = git branch -a | ForEach-Object { $_.trim() } | Where-Object { $_ -notlike '*remotes/origin/HEAD*' }
 
 $possibleOrigins = @()

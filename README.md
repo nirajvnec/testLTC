@@ -1,3 +1,8 @@
+git merge-base remotes/origin/feature/MRT_GUI_ET_IRT remotes/origin/release/MRT_GUI_ET_23.4.0
+
+
+
+
 # Fetch all branches
 git fetch
 

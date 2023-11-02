@@ -1,3 +1,11 @@
+$branches = git branch | Where-Object { $_ -notmatch "HEAD" }
+foreach ($branch in $branches) {
+    Write-Host "Checking against $branch"
+    git merge-base feature/MRT_GUI_ET_IRT $branch.trim()
+}
+
+
+
 $branches = git branch --all | Where-Object { $_ -notmatch "HEAD" }
 foreach ($branch in $branches) {
     Write-Host "Checking against $branch"

@@ -25,6 +25,7 @@ $sortedOrigins[0].Branch
 
 
 
+
 $targetBranch = "feature/MRT_GUI_ET_IRT"
 $branches = git branch -r | Where-Object { $_ -notlike "*$targetBranch*" }
 

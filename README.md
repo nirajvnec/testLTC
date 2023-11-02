@@ -1,3 +1,7 @@
+git log -1 a9a3e7a3b1d4c2093a5dd8f9b2b0e08726cb5c11^
+
+
+
 git show a9a3e7a3b1d4c2093a5dd8f9b2b0e08726cb5c11
 
 

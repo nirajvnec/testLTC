@@ -1,5 +1,37 @@
 git fetch
 
+$branches = git branch -a | ForEach-Object { $_.trim() } | Where-Object { $_ -ne "*feature/MRT_GUI_ET_IRT*" -and $_ -notlike '*remotes/origin/HEAD*' }
+
+$possibleOrigins = @()
+
+foreach ($branch in $branches) {
+    $mergeBase = git merge-base refs/remotes/origin/feature/MRT_GUI_ET_IRT $branch
+    if ($mergeBase) {
+        $date = git show -s --format=%ci $mergeBase
+        $possibleOrigins += [PSCustomObject]@{
+            Branch   = $branch
+            MergeBase= $mergeBase
+            Date     = $date
+        }
+    }
+}
+
+$sortedOrigins = $possibleOrigins | Sort-Object Date -Descending
+
+$sortedOrigins[0].Branch
+
+
+
+
+
+
+
+
+
+
+
+git fetch
+
 $branches = git branch -a | ForEach-Object { $_.trim() } | Where-Object { $_ -ne "feature/MRT_GUI_ET_IRT" -and $_ -notlike '*remotes/origin/HEAD*' }
 
 $possibleOrigins = @()

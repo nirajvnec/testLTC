@@ -1,3 +1,8 @@
+git merge-base feature/MRT_GUI_ET_IRT master
+git log -1 [COMMIT_HASH]
+
+
+
 Demonstrated ownership of tasks and responsibilities.
 Managed MET, a desktop-based application.
 Oversaw the functioning and maintenance of RADAR application.

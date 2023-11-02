@@ -1,3 +1,42 @@
+Demonstrated ownership of tasks and responsibilities.
+Managed MET, a desktop-based application.
+Oversaw the functioning and maintenance of RADAR application.
+Took charge of HIERARCHY MANAGER software.
+Successfully handled MARSNET2, another pivotal desktop application.
+Ensured smooth operations for the DRC STRATEGIC.
+Managed the NON STRATEGIC WORK projects.
+Took initiative in R to C# code amendments.
+Showed integrity in every responsibility taken up.
+Regularly updated and improved applications under management.
+Actively sought feedback to enhance application performance.
+Collaborated with a team to ensure best practices.
+Addressed and resolved any application-related issues promptly.
+Provided continuous support for all managed applications.
+Demonstrated a proactive approach to problem-solving.
+Successfully completed the certified engineer program.
+Displayed commitment to ongoing professional development.
+Always ensured high-quality deliverables.
+Promoted transparency and open communication.
+Maintained a consistent record of accountability and reliability.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 First, make sure you're inside your Git repository.
 
 Fetch the latest changes from your remote repository to ensure you're comparing the latest versions of the branches:

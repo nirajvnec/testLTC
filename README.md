@@ -1,3 +1,7 @@
+Earlier, when I entered into the RADAR project, there was no way to execute the Stored Procedure from SQL Developer, which made it challenging to check output in Oracle SQL Developer. Then, I immediately looked for another Oracle client. Where can we execute the stored Procedure and found that AllRound PL/SQL Developer is a better tool that we can use to perform Stored Procedure execution from this client. Which was not possible earlier with Oracle SQL Developer
+
+
+
 git checkout feature/MRT_GUI_ET_IRT
 
 

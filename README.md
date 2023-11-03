@@ -1,3 +1,10 @@
+Successfully completed the development of Subject Matter Expert (SME) knowledge bases for the Metallurgical (MET), Construction (CN), and Heavy Machinery (HM) sectors.
+
+Addressed and rectified a critical production bug within the MET application that was causing system crashes upon startup.
+
+Ensured stable functionality in the MET system, particularly when users attempt to generate multiple reports simultaneously.
+
+
 Developed SME Knowledge MET, CN, HM,
 
 Recently fixed Production Critical bug for MET where MET was crashing after launching, When user was trying to Run multiple reports

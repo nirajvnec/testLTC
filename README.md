@@ -1,3 +1,10 @@
+Please contact with the Production Support Team regarding your current concern. It appears that the problem you are encountering is not associated with the MET application, but rather is specific to your Virtual Machine (VM).
+
+Thank you for your prompt attention to this matter.
+
+
+
+
 Deployment Efficiency: Achieve 95% successful deployments using .NET 6/7 in the Azure environment.
 
 Serverless Response Time: Target sub-200ms response times for serverless .NET 6/7 applications on Azure Functions.

@@ -1,3 +1,56 @@
+#!/bin/bash
+
+# Define your NuGet repositories and credentials
+REPO1="https://private-nuget-repo1.com"
+USERNAME1="username1"
+PASSWORD1="password1"
+
+REPO2="https://private-nuget-repo2.com"
+USERNAME2="username2"
+PASSWORD2="password2"
+
+REPO3="https://private-nuget-repo3.com"
+USERNAME3="username3"
+PASSWORD3="password3"
+
+REPO4="https://private-nuget-repo4.com"
+USERNAME4="username4"
+PASSWORD4="password4"
+
+# Path to your NuGet.config file
+NUGET_CONFIG_PATH="./NuGet.config"
+
+# Function to add a NuGet source to the NuGet.config file
+add_nuget_source () {
+    dotnet nuget add source "$1" -n "$2" -u "$3" -p "$4" --store-password-in-clear-text --configfile "$NUGET_CONFIG_PATH"
+}
+
+# Add each private NuGet feed to the NuGet.config file using dotnet CLI
+add_nuget_source "$REPO1" "PrivateFeed1" "$USERNAME1" "$PASSWORD1"
+add_nuget_source "$REPO2" "PrivateFeed2" "$USERNAME2" "$PASSWORD2"
+add_nuget_source "$REPO3" "PrivateFeed3" "$USERNAME3" "$PASSWORD3"
+add_nuget_source "$REPO4" "PrivateFeed4" "$USERNAME4" "$PASSWORD4"
+
+# Set the NuGetInteractive property to true for non-interactive authentication
+export NUGET_RESTORE_MSBUILD_ARGS="/p:NuGetInteractive=true"
+
+# Run dotnet restore using the updated NuGet.config
+dotnet restore --configfile "$NUGET_CONFIG_PATH"
+
+# Unset the environment variable to avoid affecting other operations
+unset NUGET_RESTORE_MSBUILD_ARGS
+
+
+
+
+
+
+
+
+
+
+
+
 Please contact with the Production Support Team regarding your current concern. It appears that the problem you are encountering is not associated with the MET application, but rather is specific to your Virtual Machine (VM).
 
 Thank you for your prompt attention to this matter.

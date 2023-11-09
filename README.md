@@ -1,3 +1,11 @@
+possesses comprehensive knowledge of the MarsNet, AuraSync, and RiskPortal products.
+His understanding of processes is thorough and well-founded.
+With a decade of experience in the system, his expertise is highly regarded and beneficial.
+He has a keen ability to swiftly identify and address production issues, a skill honed by his extensive experience.
+Yash maintains a composed and tranquil approach in the workplace.
+He exhibits a helpful and cooperative attitude towards his colleagues.
+
+
 #!/bin/bash
 
 # Define your NuGet repositories and credentials

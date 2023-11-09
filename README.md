@@ -51,6 +51,7 @@ public class Program
     }
 }
 
+string assemblyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "OutputAssembly.dll");
 
 
 

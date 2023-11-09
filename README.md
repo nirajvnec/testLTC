@@ -1,3 +1,60 @@
+using System;
+using System.Reflection;
+using System.Windows.Forms;
+
+public static class FormLoader
+{
+    // Generic method to create an instance of a type
+    public static T CreateInstance<T>(string assemblyPath, string typeName) where T : class
+    {
+        // Load the assembly
+        Assembly assembly = Assembly.LoadFrom(assemblyPath);
+
+        // Get the type
+        Type type = assembly.GetType(typeName);
+        if (type == null)
+        {
+            throw new ArgumentException($"Type {typeName} not found.", nameof(typeName));
+        }
+
+        // Ensure the type is assignable to T
+        if (!typeof(T).IsAssignableFrom(type))
+        {
+            throw new ArgumentException($"Type {typeName} is not a {typeof(T).Name}.");
+        }
+
+        // Create an instance of the type
+        object instance = Activator.CreateInstance(type);
+        return instance as T; // Cast to T, will be null if instance is not a T
+    }
+}
+
+// Example of how to use the CreateInstance method with Form as the generic type
+public class Program
+{
+    [STAThread]
+    public static void Main()
+    {
+        try
+        {
+            string assemblyPath = @"C:\path\to\other\project\OutputAssembly.dll";
+            string formTypeName = "OtherProjectNamespace.FrmMain";
+
+            Form myForm = FormLoader.CreateInstance<Form>(assemblyPath, formTypeName);
+
+            Application.Run(myForm);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+
+
+
+
+
 possesses comprehensive knowledge of the MarsNet, AuraSync, and RiskPortal products.
 His understanding of processes is thorough and well-founded.
 With a decade of experience in the system, his expertise is highly regarded and beneficial.

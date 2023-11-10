@@ -1,3 +1,15 @@
+private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
+{
+    // Check if the length of the text in txtSearch is at least 3
+    if (txtSearch.Text.Length >= 3)
+    {
+        // If the text length is 3 or more, call the async method
+        _ = HandleKeyUpAsync(e);
+    }
+}
+
+
+
 this.btnSearch.Click += async (sender, e) => await BtnSearch_ClickAsync(sender, e);
 
 

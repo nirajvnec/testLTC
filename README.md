@@ -1,4 +1,199 @@
 using System;
+using System.Drawing;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+public partial class CtlSearch : UserControl
+{
+    public event EventHandler<SearchRiskAttributeEventArgs> SearchEvent;
+    public event EventHandler<SearchRiskAttributeEventArgs> FindNextEvent;
+    public event EventHandler<SearchRiskAttributeEventArgs> ClearEvent;
+
+    public bool SearchWhileTyping { get; private set; }
+    public bool IsSearchCleared { get; private set; } = true;
+    public bool IsFirstLoad { get; private set; } = true;
+    public bool IsEnterFromMsgBox { get; set; }
+    public string LostFocusEmptyText { get; set; } = "Search attributes...";
+    public string SearchText { get; private set; }
+    public Font SearchClearFont { get; private set; }
+    public Font SearchFont { get; private set; }
+    public Point BtnClearOriginalLocation { get; private set; }
+
+    private Timer timer = new Timer();
+
+    public CtlSearch()
+    {
+        InitializeComponent();
+        SearchFont = txtSearch.Font;
+        SearchClearFont = new Font(SearchFont, FontStyle.Italic);
+        BtnClearOriginalLocation = btnClear.Location;
+        timer.Interval = 750;
+        timer.Tick += async (sender, e) => await Timer_TickAsync();
+        SetSearchText();
+    }
+
+    public bool HasTextInSearchBox => !string.IsNullOrEmpty(txtSearch.Text);
+
+    private async Task Timer_TickAsync()
+    {
+        try
+        {
+            timer.Stop();
+            var searchEventArgs = new SearchRiskAttributeEventArgs(SearchText);
+            this.Cursor = Cursors.WaitCursor;
+            SearchEvent?.Invoke(this, searchEventArgs);
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+
+    private void btnSearch_Click(object sender, EventArgs e) => Search(true);
+
+    private void btnFindNext_Click(object sender, EventArgs e) => FindNext();
+
+    private void btnClear_Click(object sender, EventArgs e) => ClearSearch(true);
+
+    private void txtSearch_Enter(object sender, EventArgs e)
+    {
+        if (IsSearchCleared)
+        {
+            txtSearch.Text = "";
+            txtSearch.ForeColor = Color.Black;
+            txtSearch.Font = SearchFont;
+        }
+    }
+
+    private void txtSearch_Leave(object sender, EventArgs e) => SetSearchText();
+
+    private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode != Keys.Enter)
+        {
+            Search(SearchWhileTyping);
+        }
+        else
+        {
+            if (!IsEnterFromMsgBox)
+            {
+                Search(true);
+            }
+            IsEnterFromMsgBox = false;
+        }
+    }
+
+    private async void Search(bool raiseEvent)
+{
+    searchText = txtSearch.Text;
+
+    // Check if the searchText has at least three characters
+    if (searchText.Length < 3)
+    {
+        MessageBox.Show("Please enter at least three characters.", "Search Input", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        return;
+    }
+
+    if (!string.IsNullOrEmpty(searchText))
+    {
+        if (raiseEvent)
+        {
+            await PerformSearchAsync(searchText); // Asynchronously perform the search
+        }
+
+        if (searchText != LostFocusEmptyText)
+        {
+            IsSearchCleared = false;
+        }
+    }
+    else
+    {
+        ClearSearch(raiseEvent);
+    }
+
+    EnableSearchButtons();
+}
+
+    private async Task PerformSearchAsync(string query)
+    {
+        try
+        {
+            // Perform the actual search operation asynchronously
+            // This is where you would query a database or perform some other I/O-bound operation
+            await Task.Delay(1000); // Placeholder for actual async operation
+
+            var searchEventArgs = new SearchRiskAttributeEventArgs(query);
+            SearchEvent?.Invoke(this, searchEventArgs);
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions from the asynchronous operation here
+            MessageBox.Show(ex.Message, "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void EnableSearchButtons()
+    {
+        bool enable = HasTextInSearchBox;
+        btnSearch.Enabled = enable;
+        btnFindNext.Enabled = enable;
+        btnClear.Enabled = enable;
+    }
+
+    private void FindNext()
+    {
+        if (HasTextInSearchBox && FindNextEvent != null)
+        {
+            var findNextEventArgs = new SearchRiskAttributeEventArgs(txtSearch.Text);
+            FindNextEvent(this, findNextEventArgs);
+        }
+        EnableSearchButtons();
+    }
+
+    private void ClearSearch(bool raiseEvent)
+    {
+        IsSearchCleared = true;
+        txtSearch.Text = string.Empty;
+        lblMsg.Text = string.Empty;
+        if (raiseEvent && ClearEvent != null)
+        {
+            var clearEventArgs = new SearchRiskAttributeEventArgs(string.Empty);
+            ClearEvent(this, clearEventArgs);
+        }
+        txtSearch.Focus();
+        EnableSearchButtons();
+    }
+
+    private void SetSearchText()
+    {
+        if (IsSearchCleared || txtSearch.Focused)
+        {
+            txtSearch.Text = LostFocusEmptyText;
+            txtSearch.ForeColor = Color.Gray;
+            txtSearch.Font = SearchClearFont;
+        }
+        else
+        {
+            txtSearch.ForeColor = Color.Black;
+            txtSearch.Font = SearchFont;
+        }
+    }
+}
+
+public class SearchRiskAttributeEventArgs : EventArgs
+{
+    public string RiskAttributeName { get; }
+
+    public SearchRiskAttributeEventArgs(string riskAttributeName)
+    {
+        RiskAttributeName = riskAttributeName;
+    }
+}
+
+
+
+
+using System;
 using System.Reflection;
 using System.Windows.Forms;
 

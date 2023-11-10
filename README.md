@@ -1,3 +1,6 @@
+this.btnSearch.Click += async (sender, e) => await BtnSearch_ClickAsync(sender, e);
+
+
 public partial class CtlSearch : UserControl
 {
     public CtlSearch()

@@ -1,3 +1,43 @@
+public partial class CtlSearch : UserControl
+{
+    public CtlSearch()
+    {
+        InitializeComponent();
+        // Other initializations...
+
+        // Attach the KeyUp event handler
+        txtSearch.KeyUp += TxtSearch_KeyUp;
+    }
+
+    // This is the event handler for the KeyUp event.
+    private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
+    {
+        // Call an async method without awaiting it
+        _ = HandleKeyUpAsync(e);
+    }
+
+    // Asynchronous logic to handle KeyUp
+    private async Task HandleKeyUpAsync(KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Enter)
+        {
+            // If Enter is pressed, you might want to handle it immediately
+            await SearchAsync(true); // Assuming SearchAsync is your async search method
+        }
+        else
+        {
+            // For other keys, you might want to do something else
+            // For example, start a timer that will trigger the search to avoid searching on every keystroke
+            // This is just a placeholder; replace with actual logic
+            await Task.Delay(500);
+            await SearchAsync(SearchWhileTyping);
+        }
+    }
+}
+
+
+
+
 private async Task SearchAsync(bool raiseEvent)
     {
         // Synchronize access to searchText if it can be accessed from multiple threads

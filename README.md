@@ -1,3 +1,107 @@
+private async Task SearchAsync(bool raiseEvent)
+    {
+        // Synchronize access to searchText if it can be accessed from multiple threads
+        string currentSearchText;
+        lock (searchText)
+        {
+            currentSearchText = searchText;
+        }
+
+        // Only perform the search if there are at least 3 characters
+        if (currentSearchText.Length >= 3)
+        {
+            if (raiseEvent && SearchEvent != null)
+            {
+                // Perform the search operation asynchronously
+                try
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    var searchEventArgs = new SearchRiskAttributeEventArgs(currentSearchText);
+                    
+                    // If your actual search operation is asynchronous, call it here with 'await'
+                    await Task.Delay(500); // Placeholder for your async operation like database or API call
+                    
+                    // Raise the search event after the search is complete
+                    SearchEvent(this, searchEventArgs);
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions that occurred during the search
+                    MessageBox.Show($"An error occurred during search: {ex.Message}");
+                }
+                finally
+                {
+                    this.Cursor = Cursors.Default; // Always reset the cursor to the default
+                }
+            }
+
+            // Set the flag to indicate the search box is not cleared anymore
+            isSearchCleared = false;
+        }
+        else
+        {
+            // If not enough characters were entered and raiseEvent is true, clear the search
+            if (raiseEvent)
+            {
+                ClearSearch(raiseEvent);
+            }
+        }
+    }
+
+
+
+
+private async Task Timer_TickAsync()
+{
+    // Only invoke the search if there are 3 or more characters
+    if (searchText.Length >= 3)
+    {
+        timer.Stop(); // Stop the timer to prevent re-entry if the user keeps typing
+
+        try
+        {
+            var searchEventArgs = new SearchRiskAttributeEventArgs(searchText);
+            this.Cursor = Cursors.WaitCursor;
+            SearchEvent?.Invoke(this, searchEventArgs);
+            // Simulate a search operation with a delay
+            await Task.Delay(500); // Replace this with your actual search operation
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default; // Always reset the cursor
+        }
+    }
+}
+
+private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+{
+    searchText = txtSearch.Text; // Update the current searchText with the content of the search box
+
+    if (searchText.Length >= 3)
+    {
+        if (e.KeyCode == Keys.Enter)
+        {
+            // If Enter key was pressed and there are enough characters, perform an immediate search
+            Search(true);
+        }
+        else
+        {
+            // Start or restart the timer if there are enough characters and Enter was not pressed
+            timer.Stop(); // Stop the existing timer if it is running
+            timer.Start(); // Start the timer which will trigger the search after the interval
+        }
+    }
+    else
+    {
+        // If there are less than 3 characters, stop the timer to avoid a search operation
+        timer.Stop();
+    }
+}
+
+
+
+
+
 using System;
 using System.Drawing;
 using System.Threading.Tasks;

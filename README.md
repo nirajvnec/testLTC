@@ -1,4 +1,54 @@
-private void TxtSearch_KeyUp(object sender, KeyEventArgs e)
+
+public class SecurityMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<SecurityMiddleware> _logger;
+
+    public SecurityMiddleware(RequestDelegate next, ILogger<SecurityMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // Log the request
+        _logger.LogInformation($"Handling request: {context.Request.Method} {context.Request.Path}");
+
+        // Basic input validation
+        if (HasSuspiciousInput(context))
+        {
+            context.Response.StatusCode = 400; // Bad Request
+            return;
+        }
+
+        // Call the next delegate/middleware in the pipeline
+        await _next(context);
+    }
+
+    private bool HasSuspiciousInput(HttpContext context)
+    {
+        // Implement your input validation logic here
+        // This is a placeholder for demonstration
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+private void 
+
+
+
+TxtSearch_KeyUp(object sender, KeyEventArgs e)
 {
     // Check if the length of the text in txtSearch is at least 3
     if (txtSearch.Text.Length >= 3)

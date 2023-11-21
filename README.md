@@ -1,3 +1,15 @@
+
+# On feature branch
+git diff > changes.patch
+
+# Checkout to the target branch
+git checkout target-branch
+
+# Apply the patch
+git apply changes.patch
+
+
+
 this.txtSearch.KeyUp += async (sender, e) => await this.txtSearch_KeyUpAsync(sender, e);
 
 private async Task txtSearch_KeyUpAsync(object sender, KeyEventArgs e)

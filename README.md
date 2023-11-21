@@ -1,3 +1,9 @@
+this.txtSearch.KeyUp += async (sender, e) => await this.txtSearch_KeyUpAsync(sender, e);
+
+private async Task txtSearch_KeyUpAsync(object sender, KeyEventArgs e)
+{
+    // Your asynchronous code here
+}
 
 public class SecurityMiddleware
 {

@@ -35,6 +35,44 @@ private async Task txtSearch_KeyUp(object sender, KeyEventArgs e)
 }
 
 
+
+private async Task txtSearch_KeyUp(object sender, KeyEventArgs e)
+{
+    searchText = txtSearch.Text; // Update the current searchText with the content of the search box
+
+    if (searchText.Length >= 4)
+    {
+        // Check if the pressed key is not Enter
+        if (e.KeyCode != Keys.Enter)
+        {
+            await Search(this.SearchWhileTyping);
+        }
+        else // If the pressed key is Enter
+        {
+            if (!IsEnterFromMsgBox)
+            {
+                await Search(true);
+            }
+            else
+            {
+                this.isEnterFromMsgBox = false;
+            }
+        }
+    }
+    else
+    {
+        // ClearSearch(true); // Uncomment this line if you have a method to clear search
+        // If there are less than 4 characters, stop the timer to avoid a search operation
+        timer.Stop();
+    }
+
+    if (searchText.Length > 0)
+    {
+        // Additional logic if needed for when searchText length is more than 0
+    }
+}
+
+
 myCustomTextBox.Paste += new EventHandler(MyCustomTextBox_Paste);
 
 private void MyCustomTextBox_Paste(object sender, EventArgs e)

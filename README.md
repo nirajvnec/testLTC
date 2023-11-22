@@ -1,3 +1,28 @@
+// Define a delegate that encapsulates a method that takes a bool and returns a Task
+Func<bool, Task> performSearch;
+
+// Assign a lambda expression to the delegate based on the condition
+if (this.Parent?.Name != "")
+{
+    // If the parent's name is not empty, assign the asynchronous search method
+    performSearch = async (isSync) => await SearchAsync(isSync);
+}
+else
+{
+    // If the parent's name is empty, assign the synchronous search method
+    performSearch = (isSync) => 
+    {
+        Search(isSync);
+        return Task.CompletedTask;
+    };
+}
+
+// Use the delegate to perform the search
+await Task.Delay(1);
+await performSearch(true);
+
+
+
 private async Task txtSearch_KeyUp(object sender, KeyEventArgs e)
 {
     searchText = txtSearch.Text; // Update the current searchText with the content of the search box

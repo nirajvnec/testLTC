@@ -1,3 +1,21 @@
+myTextBox.KeyDown += new KeyEventHandler(MyTextBox_KeyDown);
+
+private void MyTextBox_KeyDown(object sender, KeyEventArgs e)
+{
+    if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
+    {
+        // Check the length after the key press is handled
+        // Note: The length will not have changed yet, as this event fires before the key action is processed
+        int lengthBeforeAction = myTextBox.Text.Length;
+
+        // Use BeginInvoke to check the length after the key action is processed
+        BeginInvoke(new Action(() =>
+        {
+            int lengthAfterAction = myTextBox.Text.Length;
+            // Now you can use lengthAfterAction for your logic
+        }));
+    }
+}
 
 # On feature branch
 git diff > changes.patch

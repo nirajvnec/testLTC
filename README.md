@@ -1,3 +1,12 @@
+myCustomTextBox.Paste += new EventHandler(MyCustomTextBox_Paste);
+
+private void MyCustomTextBox_Paste(object sender, EventArgs e)
+{
+    // Handle the paste event
+}
+
+
+
 myTextBox.KeyDown += new KeyEventHandler(MyTextBox_KeyDown);
 
 private void MyTextBox_KeyDown(object sender, KeyEventArgs e)

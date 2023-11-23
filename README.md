@@ -1,3 +1,18 @@
+<filter>
+    <filter-name>CORSFilter</filter-name>
+    <filter-class>your.package.CORSFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>CORSFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+
+
+
+
+
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

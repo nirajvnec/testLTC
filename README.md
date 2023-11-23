@@ -1,3 +1,7 @@
+
+Configuration in web.xml
+
+
 <filter>
     <filter-name>CORSFilter</filter-name>
     <filter-class>your.package.CORSFilter</filter-class>

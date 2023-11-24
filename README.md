@@ -1,3 +1,7 @@
+Replace ArrayList with Generic List<T>
+For I/O bound Database or Network Calls, avoid doing them on the main thread as it blocks the main thread.
+
+
 public partial class MyForm : Form
 {
     private Timer typingTimer;

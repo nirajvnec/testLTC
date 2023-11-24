@@ -1,3 +1,66 @@
+public partial class MyForm : Form
+{
+    private Timer typingTimer;
+
+    public MyForm()
+    {
+        InitializeComponent();
+
+        // Initialize the timer
+        typingTimer = new Timer();
+        typingTimer.Interval = 500; // Delay for 500 milliseconds
+        typingTimer.Tick += TypingTimer_Tick;
+    }
+
+    private void textBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        // Reset the timer every time a key is pressed
+        typingTimer.Stop();
+        typingTimer.Start();
+    }
+
+    private void TypingTimer_Tick(object sender, EventArgs e)
+    {
+        typingTimer.Stop();
+
+        // Check if the textbox has at least three characters
+        if (textBox.Text.Length >= 3)
+        {
+            // Your code here - this will run after the user has stopped typing
+        }
+    }
+}
+
+
+
+
+
+
+
+"The 'RiskPortal DB' requires an update to the clusternet report link to ensure compliance with the latest internal database structure changes. This update aims to correct outdated URLs that may be causing report generation errors or data mismatches. The update is expected to improve report accuracy and access reliability for all Riskportal users, with minimal downtime anticipated during the transition. All changes have been tested in a controlled environment to ensure a smooth rollout
+
+
+"This task involves the design and implementation of a new user interface for the AuraSync component on the Security Server, aimed at providing a streamlined and intuitive view of synchronization logs. The UI will enable administrators to quickly identify and resolve sync issues, track synchronization statuses in real-time, and access historical log data for auditing purposes. The focus will be on creating a responsive and user-friendly interface that integrates seamlessly with the existing security infrastructure, enhancing operational efficiency and oversight for security personnel."
+
+
+"The objective of this task is to audit the SecurityServer user interface and remove any outdated or unused hyperlinks. This cleanup is intended to streamline the user experience by eliminating dead links, reducing clutter, and ensuring that all navigational elements are functional and up to date. The process will involve reviewing the UI elements, identifying any links that are no longer relevant to current operations or user tasks, and removing or updating them as necessary. This effort will not only improve the aesthetic and functional aspects of the UI but also enhance the overall security by removing potential vulnerabilities associated with outdated content."
+
+
+"The purpose of this task is to remove the 'OUT-OF-SERVICE' right from users' AURA Access within the SecurityNet system. This action is taken to enhance security protocols by ensuring that only active, in-service rights are granted, thus minimizing potential security risks associated with inactive rights. The removal process will involve auditing current AURA Access rights, identifying all instances of the 'OUT-OF-SERVICE' right, and revoking it to maintain a tighter security posture. It is expected that this change will have no adverse effect on users' ability to perform their necessary functions, as the right is no longer applicable for active services."
+
+"This task entails the removal of the 'OUT-OF-SERVICE' access right from the RiskNet module within the AURA Access system. The initiative is aimed at reinforcing the security framework by ensuring that access rights are current and relevant to operational needs, thereby eliminating redundant permissions that no longer serve a functional purpose. The process will include a comprehensive audit of the RiskNet access rights, the identification of all instances where the 'OUT-OF-SERVICE' right has been assigned, and its systematic revocation. The end result will be a streamlined access rights structure that aligns with the principle of least privilege and reduces the attack surface for potential security threats."
+
+
+"This task involves the development and integration of a logging mechanism for the automatic dormancy feature within the Security Server, accompanied by an email alert system. The goal is to provide a robust tracking system that records all activities related to auto dormancy, including when accounts become dormant and when they are reactivated. Additionally, the system will automatically notify administrators via email whenever an account enters or exits dormancy status. This will aid in proactive monitoring and swift response to any potential security concerns, ensuring that account status changes are both transparent and traceable."
+
+"This task requires the deactivation and decommissioning of outdated Aura Sync jobs and any other related scheduled tasks within the Security Server that have become obsolete. The process will involve a thorough review of all scheduled jobs, identification of those that are no longer required for current operations, and their systematic disablement. This measure is being implemented to enhance system performance, reduce unnecessary workload on the servers, and eliminate potential security vulnerabilities associated with maintaining legacy code. Post-deactivation, a verification process will ensure that all essential functions continue to operate without disruption."
+
+
+"This task focuses on augmenting the UserGroup Report page within the Security Server's reporting module by adding a new 'Process ID (PID)' column. The addition of the PID column is intended to provide administrators and security personnel with more granular information regarding the processes associated with user groups, thereby enhancing audit capabilities and process tracking. The implementation will include updating the database queries, modifying the report UI, and ensuring that the data retrieval logic accurately reflects the new column. This update is expected to facilitate better system monitoring and troubleshooting, while also aiding compliance with audit requirements."
+
+
+"The objective of this task is to enhance the quality and usefulness of the log files generated by the SecNet module in the Security Server. This improvement will focus on increasing the clarity, detail, and structure of the log entries to make them more informative and easier to analyze. It may involve refining the log generation algorithms, adding additional data points, improving timestamp accuracy, and implementing better categorization and filtering options. The ultimate goal is to facilitate more effective monitoring and faster troubleshooting, thereby boosting overall system reliability and security."
+
 
 Configuration in web.xml
 

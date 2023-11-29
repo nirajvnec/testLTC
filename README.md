@@ -1,3 +1,8 @@
+
+https://chat.openai.com/share/7e592464-4773-4c04-b2e2-fdd3b2330427
+
+
+
 When developing software, particularly for applications with a graphical user interface (GUI) or services that require high responsiveness, it's crucial to manage how tasks are executed to ensure smooth and responsive performance. Two common types of tasks in many applications are I/O-bound tasks, like database or network calls, and CPU-bound tasks, like complex calculations. It's particularly important to handle I/O-bound tasks carefully, as they can significantly impact the application's responsiveness if not managed correctly.
 
 Why Avoid I/O Bound Tasks on Main Thread?

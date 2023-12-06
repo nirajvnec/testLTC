@@ -78,6 +78,86 @@ ChatGPT
 
 
 
+Open sidebar
+Scala Data Types Examples
+
+ChatGPT 4
+
+User
+Scala datatypes with examples
+
+ChatGPT
+Scala offers a variety of data types, which are similar to those in Java but with some additional features and functionalities. Here are some of the common Scala data types along with examples:
+
+Byte: An 8-bit signed value.
+
+Example: val a: Byte = 10
+Short: A 16-bit signed value.
+
+Example: val b: Short = 200
+Int: A 32-bit signed value.
+
+Example: val c: Int = 12345
+Long: A 64-bit signed value.
+
+Example: val d: Long = 1234567890L
+Float: A 32-bit IEEE 754 floating point.
+
+Example: val e: Float = 12.34F
+Double: A 64-bit IEEE 754 floating point.
+
+Example: val f: Double = 123.456
+Char: A 16-bit unsigned Unicode character.
+
+Example: val g: Char = 'A'
+String: A sequence of characters.
+
+Example: val h: String = "Hello, Scala"
+Boolean: Either true or false.
+
+Example: val i: Boolean = true
+Unit: Corresponds to no value, similar to void in Java.
+
+Example: def j(): Unit = { println("This is Unit type") }
+Null: Represents a reference that points to nothing.
+
+Example: val k: String = null
+Option: Represents optional values that could either be Some or None.
+
+Example: val l: Option[Int] = Some(5)
+Example: val m: Option[Int] = None
+Tuple: Aggregates a fixed number of items together.
+
+Example: val n: (Int, String) = (1, "one")
+List: An immutable list.
+
+Example: val o: List[Int] = List(1, 2, 3)
+Array: Mutable, fixed-size sequence of elements of the same type.
+
+Example: val p: Array[Int] = Array(1, 2, 3)
+Map: Collections of key/value pairs.
+
+Example: val q: Map[String, Int] = Map("one" -> 1, "two" -> 2)
+Set: A collection of distinct elements.
+
+Example: val r: Set[Int] = Set(1, 2, 3)
+These data types allow Scala to be used for a wide range of programming tasks, from simple applications to complex systems.
+
+
+
+
+
+
+Message ChatGPT…
+
+
+ChatGPT can make mistakes. Consider checking important information.
+ChatGPT
+
+
+
+
+
 
 
 Is Scala made from Java?

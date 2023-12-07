@@ -1,4 +1,79 @@
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
+public class PropertyAttributes
+{
+    private const string BookPositionCategory = "BOOK";
+    private const string SensitivityPositionCategory = "SENSITIVITY";
+    private const string InstrumentPositionCategory = "INSTRUMENT";
+    private const string InstAliasPositionCategory = "INST ALIAS";
+    private const string InstParticipantPositionCategory = "INST PARTICIPANT";
+
+    // Existing CsAttributeList field
+    private CsAttributeList propertyAttributeList;
+
+    // New field for LINQ operations
+    private List<CsAttribute> propertyAttributeListAsList;
+
+    public PropertyAttributes(CsAttributeList attributeList)
+    {
+        propertyAttributeList = attributeList;
+        propertyAttributeListAsList = attributeList.Cast<CsAttribute>().ToList();
+    }
+
+    // New methods that return List<CsAttribute>
+
+    public List<CsAttribute> GetPositionAttributesAsList()
+    {
+        return propertyAttributeListAsList
+            .Where(attribute =>
+                attribute.Category.ToUpper() != BookPositionCategory &&
+                attribute.Category.ToUpper() != SensitivityPositionCategory &&
+                attribute.Category.ToUpper() != InstrumentPositionCategory ||
+                (attribute.Category.ToUpper() == InstrumentPositionCategory &&
+                 attribute.AttributeName.StartsWith(InstAliasPositionCategory) &&
+                 !attribute.AttributeName.StartsWith(InstParticipantPositionCategory)))
+            .ToList();
+    }
+
+    public List<CsAttribute> GetAttributesByCategoryAsList(string category)
+    {
+        return propertyAttributeListAsList
+            .Where(attribute =>
+                (category.ToUpper() == InstrumentPositionCategory &&
+                 attribute.AttributeName.StartsWith(InstAliasPositionCategory) &&
+                 !attribute.AttributeName.StartsWith(InstParticipantPositionCategory)) ||
+                category.ToUpper() != InstrumentPositionCategory)
+            .ToList();
+    }
+
+    public List<CsAttribute> GetBookAndSensitivityAttributesAsList()
+    {
+        return propertyAttributeListAsList
+            .Where(attribute =>
+                attribute.Category.ToUpper() == BookPositionCategory ||
+                attribute.Category.ToUpper() == SensitivityPositionCategory)
+            .ToList();
+    }
+
+    public bool CanHaveDirectInput(string attributeName)
+    {
+        CsAttribute attribute = propertyAttributeListAsList.FirstOrDefault(attr => attr.AttributeName == attributeName);
+        return attribute != null && attribute.DomainType.ToLower().Equals("open") && attribute.DataType == typeof(string);
+    }
+
+    // Original methods that use CsAttributeList
+    // ...
+
+    // Add any other methods or properties that exist in your original PropertyAttributes class
+}
+
+
+
+
 Certainly! Let's delve into some of Scala's data types with more detailed examples and explanations:
 
 Byte: Represents an 8-bit signed integer. It's useful for saving memory in large arrays where the memory savings actually matter.

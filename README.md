@@ -1,3 +1,10 @@
+if (this.m_searchControl != null)
+{
+    this.m_searchControl.DeleteOrBackSpacePressed += CtlSearch_DeleteOrBackSpacePressed;
+}
+
+
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;

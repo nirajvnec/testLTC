@@ -1,3 +1,52 @@
+public class CtlDragDropList : System.Windows.Forms.UserControl
+{
+    // Existing code...
+
+    // Step 1: Define the new event
+    public event EventHandler<ItemAddingEventArgs> ItemAdding;
+
+    // Existing code...
+
+    // Step 2 (optional): Create EventArgs class, only if you need to pass additional data
+    public class ItemAddingEventArgs : EventArgs
+    {
+        public CtlDragDropItem Item { get; private set; }
+        public bool Cancel { get; set; }
+
+        public ItemAddingEventArgs(CtlDragDropItem item)
+        {
+            Item = item;
+            Cancel = false; // Default to not cancelling
+        }
+    }
+
+    // Existing code...
+
+    // You'll need to find the method where items are added to m_drag_drop_items and modify it
+    // For example, if you have a method like this:
+    public void AddItem(CtlDragDropItem item)
+    {
+        // Step 3: Raise the event before adding the item
+        var args = new ItemAddingEventArgs(item);
+        OnItemAdding(args); // This method will notify all subscribers
+
+        if (!args.Cancel)
+        {
+            // If not cancelled, add the item to the collection
+            m_drag_drop_items.Add(item);
+            // Plus any other code needed when an item is added
+        }
+    }
+
+    // Method to raise the ItemAdding event
+    protected virtual void OnItemAdding(ItemAddingEventArgs e)
+    {
+        ItemAdding?.Invoke(this, e);
+    }
+}
+
+
+
 this.breakdown_headings_combo_box = new System.Windows.Forms.ComboBox();
 this.searchTextBox = new System.Windows.Forms.TextBox(); // Renamed TextBox
 this.clearButton = new System.Windows.Forms.Button(); // Declare the Clear Button

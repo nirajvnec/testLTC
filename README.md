@@ -1,3 +1,94 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+partial class FrmBreakDownSearch : Form
+{
+    private GroupBox groupBox6;
+    private SplitContainer splitContainer5;
+    // Assuming the existence of these controls based on previous context
+    private TableLayoutPanel tlpRowBreakdowns;
+    private SplitContainer splitContainer6;
+    private ListBox breakdown_attributes;
+    private ComboBox breakdown_headings_combo_box;
+    private Button btnFrequentAttribute;
+    private Panel pnISearch;
+
+    public FrmBreakDownSearch()
+    {
+        InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+        // Initialization of groupBox6 and splitContainer5
+        this.groupBox6 = new GroupBox();
+        this.splitContainer5 = new SplitContainer();
+        // ... Initialize other controls here
+
+        // Begin Initialization
+        ((ISupportInitialize)(this.splitContainer5)).BeginInit();
+        this.splitContainer5.Panel1.SuspendLayout();
+        this.splitContainer5.Panel2.SuspendLayout();
+
+        // splitContainer5 setup
+        this.splitContainer5.Dock = DockStyle.Fill;
+        this.splitContainer5.Location = new Point(3, 16);
+        this.splitContainer5.Name = "splitContainer5";
+        this.splitContainer5.Size = new Size(1114, 212);
+        this.splitContainer5.SplitterDistance = 358;
+        this.splitContainer5.TabIndex = 19; // Set the TabIndex appropriately
+        this.splitContainer5.SplitterMoved += new SplitterEventHandler(this.splitContainer_SplitterMoved);
+
+        // ... Add controls to splitContainer5.Panel1 and Panel2 here
+        // Add tlpRowBreakdowns to Panel1 of splitContainer5
+        this.splitContainer5.Panel1.Controls.Add(this.tlpRowBreakdowns);
+
+        // Add controls to Panel2 of splitContainer6
+        this.splitContainer5.Panel2.Controls.Add(this.splitContainer6);
+        this.splitContainer5.Panel2.Controls.Add(this.breakdown_attributes);
+        this.splitContainer5.Panel2.Controls.Add(this.breakdown_headings_combo_box);
+        this.splitContainer5.Panel2.Controls.Add(this.btnFrequentAttribute);
+        this.splitContainer5.Panel2.Controls.Add(this.pnISearch);
+
+        // groupBox6 setup
+        this.groupBox6.Controls.Add(this.splitContainer5);
+        this.groupBox6.Location = new Point(0, 0); // Adjust as needed
+        this.groupBox6.Size = new Size(1114, 212); // Adjust as needed
+        this.groupBox6.TabIndex = 0;
+        this.groupBox6.TabStop = false;
+        this.groupBox6.Text = "groupBox6";
+
+        // Resume layout logic
+        this.splitContainer5.Panel1.ResumeLayout(false);
+        this.splitContainer5.Panel2.ResumeLayout(false);
+        ((ISupportInitialize)(this.splitContainer5)).EndInit();
+        this.splitContainer5.ResumeLayout(false);
+
+        // Add groupBox6 to the form
+        this.Controls.Add(this.groupBox6);
+
+        // Set the form's properties
+        this.AutoScaleDimensions = new SizeF(6F, 13F);
+        this.AutoScaleMode = AutoScaleMode.Font;
+        this.ClientSize = new Size(1128, 244); // Adjust the size as necessary
+        this.Name = "FrmBreakDownSearch";
+        this.Text = "BreakDown Search Form";
+    }
+
+    private void splitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+    {
+        // Event handler for SplitterMoved event
+        // Logic to handle the event goes here
+    }
+}
+
+
+
+
+
+
+
 
 using System;
 using System.Collections;

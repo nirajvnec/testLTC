@@ -6,6 +6,85 @@ partial class FrmBreakDownSearch : Form
 {
     private GroupBox groupBox6;
     private SplitContainer splitContainer5;
+    private TableLayoutPanel tlpColumnBreakdowns; // Now properly named as per screenshot
+
+    public FrmBreakDownSearch()
+    {
+        InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+        this.groupBox6 = new GroupBox();
+        this.splitContainer5 = new SplitContainer();
+        this.tlpColumnBreakdowns = new TableLayoutPanel(); // Added based on your screenshot
+
+        // ... (other control initializations) ...
+
+        ((ISupportInitialize)(this.splitContainer5)).BeginInit();
+        this.splitContainer5.Panel1.SuspendLayout();
+        this.splitContainer5.Panel2.SuspendLayout();
+
+        // tlpColumnBreakdowns setup
+        this.tlpColumnBreakdowns.Dock = DockStyle.Fill;
+        this.tlpColumnBreakdowns.Name = "tlpColumnBreakdowns";
+        this.tlpColumnBreakdowns.TabIndex = 18; // TabIndex set as per screenshot
+        this.tlpColumnBreakdowns.ColumnCount = 2; // Assuming 2 columns as per screenshot
+        this.tlpColumnBreakdowns.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F)); // First column style
+        this.tlpColumnBreakdowns.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); // Second column style
+        this.tlpColumnBreakdowns.RowCount = 2; // Assuming 2 rows as per screenshot
+        this.tlpColumnBreakdowns.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F)); // First row style
+        this.tlpColumnBreakdowns.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // Second row style
+        this.tlpColumnBreakdowns.Size = new Size(362, 212); // Size set as per screenshot
+        // Add any additional controls to tlpColumnBreakdowns here
+
+        // splitContainer5 setup
+        // ... (splitContainer5 initialization code) ...
+
+        // Adding tlpColumnBreakdowns to splitContainer5.Panel1
+        this.splitContainer5.Panel1.Controls.Add(this.tlpColumnBreakdowns);
+
+        // groupBox6 setup
+        // ... (groupBox6 initialization code) ...
+
+        // Adding groupBox6 to the form
+        // ... (groupBox6 addition to form's controls) ...
+
+        // Finalize layout of splitContainer and tlpColumnBreakdowns
+        this.splitContainer5.Panel1.ResumeLayout(false);
+        this.splitContainer5.Panel2.ResumeLayout(false);
+        ((ISupportInitialize)(this.splitContainer5)).EndInit();
+        this.splitContainer5.ResumeLayout(false);
+        this.tlpColumnBreakdowns.ResumeLayout(false);
+        this.tlpColumnBreakdowns.PerformLayout();
+
+        // Set the form's properties
+        // ... (form properties setup code) ...
+    }
+
+    // Event handler for SplitterMoved event
+    private void splitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+    {
+        // Handle the SplitterMoved event
+    }
+}
+
+
+
+
+
+
+
+
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+partial class FrmBreakDownSearch : Form
+{
+    private GroupBox groupBox6;
+    private SplitContainer splitContainer5;
     // Assuming the existence of these controls based on previous context
     private TableLayoutPanel tlpRowBreakdowns;
     private SplitContainer splitContainer6;

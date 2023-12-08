@@ -1,3 +1,52 @@
+this.breakdown_headings_combo_box = new System.Windows.Forms.ComboBox();
+this.searchTextBox = new System.Windows.Forms.TextBox(); // Renamed TextBox
+this.clearButton = new System.Windows.Forms.Button(); // Declare the Clear Button
+
+// Initialize ComboBox properties as per your screenshot
+// ... (ComboBox initialization code remains the same)
+
+// Now, set the properties for the renamed TextBox (searchTextBox)
+this.searchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+this.searchTextBox.Location = new System.Drawing.Point(3, this.breakdown_headings_combo_box.Location.Y - this.breakdown_headings_combo_box.Height - 5); // 5 pixels above the ComboBox
+this.searchTextBox.Name = "searchTextBox";
+this.searchTextBox.Size = new System.Drawing.Size(632, 20); // Adjust the width as needed to accommodate the clear button
+this.searchTextBox.TabIndex = 13; // Tab index just before the ComboBox
+
+
+
+// Adjust the width of the searchTextBox to make space for the clearButton
+int buttonWidth = 75;
+this.searchTextBox.Size = new System.Drawing.Size(632 - buttonWidth - 5, 20); // Subtract button width and a small margin
+
+// Initialize the Clear Button
+this.clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+this.clearButton.Location = new System.Drawing.Point(this.searchTextBox.Location.X + this.searchTextBox.Width + 5, this.searchTextBox.Location.Y);
+this.clearButton.Name = "clearButton";
+this.clearButton.Size = new System.Drawing.Size(buttonWidth, this.searchTextBox.Height); // Match the height of the searchTextBox
+this.clearButton.Text = "Clear";
+this.clearButton.UseVisualStyleBackColor = true;
+// Event handler for clear button click action
+this.clearButton.Click += new System.EventHandler(this.ClearButton_Click);
+
+// Add the controls to the form or panel
+this.Controls.Add(this.searchTextBox);
+this.Controls.Add(this.clearButton);
+this.Controls.Add(this.breakdown_headings_combo_box);
+
+// ... Any additional initialization code ...
+
+// Event handler method for the clear button
+private void ClearButton_Click(object sender, EventArgs e)
+{
+    this.searchTextBox.Clear(); // Clear the text in the searchTextBox
+}
+
+// Remember to add this event handler in the same partial class file where your controls are defined
+
+
+
+
 if (this.m_searchControl != null)
 {
     this.m_searchControl.DeleteOrBackSpacePressed += CtlSearch_DeleteOrBackSpacePressed;

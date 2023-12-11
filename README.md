@@ -1,3 +1,86 @@
+Reading XML using XSLT and creating a table structure involves transforming XML data into HTML table elements. Below is a step-by-step guide to achieve this:
+
+Step 1: XML Data
+First, consider you have an XML file (data.xml) like this:
+
+xml
+Copy code
+<data>
+    <record>
+        <name>John Doe</name>
+        <email>johndoe@example.com</email>
+        <phone>1234567890</phone>
+    </record>
+    <record>
+        <name>Jane Doe</name>
+        <email>janedoe@example.com</email>
+        <phone>0987654321</phone>
+    </record>
+    <!-- Add more records as needed -->
+</data>
+Step 2: XSLT Transformation
+Create an XSLT file (transform.xsl) that defines how to transform the XML into an HTML table:
+
+xml
+Copy code
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+    <html>
+    <body>
+        <h2>My Contacts</h2>
+        <table border="1">
+            <tr bgcolor="#9acd32">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+            <xsl:for-each select="data/record">
+            <tr>
+                <td><xsl:value-of select="name"/></td>
+                <td><xsl:value-of select="email"/></td>
+                <td><xsl:value-of select="phone"/></td>
+            </tr>
+            </xsl:for-each>
+        </table>
+    </body>
+    </html>
+</xsl:template>
+
+</xsl:stylesheet>
+Step 3: Explanation
+xsl:stylesheet: Defines the XSLT stylesheet.
+xsl:template match="/": Matches the root of the XML document.
+html, body, table, tr, th, td: These are HTML elements to structure the table.
+xsl:for-each select="data/record": Iterates over each record element in the XML.
+xsl:value-of select="...": Extracts the value of a specified element (like name, email, phone).
+Step 4: Transforming XML with XSLT
+To view the transformed HTML, you'll need an XSLT processor. This can be done in many programming environments or even in some modern web browsers. The process involves loading the XML and XSLT documents and then performing the transformation.
+
+For instance, in a web browser, you could reference the XSLT file within your XML like this:
+
+xml
+Copy code
+<?xml-stylesheet type="text/xsl" href="transform.xsl"?>
+<data>
+    <!-- Your XML data -->
+</data>
+Opening this XML file in a browser that supports XSLT (like Firefox) should display the HTML table.
+
+Note:
+The exact syntax and methods might differ based on the tools or programming languages you are using.
+Ensure that the XML and XSLT files are correctly linked and accessible for the transformation to occur.
+The above example is a basic demonstration. Your actual implementation may require more sophisticated XSLT depending on the complexity of your XML structure.
+
+
+
+
+
+
+
+
+
+
 Moving a JSP file from a publicly accessible directory like "js" to a protected one like "WEB-INF" can definitely cause issues, because the contents of "WEB-INF" are not directly accessible to the public for security reasons. "WEB-INF" is intended for files that define the application configuration, classes, and libraries, not for content that should be served directly to users.
 
 Here are some steps you might consider to resolve this issue:

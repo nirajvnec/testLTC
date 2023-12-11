@@ -1,3 +1,14 @@
+Moving a JSP file from a publicly accessible directory like "js" to a protected one like "WEB-INF" can definitely cause issues, because the contents of "WEB-INF" are not directly accessible to the public for security reasons. "WEB-INF" is intended for files that define the application configuration, classes, and libraries, not for content that should be served directly to users.
+
+Here are some steps you might consider to resolve this issue:
+
+Review Application Configuration: Ensure that your application server is configured correctly to serve JSP files from "WEB-INF" if that is intentional. Typically, JSP files inside "WEB-INF" are accessed via a Servlet or a Controller that forwards requests to the JSP. They are not meant to be accessed directly by the client.
+
+Servlet Mapping: If you have a servlet that is supposed to serve the JSP, make sure that the servlet mapping in your web.xml is correct. You should have a servlet entry that maps a URL pattern to the servlet, and the servlet should forward to the JSP in "WEB-INF".
+
+Check for Relative Paths: If your JavaScript is trying to load resources using relative paths, those paths may now be incorrect since the base directory of the JSP
+
+
 public class CtlDragDropList : System.Windows.Forms.UserControl
 {
     // Existing code...

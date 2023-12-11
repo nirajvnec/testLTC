@@ -1,3 +1,119 @@
+private bool _isSearchRunning = false;
+
+private async void m_searchControl_SearchEvent(object sender, SearchRiskAttributeEventArgs e)
+{
+    // Prevent multiple simultaneous executions
+    if (_isSearchRunning)
+        return;
+
+    try
+    {
+        _isSearchRunning = true;
+
+        // Your existing code to handle the search event
+        CsSessionData.GetInstance().SearchText = e.RiskAttributeName.ToUpper();
+        SetSearchBDData();
+        pnlSearch.Visible = true;
+        breakdown_attributes.Visible = false;
+        breakdown_headings_combo_box.Enabled = false;
+        breakdown_headings_combo_box.SelectedIndex = 1;
+        DisableBreakdownsByText(m_global_cache.HideBreakdownAndDrilldowns);
+        SetRiskTypeAttributes(CsSessionData.GetInstance().Attributes);
+        var selectedCalculationMethod = this.GetSelectedMethod();
+
+        // Your existing conditional logic
+        if (selectedCalculationMethod is CsCalculationContribution &&
+            ((CsCalculationContribution)selectedCalculationMethod).SelectedMethod().IsErType)
+        {
+            if (rbtnConstant.Checked)
+            {
+                RemoveColumnRowBreakdown("cobdate", CobDateBreakdown);
+                DisableBreakdownByText(CobDateBreakdown, true);
+            }
+            else
+            {
+                DisableBreakdownChooseDetailsOption(CobDateBreakdown, false);
+                DisableBreakdownByText(RISK_TYPE, false);
+            }
+        }
+        else
+        {
+            DisableBreakdownByText(CobDateBreakdown, false);
+            DisableBreakdownChooseDetailsOption(CobDateBreakdown, true);
+        }
+
+        // Additional conditional logic from the new snippet
+        if (!(selectedCalculationMethod is CsCalculationMethodBMPClStrip) &&
+            !(selectedCalculationMethod is CsCalculationMethodRNIVMarginalToVar))
+        {
+            DisableBreakdownByText(RISK_TYPE, false);
+        }
+
+        // The asynchronous search operation
+        await Task.Run(() => this.breakdown_attributes.SearchAttributes(e));
+
+        // Update the visibility of the controls
+        breakdown_attributes.Visible = true;
+        pnlSearch.Visible = false;
+    }
+    finally
+    {
+        // Ensure the flag is reset even if an exception occurs
+        _isSearchRunning = false;
+    }
+}
+
+// Below are the placeholders for your methods which you should replace with actual implementations
+
+private void SetSearchBDData()
+{
+    // Your method implementation
+}
+
+private void DisableBreakdownsByText(bool hideBreakdowns)
+{
+    // Your method implementation
+}
+
+private void SetRiskTypeAttributes(object attributes)
+{
+    // Your method implementation
+}
+
+private MethodType GetSelectedMethod()
+{
+    // Your method implementation
+    // Return the selected method
+}
+
+private void RemoveColumnRowBreakdown(string columnName, object breakdown)
+{
+    // Your method implementation
+}
+
+private void DisableBreakdownByText(object breakdown, bool disable)
+{
+    // Your method implementation
+}
+
+private void DisableBreakdownChooseDetailsOption(object breakdown, bool option)
+{
+    // Your method implementation
+}
+
+// Your class definitions for the calculation methods
+public class CsCalculationMethodBMPClStrip
+{
+    // Your class implementation
+}
+
+public class CsCalculationMethodRNIVMarginalToVar
+{
+    // Your class implementation
+}
+
+
+
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Linq;

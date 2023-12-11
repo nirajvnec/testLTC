@@ -4,6 +4,21 @@ using System.Linq;
 
 public static class StringCollectionExtensions
 {
+    public static List<string> ToListDistinct(this StringCollection stringCollection)
+    {
+        return stringCollection.Cast<string>().Distinct().ToList();
+    }
+}
+
+
+
+
+using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Linq;
+
+public static class StringCollectionExtensions
+{
     public static List<string> ToList(this StringCollection stringCollection)
     {
         return new List<string>(stringCollection.Cast<string>());

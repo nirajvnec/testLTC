@@ -1,9 +1,40 @@
+using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.Linq;
+
+public static class StringCollectionExtensions
+{
+    public static List<string> ToList(this StringCollection stringCollection)
+    {
+        return new List<string>(stringCollection.Cast<string>());
+    }
+}
+
+
+using System.Collections.Specialized;
+using System.Collections.Generic;
+
+public static class ListExtensions
+{
+    public static StringCollection ToStringCollection(this List<string> stringList)
+    {
+        StringCollection stringCollection = new StringCollection();
+        foreach (string str in stringList)
+        {
+            stringCollection.Add(str);
+        }
+        return stringCollection;
+    }
+}
+
+
+
 Reading XML using XSLT and creating a table structure involves transforming XML data into HTML table elements. Below is a step-by-step guide to achieve this:
 
 Step 1: XML Data
 First, consider you have an XML file (data.xml) like this:
 
-xml
+XML
 Copy code
 <data>
     <record>

@@ -1,3 +1,93 @@
+private CancellationTokenSource debounceCts = new CancellationTokenSource();
+private const int MinimumChar = 3; // Assuming a minimum number of characters to trigger a search
+private const int DebounceDelay = 500; // 500 milliseconds debounce delay
+
+private async Task TxtSearch_KeyUp(object sender, KeyEventArgs e)
+{
+    if (this.Parent?.Name != "")
+    {
+        if (e.KeyValue == 13) // Enter key is pressed
+        {
+            if (!IsEnterFromMsgBox)
+            {
+                Search(true);
+            }
+            else
+            {
+                this.IsEnterFromMsgBox = false;
+            }
+        }
+        else
+        {
+            // For non-enter keys, trigger the search with debounce
+            Search(this.SearchWhileTyping);
+        }
+    }
+    else if (this.Parent?.Name == "")
+    {
+        // Cancel any pending debounce since a new key is pressed
+        debounceCts.Cancel();
+        debounceCts = new CancellationTokenSource();
+
+        // Check if the length of the text in txtSearch is at least the minimum required
+        if (txtSearch.Text.Length >= MinimumChar)
+        {
+            try
+            {
+                // Wait for the debounce delay
+                await Task.Delay(DebounceDelay, debounceCts.Token);
+                
+                // If the token has not been canceled, proceed with the search
+                if (!debounceCts.Token.IsCancellationRequested)
+                {
+                    this.searchText = txtSearch.Text;
+                    await HandleKeyUpAsync(e);
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // If the task was canceled, do nothing
+            }
+        }
+    }
+
+    if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+    {
+        if (txtSearch.Text.Length > 0 && txtSearch.Text.Length < MinimumChar)
+        {
+            DeleteOrBackSpacePressed?.Invoke(this, EventArgs.Empty);
+        }
+        else if (txtSearch.Text.Length >= MinimumChar && this.Parent?.Name == "")
+        {
+            await RaiseSearchEvent();
+        }
+    }
+}
+
+private async Task HandleKeyUpAsync(KeyEventArgs e)
+{
+    // Your asynchronous key handling logic here
+}
+
+private async Task RaiseSearchEvent()
+{
+    // Your search raising logic here
+}
+
+private void Search(bool searchWhileTyping)
+{
+    // Your Search method here
+}
+
+// Assuming you have these members defined in your class
+public bool IsEnterFromMsgBox { get; set; }
+public bool SearchWhileTyping { get; set; }
+public event EventHandler DeleteOrBackSpacePressed;
+// txtSearch is assumed to be your TextBox control
+
+
+
+
 private bool _isSearchRunning = false;
 
 private async void m_searchControl_SearchEvent(object sender, SearchRiskAttributeEventArgs e)

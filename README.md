@@ -1,3 +1,68 @@
+private CancellationTokenSource debounceCts = new CancellationTokenSource();
+private const int DebounceDelay = 500; // Milliseconds to wait before executing the search
+
+private async void txtSearch_KeyUp(object sender, KeyEventArgs e)
+{
+    if (this.Parent?.Name != "")
+    {
+        // If there's a parent and Enter is pressed
+        if (e.KeyCode == Keys.Enter)
+        {
+            debounceCts.Cancel(); // Cancel any pending search that was debounced
+            if (!IsEnterFromMsgBox)
+            {
+                await SearchSync(true); // Perform immediate search
+            }
+            else
+            {
+                this.IsEnterFromMsgBox = false;
+            }
+        }
+        else if (searchText.Length >= MinimumChar)
+        {
+            // Debounce other key presses
+            debounceCts.Cancel();
+            debounceCts.Dispose();
+            debounceCts = new CancellationTokenSource();
+            
+            try
+            {
+                await Task.Delay(DebounceDelay, debounceCts.Token); // Delay search execution
+                if (!debounceCts.Token.IsCancellationRequested)
+                {
+                    // If the delay wasn't cancelled, call the method to perform the search
+                    await SearchSync(this.SearchWhileTyping);
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // If a new key press event occurs, the delay will be cancelled
+            }
+        }
+    }
+
+    // Code for less than MinimumChar or when Parent's Name is empty
+    // ...
+
+    if (searchText.Length > 0)
+    {
+        btnClear.Enabled = true; // Enable the clear button if there's text
+    }
+}
+
+// Assuming SearchSync is an async method that performs the search
+private async Task SearchSync(bool searchWhileTyping)
+{
+    // Your search logic here
+}
+
+// Other class members
+public bool IsEnterFromMsgBox { get; set; }
+public bool SearchWhileTyping { get; set; }
+public TextBox txtSearch; // Your TextBox control
+
+
+
 private async Task RaiseSearchEvent()
 {
     // Log the call to this method

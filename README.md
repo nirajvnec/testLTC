@@ -1,3 +1,38 @@
+private async Task RaiseSearchEvent()
+{
+    // Log the call to this method
+    Console.WriteLine("RaiseSearchEvent called at " + DateTime.Now.ToString("o"));
+
+    // Cancel any ongoing operation
+    debounceCts.Cancel();
+    debounceCts.Dispose();
+    debounceCts = new CancellationTokenSource();
+
+    try
+    {
+        var searchEventArgs = new SearchRiskAttributeEventArgs(searchText);
+        this.Cursor = Cursors.WaitCursor;
+
+        // Log before invoking the event
+        Console.WriteLine("Invoking SearchEvent at " + DateTime.Now.ToString("o"));
+        SearchEvent?.Invoke(this, searchEventArgs);
+
+        // Perform your actual search operation here
+        // await PerformSearchAsync(searchText, debounceCts.Token);
+    }
+    catch (OperationCanceledException)
+    {
+        // Log the cancellation
+        Console.WriteLine("Search operation was canceled at " + DateTime.Now.ToString("o"));
+    }
+    finally
+    {
+        this.Cursor = Cursors.Default;
+    }
+}
+
+
+
 Certainly! Below are the XML and XSLT files designed to work together. The XML file contains contact information, and the XSLT file is designed to transform this XML into an HTML table with links.
 
 XML Document (contacts.xml)

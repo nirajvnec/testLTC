@@ -1,3 +1,8 @@
+List<CsAttribute> attributes = positionAttributeBreakdowns
+    .Select(breakdown => globalCache.AttributesDoc.GetAttribute(breakdown.AttributeName))
+    .ToList();
+
+
 private CancellationTokenSource debounceCts = new CancellationTokenSource();
 private const int DebounceDelay = 500; // Milliseconds to wait before executing the search
 

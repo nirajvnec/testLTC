@@ -46,6 +46,15 @@ Description: Supports features like higher-order functions and immutability.
 Example:
 val numbers = List(1, 2, 3)
 val doubled = numbers.map(_ * 2) // Using higher-order function map
+
+
+Equivalent code in C#
+var numbers = new List<int> { 1, 2, 3 };
+var doubled = numbers.Select(x => x * 2);
+
+        
+
+
 Case Classes and Pattern Matching
 
 Description: Useful for immutable data and pattern matching.
@@ -55,6 +64,30 @@ val point = Point(1, 2)
 point match {
   case Point(1, y) => println(s"Y is $y")
   case _ => println("Other point")
+}
+
+Equivalent C# code
+
+var point = new Point(1, 2);
+if (point.X == 1)
+{
+    Console.WriteLine($"Y is {point.Y}");
+}
+else
+{
+    Console.WriteLine("Other point");
+}
+
+public class Point
+{
+    public int X { get; }
+    public int Y { get; }
+
+    public Point(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
 }
 
 Concurrency and Distribution

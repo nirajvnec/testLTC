@@ -104,12 +104,46 @@ class HelloActor extends Actor {
   }
 }
 
+equivalent C# Code
+using Akka.Actor;
+using System;
+
+public class HelloActor : UntypedActor
+{
+    protected override void OnReceive(object message)
+    {
+        switch (message)
+        {
+            case "hello":
+                Console.WriteLine("hello back at you");
+                break;
+            default:
+                Console.WriteLine("huh?");
+                break;
+        }
+    }
+}
+
+// Usage of the actor would require creating an ActorSystem and an actor reference.
+
+
 Scala Collections
 
 Description: Offers mutable and immutable collections.
 Example:
 val immutableList = List(1, 2, 3)
 val mutableList = scala.collection.mutable.ArrayBuffer(1, 2, 3)
+
+equivalent C# code
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+// Immutable list
+var immutableList = new ReadOnlyCollection<int>(new List<int> { 1, 2, 3 });
+
+// Mutable list
+var mutableList = new List<int> { 1, 2, 3 };
+
 
 Traits
 
@@ -121,6 +155,45 @@ trait Greeter {
 }
 
 class DefaultGreeter extends Greeter
+
+equivalent C# Code
+
+C# Equivalent (for C# 8.0 and later):
+
+using System;
+
+interface IGreeter
+{
+    void Greet(string name) => Console.WriteLine($"Hello, {name}");
+}
+
+class DefaultGreeter : IGreeter
+{
+}
+
+C# Equivalent (for versions prior to C# 8.0):
+
+csharp
+Copy code
+using System;
+
+interface IGreeter
+{
+    void Greet(string name);
+}
+
+class DefaultGreeter : IGreeter
+{
+    public void Greet(string name)
+    {
+        Console.WriteLine($"Hello, {name}");
+    }
+}
+
+// Usage
+var greeter = new DefaultGreeter();
+greeter.Greet("World");
+
 Type Inference
 
 Description: Compiler can often infer the type of variables.

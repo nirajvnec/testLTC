@@ -40,6 +40,24 @@ class Animal(name: String) {
 }
 val dog = new Animal("Dog")
 
+equivalent C# code
+
+public class Animal
+{
+    private string name;
+
+    public Animal(string name)
+    {
+        this.name = name;
+    }
+
+    public string MakeSound()
+    {
+        return "Some sound";
+    }
+}
+
+
 Functional Programming
 
 Description: Supports features like higher-order functions and immutability.
@@ -173,8 +191,7 @@ class DefaultGreeter : IGreeter
 
 C# Equivalent (for versions prior to C# 8.0):
 
-csharp
-Copy code
+csharp code
 using System;
 
 interface IGreeter
@@ -206,6 +223,7 @@ equivalent code in C#
 var number = 10; // Type int is inferred
 
 Description: Scala can use Java libraries and vice versa.
+
 Example:
 import java.util.{Date, Locale}
 import java.text.DateFormat
@@ -292,8 +310,7 @@ However, if we were to create a simple server-side C# application that serves an
 Step 1: Server-Side C# Code Using ASP.NET
 Create an ASP.NET Core Web Application.
 
-csharp
-code
+csharp code
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -363,7 +380,7 @@ In C#.NET, using using SomeNamespace; is like accessing a set of tools provided 
 In both cases, the idea is to include specific functionalities from external libraries into your program, enabling you to use predefined classes and methods that simplify building complex applications, such as those requiring concurrency and distributed computing.
 
 
-Question: How Akka Toolkit Achieves concurrent, distributed, and fault-tolerant applications in Scala in simple language
+Question:  How the Akka toolkit facilitates the development of concurrent, distributed, and fault-tolerant applications using Scala?
 
 Explaination: To explain how the Akka toolkit achieves concurrent, distributed, and fault-tolerant applications in Scala in simple terms, let's break down these concepts:
 

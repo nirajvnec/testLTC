@@ -202,6 +202,9 @@ Example:
 val number = 10 // Type Int is inferred
 Interoperability with Java
 
+equivalent code in C#
+var number = 10; // Type int is inferred
+
 Description: Scala can use Java libraries and vice versa.
 Example:
 import java.util.{Date, Locale}
@@ -209,6 +212,17 @@ import java.text.DateFormat
 val now = new Date
 val df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE)
 println(df format now)
+
+Equivalent C# Code
+using System;
+using System.Globalization;
+
+var now = DateTime.Now;
+var cultureInfo = new CultureInfo("fr-FR");
+var formattedDate = now.ToString("D", cultureInfo);
+
+Console.WriteLine(formattedDate);
+
 
 Slick and Play Framework
 
@@ -218,6 +232,20 @@ Example:
 def index = Action {
   Ok("Hello, Play!")
 }
+
+equivalent C# code
+convert this into C#, specifically for an ASP.NET MVC application, you would create a controller action method that returns a string. Here's the converted code:
+
+using Microsoft.AspNetCore.Mvc;
+
+public class HomeController : Controller
+{
+    public IActionResult Index()
+    {
+        return Ok("Hello, Play!");
+    }
+}
+
 
 write web applications in Scala which run in the browser. To provide a simple example, for creating a Scala.js application that interacts with the DOM (Document Object Model) of a web page.
 
@@ -256,6 +284,59 @@ We use document.createElement and document.body just like in regular JavaScript.
 After writing this code, you'll compile it with Scala.js, which will generate JavaScript files. These files can then be included in your HTML file, just like any other JavaScript file.
 
 Please note, this is a basic example. Scala.js is a powerful tool and can be used to write complex web applications, leveraging both the robustness of Scala and the ecosystem of JavaScript.
+
+To replicate similar functionality in C#, particularly for a web application, we would typically use a combination of C# for the server-side logic and JavaScript for the client-side, as C# itself doesn't compile to JavaScript.
+
+However, if we were to create a simple server-side C# application that serves an HTML page with similar functionality, we could use ASP.NET (a popular web framework for C#). The client-side JavaScript would remain in JavaScript, as C# does not directly translate into JavaScript like Scala.js.
+
+Step 1: Server-Side C# Code Using ASP.NET
+Create an ASP.NET Core Web Application.
+
+csharp
+code
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllersWithViews();
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseRouting();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapGet("/", async context =>
+            {
+                await context.Response.WriteAsync("<!DOCTYPE html><html><head><title>Hello</title></head><body><script src='main.js'></script></body></html>");
+            });
+        });
+    }
+}
+Step 2: Client-Side JavaScript
+This JavaScript code would be similar to what the Scala.js code compiles into. Assume this is wwwroot/main.js:
+
+javascript
+document.addEventListener("DOMContentLoaded", function() {
+    appendPar(document.body, "Hello from C# and JavaScript!");
+});
+
+function appendPar(targetNode, text) {
+    var parNode = document.createElement("p");
+    parNode.textContent = text;
+    targetNode.appendChild(parNode);
+}
+Explanation:
+In the C# part (ASP.NET Core application), we set up a simple web server that serves an HTML page. This page includes a JavaScript file.
+The JavaScript file (main.js) contains the client-side logic to append a paragraph to the body of the document. This is similar to the functionality provided by the Scala.js code.
+The C# code does not directly interact with the DOM or compile to JavaScript. It's only responsible for serving the web page.
+This setup demonstrates a common pattern in web development where C# is used on the server-side and JavaScript on the client-side. While it's not a direct translation of Scala.js to C#, it achieves a similar end result in the context of web application development.
 
 These examples give a glimpse into Scala's syntax and capabilities in each of these fundamental areas. Scala's functional programming features, combined with object-oriented concepts, make it a powerful and versatile language.
 

@@ -1,3 +1,7 @@
+this.KeyUpCompleted += new EventHandler<KeyUpCompletedEventArgs>(YourEventHandlerMethod);
+
+
+
 public class KeyUpCompletedEventArgs : EventArgs
 {
     public Button TargetButton { get; }

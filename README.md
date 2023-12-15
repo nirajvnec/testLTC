@@ -1,3 +1,9 @@
+// Assuming you have a TextBox control named 'textBox1'
+textBox1.Font = new Font(textBox1.Font, FontStyle.Italic);
+
+
+
+
 Scala is a modern, multi-paradigm programming language designed to express common programming patterns in a concise, elegant, and type-safe way. It integrates features of object-oriented and functional programming. Here are some fundamental concepts and features of Scala:
 
 Statically Typed: Scala is a statically typed language, which means that types are checked at compile time. This leads to safer and more robust code.

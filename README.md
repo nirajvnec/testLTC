@@ -1,3 +1,32 @@
+public class KeyUpCompletedEventArgs : EventArgs
+{
+    public Button TargetButton { get; }
+
+    public KeyUpCompletedEventArgs(Button targetButton)
+    {
+        TargetButton = targetButton;
+    }
+}
+
+
+public event EventHandler<KeyUpCompletedEventArgs> KeyUpCompleted;
+
+private void TextBox1_KeyUp(object sender, KeyEventArgs e)
+{
+    // ... Your code for KeyUp event ...
+
+    // Assuming 'button1' is the button you want to focus
+    OnKeyUpCompleted(new KeyUpCompletedEventArgs(button1));
+}
+
+protected virtual void OnKeyUpCompleted(KeyUpCompletedEventArgs e)
+{
+    KeyUpCompleted?.Invoke(this, e);
+}
+
+
+
+
 // Assuming you have a TextBox control named 'textBox1'
 textBox1.Font = new Font(textBox1.Font, FontStyle.Italic);
 

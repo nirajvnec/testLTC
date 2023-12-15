@@ -1,3 +1,6 @@
+OnKeyUpCompleted(new KeyUpCompletedEventArgs(btnSearch)); // assuming btnSearch is the button you want to focus
+
+
 protected virtual void OnKeyUpCompleted(object sender, KeyUpCompletedEventArgs e)
 {
     // Your code here.

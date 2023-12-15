@@ -1,3 +1,12 @@
+private void textBox1_TextChanged(object sender, EventArgs e)
+{
+    // Set the font to regular and the text color to black
+    textBox1.Font = new Font(textBox1.Font, FontStyle.Regular);
+    textBox1.ForeColor = Color.Black;
+}
+
+
+
 OnKeyUpCompleted(new KeyUpCompletedEventArgs(btnSearch)); // assuming btnSearch is the button you want to focus
 
 

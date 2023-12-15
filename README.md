@@ -1,3 +1,12 @@
+protected virtual void OnKeyUpCompleted(object sender, KeyUpCompletedEventArgs e)
+{
+    // Your code here.
+}
+// Assuming you have a method in the current class with the correct signature
+KeyUpCompleted += OnKeyUpCompleted;
+
+
+
 this.KeyUpCompleted += new EventHandler<KeyUpCompletedEventArgs>(YourEventHandlerMethod);
 
 

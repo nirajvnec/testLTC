@@ -1,19 +1,32 @@
 public static class CacheManager
 {
+    private static CsETConfigDoc m_configdoc;
+    private static CsETGlobalCache m_globalCache;
     private static CsBreakdownCollection _breakdownsCache;
 
+    // Static method to initialize dependencies
+    public static void Initialize(CsETConfigDoc configdoc, CsETGlobalCache globalCache)
+    {
+        m_configdoc = configdoc;
+        m_globalCache = globalCache;
+    }
+
+    // Static method to get breakdowns
     public static CsBreakdownCollection GetBreakdowns()
     {
         if (_breakdownsCache == null)
         {
-            // Assuming m_config_doc is accessible here or passed as a parameter
-            _breakdownsCache = m_config_doc.GetspecialBreakDownsByCategoryCCsBreakDownHeading("HEADING_VARANALYSIS_BUS_ORG");
-        }
+            if (m_configdoc == null)
+            {
+                throw new InvalidOperationException("CacheManager not initialized with a CsETConfigDoc instance.");
+            }
 
+            _breakdownsCache = m_configdoc.GetspecialBreakDownsByCategoryCCsBreakDownHeading("HEADING_VARANALYSIS_BUS_ORG");
+        }
         return _breakdownsCache;
     }
 
-    // Method to clear the cache, if needed
+    // Static method to clear the cache, if needed
     public static void ClearBreakdownsCache()
     {
         _breakdownsCache = null;
@@ -21,6 +34,12 @@ public static class CacheManager
 }
 
 // Usage
+// Initialize the CacheManager at the start of your application or before first use
+CsETConfigDoc configdoc = // initialize or get existing instance
+CsETGlobalCache globalCache = // initialize or get existing instance
+CacheManager.Initialize(configdoc, globalCache);
+
+// Now you can call GetBreakdowns
 var breakdowns = CacheManager.GetBreakdowns();
 
 

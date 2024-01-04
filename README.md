@@ -1,3 +1,29 @@
+public static class CacheManager
+{
+    private static CsBreakdownCollection _breakdownsCache;
+
+    public static CsBreakdownCollection GetBreakdowns()
+    {
+        if (_breakdownsCache == null)
+        {
+            // Assuming m_config_doc is accessible here or passed as a parameter
+            _breakdownsCache = m_config_doc.GetspecialBreakDownsByCategoryCCsBreakDownHeading("HEADING_VARANALYSIS_BUS_ORG");
+        }
+
+        return _breakdownsCache;
+    }
+
+    // Method to clear the cache, if needed
+    public static void ClearBreakdownsCache()
+    {
+        _breakdownsCache = null;
+    }
+}
+
+// Usage
+var breakdowns = CacheManager.GetBreakdowns();
+
+
 private void textBox1_TextChanged(object sender, EventArgs e)
 {
     // Set the font to regular and the text color to black

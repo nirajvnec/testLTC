@@ -1,3 +1,51 @@
+# Scala Training Schedule for Beginners
+
+Training from January 9, 2024, to February 1, 2024. Weekday sessions with 1 hour of learning and 1 hour of practice each day.
+
+| Date  | 1st Hour (Topic)                                       | 2nd Hour (Practice)                               |
+|-------|--------------------------------------------------------|---------------------------------------------------|
+| Jan 9 | Introduction to Scala and the Scala REPL               | Scala REPL Exercises                              |
+| Jan 10| Basic Syntax: Variables, Data Types, Expressions       | Syntax and Data Types Exercises                   |
+| Jan 11| Control Structures: if, else, loops                    | Control Structures Exercises                      |
+| Jan 12| Functions: Declaration, Invocation, Return Types       | Functions Implementation Exercises                |
+| Jan 15| Collections in Scala: List, Array, Map                 | Collections Manipulation Exercises                |
+| Jan 16| Immutable vs. Mutable Collections                      | Mutable vs. Immutable Collections Exercises       |
+| Jan 17| Pattern Matching                                       | Pattern Matching Scenarios                        |
+| Jan 18| Classes and Objects in Scala                           | Classes and Objects Implementation                |
+| Jan 19| Case Classes and Sealed Traits                         | Case Classes and Sealed Traits Exercises          |
+| Jan 22| Scala's Type Hierarchy and Type Inference              | Type Inference and Hierarchy Challenges           |
+| Jan 23| Exception Handling in Scala                            | Exception Handling Scenarios                      |
+| Jan 24| Scala's Advanced Functions: Higher-Order Functions     | Higher-Order Functions Exercises                  |
+| Jan 25| Traits and Mixin Compositions                          | Traits and Mixin Compositions Implementation      |
+| Jan 29| Functional Programming Concepts in Scala               | Functional Programming Challenges                 |
+| Jan 30| Scala Futures for Concurrency                          | Concurrency with Futures Exercises                |
+| Jan 31| Interacting with Databases using Scala                 | Database Interaction Exercises                    |
+| Feb 1 | Project: Building a Simple Scala Application           | Project Development and Review                    |
+
+## Notes
+- Weekends are excluded from the schedule.
+- Each session includes theoretical learning and practical exercises.
+- The final session is dedicated to a project that consolidates the learning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public static class CacheManager
 {
     private static CsETConfigDoc m_configdoc;

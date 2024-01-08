@@ -1,3 +1,6 @@
+Dear Team,
+
+I am pleased to announce that we have scheduled a series of learning sessions focused on the Scala programming language, as previously discussed with Shadab. I am confident that these sessions will be beneficial for our team's development and expertise in Scala.
 
 # Scala Training Schedule for Beginners
 

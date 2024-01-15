@@ -1,3 +1,16 @@
+private readonly object _lockObj = new object();
+
+public int Add(CtlDragDropItem newItem, bool isHidden = false, bool ignoreValidation = false)
+{
+    lock (_lockObj)
+    {
+        // Your existing code here
+    }
+}
+
+
+
+
 using System.Runtime.Caching;
 
 public static class SessionCache

@@ -1,3 +1,29 @@
+using System.Collections.Specialized;
+using System.Collections.Generic;
+
+public static class StringCollectionExtensions
+{
+    public static StringCollection GetDistinct(this StringCollection originalCollection)
+    {
+        HashSet<string> distinctSet = new HashSet<string>();
+        foreach (string item in originalCollection)
+        {
+            distinctSet.Add(item);
+        }
+
+        StringCollection distinctCollection = new StringCollection();
+        foreach (string item in distinctSet)
+        {
+            distinctCollection.Add(item);
+        }
+
+        return distinctCollection;
+    }
+}
+
+
+
+
 Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name LIKE '%.NET%'"
 
 Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name = 'Microsoft .NET Framework 6.X.X (or exact name)'" | ForEach-Object { $_.Uninstall() }

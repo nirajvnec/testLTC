@@ -1,3 +1,38 @@
+using System.Collections.Generic;
+using System.Xml;
+
+
+
+public static List<string> ExtractRowAndColumnValues(XmlDocument xmlDocument)
+{
+    List<string> rowAndColumnValues = new List<string>();
+
+    XmlNodeList rowNodes = xmlDocument.SelectNodes("//Row/SubReportRef");
+    foreach (XmlNode row in rowNodes)
+    {
+        if (row.Attributes["sub_report_name"] != null)
+        {
+            rowAndColumnValues.Add(row.Attributes["sub_report_name"].Value);
+        }
+    }
+
+    XmlNodeList columnNodes = xmlDocument.SelectNodes("//Column/SubReportRef");
+    foreach (XmlNode column in columnNodes)
+    {
+        if (column.Attributes["sub_report_name"] != null)
+        {
+            rowAndColumnValues.Add(column.Attributes["sub_report_name"].Value);
+        }
+    }
+
+    return rowAndColumnValues;
+}
+
+// ... after loading xml_doc ...
+List<string> rowAndColumnValues = ExtractRowAndColumnValues(xml_doc);
+// Now rowAndColumnValues contains all the required values.
+
+
 using System;
 using System.Collections.Generic;
 using System.Xml;

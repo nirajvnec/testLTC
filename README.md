@@ -1,3 +1,46 @@
+using System.Runtime.Caching;
+
+public static class SessionCache
+{
+    private static MemoryCache _cache = MemoryCache.Default;
+
+    public static void Set(string key, object value)
+    {
+        var cacheItemPolicy = new CacheItemPolicy();
+        // You can set other properties on cacheItemPolicy if needed
+        _cache.Set(key, value, cacheItemPolicy);
+    }
+
+    public static object Get(string key)
+    {
+        return _cache.Get(key);
+    }
+
+    public static void Remove(string key)
+    {
+        _cache.Remove(key);
+    }
+}
+
+
+
+// Store a boolean value
+SessionCache.Set("IsUserLoggedIn", true);
+
+// Retrieve the boolean value
+bool isUserLoggedIn = (bool?)SessionCache.Get("IsUserLoggedIn") ?? false;
+
+// Remove the value from the cache
+SessionCache.Remove("IsUserLoggedIn");
+
+
+
+
+
+
+
+
+
 using System.Collections.Generic;
 using System.Xml;
 

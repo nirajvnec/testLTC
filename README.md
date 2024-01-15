@@ -1,3 +1,69 @@
+using System;
+using System.Collections.Generic;
+using System.Xml;
+
+// ... your existing code ...
+
+private CsReportDef OpenReportDefFromFile(string filePath)
+{
+    StreamReader stream;
+    XmlDocument xml_doc = new XmlDocument();
+    CsReportDef report_def;
+    Cursor.Current = Cursors.WaitCursor;
+    stream = File.OpenText(filePath);
+
+    try
+    {
+        xml_doc.LoadXml(stream.ReadToEnd());
+    }
+    catch (XmlException x)
+    {
+        throw new ApplicationException("The file " + filePath + " contains invalid xml", x);
+    }
+    finally
+    {
+        stream.Close();
+    }
+
+    // New code to read <Row> and <Column> tag values
+    List<string> rowAndColumnValues = new List<string>();
+    XmlNodeList rowNodes = xml_doc.SelectNodes("//Row/SubReportRef");
+    foreach (XmlNode row in rowNodes)
+    {
+        if (row.Attributes["sub_report_name"] != null)
+        {
+            rowAndColumnValues.Add(row.Attributes["sub_report_name"].Value);
+        }
+    }
+
+    XmlNodeList columnNodes = xml_doc.SelectNodes("//Column/SubReportRef");
+    foreach (XmlNode column in columnNodes)
+    {
+        if (column.Attributes["sub_report_name"] != null)
+        {
+            rowAndColumnValues.Add(column.Attributes["sub_report_name"].Value);
+        }
+    }
+
+    // Here you can use rowAndColumnValues as needed
+    // ...
+
+    resetOtherParameters();
+    report_def = new CsReportDef(m_report_def_helper);
+
+    report_def.ReportFileName = Path.GetFileName(filePath);
+    report_def.LoadXml(xml_doc);
+    AddPropertyTypeSetsToCache(report_def);
+
+    return report_def;
+}
+
+// ... rest of your code ...
+
+
+
+
+
 using System.Collections.Specialized;
 using System.Collections.Generic;
 

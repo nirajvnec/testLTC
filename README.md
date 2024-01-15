@@ -1,3 +1,15 @@
+Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name LIKE '%.NET%'"
+
+Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name = 'Microsoft .NET Framework 6.X.X (or exact name)'" | ForEach-Object { $_.Uninstall() }
+
+
+
+Get-WmiObject -Query "SELECT * FROM Win32_Product WHERE Name LIKE '%.NET%'"
+
+
+
+
+
 
 # Scala Training Schedule for Beginners
 

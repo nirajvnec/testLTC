@@ -1,3 +1,58 @@
+using System;
+using System.Windows.Forms;
+
+public partial class MyForm : Form
+{
+    // Define the custom event
+    public event EventHandler SelectedIndexChangedCompleted;
+
+    public MyForm()
+    {
+        InitializeComponent();
+        // Subscribe to the SelectedIndexChanged event
+        myTabControl.SelectedIndexChanged += MyTabControl_SelectedIndexChanged;
+    }
+
+    private void MyTabControl_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // Handle the SelectedIndexChanged event
+
+        // After handling, raise the custom event
+        OnSelectedIndexChangedCompleted(EventArgs.Empty);
+    }
+
+    // Method to raise the custom event
+    protected virtual void OnSelectedIndexChangedCompleted(EventArgs e)
+    {
+        SelectedIndexChangedCompleted?.Invoke(this, e);
+    }
+}
+
+// Usage in client code
+public class Client
+{
+    public void Main()
+    {
+        MyForm form = new MyForm();
+        // Subscribe to the custom event
+        form.SelectedIndexChangedCompleted += Form_SelectedIndexChangedCompleted;
+    }
+
+    private void Form_SelectedIndexChangedCompleted(object sender, EventArgs e)
+    {
+        // Handle the event
+        Console.WriteLine("Selected Index Changed processing is completed.");
+    }
+}
+
+
+
+
+
+
+
+
+
 Sub CreateScalaJavaPresentationWithDetailedNotes()
     ' Create a new PowerPoint application and presentation
     Dim pptApp As Object

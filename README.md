@@ -15,10 +15,11 @@ def handleResponse(response: ApiResponse) = response match {
   case SuccessResponse(data) => println(s"Received data: $data")
   case ErrorResponse(message) => println(s"Error: $message")
 }
-2. Extracting Values from Case Classes
+
+### 2. Extracting Values from Case Classes
 Case classes are used to model immutable data. Pattern matching is used for deconstructing these classes.
 
-scala code
+```scala code
 case class User(id: Int, name: String)
 
 val user = User(1, "Alice")

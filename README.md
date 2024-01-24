@@ -6,7 +6,7 @@ Pattern matching in Scala is a powerful feature that allows you to check a value
 
 Function may return different types of results. Pattern matching allows handling each type appropriately.
 
-```scala
+```scala code
 sealed trait ApiResponse
 case class SuccessResponse(data: String) extends ApiResponse
 case class ErrorResponse(message: String) extends ApiResponse
@@ -18,8 +18,7 @@ def handleResponse(response: ApiResponse) = response match {
 2. Extracting Values from Case Classes
 Case classes are used to model immutable data. Pattern matching is used for deconstructing these classes.
 
-scala
-Copy code
+scala code
 case class User(id: Int, name: String)
 
 val user = User(1, "Alice")
@@ -30,8 +29,7 @@ user match {
 3. Recursive Algorithms
 Pattern matching is often used in recursive algorithms, especially with recursive data structures like trees or lists.
 
-scala
-Copy code
+scala code
 sealed trait LinkedList[+A]
 case object End extends LinkedList[Nothing]
 case class Pair[+A](head: A, tail: LinkedList[A]) extends LinkedList[A]
@@ -43,8 +41,7 @@ def sum(list: LinkedList[Int]): Int = list match {
 4. Handling Optional Values
 Scala's Option type is commonly handled using pattern matching.
 
-scala
-Copy code
+scala code
 val name: Option[String] = Some("Bob")
 
 name match {
@@ -54,8 +51,7 @@ name match {
 5. Actor Messages in Akka
 Actors in Akka use pattern matching to decide on actions based on received messages.
 
-scala
-Copy code
+scala code
 import akka.actor.Actor
 
 class MyActor extends Actor {
@@ -67,8 +63,7 @@ class MyActor extends Actor {
 6. JSON Parsing
 Pattern matching is used for extracting data from various JSON structures safely.
 
-scala
-Copy code
+scala code
 import play.api.libs.json._
 
 val json: JsValue = Json.parse("""{"name":"John", "age":30}""")
@@ -81,7 +76,7 @@ json match {
 7. Simplifying Complex Conditionals
 Pattern matching can simplify complex conditional logic.
 
-scala
+scala code
 
 def gameResult(score: (Int, Int)) = score match {
   case (us, them) if us > them => "We won!"

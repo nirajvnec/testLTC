@@ -1,3 +1,35 @@
+public CsBreakdownCollection GetspecialBreakdownsByNames(List<string> names)
+{
+    // Assuming _xmlDocument is an XDocument that has been loaded with your XML content.
+    var breakdowns = new CsBreakdownCollection();
+
+    foreach (string name in names)
+    {
+        var reportAttributes = _xmlDocument.Descendants("ReportAttribute")
+            .Where(e => names.Contains(e.Attribute("name")?.Value));
+
+        foreach (var reportAttribute in reportAttributes)
+        {
+            var breakdown = new CsBreakdown
+            {
+                // Assign properties to CsBreakdown from the reportAttribute as needed
+                Name = reportAttribute.Attribute("name")?.Value,
+                DisplayName = reportAttribute.Attribute("display_name")?.Value,
+                // ... other properties
+            };
+            breakdowns.Add(breakdown);
+        }
+    }
+
+    return breakdowns;
+}
+
+
+
+
+
+
+
 
 # Pattern Matching in Scala
 

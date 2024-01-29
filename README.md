@@ -1,28 +1,37 @@
+
 public CsBreakdownCollection GetspecialBreakdownsByNames(List<string> names)
 {
-    // Assuming _xmlDocument is an XDocument that has been loaded with your XML content.
-    var breakdowns = new CsBreakdownCollection();
+    CsBreakdownCollection result = new CsBreakdownCollection();
+    XmlNodeList breakdowns_node_list = null;
 
+    // Assuming 'this' is an instance of XmlDocument or a similar class that has the SelectSingleNode and SelectNodes methods
     foreach (string name in names)
     {
-        var reportAttributes = _xmlDocument.Descendants("ReportAttribute")
-            .Where(e => names.Contains(e.Attribute("name")?.Value));
+        // Select the Breakdown node that has an attribute 'name' matching the current name in the list
+        XmlElement breakdowngroupnode = (XmlElement)this.SelectSingleNode("//PredefinedBreakdowns/Breakdowns/Breakdown[@name='" + name + "']");
 
-        foreach (var reportAttribute in reportAttributes)
+        if (breakdowngroupnode != null && 
+            (breakdowngroupnode.GetAttribute("visible") == string.Empty || breakdowngroupnode.GetAttribute("visible") == "true"))
         {
-            var breakdown = new CsBreakdown
-            {
-                // Assign properties to CsBreakdown from the reportAttribute as needed
-                Name = reportAttribute.Attribute("name")?.Value,
-                DisplayName = reportAttribute.Attribute("display_name")?.Value,
-                // ... other properties
-            };
-            breakdowns.Add(breakdown);
+            CsBreakdownHierarchy new_breakdown = CreateHierarchyBreakdown(breakdowngroupnode, breakdowngroupnode.GetAttribute("category"));
+            result.Add(new_breakdown);
+        }
+
+        // Select the ReportAttribute node that has an attribute 'name' matching the current name in the list
+        breakdowngroupnode = (XmlElement)this.SelectSingleNode("//PredefinedBreakdowns/Breakdowns/ReportAttribute[@name='" + name + "']");
+
+        if (breakdowngroupnode != null && 
+            (breakdowngroupnode.GetAttribute("visible") == string.Empty || breakdowngroupnode.GetAttribute("visible") == "true"))
+        {
+            CsBreakdown new_breakdown = CreateBreakdownFromXml(breakdowngroupnode);
+            result.Add(new_breakdown);
         }
     }
 
-    return breakdowns;
+    return result;
 }
+
+
 
 
 

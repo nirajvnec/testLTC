@@ -1,3 +1,23 @@
+using System.Collections.Specialized;
+using System.Collections.Generic;
+
+public static class StringCollectionExtensions
+{
+    public static List<string> ToList(this StringCollection stringCollection)
+    {
+        List<string> list = new List<string>();
+        foreach (string item in stringCollection)
+        {
+            list.Add(item);
+        }
+        return list;
+    }
+}
+
+
+
+
+
 
 public CsBreakdownCollection GetspecialBreakdownsByNames(List<string> names)
 {

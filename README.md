@@ -1,3 +1,34 @@
+public CsBreakdownCollection GetspecialBreakdownsByNames(List<string> names)
+{
+    CsBreakdownCollection result = new CsBreakdownCollection();
+
+    foreach (string name in names)
+    {
+        // Select the Breakdown node that has an attribute 'name' matching the current name in the list
+        XmlElement breakdownElement = (XmlElement)this.SelectSingleNode("//PredefinedBreakdowns/Breakdowns/Breakdown[@name='" + name + "']");
+        if (breakdownElement != null)
+        {
+            string category = GetCategoryFromParentBreakdowns(breakdownElement);
+
+            if ((breakdownElement.GetAttribute("visible") == string.Empty || breakdownElement.GetAttribute("visible") == "true"))
+            {
+                CsBreakdownHierarchy new_breakdown = CreateHierarchyBreakdown(breakdownElement, category);
+                result.Add(new_breakdown);
+            }
+        }
+
+        // Repeat similar logic for ReportAttribute elements if needed...
+    }
+
+    return result;
+}
+
+
+
+
+
+
+
 using System.Collections.Specialized;
 using System.Collections.Generic;
 

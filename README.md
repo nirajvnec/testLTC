@@ -1,3 +1,29 @@
+
+public string GetCategoryByName(string name)
+{
+    // Find the Breakdown element with the given name
+    XmlElement breakdownElement = (XmlElement)this.SelectSingleNode("//PredefinedBreakdowns/Breakdowns/Breakdown[@name='" + name + "']");
+
+    if (breakdownElement != null)
+    {
+        // Get the immediate parent 'Breakdowns' node
+        XmlElement parentBreakdownsNode = (XmlElement)breakdownElement.ParentNode;
+        
+        if (parentBreakdownsNode != null && parentBreakdownsNode.Name.Equals("Breakdowns"))
+        {
+            // Return the 'category' attribute from the parent 'Breakdowns' node
+            return parentBreakdownsNode.GetAttribute("category");
+        }
+    }
+
+    // Return null or string.Empty if the category attribute is not found
+    return null;
+}
+
+
+
+
+
 ChatGPT 4
 
 User

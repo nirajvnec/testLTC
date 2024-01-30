@@ -1,3 +1,25 @@
+public string GetCategoryFromParentBreakdowns(XmlElement breakdownElement)
+{
+    // Check if the provided element is not null and has a parent
+    if (breakdownElement != null && breakdownElement.ParentNode is XmlElement parentElement)
+    {
+        // Check if the parent node is the 'Breakdowns' element
+        if (parentElement.Name == "Breakdowns")
+        {
+            // Return the 'category' attribute of the parent 'Breakdowns' node
+            return parentElement.GetAttribute("category");
+        }
+    }
+
+    // Return null or string.Empty if the category attribute is not found or the parent is not 'Breakdowns'
+    return null;
+}
+
+
+
+
+
+
 public CsBreakdownCollection GetspecialBreakdownsByNames(List<string> names)
 {
     CsBreakdownCollection result = new CsBreakdownCollection();

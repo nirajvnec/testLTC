@@ -1,3 +1,15 @@
+string displayCategory = "yourCategory"; // Replace with your actual category
+XmlNodeList parameter_node_list = this.SelectNodes("//RiskParameters/ReportAttribute[@is_deprecated='no' and @displaycategory='" + displayCategory + "']");
+
+
+
+
+
+
+
+
+
+
 
 public string GetCategoryByName(string name)
 {

@@ -1,3 +1,29 @@
+private void DisplayLoadingText()
+{
+    Label loadingLabel = new Label();
+    loadingLabel.AutoSize = false; // Allows you to manually set the size
+    loadingLabel.TextAlign = ContentAlignment.MiddleCenter; // Centers the text inside the label
+    loadingLabel.Text = "Loading...";
+    loadingLabel.Font = new Font("Arial", 12); // Example font, adjust as needed
+
+    // Set the size of the label (you might want to adjust this)
+    loadingLabel.Size = new Size(100, 50); 
+
+    // Center the label on the form
+    loadingLabel.Location = new Point(
+        (this.ClientSize.Width - loadingLabel.Width) / 2,
+        (this.ClientSize.Height - loadingLabel.Height) / 2
+    );
+
+    this.Controls.Add(loadingLabel);
+}
+
+
+
+
+
+
+
 I hope this message finds you well. I wanted to take a moment to provide my feedback on the recent communication regarding the salary hike that has been granted to me.
 
 First and foremost, I want to express my sincere gratitude to the company and My Manager Shadab for considering and approving the salary increase. I am truly appreciative of the recognition of my contributions and the commitment the organization and my manager have shown to my well-being.

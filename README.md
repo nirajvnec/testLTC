@@ -1,3 +1,57 @@
+public class CtlResultsTable : ClFlexGrid.ClFlexGrid
+{
+    // Define an event to be raised after data is loaded.
+    public event EventHandler DataLoaded;
+
+    // Method to load data and raise the event.
+    public void LoadData()
+    {
+        // Your logic to load data into the grid
+
+        // After loading data, raise the event
+        OnDataLoaded(EventArgs.Empty);
+    }
+
+    // Method to safely raise the event
+    protected virtual void OnDataLoaded(EventArgs e)
+    {
+        DataLoaded?.Invoke(this, e);
+    }
+}
+
+
+public class FrmResult : Form
+{
+    private CtlResultsTable myGrid;
+
+    public FrmResult()
+    {
+        InitializeComponent();
+
+        // Assuming myGrid is already initialized
+        myGrid = new CtlResultsTable();
+        this.Controls.Add(myGrid); // Add the grid to the form's controls if not already done
+
+        // Subscribe to the DataLoaded event
+        myGrid.DataLoaded += MyGrid_DataLoaded;
+    }
+
+    // Event handler for DataLoaded event
+    private void MyGrid_DataLoaded(object sender, EventArgs e)
+    {
+        // Code to execute when data is loaded and visible
+        MessageBox.Show("Data loaded into grid!");
+    }
+}
+
+
+
+
+
+
+
+
+
 private void DisplayLoadingText()
 {
     Label loadingLabel = new Label();

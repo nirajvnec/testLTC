@@ -1,3 +1,50 @@
+public class YourViewModel
+{
+    // Define an event that can be subscribed to from the outside, e.g., by a View
+    public event EventHandler DataLoaded;
+
+    // Method to safely raise the DataLoaded event
+    protected virtual void OnDataLoaded()
+    {
+        DataLoaded?.Invoke(this, EventArgs.Empty);
+    }
+
+    // Existing command property and logic
+    private ICommand _showResultCommand;
+    public ICommand ShowResultCommand
+    {
+        get
+        {
+            if (_showResultCommand == null)
+            {
+                _showResultCommand = new DelegateCommand(
+                    param => this.ShowResult((ReportsListViewModel)param),
+                    param => this.CanShowResult(param) // Assuming you have a CanExecute predicate
+                );
+            }
+            return _showResultCommand;
+        }
+    }
+
+    private void ShowResult(ReportsListViewModel param)
+    {
+        // Your logic here
+
+        // After completing the logic, raise the event
+        OnDataLoaded();
+    }
+
+    private bool CanShowResult(object param)
+    {
+        // Your CanExecute logic here
+        return true; // Simplified for demonstration
+    }
+}
+
+
+
+
+
 public class CtlResultsTable : ClFlexGrid.ClFlexGrid
 {
     // Define an event to be raised after data is loaded.

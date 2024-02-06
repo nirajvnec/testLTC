@@ -1,3 +1,17 @@
+public class YourViewModel : INotifyPropertyChanged
+{
+    public event EventHandler DataLoaded;
+
+    protected virtual void OnDataLoaded()
+    {
+        DataLoaded?.Invoke(this, EventArgs.Empty);
+    }
+
+   
+}
+
+
+
 public class YourViewModel
 {
     // Define an event that can be subscribed to from the outside, e.g., by a View

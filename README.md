@@ -1,3 +1,27 @@
+public partial class YourView : UserControl
+{
+    public YourView()
+    {
+        InitializeComponent();
+
+        // Assuming your ViewModel is already assigned to DataContext
+        var viewModel = DataContext as YourViewModel;
+        if (viewModel != null)
+        {
+            viewModel.DataLoaded += ViewModel_DataLoaded;
+        }
+    }
+
+    private void ViewModel_DataLoaded(object sender, EventArgs e)
+    {
+        // Respond to the event, e.g., update the UI or show a message
+        MessageBox.Show("Data loaded and grid is updated.");
+    }
+}
+
+
+
+
 public class YourViewModel : INotifyPropertyChanged
 {
     public event EventHandler DataLoaded;

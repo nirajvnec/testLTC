@@ -1,3 +1,75 @@
+using System;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Timers;
+
+public class YourViewModel
+{
+    public ICommand ShowResultsCommand { get; }
+
+    public YourViewModel()
+    {
+        ShowResultsCommand = new DelegateCommand(async obj =>
+        {
+            await ShowResultsAsync();
+        });
+    }
+
+    private async Task ShowResultsAsync()
+    {
+        // Your method's logic here
+        Console.WriteLine("Results shown");
+
+        // Wait for the method to complete (simulated with Task.Delay here)
+        await Task.Delay(100); // Simulating work
+
+        // Setup a timer to fire an event after 10 seconds
+        var timer = new Timer(10000); // 10 seconds specified in milliseconds
+        timer.Elapsed += async (sender, e) =>
+        {
+            timer.Stop(); // Stop the timer to prevent it from firing again
+
+            // Fire your event here (this is just a placeholder action)
+            Console.WriteLine("Event fired after 10 seconds");
+
+            // Execute on the UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show("This is your message.");
+            });
+        };
+        timer.Start();
+    }
+}
+
+public class DelegateCommand : ICommand
+{
+    private readonly Action<object> _execute;
+    private readonly Func<object, bool> _canExecute;
+
+    public event EventHandler CanExecuteChanged
+    {
+        add { CommandManager.RequerySuggested += value; }
+        remove { CommandManager.RequerySuggested -= value; }
+    }
+
+    public DelegateCommand(Action<object> execute, Func<object, bool> canExecute = null)
+    {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        _canExecute = canExecute;
+    }
+
+    public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
+
+    public void Execute(object parameter) => _execute(parameter);
+}
+
+
+
+
+
+
 public partial class YourView : UserControl
 {
     public YourView()

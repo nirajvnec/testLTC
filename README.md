@@ -1,8 +1,7 @@
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Timers;
+using System.Windows.Threading;
 
 public class YourViewModel
 {
@@ -10,37 +9,54 @@ public class YourViewModel
 
     public YourViewModel()
     {
-        ShowResultsCommand = new DelegateCommand(async obj =>
+        ShowResultsCommand = new DelegateCommand(obj =>
         {
-            await ShowResultsAsync();
+            ShowResults();
         });
     }
 
-    private async Task ShowResultsAsync()
+    private void ShowResults()
     {
         // Your method's logic here
         Console.WriteLine("Results shown");
 
-        // Wait for the method to complete (simulated with Task.Delay here)
-        await Task.Delay(100); // Simulating work
-
-        // Setup a timer to fire an event after 10 seconds
-        var timer = new Timer(10000); // 10 seconds specified in milliseconds
-        timer.Elapsed += async (sender, e) =>
+        // Setup a DispatcherTimer to fire an event after 10 seconds
+        var timer = new DispatcherTimer();
+        timer.Interval = TimeSpan.FromSeconds(10); // 10 seconds
+        timer.Tick += (sender, e) =>
         {
             timer.Stop(); // Stop the timer to prevent it from firing again
 
             // Fire your event here (this is just a placeholder action)
             Console.WriteLine("Event fired after 10 seconds");
 
-            // Execute on the UI thread
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                MessageBox.Show("This is your message.");
-            });
+            // Show a MessageBox directly since we're on the UI thread
+            MessageBox.Show("This is your message.");
         };
         timer.Start();
     }
+}
+
+public class DelegateCommand : ICommand
+{
+    private readonly Action<object> _execute;
+    private readonly Func<object, bool> _canExecute;
+
+    public event EventHandler CanExecuteChanged
+    {
+        add { CommandManager.RequerySuggested += value; }
+        remove { CommandManager.RequerySuggested -= value; }
+    }
+
+    public DelegateCommand(Action<object> execute, Func<object, bool> canExecute = null)
+    {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        _canExecute = canExecute;
+    }
+
+    public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
+
+    public void Execute(object parameter) => _execute(parameter);
 }
 
 public class DelegateCommand : ICommand

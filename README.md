@@ -1,3 +1,28 @@
+import {NgModule} from '@angular/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MAT_DATE_FORMATS} from '@angular/material/core';
+import {MY_DATE_FORMATS} from './my-date-formats'; // Adjust the path as necessary
+
+@NgModule({
+  declarations: [
+    // your components here
+  ],
+  imports: [
+    MatDatepickerModule,
+    // other imports here
+  ],
+  providers: [
+    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},
+  ],
+})
+export class YourModule { }
+
+
+
+
+
+
+
 import {MatDateFormats} from '@angular/material/core';
 
 export const MY_DATE_FORMATS: MatDateFormats = {

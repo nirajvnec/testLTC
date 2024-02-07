@@ -1,3 +1,23 @@
+import {MatDateFormats} from '@angular/material/core';
+
+export const MY_DATE_FORMATS: MatDateFormats = {
+  parse: {
+    dateInput: 'LL', // Use moment.js format strings e.g., 'DD/MM/YYYY'
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
+
+
+
+
+
+
 
 We require a Spark environment to fulfill the UBS project's requirements. Our team needs to be trained to gain proficiency in using the Spark platform with Scala and the Azure cloud platform. We are looking for a sandbox environment where our team can learn and practice. Ideally, access to the Azure Databricks cloud platform would be highly beneficial. Could you please assist us?
 

@@ -1,3 +1,93 @@
+
+To configure the Angular Material date picker to display dates in the MMM-DD-YYYY format, you'll need to define your custom date formats accordingly. Here's how you can set it up, particularly if you're using Angular Material 13.5 and wish to use this specific format:
+
+Define Custom Date Formats
+First, you'll define your custom date formats to use the MMM-DD-YYYY format for displaying dates. This involves specifying how the date picker should parse and display dates:
+
+typescript
+Copy code
+import { MatDateFormats } from '@angular/material/core';
+
+export const MY_DATE_FORMATS: MatDateFormats = {
+  parse: {
+    dateInput: 'MMM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MMM-DD-YYYY', // use this format for display
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+Provide Your Custom Date Formats
+Next, you will need to provide these custom date formats in your module where you're using the Angular Material date picker. Make sure you have imported MatDatepickerModule and any other necessary Angular Material modules:
+
+typescript
+Copy code
+import { NgModule } from '@angular/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MY_DATE_FORMATS } from './my-date-formats'; // Adjust the path as necessary
+
+@NgModule({
+  imports: [
+    MatDatepickerModule,
+    // other necessary imports
+  ],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+  ],
+  // other module properties
+})
+export class AppModule { }
+MomentDateAdapter (Optional)
+If you decide to use MomentDateAdapter for handling dates, ensure that Moment.js and the @angular/material-moment-adapter are installed. This step is optional and based on whether you need additional date manipulation features provided by Moment.js. If you choose to use it, remember to configure your module to use MomentDateAdapter along with your custom date formats:
+
+bash
+Copy code
+npm install moment @angular/material-moment-adapter
+And in your module:
+
+typescript
+Copy code
+import { NgModule } from '@angular/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MY_DATE_FORMATS } from './my-date-formats';
+
+@NgModule({
+  imports: [
+    MatDatepickerModule,
+    // other imports
+  ],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+  ],
+  // other module properties
+})
+export class AppModule { }
+This setup ensures that your Angular Material date picker will display dates in the MMM-DD-YYYY format. Adjust the path to MY_DATE_FORMATS as necessary based on your project structure.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 npm install --save moment @angular/material-moment-adapter
 
 

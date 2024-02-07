@@ -1,3 +1,7 @@
+npm install --save moment @angular/material-moment-adapter
+
+
+
 import {NgModule} from '@angular/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MAT_DATE_FORMATS} from '@angular/material/core';

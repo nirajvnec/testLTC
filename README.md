@@ -1,3 +1,9 @@
+
+We require a Spark environment to fulfill the UBS project's requirements. Our team needs to be trained to gain proficiency in using the Spark platform with Scala and the Azure cloud platform. We are looking for a sandbox environment where our team can learn and practice. Ideally, access to the Azure Databricks cloud platform would be highly beneficial. Could you please assist us?
+
+
+
+
 using System;
 using System.Windows;
 using System.Windows.Input;

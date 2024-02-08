@@ -1,6 +1,27 @@
 
 m_report_runner.ReportCompleted += async (results) => 
 {
+    // Wrap UI updates in Invoke to ensure they are performed on the UI thread.
+    if (this.InvokeRequired)
+    {
+        this.Invoke(new Action(async () => {
+            await ReportRunner_ReportCompletedAsync(results);
+        }));
+    }
+    else
+    {
+        await ReportRunner_ReportCompletedAsync(results);
+    }
+};
+
+
+
+
+
+
+
+m_report_runner.ReportCompleted += async (results) => 
+{
     // Since we can't await directly in the lambda passed to +=, we'll call the async method without awaiting.
     await ReportRunner_ReportCompletedAsync(results);
 };

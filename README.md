@@ -1,3 +1,30 @@
+// Assuming ShowResultsFormAsync is an async version of ShowResultsForm
+private async Task ShowResultsFormAsync(CsResults results)
+{
+    // Your asynchronous logic to show results
+}
+
+private async Task ReportRunner_ReportCompletedAsync(CsResults results)
+{
+    a_running_reports.Remove(results.RepoDef.ModifiedFileName);
+
+    // Check if we need to marshal back to the UI thread
+    if (this.InvokeRequired)
+    {
+        // Use Invoke to run asynchronously on the UI thread
+        // Assuming you have a delegate defined for showing results, similar to m_show_results_delegate
+        this.Invoke(new MethodInvoker(async () => await ShowResultsFormAsync(results)));
+    }
+    else
+    {
+        // Directly call the asynchronous version without needing to switch to the UI thread
+        await ShowResultsFormAsync(results);
+    }
+}
+
+
+
+
 
 To configure the Angular Material date picker to display dates in the MMM-DD-YYYY format, you'll need to define your custom date formats accordingly. Here's how you can set it up, particularly if you're using Angular Material 13.5 and wish to use this specific format:
 

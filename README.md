@@ -1,3 +1,12 @@
+
+m_report_runner.ReportCompleted += async (results) => 
+{
+    // Since we can't await directly in the lambda passed to +=, we'll call the async method without awaiting.
+    await ReportRunner_ReportCompletedAsync(results);
+};
+
+
+
 // Assuming ShowResultsFormAsync is an async version of ShowResultsForm
 private async Task ShowResultsFormAsync(CsResults results)
 {

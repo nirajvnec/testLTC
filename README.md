@@ -1,3 +1,18 @@
+private ListViewItem SafeGetReportItem(string report_name)
+{
+    if (report_list.InvokeRequired)
+    {
+        return (ListViewItem)report_list.Invoke(new Func<string, ListViewItem>(GetReportItem), report_name);
+    }
+    else
+    {
+        return GetReportItem(report_name);
+    }
+}
+
+
+
+
 
 m_report_runner.ReportCompleted += async (results) => 
 {

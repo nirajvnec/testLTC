@@ -1,3 +1,37 @@
+private async Task ReportRunner_ReportCompletedAsync(CsResults results) 
+{
+    m_running_reports.Remove(results.ReportDef.ModifiedFileName);
+    
+    // Perform the operation that doesn't need the UI thread here
+    // For example, processing results before showing them
+
+    // Now, check if we need to marshal back to the UI thread for UI updates
+    if (this.InvokeRequired)
+    {
+        // Marshal the UI update part back to the UI thread
+        this.Invoke(new MethodInvoker(() => ShowResultsForm(results)));
+    }
+    else
+    {
+        // We are already on the UI thread, so just call the method directly
+        ShowResultsForm(results);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 private ListViewItem SafeGetReportItem(string report_name)
 {
     if (report_list.InvokeRequired)

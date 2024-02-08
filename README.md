@@ -1,3 +1,11 @@
+m_report_runner.ReportCompleted += async (results) => 
+{
+    // No need to wrap the async call in Invoke directly.
+    // Instead, check if Invoke is required inside the async method itself for any UI updates.
+    await ReportRunner_ReportCompletedAsync(results);
+};
+
+
 private async Task ReportRunner_ReportCompletedAsync(CsResults results) 
 {
     m_running_reports.Remove(results.ReportDef.ModifiedFileName);

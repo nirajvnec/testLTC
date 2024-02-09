@@ -1,3 +1,38 @@
+The Post Implementation Verification Plan for the Myapps RFC encompasses detailed check-out steps for both the Global Production Support Team and the Swiss Level 2 (L2) Production Support Team, ensuring a seamless deployment and functioning of the Mars Enquiry Tool (MET) within the production environment. This plan is essential for updating MET to its latest version, verifying the application's launch capabilities, and testing specified functionalities within the PROD environment. Here is the updated plan, with the MET version corrected to 24.0.3.1032, Mars ET version updated to 23.4.0, and the date adjusted to February 17, 2024, all presented in standard English:
+
+For the Global Production Support Team:
+Standard Check-Out Steps:
+
+Mars Enquiry Tool Update:
+
+Update the Mars Enquiry Tool (MET) to the latest version (24.0.3.1032) in IDAPPS or SDC. Ensure the update is successfully completed and the correct version is verified.
+Application Launch Verification:
+
+Connect to the PROD environment and verify that the application launches successfully without any issues.
+Functionality Test:
+
+Perform several Value at Risk (VaR) queries in the PROD environment to ensure they run successfully and return the expected results.
+For the Swiss L2 Production Support Team:
+Check-Out Steps:
+
+Configuration Replication Verification:
+
+Ensure that the Mars ET configuration replication is successfully carried out overnight on February 17, 2024, from the Global production environment to the Swiss production environment. The Mars ET version 23.4.0 configuration deployment is scheduled for February 17 (after 2:30 PM IST) in the Global production environment by the Global Production Support Team (RFC13066525).
+Mars Enquiry Tool Update:
+
+After successful configuration replication, update the Mars Enquiry Tool (MET) to the latest version (24.0.3.1032) in IDAPPS or SDC. Verify that the update is successful and the correct version is installed.
+Application Launch Verification:
+
+Connect to the PROD environment and ensure the application launches properly without any complications.
+Functionality Test:
+
+Conduct several Value at Risk (VaR) queries in the PROD environment to verify they are executed successfully and yield accurate results.
+This revised plan details the steps required to validate the implementation of the Mars Enquiry Tool update, ensuring all involved teams are well-informed and prepared to manage the system's transition smoothly, thus maintaining the integrity of the production environment.
+
+
+
+
+
 m_report_runner.ReportCompleted += async (results) => 
 {
     // No need to wrap the async call in Invoke directly.

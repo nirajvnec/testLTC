@@ -5,35 +5,35 @@ private async void ShowResult(ReportsListModel viewModel)
     CsReportDef reportDefinition = null;
     string filename = string.Empty;
     string fileNameWithoutTimeStamp = string.Empty;
+
     try
     {
         if (ShowResultButtonEnabled || ExceptionButtonEnabled)
         {
             if (viewModel != null && viewModel.SelectedRecord != null)
             {
-                // Assuming the logic to set 'response' variable here...
-                string response = null, result;
-                Xml.XmlReader xmlResult;
-
-                // Further processing...
+                // Logic to set 'response' variable and further processing...
 
                 if (filename.Length != 0)
                 {
-                    // Assuming results are instantiated correctly here...
                     results = new CsResults(reportDefinition, result, false);
                     results.MapResultToResultTable();
-                    this.ShowResultsForm(results); // Assuming this method correctly initializes 'resultsForm'
+                    resultsForm = this.ShowResultsForm(results); // Ensure this returns the instance of FrmResults
 
+                    // Assuming there's a collection that manages instances of results forms, indexed by report names.
                     // Setup a DispatcherTimer to fire an event after 10 seconds
                     var timer = new DispatcherTimer();
-                    timer.Interval = TimeSpan.FromSeconds(10); // Corrected to 10 seconds
-                    timer.Tick += (sender, e) =>
+                    timer.Interval = TimeSpan.FromSeconds(10); // Set interval to 10 seconds
+                    timer.Tick += async (sender, e) =>
                     {
                         timer.Stop();
-                        if (resultsForm != null && resultsForm.ContainsKey(results.ReportDef.ReportName))
+                        // Ensure the form is correctly accessed and then manipulate the loadingLabel
+                        if (resultsForm != null) // Assuming resultsForm is correctly assigned by ShowResultsForm
                         {
-                            resultsForm = (FrmResults)resultForms[results.ReportDef.ReportName];
-                            resultsForm.loadingLabel.Visible = false; // Ensure this is the correct place to hide the label
+                            resultsForm.Invoke(new Action(() => 
+                            {
+                                resultsForm.loadingLabel.Visible = false;
+                            }));
                         }
                     };
                     timer.Start();
@@ -51,11 +51,7 @@ private async void ShowResult(ReportsListModel viewModel)
     }
     finally
     {
-        // Ensure 'resultsForm' is initialized and visible before trying to access 'loadingLabel'
-        if (resultsForm != null)
-        {
-            resultsForm.loadingLabel.Visible = false;
-        }
+        // It's moved inside timer's Tick event to ensure it's executed in the correct context.
     }
 }
 

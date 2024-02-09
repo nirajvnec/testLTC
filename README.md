@@ -1,3 +1,69 @@
+private async void ShowResult(ReportsListModel viewModel)
+{
+    FrmResults resultsForm = null;
+    CsResults results = null;
+    CsReportDef reportDefinition = null;
+    string filename = string.Empty;
+    string fileNameWithoutTimeStamp = string.Empty;
+    try
+    {
+        if (ShowResultButtonEnabled || ExceptionButtonEnabled)
+        {
+            if (viewModel != null && viewModel.SelectedRecord != null)
+            {
+                // Assuming the logic to set 'response' variable here...
+                string response = null, result;
+                Xml.XmlReader xmlResult;
+
+                // Further processing...
+
+                if (filename.Length != 0)
+                {
+                    // Assuming results are instantiated correctly here...
+                    results = new CsResults(reportDefinition, result, false);
+                    results.MapResultToResultTable();
+                    this.ShowResultsForm(results); // Assuming this method correctly initializes 'resultsForm'
+
+                    // Setup a DispatcherTimer to fire an event after 10 seconds
+                    var timer = new DispatcherTimer();
+                    timer.Interval = TimeSpan.FromSeconds(10); // Corrected to 10 seconds
+                    timer.Tick += (sender, e) =>
+                    {
+                        timer.Stop();
+                        if (resultsForm != null && resultsForm.ContainsKey(results.ReportDef.ReportName))
+                        {
+                            resultsForm = (FrmResults)resultForms[results.ReportDef.ReportName];
+                            resultsForm.loadingLabel.Visible = false; // Ensure this is the correct place to hide the label
+                        }
+                    };
+                    timer.Start();
+                }
+            }
+        }
+    }
+    catch (OutOfMemoryException ex)
+    {
+        CsMarsErrorHelper.GetInstance().ShowWarning(CommonConstants.OutOfMemoryError, CommonConstants.ResultFormErrorCaption);
+    }
+    catch (Exception ex)
+    {
+        CsMarsErrorHelper.GetInstance().ShowError(ex, CommonConstants.ResultFormErrorCaption, false);
+    }
+    finally
+    {
+        // Ensure 'resultsForm' is initialized and visible before trying to access 'loadingLabel'
+        if (resultsForm != null)
+        {
+            resultsForm.loadingLabel.Visible = false;
+        }
+    }
+}
+
+
+
+
+
+
 The Post Implementation Verification Plan for the Myapps RFC encompasses detailed check-out steps for both the Global Production Support Team and the Swiss Level 2 (L2) Production Support Team, ensuring a seamless deployment and functioning of the Mars Enquiry Tool (MET) within the production environment. This plan is essential for updating MET to its latest version, verifying the application's launch capabilities, and testing specified functionalities within the PROD environment. Here is the updated plan, with the MET version corrected to 24.0.3.1032, Mars ET version updated to 23.4.0, and the date adjusted to February 17, 2024, all presented in standard English:
 
 For the Global Production Support Team:

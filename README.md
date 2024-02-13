@@ -1,3 +1,18 @@
+Could you please provide the appropriate values for the following fields that I should select?
+
+Filter
+System
+Authorization domain
+Operational environment
+Subsystem
+Profile
+Your guidance on these selections would be greatly appreciated.
+
+
+
+
+
+
 Dear [Recipient's Name],
 
 I hope this message finds you well. Following the completion of the development and initial testing phases for the updates/enhancements listed under the Jira issues [Jira Issue IDs], we are now entering the User Acceptance Testing (UAT) phase. This email serves as a formal request for your UAT sign-off on these items, ensuring they meet the agreed-upon requirements and standards before moving to production.

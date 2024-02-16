@@ -1,3 +1,42 @@
+using System;
+
+// Assuming CsBreakdownCollection and CsBreakdown are defined in this namespace
+namespace YourNamespace
+{
+    // Extension method class must be static
+    public static class CsBreakdownCollectionExtensions
+    {
+        // Extension method to filter CsBreakdownCollection
+        public static CsBreakdownCollection FilterByDisplayTextCategory(this CsBreakdownCollection collection, string category)
+        {
+            // Assuming CsBreakdownCollection can be instantiated like this
+            CsBreakdownCollection filteredCollection = new CsBreakdownCollection();
+
+            // Iterate through each item in the collection
+            foreach (CsBreakdown item in collection)
+            {
+                // Check if DisplayTextCategory matches the specified category
+                if (item.DisplayTextCategory == category)
+                {
+                    // Add the item to the filtered collection
+                    // Assuming CsBreakdownCollection has an Add method
+                    filteredCollection.Add(item);
+                }
+            }
+
+            return filteredCollection;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 Could you please provide the appropriate values for the following fields that I should select?
 
 Filter

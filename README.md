@@ -1,3 +1,25 @@
+The screenshot you've shared appears to show an error message related to an FRTB (Fundamental Review of the Trading Book) set up in a production Swiss open zone. The error indicates an unauthorized access attempt by a certificate user who is not permitted to specify another username.
+
+Here are some steps to troubleshoot the issue:
+
+Certificate and Access Rights: Verify that the user M171666 doesn't have the correct permissions set up in the Swiss production environment. This will involve checking the access control list (ACL) for the resources they are trying to access.
+
+User Credentials: Ensure that the user bgandik2 is valid and has the appropriate permissions. If the user is trying to perform actions on behalf of bgandik2, confirm that delegation or impersonation rights are correctly configured.
+
+Consistency Across Environments: Since you mentioned that there is no problem with FRTB/Mars set up in the global environment, compare the configuration and permissions of both environments to spot any discrepancies.
+
+Support and Documentation: Utilize the 'Error or Warning Assistance Support' as suggested, which might direct you to a Confluence page with relevant information or troubleshooting steps.
+
+Raising a Support Ticket: If you are unable to resolve the issue with the available documentation and self-help tools, follow the process to raise a support ticket. This will get the attention of the Risk IT team who can investigate the issue with more context and access to the system.
+
+Logs and Audit Trails: Check the application and security logs to see more details about the unauthorized access attempt. This might give you more insight into why the access was denied.
+
+Environment Specific Settings: Sometimes issues can be specific to certain environments due to different settings or data. Make sure to check environment-specific settings and certificates.
+
+If none of the above steps help in resolving the issue, it's best to collaborate with your security and infrastructure teams to ensure that the certificates and user permissions are correctly implemented and that there are no other underlying issues with the environment or setup.
+
+
+
 using System;
 
 // Assuming CsBreakdownCollection and CsBreakdown are defined in this namespace

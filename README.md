@@ -1,3 +1,22 @@
+public event CalculationMethodEventHandler SelectedMethodChangedComplete;
+
+
+// This method is within the CtlCalculationMethod class
+protected virtual void OnSelectedMethodChanged()
+{
+    // Your existing logic that ends with raising the SelectedMethodChanged event
+    SelectedMethodChanged?.Invoke(this, EventArgs.Empty);
+
+    // Immediately after, raise the SelectedMethodChangedComplete event
+    SelectedMethodChangedComplete?.Invoke(this, EventArgs.Empty);
+}
+
+this.ctlCalculationMethod.SelectedMethodChangedComplete += this.CtlCalculationMethod_SelectedMethodChangedComplete;
+
+
+
+
+
 The screenshot you've shared appears to show an error message related to an FRTB (Fundamental Review of the Trading Book) set up in a production Swiss open zone. The error indicates an unauthorized access attempt by a certificate user who is not permitted to specify another username.
 
 Here are some steps to troubleshoot the issue:

@@ -1,3 +1,8 @@
+C:\Users\UserName\AppData\Local\Temp\, the result of this operation would be C:\Users\UserName\AppData\Local\Temp\HM.
+
+
+
+
 public event CalculationMethodEventHandler SelectedMethodChangedComplete;
 
 

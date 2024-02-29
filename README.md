@@ -1,3 +1,19 @@
+// Assuming breakdown_headings_combo_box is a ComboBox or similar control
+this.breakdown_headings_combo_box.SelectedIndexChanged += async (sender, e) => {
+    await BreakdownHeadingsComboBoxSelectedIndexChangedAsync(sender, e);
+};
+
+// Define the async method that does the actual work
+private async Task BreakdownHeadingsComboBoxSelectedIndexChangedAsync(object sender, EventArgs e)
+{
+    // Your asynchronous code here
+    // Example:
+    // await LoadDataAsync();
+}
+
+    
+    
+    
     // Event handler for ItemAdded event
     private void m_drag_drop_items_ItemAdded(CtlDragDropItem new_item)
     {

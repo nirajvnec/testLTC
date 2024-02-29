@@ -1,3 +1,57 @@
+private void m_drag_drop_items_ItemAdded(CtlDragDropItem new_item)
+{
+    // Define a delegate to perform UI updates that can be used with Invoke
+    MethodInvoker updateUI = delegate
+    {
+        new_item.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+        new_item.Location = new Point(SIZE_ITEM_INDENT, 0);
+        new_item.Name = "DRAG_ITEM_NAME_" + m_drag_drop_items.Count.ToString();
+        new_item.Size = new Size(label_area_panel.Width - 2 * SIZE_ITEM_INDENT, 18);
+        new_item.Visible = true;
+        new_item.AllowDrop = true;
+
+        // Unsubscribe then resubscribe to events to prevent multiple subscriptions
+        new_item.MouseDown -= CtlDragDropItem_MouseDown;
+        new_item.MouseDown += CtlDragDropItem_MouseDown;
+
+        new_item.DragEnter -= CtlDragDropList_DragEnter;
+        new_item.DragEnter += CtlDragDropList_DragEnter;
+
+        new_item.DragDrop -= CtlDragDropList_DragDrop;
+        new_item.DragDrop += CtlDragDropList_DragDrop;
+
+        new_item.DraggedAway -= CtlDragDropItem_DraggedAway;
+        new_item.DraggedAway += CtlDragDropItem_DraggedAway;
+
+        new_item.DisabledChanged -= CtlDragDropItem_DisabledChanged;
+        new_item.DisabledChanged += CtlDragDropItem_DisabledChanged;
+
+        new_item.ItemUpdated -= CtlDragDropItem_ItemUpdated;
+        new_item.ItemUpdated += CtlDragDropItem_ItemUpdated;
+
+        // Add the new item to the panel
+        this.label_area_panel.Controls.Add(new_item);
+
+        // Additional UI update methods
+        RedrawScrollArea();
+        // RedrawItems(); // Uncomment if needed
+    };
+
+    // Check if invoke is required and execute the delegate accordingly
+    if (this.label_area_panel.InvokeRequired)
+    {
+        this.label_area_panel.Invoke(updateUI);
+    }
+    else
+    {
+        updateUI();
+    }
+}
+
+
+
+
+
 using System;
 using System.Windows.Forms;
 

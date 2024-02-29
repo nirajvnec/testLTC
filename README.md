@@ -1,3 +1,33 @@
+using System.Windows.Forms;
+
+public static class ControlExtensions
+{
+    /// <summary>
+    /// Adds a control to the Controls collection of a control object safely across threads.
+    /// </summary>
+    /// <param name="parentControl">The control to which the child control will be added.</param>
+    /// <param name="childControl">The control to add.</param>
+    public static void AddControlSafely(this Control parentControl, Control childControl)
+    {
+        if (parentControl.InvokeRequired)
+        {
+            parentControl.BeginInvoke(new MethodInvoker(delegate
+            {
+                parentControl.Controls.Add(childControl);
+            }));
+        }
+        else
+        {
+            parentControl.Controls.Add(childControl);
+        }
+    }
+}
+
+
+
+
+
+
 C:\Users\UserName\AppData\Local\Temp\, the result of this operation would be C:\Users\UserName\AppData\Local\Temp\HM.
 
 

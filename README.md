@@ -1,3 +1,10 @@
+// Assume 'label_area_panel' is an instance of Panel and 'new_item' is a Control
+label_area_panel.AddControlSafely(new_item);
+
+
+
+
+
 using System.Windows.Forms;
 
 public static class ControlExtensions

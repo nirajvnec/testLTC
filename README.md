@@ -1,3 +1,42 @@
+    // Event handler for ItemAdded event
+    private void m_drag_drop_items_ItemAdded(CtlDragDropItem new_item)
+    {
+        // Define a local function to update the UI
+        void UpdateUI()
+        {
+            // Assume SIZE_ITEM_INDENT is a constant for indentation
+            const int SIZE_ITEM_INDENT = 10; 
+            new_item.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            new_item.Location = new Point(SIZE_ITEM_INDENT, 0);
+            new_item.Name = "DRAG_ITEM_NAME_" + m_drag_drop_items.Count;
+            new_item.Size = new Size(label_area_panel.Width - 2 * SIZE_ITEM_INDENT, 18); // label_area_panel is the panel where new items are added
+            new_item.Visible = true;
+            new_item.AllowDrop = true;
+
+            // Unsubscribe and resubscribe to event handlers to avoid duplicating subscriptions
+            new_item.MouseDown -= CtlDragDropItem_MouseDown;
+            new_item.MouseDown += CtlDragDropItem_MouseDown;
+            // Subscribe to other events similarly...
+
+            label_area_panel.Controls.Add(new_item); // Add new_item to the UI
+
+            RedrawScrollArea(); // A method to redraw the scroll area, if necessary
+            // RedrawItems(); // Another method to redraw items, if necessary
+        }
+
+        // Check if we need to invoke the update on the UI thread
+        if (label_area_panel.InvokeRequired)
+        {
+            label_area_panel.Invoke((MethodInvoker)UpdateUI);
+        }
+        else
+        {
+            UpdateUI();
+        }
+    }
+
+    
+
 // Assuming 'ItemAdded' is an event of type 'DragDropItemEventHandler'
 m_drag_drop_items.ItemAdded += new DragDropItemEventHandler(item => SafeInvoke(() => m_drag_drop_items_ItemAdded(item)));
 

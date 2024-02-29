@@ -1,3 +1,30 @@
+public static class ControlExtensions
+{
+    public static void AddControlsSafely(this Control parentControl, params Control[] controlsToAdd)
+    {
+        if (parentControl.InvokeRequired)
+        {
+            parentControl.BeginInvoke(new MethodInvoker(delegate
+            {
+                foreach (var control in controlsToAdd)
+                {
+                    parentControl.Controls.Add(control);
+                }
+            }));
+        }
+        else
+        {
+            foreach (var control in controlsToAdd)
+            {
+                parentControl.Controls.Add(control);
+            }
+        }
+    }
+}
+
+
+
+
 // Assume 'label_area_panel' is an instance of Panel and 'new_item' is a Control
 label_area_panel.AddControlSafely(new_item);
 

@@ -1,3 +1,27 @@
+using System;
+using System.Windows.Forms;
+
+public static class UserControlExtensions
+{
+    public static void InvokeUpdate(this UserControl userControl, Action<UserControl> updateAction)
+    {
+        if (userControl.InvokeRequired)
+        {
+            userControl.Invoke(new Action(() => updateAction(userControl)));
+        }
+        else
+        {
+            updateAction(userControl);
+        }
+    }
+}
+
+
+
+
+
+
+
 label1.InvokeUpdate(ctrl =>
 {
     ctrl.Text = "Updated from another thread";

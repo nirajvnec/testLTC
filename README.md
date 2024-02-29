@@ -1,3 +1,40 @@
+using System.Windows.Forms;
+
+public static class ControlCollectionExtensions
+{
+    /// <summary>
+    /// Adds a single control object to the collection in a thread-safe manner.
+    /// </summary>
+    /// <param name="controlCollection">The Control.ControlCollection to extend.</param>
+    /// <param name="control">The Control object to add to the collection.</param>
+    public static void Add(this Control.ControlCollection controlCollection, Control control)
+    {
+        if (control == null)
+            return;
+
+        var parentControl = controlCollection.Owner;
+        if (parentControl == null)
+            return;
+
+        // Ensure the add operation is performed on the UI thread to maintain thread safety
+        if (parentControl.InvokeRequired)
+        {
+            parentControl.Invoke(new MethodInvoker(delegate
+            {
+                controlCollection.Add(control);
+            }));
+        }
+        else
+        {
+            controlCollection.Add(control);
+        }
+    }
+}
+
+
+
+
+
 public static class ControlExtensions
 {
     public static void AddControlsSafely(this Control parentControl, params Control[] controlsToAdd)

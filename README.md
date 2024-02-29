@@ -1,3 +1,26 @@
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+public static class ControlExtensions
+{
+    public static void InvokeUpdate(this Control control, Action<Control> updateAction)
+    {
+        if (control.InvokeRequired)
+        {
+            control.Invoke(new Action(() => updateAction(control)));
+        }
+        else
+        {
+            updateAction(control);
+        }
+    }
+}
+
+
+
+
 // Assuming this code might be running on a background thread
 var parentControl = controlCollection.Owner;
 if (parentControl != null && parentControl.InvokeRequired)

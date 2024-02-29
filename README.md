@@ -1,3 +1,14 @@
+label1.InvokeUpdate(ctrl =>
+{
+    ctrl.Text = "Updated from another thread";
+    ctrl.ForeColor = Color.Red;
+    ctrl.BackColor = Color.Black;
+    // Add more property updates here as needed
+});
+
+
+
+
 
 using System;
 using System.Drawing;

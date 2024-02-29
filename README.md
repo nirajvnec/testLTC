@@ -1,3 +1,32 @@
+// Assuming this code might be running on a background thread
+var parentControl = controlCollection.Owner;
+if (parentControl != null && parentControl.InvokeRequired)
+{
+    parentControl.Invoke(new MethodInvoker(delegate
+    {
+        // Ensure control is created and manipulated here, inside the UI thread context
+        Control control = new Button(); // Example control creation
+        control.Name = "BtnUserDefinedCurrency";
+        control.Text = "User Defined Currency"; // Example control manipulation
+        
+        controlCollection.Add(control);
+    }));
+}
+else
+{
+    // Directly add the control if already on the UI thread
+    Control control = new Button(); // Example control creation
+    control.Name = "BtnUserDefinedCurrency";
+    control.Text = "User Defined Currency"; // Example control manipulation
+    
+    controlCollection.Add(control);
+}
+
+
+
+
+
+
 using System.Windows.Forms;
 
 public static class ControlCollectionExtensions

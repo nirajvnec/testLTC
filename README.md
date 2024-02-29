@@ -1,3 +1,9 @@
+// Assuming 'ItemAdded' is an event of type 'DragDropItemEventHandler'
+m_drag_drop_items.ItemAdded += new DragDropItemEventHandler(item => SafeInvoke(() => m_drag_drop_items_ItemAdded(item)));
+
+
+
+
 public partial class CtlDragDropList : UserControl
 {
     public CtlDragDropList()

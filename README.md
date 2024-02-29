@@ -1,3 +1,55 @@
+public partial class CtlDragDropList : UserControl
+{
+    public CtlDragDropList()
+    {
+        InitializeComponent();
+
+        // Subscribe to HeadingAdded event
+        m_heading_buttons.HeadingAdded += new HeadingCollection.HeadingCollectionEventHandler(m_heading_buttons_HeadingAdded);
+
+        // Subscribe to ItemAdded event in a thread-safe manner
+        m_drag_drop_items.ItemAdded += (sender, e) => SafeInvoke(() => m_drag_drop_items_ItemAdded(sender, e));
+
+        // Subscribe to ItemRemoved event
+        m_drag_drop_items.ItemRemoved += new CtlDragDropItem.DragDropItemEventHandler(m_drag_drop_items_ItemRemoved);
+    }
+
+    // This method ensures that the action is performed on the UI thread
+    private void SafeInvoke(Action action)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(action);
+        }
+        else
+        {
+            action();
+        }
+    }
+
+    // Define your event handlers here
+    private void m_heading_buttons_HeadingAdded(object sender, HeadingCollectionEventArgs e)
+    {
+        // Your event handling code
+    }
+
+    private void m_drag_drop_items_ItemAdded(object sender, DragDropItemEventArgs e)
+    {
+        // Your event handling code
+    }
+
+    private void m_drag_drop_items_ItemRemoved(object sender, DragDropItemEventArgs e)
+    {
+        // Your event handling code
+    }
+}
+
+
+
+
+
+
+
 private void m_drag_drop_items_ItemAdded(CtlDragDropItem new_item)
 {
     // Define a delegate to perform UI updates that can be used with Invoke

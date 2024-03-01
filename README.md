@@ -1,3 +1,89 @@
+public partial class YourForm : Form
+{
+    private Panel loadingPanel;
+    private Label loadingLabel;
+
+    public YourForm()
+    {
+        InitializeComponent();
+        InitializeLoadingOverlay();
+    }
+
+    private void InitializeLoadingOverlay()
+    {
+        // Create the loading panel
+        loadingPanel = new Panel
+        {
+            Size = new Size(this.ClientSize.Width, this.ClientSize.Height),
+            Location = new Point(0, 0),
+            BackColor = Color.FromArgb(120, 0, 0, 0), // Semi-transparent
+            Visible = false // Initially hidden
+        };
+        this.Controls.Add(loadingPanel);
+        loadingPanel.BringToFront();
+
+        // Create the loading label
+        loadingLabel = new Label
+        {
+            Text = "Loading...",
+            AutoSize = true,
+            ForeColor = Color.White,
+            BackColor = Color.Transparent,
+        };
+        loadingPanel.Controls.Add(loadingLabel);
+        loadingLabel.Location = new Point(
+            (loadingPanel.Width - loadingLabel.Width) / 2,
+            (loadingPanel.Height - loadingLabel.Height) / 2);
+    }
+
+    public void ShowLoadingOverlay(bool show)
+    {
+        loadingPanel.Visible = show;
+        // Ensure the loading label is properly centered every time it's shown
+        loadingLabel.Location = new Point(
+            (loadingPanel.Width - loadingLabel.Width) / 2,
+            (loadingPanel.Height - loadingLabel.Height) / 2);
+
+        // Optionally, disable the form's controls while loading
+        foreach (Control ctrl in this.Controls)
+        {
+            if (ctrl != loadingPanel) // Avoid disabling the loadingPanel itself
+            {
+                ctrl.Enabled = !show;
+            }
+        }
+    }
+}
+
+
+
+
+public partial class CtlCalculationReport : UserControl
+{
+    private Action<bool> showLoadingOverlayAction;
+
+    public void SetShowLoadingOverlayAction(Action<bool> action)
+    {
+        showLoadingOverlayAction = action;
+    }
+
+    // Example method that requires loading overlay
+    public async Task PerformLongRunningCalculationAsync()
+    {
+        showLoadingOverlayAction?.Invoke(true);
+        // Simulate long-running operation
+        await Task.Delay(3000);
+        showLoadingOverlayAction?.Invoke(false);
+    }
+}
+
+
+
+
+
+
+
+
 // Assuming breakdown_headings_combo_box is a ComboBox or similar control
 this.breakdown_headings_combo_box.SelectedIndexChanged += async (sender, e) => {
     await BreakdownHeadingsComboBoxSelectedIndexChangedAsync(sender, e);

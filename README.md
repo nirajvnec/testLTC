@@ -1,3 +1,54 @@
+public sealed class HierarchyManager : ModuleInit
+{
+    private WorkItem _rootWorkItem;
+
+    [InjectionConstructor]
+    public HierarchyManager([ServiceDependency] WorkItem rootWorkItem)
+    {
+        _rootWorkItem = rootWorkItem;
+        SubscribeToGlobalExceptions();
+    }
+
+    private void SubscribeToGlobalExceptions()
+    {
+        AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+        {
+            // Explicit casting and null check, tailored for clarity with C# 6.0
+            var ex = e.ExceptionObject as Exception;
+            if (ex != null)
+            {
+                // Log the exception or show a global pop-up
+                ShowGlobalExceptionPopup(ex.Message);
+            }
+        };
+
+        // UI thread exceptions handling strategy needs to be implemented as described.
+    }
+
+    private void ShowGlobalExceptionPopup(Exception exception)
+    {
+        // Check if the exception object is not null
+        if (exception != null)
+        {
+            string fullMessage = $"An unhandled exception occurred: {exception.Message}\n\nStack Trace:\n{exception.StackTrace}";
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show(fullMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            });
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
 public partial class YourForm : Form
 {
     private Panel loadingPanel;

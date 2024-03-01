@@ -1,3 +1,10 @@
+AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+{
+    Exception ex = e.ExceptionObject as Exception;
+    ShowGlobalExceptionPopup(ex);
+};
+
+
 public sealed class HierarchyManager : ModuleInit
 {
     private WorkItem _rootWorkItem;

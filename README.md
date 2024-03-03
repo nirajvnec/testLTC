@@ -1,3 +1,40 @@
+public static class BackgroundWorkerHelper
+{
+    public static void HandleRunWorkerCompleted(RunWorkerCompletedEventArgs e, Action onSuccess)
+    {
+        if (e.Error != null)
+        {
+            // An exception occurred during the operation
+            MessageBox.Show($"Exception caught: {e.Error.Message}\n{e.Error.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        else if (e.Result is Exception)
+        {
+            // The operation completed by raising an exception, passed as the Result
+            var ex = (Exception)e.Result;
+            MessageBox.Show($"Exception caught: {ex.Message}\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        else
+        {
+            // The operation completed successfully
+            onSuccess?.Invoke();
+        }
+    }
+}
+
+
+
+private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+{
+    BackgroundWorkerHelper.HandleRunWorkerCompleted(e, () =>
+    {
+        // Code to execute on successful completion
+        MessageBox.Show("Operation completed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    });
+}
+
+
+
+
 [InjectionConstructor]
 public HierarchyManager([ServiceDependency] WorkItem rootWorkItem)
 {

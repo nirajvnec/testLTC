@@ -1,3 +1,45 @@
+[InjectionConstructor]
+public HierarchyManager([ServiceDependency] WorkItem rootWorkItem)
+{
+    _rootWorkItem = rootWorkItem;
+    SubscribeToGlobalExceptions();
+}
+
+private void SubscribeToGlobalExceptions()
+{
+    // Catch exceptions from the main UI thread
+    Application.Current.DispatcherUnhandledException += (s, e) =>
+    {
+        // Log the exception, inform the user, etc.
+        MessageBox.Show($"An unhandled exception occurred: {e.Exception.Message}");
+        e.Handled = true;
+    };
+
+    // Catch exceptions from all other threads in the app domain
+    AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+    {
+        Exception ex = e.ExceptionObject as Exception;
+        // Log the exception, inform the user, etc.
+        MessageBox.Show($"An unhandled exception occurred on a background thread: {ex?.Message}");
+    };
+
+    // Catch exceptions from tasks that have been garbage collected without being observed
+    TaskScheduler.UnobservedTaskException += (s, e) =>
+    {
+        e.SetObserved(); // Prevent the exception from triggering exception escalation policy
+        // Log the exception, inform the user, etc.
+        MessageBox.Show($"An unobserved task exception occurred: {e.Exception.Message}");
+    };
+}
+
+
+
+
+
+
+
+
+
 AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
 {
     Exception ex = e.ExceptionObject as Exception;

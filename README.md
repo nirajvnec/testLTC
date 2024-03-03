@@ -1,3 +1,17 @@
+private void ShowGlobalExceptionPopup(Exception exception)
+{
+    if (exception != null && Application.Current != null)
+    {
+        string fullMessage = $"An unhandled exception occurred: {exception.Message}\n\nStack Trace:\n{exception.StackTrace}";
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            MessageBox.Show(fullMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        });
+    }
+}
+
+
+
 public static class BackgroundWorkerHelper
 {
     public static void HandleRunWorkerCompleted(RunWorkerCompletedEventArgs e, Action onSuccess)

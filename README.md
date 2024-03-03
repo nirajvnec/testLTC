@@ -1,14 +1,37 @@
+public async Task<bool> StartProcessMonitoringAsync()
+{
+    try
+    {
+        await Task.Run(() => 
+        {
+            // Your existing DoWork code logic here
+            // For example, the logic inside BkWorker_DoWork without the sender and DoWorkEventArgs parameters
+        });
+
+        // Optionally, handle any actions after the background work is completed
+        // For example, you could update the UI to indicate completion, if necessary
+        // Remember to marshal these updates back to the UI thread, if you're updating the UI from here
+
+        return true;
+    }
+    catch (Exception ex)
+    {
+        // Log or handle exceptions
+        Console.WriteLine(ex.Message);
+        return false;
+    }
+}
+
+
+
+
+
 public bool StartProcessMonitoring()
 {
     Task<bool> task = Task.Run(async () => await StartProcessMonitoringAsync());
     return task.GetAwaiter().GetResult();
 }
 
-private async Task<bool> StartProcessMonitoringAsync()
-{
-    // Your async code here
-    return true;
-}
 
 
 

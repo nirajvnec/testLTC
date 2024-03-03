@@ -1,3 +1,17 @@
+public bool StartProcessMonitoring()
+{
+    Task<bool> task = Task.Run(async () => await StartProcessMonitoringAsync());
+    return task.GetAwaiter().GetResult();
+}
+
+private async Task<bool> StartProcessMonitoringAsync()
+{
+    // Your async code here
+    return true;
+}
+
+
+
 private void ShowGlobalExceptionPopup(Exception exception)
 {
     if (exception != null && Application.Current != null)

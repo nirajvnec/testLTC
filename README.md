@@ -1,17 +1,37 @@
-ExceptionHelper.RunWithExceptionHandling(
-    () =>
+using System;
+using System.Windows;
+
+public static class ExceptionHelper
+{
+    public static void RunWithExceptionHandling(Action tryAction, Action<Exception> catchAction)
     {
-        // Code that might throw an exception
-    },
-    (ex) =>
-    {
-        // Marshal the exception handling code to the UI thread
-        Application.Current.Dispatcher.Invoke(() =>
+        try
         {
-            MessageBox.Show($"An error occurred: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        });
+            tryAction?.Invoke();
+        }
+        catch (Exception ex)
+        {
+            catchAction?.Invoke(ex);
+        }
     }
-);
+
+    
+    public static void ShowExceptionDetails(Exception exception)
+    {
+        if (Application.Current?.Dispatcher.CheckAccess() == true)
+        {
+            
+            MessageBox.Show($"An error occurred: {exception.Message}\n\nStack Trace:\n{exception.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        else
+        {
+            Application.Current?.Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show($"An error occurred: {exception.Message}\n\nStack Trace:\n{exception.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            });
+        }
+    }
+}
 
 
 

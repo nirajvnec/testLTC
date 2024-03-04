@@ -1,3 +1,84 @@
+private async Task BkWorker_DoWorkAsync()
+{
+    try
+    {
+        WantToRun = true;
+        var selfProcess = Process.GetProcessById(PID);
+        var performanceCounters = new Dictionary<string, PerformanceCounter>
+        {
+            { "AvailableBytesPC", new PerformanceCounter("Memory", "Available MBytes") },
+            { "ProcessTimePercent", new PerformanceCounter("Process", "% Processor Time", Process.GetCurrentProcess().ProcessName) },
+            { "PrivateByte", new PerformanceCounter("Process", "Private Bytes", Process.GetCurrentProcess().ProcessName) },
+            { "WorkingSet", new PerformanceCounter("Process", "Working Set", Process.GetCurrentProcess().ProcessName) },
+            { "WorkingSetPrivate", new PerformanceCounter("Process", "Working Set - Private", Process.GetCurrentProcess().ProcessName) },
+            { "HandleCount", new PerformanceCounter("Process", "Handle Count", Process.GetCurrentProcess().ProcessName) },
+            { "ThreadCount", new PerformanceCounter("Process", "Thread Count", Process.GetCurrentProcess().ProcessName) },
+            { "DPCTime", new PerformanceCounter("Processor", "% DPC Time", "_Total") },
+            { "ProcessorTime_Total", new PerformanceCounter("Processor", "% Processor Time", "_Total") },
+            { "PrivilegedTime_Total", new PerformanceCounter("Processor", "% Privileged Time", "_Total") },
+            { "FreeCounter", new PerformanceCounter("Memory", "Free & Zero Page List Bytes") }
+        };
+
+        using (var fileWriter = new StreamWriter(FileName))
+        {
+            await WriteHeaderAsync(fileWriter);
+
+            while (WantToRun)
+            {
+                var availableRAM = await GetAvailableRAMAsync();
+                var processData = GetProcessData(selfProcess, performanceCounters, availableRAM);
+
+                await fileWriter.WriteLineAsync(processData);
+            }
+        }
+    }
+    catch (Exception exp)
+    {
+        CustomLogging.Log($"{nameof(BkWorker_DoWorkAsync)}: {exp}");
+    }
+}
+
+private string GetProcessData(Process selfProcess, Dictionary<string, PerformanceCounter> performanceCounters, string availableRAM)
+{
+    var dt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Local);
+
+    var sb = new StringBuilder();
+    sb.Append(GetTimestamp(dt));
+    sb.Append(GetWorkingSet64(selfProcess));
+    sb.Append(GetUserProcessorTime(selfProcess));
+    sb.Append(GetPrivilegedProcessorTime(selfProcess));
+    sb.Append(GetTotalProcessorTime(selfProcess));
+    sb.Append(GetPagedSystemMemorySize64(selfProcess));
+    sb.Append(GetPagedMemorySize64(selfProcess));
+    sb.Append(GetHandleCount());
+    sb.Append(GetMaxWorkingSet(selfProcess));
+    sb.Append(GetPrivateMemorySize64(selfProcess));
+    sb.Append(GetVirtualMemorySize64(selfProcess));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["AvailableBytesPC"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["ProcessTimePercent"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["PrivateByte"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["WorkingSet"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["WorkingSetPrivate"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["HandleCount"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["ThreadCount"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["DPCTime"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["ProcessorTime_Total"]));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["PrivilegedTime_Total"]));
+    sb.Append(GetAvailableRAM(availableRAM));
+    sb.Append(GetPerformanceCounterValue(performanceCounters["FreeCounter"]));
+
+    return sb.ToString();
+}
+
+private string GetPerformanceCounterValue(PerformanceCounter counter)
+{
+    return $"{counter.NextValue()},";
+}
+
+
+
+
+
 SynchronizationContextProvider.UiContext = SynchronizationContext.Current;
 
 

@@ -1,3 +1,49 @@
+#if DEBUG
+ProcessMonitor processMonitor = new ProcessMonitor(Process.GetCurrentProcess().Id);
+await processMonitor.StartProcessMonitoringAsync();
+#endif
+
+System.Timers.Timer timer = new System.Timers.Timer(10000);
+timer.Elapsed += async (sender, e) => await UpdateMonitorsAsync();
+timer.Start();
+
+private async Task UpdateMonitorsAsync()
+{
+    if (locker) return;
+
+    locker = true;
+
+    try
+    {
+        int memory = await Task.Run(() => MemoryMonitors.FreeMemory(x =>
+        {
+            if (!string.IsNullOrWhiteSpace(x))
+            {
+                var info = x.Split('#');
+                ApplicationStatus = info[0] ?? "";
+                FreeMemory = info[1] != null ? $"{info[1]} MB" : "Calculating...";
+            }
+        }));
+
+        FreeMemoryFontForeground = memory > 500 ? Brushes.Black : Brushes.Red;
+        FreeMemory = $"{memory} MB";
+
+        ShowStatusMessage = memory < 100 
+            ? Visibility.Visible 
+            : EnableAppStatusVisibility ? Visibility.Visible : Visibility.Hidden;
+        
+        IsEnableAppStatus = memory >= 100 || !_isStartupSettingsOpen;
+    }
+    finally
+    {
+        locker = false;
+    }
+}
+
+
+
+
+
 public async Task<bool> StartProcessMonitoringAsync()
 {
     try

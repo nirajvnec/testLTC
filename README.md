@@ -1,3 +1,31 @@
+using System;
+using System.Windows.Forms; // Make sure to add a reference to System.Windows.Forms
+
+public class ExceptionHandler
+{
+    public static void ExecuteWithTryCatch(Action action)
+    {
+        try
+        {
+            action.Invoke();
+        }
+        catch (Exception ex)
+        {
+            // Displaying the exception stack trace in a MessageBox
+            MessageBox.Show($"An error occurred: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+}
+
+ExceptionHandler.ExecuteWithTryCatch(() =>
+{
+    // Your code here
+    // Example:
+    throw new Exception("This is a test exception.");
+});
+
+
+
 // Global exception handler service
 public interface IGlobalExceptionHandlerService
 {

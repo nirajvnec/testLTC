@@ -1,58 +1,48 @@
-using System;
-using System.Windows.Forms; // Make sure to add a reference to System.Windows.Forms
+SynchronizationContextProvider.UiContext = SynchronizationContext.Current;
 
-public class ExceptionHandler
+
+public static void ExecuteWithTryCatch(Action action)
 {
-    public static void ExecuteWithTryCatch(Action action)
+    try
     {
-        try
-        {
-            action.Invoke();
-        }
-        catch (Exception ex)
-        {
-            // Displaying the exception stack trace in a MessageBox
-            MessageBox.Show($"An error occurred: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        action.Invoke();
+    }
+    catch (Exception ex)
+    {
+        // Use the refactored method to handle exceptions
+        SynchronizationContextProvider.HandleException(ex);
     }
 }
 
-ExceptionHandler.ExecuteWithTryCatch(() =>
+public static class SynchronizationContextProvider
 {
-    // Your code here
-    // Example:
-    throw new Exception("This is a test exception.");
-});
+    public static SynchronizationContext UiContext { get; set; }
 
-
-
-// Global exception handler service
-public interface IGlobalExceptionHandlerService
-{
-    void Initialize();
-}
-
-public class GlobalExceptionHandlerService : IGlobalExceptionHandlerService
-{
-    public void Initialize()
+    public static void HandleException(Exception ex)
     {
-        // Setup global exception handling here
-        AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+        if (UiContext != null)
         {
-            // Handle non-UI thread exceptions
-        };
+            // Post the MessageBox show method onto the UI thread via the synchronization context
+            UiContext.Post(_ =>
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }, null);
+        }
+        else
+        {
+            // Fallback if no synchronization context is available
+            // This would typically be a logging mechanism or some other non-UI action
+            // For example, logging to a file, console, etc.
+            LogException(ex);
+        }
+    }
 
-        Application.Current.DispatcherUnhandledException += (sender, e) =>
-        {
-            // Handle UI thread exceptions
-            e.Handled = true;
-        };
-
-        TaskScheduler.UnobservedTaskException += (sender, e) =>
-        {
-            // Handle task exceptions
-            e.SetObserved();
-        };
+    private static void LogException(Exception ex)
+    {
+        // Implement your logging mechanism here
+        // Example:
+        Console.WriteLine($"Exception occurred: {ex.Message}\n{ex.StackTrace}");
+        // Or log to a file, database, etc.
     }
 }
 

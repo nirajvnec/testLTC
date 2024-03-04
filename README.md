@@ -1,26 +1,57 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
+
+public sealed class HierarchyManager : ModuleInit
+{
+    private WorkItem _rootWorkItem;
+
+    public HierarchyManager([ServiceDependency] WorkItem rootWorkItem)
+    {
+        _rootWorkItem = rootWorkItem;
+    }
+
+    public override void Load()
+    {
+        base.Load();
+        SubscribeToGlobalExceptions();
+    }
+
+    private void SubscribeToGlobalExceptions()
+    {
+        // Handle UI thread exceptions
+        Application.Current.DispatcherUnhandledException += (sender, e) =>
+        {
+            ExceptionHelper.ShowExceptionDetails(e.Exception);
+            e.Handled = true;
+        };
+
+        // Handle background thread exceptions
+        AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+        {
+            Exception ex = e.ExceptionObject as Exception;
+            if (ex != null)
+            {
+                ExceptionHelper.ShowExceptionDetails(ex);
+            }
+        };
+
+        // Handle task exceptions
+        TaskScheduler.UnobservedTaskException += (sender, e) =>
+        {
+            ExceptionHelper.ShowExceptionDetails(e.Exception);
+            e.SetObserved();
+        };
+    }
+}
 
 public static class ExceptionHelper
 {
-    public static void RunWithExceptionHandling(Action tryAction, Action<Exception> catchAction)
-    {
-        try
-        {
-            tryAction?.Invoke();
-        }
-        catch (Exception ex)
-        {
-            catchAction?.Invoke(ex);
-        }
-    }
-
-    
     public static void ShowExceptionDetails(Exception exception)
     {
         if (Application.Current?.Dispatcher.CheckAccess() == true)
         {
-            
             MessageBox.Show($"An error occurred: {exception.Message}\n\nStack Trace:\n{exception.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         else
@@ -32,21 +63,6 @@ public static class ExceptionHelper
         }
     }
 }
-
-
-ExceptionHelper.RunWithExceptionHandling(
-    () =>
-    {
-        // Code that might throw an exception
-        // For example:
-        // throw new InvalidOperationException("Something went wrong!");
-    },
-    (ex) =>
-    {
-        // Handle the exception by showing a message box with the exception details
-        ExceptionHelper.ShowExceptionDetails(ex);
-    }
-);
 
 
 

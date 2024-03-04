@@ -1,3 +1,22 @@
+ExceptionHelper.RunWithExceptionHandling(
+    () =>
+    {
+        // Code that might throw an exception
+    },
+    (ex) =>
+    {
+        // Marshal the exception handling code to the UI thread
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            MessageBox.Show($"An error occurred: {ex.Message}\n\nStack Trace:\n{ex.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        });
+    }
+);
+
+
+
+
+
 Pressing Load will display the hierarchies corresponding to the selected COB date and Node Type
 
 

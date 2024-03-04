@@ -1,3 +1,120 @@
+public async Task<bool> StartProcessMonitoringAsync()
+{
+    try
+    {
+        await Task.Run(() => BkWorker_DoWorkAsync());
+        return true;
+    }
+    catch (Exception ex)
+    {
+        // Handle any exceptions that occur during the process monitoring
+        Debug.WriteLine($"Error in StartProcessMonitoringAsync: {ex.Message}");
+        return false;
+    }
+}
+
+private async Task BkWorker_DoWorkAsync()
+{
+    try
+    {
+        WantToRun = true;
+        Process selfProcess = Process.GetProcessById(PID);
+        var availableBytesPC = new PerformanceCounter("Memory", "Available MBytes");
+        var processTimePercent = new PerformanceCounter("Process", "% Processor Time", Process.GetCurrentProcess().ProcessName);
+        var privateByte = new PerformanceCounter("Process", "Private Bytes", Process.GetCurrentProcess().ProcessName);
+        var workingSet = new PerformanceCounter("Process", "Working Set", Process.GetCurrentProcess().ProcessName);
+        var workingSetPrivate = new PerformanceCounter("Process", "Working Set - Private", Process.GetCurrentProcess().ProcessName);
+        var handleCount = new PerformanceCounter("Process", "Handle Count", Process.GetCurrentProcess().ProcessName);
+        var threadCount = new PerformanceCounter("Process", "Thread Count", Process.GetCurrentProcess().ProcessName);
+        var dpcTime = new PerformanceCounter("Processor", "% DPC Time", "_Total");
+        var processorTime_Total = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+        var privilegedTime_Total = new PerformanceCounter("Processor", "% Privileged Time", "_Total");
+        var freeCounter = new PerformanceCounter("Memory", "Free & Zero Page List Bytes");
+
+        string availableRAM = string.Empty;
+        StringBuilder titleStringBuilder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+
+        ObjectQuery wql = new ObjectQuery("SELECT FreePhysicalMemory FROM Win32_OperatingSystem");
+        ManagementObjectSearcher searcher = new ManagementObjectSearcher(wql);
+
+        using (var fileWriter = File.CreateText(FileName))
+        {
+            titleStringBuilder.Append("Time,")
+                .Append("WorkingSet64,")
+                .Append("UserProcessorTime,")
+                .Append("PrivilegedProcessorTime,")
+                .Append("TotalProcessorTime,")
+                .Append("PagedSystemMemorySize64,")
+                .Append("PagedMemorySize64,")
+                .Append("HandleCount,")
+                .Append("MaxWorkingSet,")
+                .Append("PrivateMemorySize64,")
+                .Append("VirtualMemorySize64,")
+                .Append("AvailableMemory,")
+                .Append("ProcessTimePercent,")
+                .Append("PrivateByte,")
+                .Append("WorkingSet,")
+                .Append("WorkingSetPrivate,")
+                .Append("HandleCount,")
+                .Append("ThreadCount,")
+                .Append("DPCTime,")
+                .Append("ProcessorTime_Total,")
+                .Append("PrivilegedTime_Total,")
+                .Append("Available RAM,")
+                .Append("freeCounter");
+
+            await fileWriter.WriteLineAsync(titleStringBuilder.ToString());
+            titleStringBuilder.Clear();
+
+            while (WantToRun)
+            {
+                ManagementObjectCollection results = await Task.Run(() => searcher.Get());
+                foreach (ManagementObject result in results)
+                {
+                    var ram = (int)(Convert.ToInt32(result["FreePhysicalMemory"]) / 1024);
+                    availableRAM = ram.ToString();
+                }
+
+                DateTime dt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Local);
+
+                sb.Append(dt.ToLocalTime()).Append(",")
+                    .Append(selfProcess.WorkingSet64).Append(",")
+                    .Append(selfProcess.UserProcessorTime).Append(",")
+                    .Append(selfProcess.PrivilegedProcessorTime).Append(",")
+                    .Append(selfProcess.TotalProcessorTime).Append(",")
+                    .Append(selfProcess.PagedSystemMemorySize64).Append(",")
+                    .Append(selfProcess.PagedMemorySize64).Append(",")
+                    .Append(UIObjects.GetGuiResourcesUserCount()).Append(",")
+                    .Append(selfProcess.MaxWorkingSet).Append(",")
+                    .Append(selfProcess.PrivateMemorySize64).Append(",")
+                    .Append(selfProcess.VirtualMemorySize64).Append(",")
+                    .Append(availableBytesPC.NextValue()).Append(",")
+                    .Append(processTimePercent.NextValue()).Append(",")
+                    .Append(privateByte.NextValue()).Append(",")
+                    .Append(workingSet.NextValue()).Append(",")
+                    .Append(workingSetPrivate.NextValue()).Append(",")
+                    .Append(handleCount.NextValue()).Append(",")
+                    .Append(threadCount.NextValue()).Append(",")
+                    .Append(dpcTime.NextValue()).Append(",")
+                    .Append(processorTime_Total.NextValue()).Append(",")
+                    .Append(privilegedTime_Total.NextValue()).Append(",")
+                    .Append(availableRAM).Append(",")
+                    .Append(freeCounter.NextValue());
+
+                await fileWriter.WriteLineAsync(sb.ToString());
+                sb.Clear();
+            }
+        }
+    }
+    catch (Exception exp)
+    {
+        if (exp != null)
+            CustomLogging.Log(exp.ToString());
+    }
+}
+
+
 private async Task BkWorker_DoWorkAsync()
 {
     try

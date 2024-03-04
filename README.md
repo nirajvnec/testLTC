@@ -34,6 +34,19 @@ public static class ExceptionHelper
 }
 
 
+ExceptionHelper.RunWithExceptionHandling(
+    () =>
+    {
+        // Code that might throw an exception
+        // For example:
+        // throw new InvalidOperationException("Something went wrong!");
+    },
+    (ex) =>
+    {
+        // Handle the exception by showing a message box with the exception details
+        ExceptionHelper.ShowExceptionDetails(ex);
+    }
+);
 
 
 

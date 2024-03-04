@@ -1,3 +1,46 @@
+// Global exception handler service
+public interface IGlobalExceptionHandlerService
+{
+    void Initialize();
+}
+
+public class GlobalExceptionHandlerService : IGlobalExceptionHandlerService
+{
+    public void Initialize()
+    {
+        // Setup global exception handling here
+        AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+        {
+            // Handle non-UI thread exceptions
+        };
+
+        Application.Current.DispatcherUnhandledException += (sender, e) =>
+        {
+            // Handle UI thread exceptions
+            e.Handled = true;
+        };
+
+        TaskScheduler.UnobservedTaskException += (sender, e) =>
+        {
+            // Handle task exceptions
+            e.SetObserved();
+        };
+    }
+}
+
+// In your ModuleInit derived class
+public override void Load()
+{
+    // Assuming rootWorkItem is available and represents the root work item of the application
+    var exceptionService = new GlobalExceptionHandlerService();
+    exceptionService.Initialize();
+
+    base.Load();
+}
+
+
+
+
 using System;
 using System.Threading.Tasks;
 using System.Windows;

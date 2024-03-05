@@ -1,3 +1,32 @@
+
+public static class ControlExtensions
+{
+    public static List<string> GetAllChildControlNames(this Control parent) 
+    {
+        List<string> names = new List<string>();
+            
+        GetControlNames(parent, names);
+            
+        return names;
+    }
+
+    private static void GetControlNames(Control parent, List<string> names)
+    {
+        foreach (Control c in parent.Controls)
+        {
+            // Add name
+            names.Add(c.Name);
+
+            // Recurse child controls
+            if (c.Controls.Count > 0)
+            {
+                GetControlNames(c, names);
+            }
+        }
+    }
+}
+
+
 private async void ComboBox_SelectionChanged(object sender, EventArgs e)
 {
   Form frmMain = this.FindForm();

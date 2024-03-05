@@ -1,3 +1,35 @@
+
+public partial class Form1 : Form
+{
+    // ...
+
+    public void ShowLoadingLabel()
+    {
+        // Set the loading label's ForeColor to a contrasting color
+        lblLoading.ForeColor = Color.Black;
+
+        // Set the loading label's Font to a readable size
+        lblLoading.Font = new Font("Arial", 12, FontStyle.Bold);
+
+        // Set the loading label's Text
+        lblLoading.Text = "Loading...";
+
+        // Set the loading label to visible
+        lblLoading.Visible = true;
+
+        // Center the loading label on the form
+        CenterLabel();
+
+        // Refresh the form to display the loading label
+        this.Refresh();
+    }
+
+    // ...
+}
+
+
+
+
 public partial class ChildControl : UserControl
 {
     public ChildControl()

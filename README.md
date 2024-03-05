@@ -1,3 +1,21 @@
+private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)  
+{
+    // Background thread
+    // Create and configure label
+    Label label1 = new Label();
+    label1.Text = "Hello";
+
+    label1.MakeOverlayCentered(this);
+    
+    // Invoke UI thread to update form 
+    this.Invoke((MethodInvoker)delegate {  
+        this.Controls.Add(label1); 
+    });
+}
+
+
+
+
 Label label1 = new Label();
 label1.Text = "Hello"; 
 

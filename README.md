@@ -3,8 +3,15 @@ using System.Windows;
 using System.Windows.Threading;
 using Microsoft.Practices.CompositeUI;
 
+using System;
+using System.Windows;
+using System.Windows.Threading;
+using Microsoft.Practices.CompositeUI;
+
 public static class ExceptionHandler
 {
+    private static Exception lastException;
+
     public static void Initialize()
     {
         // Subscribe to the DispatcherUnhandledException event
@@ -13,13 +20,16 @@ public static class ExceptionHandler
 
     private static void HandleException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
+        // Store the exception for later use
+        lastException = e.Exception;
+
         // Log the exception
         LogException(e.Exception);
 
         // Display a user-friendly error message on the UI thread asynchronously
         Application.Current.Dispatcher.BeginInvoke(() =>
         {
-            ShowErrorMessage("An unexpected error occurred. Please contact support.");
+            ShowErrorMessage("An unexpected error occurred. Please contact support.", e.Exception);
         });
 
         // Prevent the application from crashing
@@ -35,12 +45,13 @@ public static class ExceptionHandler
         Console.WriteLine($"Exception: {ex}");
     }
 
-    private static void ShowErrorMessage(string message)
+    private static void ShowErrorMessage(string message, Exception ex)
     {
-        // Implement your error message display logic here
-        // You can show a message box, display an error window, or use any other desired method
-        // For demonstration purposes, let's use a message box
-        MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        // Create a formatted error message with the stack trace
+        string errorMessage = $"{message}\n\nStack Trace:\n{ex.StackTrace}";
+
+        // Show the error message with the stack trace in a message box
+        MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 }
 

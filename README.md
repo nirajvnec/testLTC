@@ -1,3 +1,31 @@
+public partial class LoadingForm : Form
+{
+    public LoadingForm()
+    {
+        InitializeComponent();
+    }
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        // Set the form's size to a smaller width and height
+        this.ClientSize = new Size(200, 100);
+
+        // Center the form on the main form
+        this.StartPosition = FormStartPosition.Manual;
+        Form mainForm = Application.OpenForms.Cast<Form>().FirstOrDefault(x => x is Form1);
+        if (mainForm != null)
+        {
+            int centerX = mainForm.Location.X + (mainForm.Width - this.Width) / 2;
+            int centerY = mainForm.Location.Y + (mainForm.Height - this.Height) / 2;
+            this.Location = new Point(centerX, centerY);
+        }
+    }
+}
+
+
+
 
 public partial class Form1 : Form
 {

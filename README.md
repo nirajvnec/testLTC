@@ -1,4 +1,26 @@
 
+public static class LabelExtensions
+{
+    public static void MakeOverlayCentered(this Label label, Form form)
+    {
+        // Enable overlay 
+        label.BackColor = Color.FromArgb(128, 255, 255, 255);
+
+        // Set size
+        label.AutoSize = false; 
+        label.Width = 100;
+        label.Height = 50;
+
+        // Center text 
+        label.TextAlign = ContentAlignment.MiddleCenter;
+
+        // Center position on form
+        label.Left = (form.ClientSize.Width - label.Width) / 2;
+        label.Top = (form.ClientSize.Height - label.Height) / 2; 
+    }
+}
+
+
 public static class ControlExtensions
 {
     public static List<string> GetAllChildControlNames(this Control parent) 

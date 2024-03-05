@@ -1,3 +1,73 @@
+using System;
+using System.Windows;
+using System.Windows.Threading;
+using Microsoft.Practices.CompositeUI;
+
+public static class ExceptionHandler
+{
+    public static void Initialize()
+    {
+        // Subscribe to the DispatcherUnhandledException event
+        Application.Current.DispatcherUnhandledException += HandleException;
+    }
+
+    private static void HandleException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+        // Log the exception
+        LogException(e.Exception);
+
+        // Display a user-friendly error message on the UI thread asynchronously
+        Application.Current.Dispatcher.BeginInvoke(() =>
+        {
+            ShowErrorMessage("An unexpected error occurred. Please contact support.");
+        });
+
+        // Prevent the application from crashing
+        e.Handled = true;
+    }
+
+    private static void LogException(Exception ex)
+    {
+        // Implement your exception logging logic here
+        // You can log the exception to a file, database, or any other desired location
+        // Example: File.AppendAllText("error.log", $"{DateTime.Now}: {ex}\n");
+        // For demonstration purposes, let's just write the exception to the console
+        Console.WriteLine($"Exception: {ex}");
+    }
+
+    private static void ShowErrorMessage(string message)
+    {
+        // Implement your error message display logic here
+        // You can show a message box, display an error window, or use any other desired method
+        // For demonstration purposes, let's use a message box
+        MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+}
+
+namespace YourNamespace
+{
+    public class YourModule : ModuleInit
+    {
+        public override void Load()
+        {
+            // Initialize the global exception handler
+            ExceptionHandler.Initialize();
+
+            // Rest of your module initialization code
+            // ...
+
+            // Simulate an exception on a background thread
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                throw new Exception("Exception on a background thread");
+            });
+        }
+    }
+}
+
+
+
+
 public async Task InitializeAsync()
 {
     #if DEBUG

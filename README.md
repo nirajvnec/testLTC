@@ -1,3 +1,28 @@
+private async void ComboBox_SelectionChanged(object sender, EventArgs e)
+{
+  Form frmMain = this.FindForm();
+
+  if (frmMain != null && frmMain is FrmMain && frmMain.IsHandleCreated)  
+  {
+    FrmMain mainForm = (FrmMain)frmMain;
+
+    ComboBox breakdownCombo = (ComboBox)mainForm.Controls.Find("breakdown_heading_combobox", true).FirstOrDefault();
+
+    if (breakdownCombo != null && breakdownCombo.Visible)
+    {
+       // Breakdown combo is visible
+       mainForm.StartLoadingForm(); 
+    }
+    else 
+    {
+       // Breakdown combo not visible
+    }
+
+  }
+}
+
+
+
 private async void ComboBox_SelectionChanged(object sender, EventArgs e) 
 {
   Form frmMain = this.FindForm();

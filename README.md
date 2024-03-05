@@ -2,6 +2,69 @@ public partial class Form1 : Form
 {
     // ...
 
+    private async Task ShowLoadingFormAsync(CancellationToken cancellationToken)
+    {
+        using (LoadingForm loadingForm = new LoadingForm())
+        {
+            loadingForm.Show();
+            await Task.Delay(-1, cancellationToken);
+        }
+    }
+
+    // ...
+}
+
+public partial class ChildControl : UserControl
+{
+    private CancellationTokenSource _cancellationTokenSource;
+
+    public ChildControl()
+    {
+        InitializeComponent();
+    }
+
+    private async void StartLoading()
+    {
+        // Get a reference to the main form
+        Form1 mainForm = (Form1)this.ParentForm;
+
+        // Create a cancellation token source
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        try
+        {
+            // Show the loading form
+            Task loadingTask = mainForm.ShowLoadingFormAsync(_cancellationTokenSource.Token);
+
+            // Perform the loading logic here
+            // ...
+
+            // Cancel the loading form when loading is complete
+            _cancellationTokenSource.Cancel();
+
+            // Wait for the loading form to close
+            await loadingTask;
+        }
+        catch (OperationCanceledException)
+        {
+            // Handle the cancellation if needed
+        }
+        finally
+        {
+            // Dispose the cancellation token source
+            _cancellationTokenSource.Dispose();
+        }
+    }
+}
+
+
+
+
+
+public partial class Form1 : Form
+{
+    // ...
+
     private void ShowLoadingForm()
     {
         using (LoadingForm loadingForm = new LoadingForm())

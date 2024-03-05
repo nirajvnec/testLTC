@@ -1,4 +1,20 @@
 
+public partial class Form1 : Form
+{
+    // ...
+
+    private void ShowLoadingForm()
+    {
+        using (LoadingForm loadingForm = new LoadingForm())
+        {
+            loadingForm.ShowDialog();
+        }
+    }
+
+    // ...
+}
+
+
 public partial class ChildControl : UserControl
 {
     public ChildControl()

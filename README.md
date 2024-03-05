@@ -1,3 +1,15 @@
+private async void ComboBox_SelectionChanged(object sender, EventArgs e) 
+{
+  Form frmMain = this.FindForm();
+
+  if (frmMain != null && frmMain is FrmMain && frmMain.IsHandleCreated)
+  {
+    StartLoadingForm();
+  }
+}
+
+
+
 public partial class Form1 : Form
 {
     private LoadingForm _loadingForm;

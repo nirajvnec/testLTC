@@ -1,3 +1,31 @@
+public partial class ChildControl : UserControl
+{
+    public ChildControl()
+    {
+        InitializeComponent();
+    }
+
+    private void StartLoading()
+    {
+        // Get a reference to the main form
+        Form1 mainForm = (Form1)this.ParentForm;
+
+        // Call the ShowLoadingLabel method of the main form
+        mainForm.ShowLoadingLabel();
+
+        // Perform the loading logic here
+        // ...
+
+        // Call the HideLoadingLabel method of the main form when loading is complete
+        mainForm.HideLoadingLabel();
+    }
+}
+
+
+
+
+
+
 public partial class Form1 : Form
 {
     // ...

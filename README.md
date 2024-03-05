@@ -1,3 +1,42 @@
+public partial class Form1 : Form
+{
+    // ...
+
+    public void ShowLoadingLabel()
+    {
+        // Set the loading label to visible
+        lblLoading.Visible = true;
+
+        // Center the loading label on the form
+        CenterLabel();
+
+        // Refresh the form to display the loading label
+        this.Refresh();
+    }
+
+    public void HideLoadingLabel()
+    {
+        // Hide the loading label
+        lblLoading.Visible = false;
+    }
+
+    private void CenterLabel()
+    {
+        // Calculate the center position of the form
+        int centerX = (this.ClientSize.Width - lblLoading.Width) / 2;
+        int centerY = (this.ClientSize.Height - lblLoading.Height) / 2;
+
+        // Set the position of the label to the center of the form
+        lblLoading.Location = new Point(centerX, centerY);
+    }
+}
+
+
+
+
+
+
+
 using System;
 using System.Windows;
 using System.Windows.Threading;

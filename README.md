@@ -1,4 +1,30 @@
 
+public partial class ChildControl : UserControl
+{
+    public ChildControl()
+    {
+        InitializeComponent();
+    }
+
+    private async void StartLoading()
+    {
+        // Get a reference to the main form
+        Form1 mainForm = (Form1)this.ParentForm;
+
+        // Show the loading form
+        Task loadingTask = Task.Run(() => mainForm.ShowLoadingForm());
+
+        // Perform the loading logic here
+        // ...
+
+        // Close the loading form when loading is complete
+        mainForm.Invoke((Action)(() => loadingTask.Dispose()));
+    }
+}
+
+
+
+
 public partial class Form1 : Form
 {
     // ...

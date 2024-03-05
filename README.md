@@ -1,3 +1,11 @@
+Label label1 = new Label();
+label1.Text = "Hello"; 
+
+label1.MakeOverlayCentered(this);
+
+this.Controls.Add(label1);
+
+
 
 public static class LabelExtensions
 {

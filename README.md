@@ -1,3 +1,30 @@
+
+public static IEnumerable<T> Clone<T>(this IEnumerable<T> source)
+{
+    if (!typeof(T).IsSerializable)
+    {
+        throw new ArgumentException("Type must be serializable.");
+    }
+
+    return source.AsParallel().Select(item =>
+    {
+        if (item == null)
+        {
+            return default(T);
+        }
+
+        using (MemoryStream stream = new MemoryStream())
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, item);
+            stream.Position = 0;
+            return (T)formatter.Deserialize(stream);
+        }
+    });
+}
+
+
+
 public static IEnumerable<T> Clone<T>(this IEnumerable<T> source)
 {
     if (!typeof(T).IsSerializable)

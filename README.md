@@ -1,3 +1,30 @@
+public static IEnumerable<T> Clone<T>(this IEnumerable<T> source)
+{
+    if (!typeof(T).IsSerializable)
+    {
+        throw new ArgumentException("Type must be serializable.");
+    }
+
+    return source.AsParallel().Select(item =>
+    {
+        if (Object.ReferenceEquals(item, null))
+        {
+            return default(T);
+        }
+
+        IFormatter formatter = new BinaryFormatter();
+        using (Stream stream = new MemoryStream())
+        {
+            formatter.Serialize(stream, item);
+            stream.Seek(0, SeekOrigin.Begin);
+            return (T)formatter.Deserialize(stream);
+        }
+    });
+}
+
+
+
+
 private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)  
 {
     // Background thread

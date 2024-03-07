@@ -1,4 +1,14 @@
+# Allow a specific XML file
+!DapSplunkConfiguration.xml
 
+# Allow a specific directory
+!/RiskPortal.www/
+
+# Exclude all XML files
+*.xml
+
+# Exclude a specific directory
+/path/to/excluded/directory/
 public static IEnumerable<T> Clone<T>(this IEnumerable<T> source)
 {
     if (!typeof(T).IsSerializable)

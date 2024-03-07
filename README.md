@@ -4,7 +4,7 @@ private void CtlCalculationReport_LoadingLabelVisibilityChanged(object sender, b
 {
     if (visible)
     {
-        _loadingForm = _loadingForm?.IsDisposed == true ? new LoadingForm() : _loadingForm;
+        _loadingForm = _loadingForm?.IsDisposed == true ? new LoadingForm() : _loadingForm ?? new LoadingForm();
         _loadingForm?.Show();
     }
 }

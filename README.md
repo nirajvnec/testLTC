@@ -1,3 +1,22 @@
+
+public partial class CtlCalculationReport : UserControl
+{
+    public event EventHandler<bool> LoadingLabelVisibilityChanged;
+
+    private void ComboBox_SelectionIndexChanged(object sender, EventArgs e)
+    {
+        // Raise the event to notify the parent form about the visibility change
+        LoadingLabelVisibilityChanged?.Invoke(this, true);
+
+        // Perform the necessary processing for the SelectionIndexChanged event
+        // ...
+
+        // Raise the event again to hide the loading label after processing is completed
+        LoadingLabelVisibilityChanged?.Invoke(this, false);
+    }
+}
+
+
 private void SetLabelVisibility(bool visible)
 {
     if (InvokeRequired)

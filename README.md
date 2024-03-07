@@ -1,3 +1,34 @@
+private void SetLabelVisibility(bool visible)
+{
+    if (InvokeRequired)
+    {
+        // Invoke the SetLabelVisibility method on the main UI thread
+        Invoke(new Action<bool>(SetLabelVisibility), visible);
+    }
+    else
+    {
+        // Find the parent form
+        Form parentForm = FindForm();
+
+        if (parentForm != null)
+        {
+            // Find the Label control by name within the parent form's controls
+            Label lblLoadingLabel = parentForm.Controls.Find("lblLoadingLabel", true).FirstOrDefault() as Label;
+
+            if (lblLoadingLabel != null)
+            {
+                // Set the Visible property of the Label control
+                lblLoadingLabel.Visible = visible;
+            }
+        }
+    }
+}
+
+
+
+
+
+
 # Allow a specific XML file
 !DapSplunkConfiguration.xml
 

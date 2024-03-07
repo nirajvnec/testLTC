@@ -1,3 +1,12 @@
+_animator.AnimateLoop(
+    rotateTransform,
+    (ft, t) => ft.Rotation = t,
+    0,
+    360,
+    TimeSpan.FromSeconds(2)
+);
+
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;

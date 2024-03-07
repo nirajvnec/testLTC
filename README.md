@@ -1,3 +1,25 @@
+public LoadingForm()
+{
+    InitializeComponent();
+
+    this.FormBorderStyle = FormBorderStyle.FixedSingle;
+    this.ControlBox = false;
+    this.StartPosition = FormStartPosition.CenterScreen;
+    this.BackColor = Color.White;
+
+    Label lblLoading = new Label();
+    lblLoading.AutoSize = true;
+    lblLoading.Text = "Loading Breakdowns.....";
+    lblLoading.Font = new Font("Arial", 12, FontStyle.Bold);
+    lblLoading.ForeColor = Color.Black;
+    lblLoading.BackColor = Color.Transparent;
+    lblLoading.Dock = DockStyle.Fill;
+    lblLoading.TextAlign = ContentAlignment.MiddleCenter;
+    this.Controls.Add(lblLoading);
+}
+
+
+
 _animator.AnimateLoop(
     rotateTransform,
     (ft, t) => ft.Rotation = t,

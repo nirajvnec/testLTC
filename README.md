@@ -1,3 +1,33 @@
+public partial class FrmMain : Form
+{
+    public FrmMain()
+    {
+        InitializeComponent();
+
+        // Subscribe to the LoadingLabelVisibilityChanged event of the CtlCalculationReport control
+        ctlCalculationReport.LoadingLabelVisibilityChanged += CtlCalculationReport_LoadingLabelVisibilityChanged;
+    }
+
+    private void CtlCalculationReport_LoadingLabelVisibilityChanged(object sender, bool visible)
+    {
+        SetLabelVisibility(visible);
+    }
+
+    private void SetLabelVisibility(bool visible)
+    {
+        if (lblLoadingLabel.InvokeRequired)
+        {
+            lblLoadingLabel.Invoke(new Action<bool>(SetLabelVisibility), visible);
+        }
+        else
+        {
+            lblLoadingLabel.Visible = visible;
+        }
+    }
+}
+
+
+
 
 public partial class CtlCalculationReport : UserControl
 {

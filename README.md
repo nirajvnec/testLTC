@@ -1,3 +1,54 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+public class LoadingForm : Form
+{
+    public LoadingForm()
+    {
+        InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+        // Label to display loading text
+        Label loadingLabel = new Label();
+        loadingLabel.AutoSize = true;
+        loadingLabel.Text = "Loading, please wait...";
+        loadingLabel.Location = new Point(50, 50); // Adjust as necessary
+
+        // Customize the form
+        this.Controls.Add(loadingLabel);
+        this.FormBorderStyle = FormBorderStyle.FixedDialog; // Disables resizing
+        this.ControlBox = false; // Hides close, minimize, and maximize buttons
+        this.StartPosition = FormStartPosition.CenterScreen;
+        this.Size = new Size(200, 100); // Adjust size as necessary
+        this.Text = ""; // No title
+
+        // Subscribe to Paint event to draw custom border
+        this.Paint += LoadingForm_Paint;
+    }
+
+    private void LoadingForm_Paint(object sender, PaintEventArgs e)
+    {
+        // Draw a thick green border
+        int thickness = 3; // Adjust thickness
+        Color borderColor = Color.Green;
+        ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle,
+                                borderColor, thickness, ButtonBorderStyle.Solid,
+                                borderColor, thickness, ButtonBorderStyle.Solid,
+                                borderColor, thickness, ButtonBorderStyle.Solid,
+                                borderColor, thickness, ButtonBorderStyle.Solid);
+    }
+}
+
+// Usage
+// Show the loading form
+LoadingForm loadingForm = new LoadingForm();
+loadingForm.Show();
+
+
+
 public LoadingForm()
 {
     InitializeComponent();

@@ -1,3 +1,120 @@
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using WinFormAnimation;
+
+namespace YourNamespace
+{
+    public partial class LoadingForm : Form
+    {
+        private Animator _animator;
+
+        public LoadingForm()
+        {
+            InitializeComponent();
+
+            // Set the form's start position to center
+            StartPosition = FormStartPosition.CenterParent;
+
+            // Set up the Animator
+            _animator = new Animator();
+
+            // Set up the Grid control
+            TableLayoutPanel grid = new TableLayoutPanel();
+            grid.Name = "Overlay";
+            grid.Dock = DockStyle.Fill;
+            grid.ColumnCount = 1;
+            grid.RowCount = 3;
+            grid.Height = 114;
+            grid.Width = 282;
+            grid.Margin = new Padding(20); // Add margins to create space around the grid
+            Controls.Add(grid);
+
+            // Set up the Grid.RowDefinitions
+            grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 54F));
+            grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+
+            // Set up the Border control
+            Panel border = new Panel();
+            border.Name = "SpinnerRotate";
+            border.Dock = DockStyle.Fill;
+            border.BorderStyle = BorderStyle.FixedSingle;
+            grid.Controls.Add(border, 0, 1);
+
+            // Set up the rotation animation for the Border control
+            RotateTransform rotateTransform = new RotateTransform(border);
+            _animator.AnimateLoop(rotateTransform, r => r.Rotation, 0, 360, TimeSpan.FromSeconds(2));
+
+            // Set up the VerticalAlignment and HorizontalAlignment for the Border control
+            border.Anchor = AnchorStyles.None;
+
+            // Set up the CheckBox control
+            CheckBox checkBox = new CheckBox();
+            checkBox.Name = "SpinnerRotate";
+            checkBox.Text = "Rotate";
+            checkBox.Margin = new Padding(0, 8, 5, 0);
+            checkBox.ForeColor = Color.FromArgb(255, 10, 35, 55);
+            checkBox.AutoSize = true;
+            grid.Controls.Add(checkBox, 0, 2);
+
+            // Set up the StackPanel control
+            TableLayoutPanel stackPanel = new TableLayoutPanel();
+            stackPanel.Dock = DockStyle.Fill;
+            stackPanel.ColumnCount = 2;
+            grid.Controls.Add(stackPanel, 0, 0);
+
+            // Set up the Canvas control
+            Panel canvas = new Panel();
+            canvas.Dock = DockStyle.Fill;
+            canvas.Paint += Canvas_Paint;
+            stackPanel.Controls.Add(canvas, 0, 0);
+
+            // Set the size of the form to fit the content
+            AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
+
+        private void Canvas_Paint(object sender, PaintEventArgs e)
+        {
+            // ... (same as before)
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            // ... (same as before)
+        }
+    }
+}
+
+
+private void Canvas_Paint(object sender, PaintEventArgs e)
+{
+    Graphics graphics = e.Graphics;
+
+    for (int i = 0; i < 8; i++)
+    {
+        int size = 21;
+        int spacing = 30;
+        int x = i * spacing;
+        int y = 0;
+
+        using (SolidBrush brush = new SolidBrush(Color.FromArgb(255, 86, 86, 86)))
+        {
+            graphics.FillEllipse(brush, x, y, size, size);
+        }
+    }
+}
+
+protected override void OnFormClosing(FormClosingEventArgs e)
+{
+    base.OnFormClosing(e);
+
+    // Dispose the animator when the form is closing
+    _animator.Dispose();
+}
+
+
 private LoadingForm _loadingForm;
 
 private void CtlCalculationReport_LoadingLabelVisibilityChanged(object sender, bool visible)

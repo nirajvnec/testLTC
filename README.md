@@ -1,3 +1,23 @@
+private LoadingForm _loadingForm;
+
+private void CtlCalculationReport_LoadingLabelVisibilityChanged(object sender, bool visible)
+{
+    if (visible)
+    {
+        _loadingForm = _loadingForm?.IsDisposed == true ? new LoadingForm() : _loadingForm;
+        _loadingForm?.Show();
+    }
+}
+
+private void CtlCalculationReport_LoadingLabelInvisibleChanged(object sender, bool e)
+{
+    _loadingForm?.Close();
+    _loadingForm?.Dispose();
+    _loadingForm = null;
+}
+
+
+
 public partial class FrmMain : Form
 {
     public FrmMain()

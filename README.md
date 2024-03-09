@@ -1,3 +1,111 @@
+using C1.Win.C1FlexGrid;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp6
+{
+    public partial class Form1 : Form
+    {
+        private C1FlexGrid flexGrid;
+        public Form1()
+        {
+            InitializeComponent();
+            InitializeFlexGrid();
+        }
+
+        private void InitializeFlexGrid()
+        {
+            flexGrid = new C1FlexGrid();
+            flexGrid.Dock = DockStyle.Fill;
+            flexGrid.DrawMode = DrawModeEnum.OwnerDraw;
+            flexGrid.OwnerDrawCell += FlexGrid_OwnerDrawCell;
+
+            // Add columns to the grid
+            flexGrid.Cols.Add().Caption = "FirstName";
+            flexGrid.Cols.Add().Caption = "Last Name";
+            flexGrid.Cols.Add().Caption = "Grade";
+
+            // Create some sample student data
+            List<Student> students = new List<Student>
+            {
+                new Student { FirstName = "John", LastName = "Doe", Grade = "A" },
+                new Student { FirstName = "Jane", LastName = "Smith", Grade = "B" },
+                new Student { FirstName = "Mike", LastName = "Johnson", Grade = "C" },
+                new Student { FirstName = "Emily", LastName = "Brown", Grade = "D" },
+                // Add more student data here...
+            };
+
+            // Add student data to the grid
+            int rowIndex = 0;
+            foreach (var student in students)
+            {
+                flexGrid.Rows.Add();
+
+                // Check if the student's grade is "D"
+                if (student.Grade == "D")
+                {
+                    // Set the row style to the predefined "TOTAL_ROW_STYLE" with red background
+                    flexGrid.Rows[rowIndex].Style = flexGrid.Styles[CellStyleEnum.Highlight];
+                }
+                rowIndex++;
+            }
+
+            this.Controls.Add(flexGrid);
+        }
+
+        private void FlexGrid_OwnerDrawCell(object sender, OwnerDrawCellEventArgs e)
+        {
+            // Assuming the grade column is at index 2
+            int gradeColumnIndex = 2;
+
+            if (e.Col == gradeColumnIndex)
+            {
+                string grade = flexGrid[e.Row, e.Col].ToString();
+
+                // Check if the grade is "D"
+                if (grade == "D")
+                {
+                    // Draw a red border around the entire row
+                    e.Graphics.DrawRectangle(Pens.Red, e.Bounds);
+                }
+            }
+
+            // Draw the cell content
+            e.Graphics.DrawString(flexGrid[e.Row, e.Col].ToString(),e.Style.Font  ,Brushes.Black, e.Bounds);
+            e.Handled = true;
+        }
+    }
+
+    public class Student
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public string Grade { get; set; }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;

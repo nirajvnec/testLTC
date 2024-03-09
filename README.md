@@ -1,3 +1,60 @@
+// Create some sample student data
+List<Student> students = new List<Student>
+{
+    new Student { FirstName = "John", LastName = "Doe", Grade = "A" },
+    new Student { FirstName = "Jane", LastName = "Smith", Grade = "B" },
+    new Student { FirstName = "Mike", LastName = "Johnson", Grade = "C" },
+    new Student { FirstName = "Emily", LastName = "Brown", Grade = "D" },
+    // Add more student data here...
+};
+
+// Add student data to the grid
+foreach (var student in students)
+{
+    C1.Win.C1FlexGrid.Row newRow = flexGrid.Rows.Add();
+    newRow[0] = student.FirstName;
+    newRow[1] = student.LastName;
+    newRow[2] = student.Grade;
+}
+
+// Set the DrawMode property to OwnerDraw
+flexGrid.DrawMode = C1.Win.C1FlexGrid.DrawModeEnum.OwnerDraw;
+
+// Handle the OwnerDrawCell event
+private void flexGrid_OwnerDrawCell(object sender, C1.Win.C1FlexGrid.OwnerDrawCellEventArgs e)
+{
+    // Check if the current cell is in the "Grade" column
+    if (e.Col == 2)
+    {
+        string grade = e.Text;
+
+        // Check if the grade is "D"
+        if (grade == "D")
+        {
+            // Set the cell's background color to red
+            e.Style.BackColor = Color.Red;
+            
+            // Set the cell's foreground color to white for better contrast
+            e.Style.ForeColor = Color.White;
+            
+            // Set the cell's font style to bold
+            e.Style.Font = new Font(e.Style.Font, FontStyle.Bold);
+            
+            // Apply the updated style to the cell
+            C1.Win.C1FlexGrid.CellRange cellRange = flexGrid.GetCellRange(e.Row, e.Col);
+            flexGrid.SetCellStyle(cellRange, e.Style);
+        }
+
+        // Draw the cell content
+        e.Graphics.DrawString(e.Text, e.Style.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
+        e.Handled = true;
+    }
+}
+
+
+
+
+
 using C1.Win.C1FlexGrid;
 using System;
 using System.Collections.Generic;

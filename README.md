@@ -1,70 +1,101 @@
-List<Student> students = new List<Student>
-
-    {
-
-    new Student { FirstName = "John", LastName = "Doe", Grade = "A" },
-
-    new Student { FirstName = "Jane", LastName = "Smith", Grade = "B" },
-
-    new Student { FirstName = "Mike", LastName = "Johnson", Grade = "C" },
-
-    new Student { FirstName = "Emily", LastName = "Brown", Grade = "D" },
-	
-	// Add more student data here...
-	
-	};
-
-DataTable dataTable = new DataTable();
-
-// Add columns to the DataTable based on the Student properties
-dataTable.Columns.Add("FirstName", typeof(string));
-dataTable.Columns.Add("LastName", typeof(string));
-dataTable.Columns.Add("Grade", typeof(string));
-
-// Iterate through each student in the list and add a new row to the DataTable
-foreach (Student student in students)
+private void InitializeComponent()
 {
-    DataRow row = dataTable.NewRow();
-    row["FirstName"] = student.FirstName;
-    row["LastName"] = student.LastName;
-    row["Grade"] = student.Grade;
-    dataTable.Rows.Add(row);
-}
+    this.components = new System.ComponentModel.Container();
+    this._flex = new C1.Win.C1FlexGrid.C1FlexGrid();
+    ((System.ComponentModel.ISupportInitialize)(this._flex)).BeginInit();
+    this.SuspendLayout();
 
-this._flex.DataSource = dataTable;
+    // ... (existing code for creating the DataTable and populating it with data)
 
+    // Set the properties of the C1FlexGrid control
+    this._flex.Location = new System.Drawing.Point(0, 0);
+    this._flex.Name = "_flex";
+    this._flex.Size = new System.Drawing.Size(this.ClientSize.Width, this.ClientSize.Height);
+    this._flex.Dock = DockStyle.Fill;
 
-// Iterate through each row in the C1FlexGrid
-for (int rowIndex = 1; rowIndex < this._flex.Rows.Count; rowIndex++)
-{
-    // Get the current row
-    C1.Win.C1FlexGrid.Row row = this._flex.Rows[rowIndex];
-    
+    // Add the C1FlexGrid control to the form's controls collection
+    this.Controls.Add(this._flex);
 
-    // Iterate through each cell in the current row
-    for (int colIndex = 1; colIndex < this._flex.Cols.Count; colIndex++)
-    {
-        CellRange rng = this._flex.GetCellRange(rowIndex, colIndex);
+    this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+    this.ClientSize = new System.Drawing.Size(576, 397);
+    this.DockPadding.Top = 40;
+    this.Name = "Form1";
+    this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 
-        
-        // Get the current cell
-        object cellValue = this._flex[rowIndex, colIndex];
-        
-        string grade = (string)cellValue;
-        if (grade == "D") 
+    List<Student> students = new List<Student>
+
         {
-            // Create new style and add it to the styles collection
-            
+
+        new Student { FirstName = "John", LastName = "Doe", Grade = "A" },
+
+        new Student { FirstName = "Jane", LastName = "Smith", Grade = "B" },
+
+        new Student { FirstName = "Mike", LastName = "Johnson", Grade = "C" },
+
+        new Student { FirstName = "Emily", LastName = "Brown", Grade = "D" },
+		
+		// Add more student data here...
+		
+		};
+
+    DataTable dataTable = new DataTable();
+
+    // Add columns to the DataTable based on the Student properties
+    dataTable.Columns.Add("FirstName", typeof(string));
+    dataTable.Columns.Add("LastName", typeof(string));
+    dataTable.Columns.Add("Grade", typeof(string));
+
+    // Iterate through each student in the list and add a new row to the DataTable
+    foreach (Student student in students)
+    {
+        DataRow row = dataTable.NewRow();
+        row["FirstName"] = student.FirstName;
+        row["LastName"] = student.LastName;
+        row["Grade"] = student.Grade;
+        dataTable.Rows.Add(row);
+    }
+
+    this._flex.DataSource = dataTable;
+
+    
+    // Iterate through each row in the C1FlexGrid
+    for (int rowIndex = 1; rowIndex < this._flex.Rows.Count; rowIndex++)
+    {
+        // Get the current row
+        C1.Win.C1FlexGrid.Row row = this._flex.Rows[rowIndex];
+        
+
+        // Iterate through each cell in the current row
+        for (int colIndex = 1; colIndex < this._flex.Cols.Count; colIndex++)
+        {
+            CellRange rng = this._flex.GetCellRange(rowIndex, colIndex);
 
             
+            // Get the current cell
+            object cellValue = this._flex[rowIndex, colIndex];
+            
+            string grade = (string)cellValue;
+            if (grade == "D") 
+            {
+                // Create new style and add it to the styles collection
+                
 
+                
+
+            }
         }
     }
+
+    // Refresh the C1FlexGrid to reflect the changes
+    this._flex.Refresh();
+
+
+
+
+
+    ((System.ComponentModel.ISupportInitialize)(this._flex)).EndInit();
+    this.ResumeLayout(false);
 }
-
-// Refresh the C1FlexGrid to reflect the changes
-this._flex.Refresh();
-
 
 
 

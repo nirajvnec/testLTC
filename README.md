@@ -1,4 +1,4 @@
-"https://odyssey.apps.csintra.net/bitbucket/projects/MARSGUI/repos/marsgui/browse/Source/enquiry_tool/config.xml?at=refs%2Fheads%2Frelease%2FMRT_GUI_ET_24.2.0" -OutFile "config-release-24.2.0.xml" -Credential (Get-Credential)
+Invoke-WebRequest -Uri "https://odyssey.apps.csintra.net/bitbucket/projects/MARSGUI/repos/marsgui/browse/Source/enquiry_tool/config.xml?at=refs%2Fheads%2Frelease%2FMRT_GUI_ET_24.2.0" -OutFile "config-release-24.2.0.xml" -Credential (Get-Credential)
 
 
 

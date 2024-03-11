@@ -1,3 +1,7 @@
+In C++, long double refers to a floating-point data type that is typically more precise than double. The size and precision of long double can vary by compiler and platform, but it is often 80 bits on systems following the IEEE 754 standard, providing more precision and a wider range than the 64-bit double type. This makes it suitable for calculations requiring high precision.
+
+
+
 #include <iostream>
 #include <iomanip>
 

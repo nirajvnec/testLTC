@@ -1,3 +1,20 @@
+#include <iostream>
+#include <iomanip>
+
+int main() {
+    long double num1 = 1.23456789012345678901234567890L;
+    long double num2 = 9.87654321098765432109876543210L;
+
+    long double sum = num1 + num2;
+
+    std::cout << std::setprecision(30) << sum << std::endl;
+    // Output: 11.1111111111111111111111111111
+
+    return 0;
+}
+
+
+
 private void InitializeComponent()
 {
     this.components = new System.ComponentModel.Container();

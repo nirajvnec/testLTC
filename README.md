@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+public static class XmlExtensions
+{
+    public static string GetXmlResponse(this string _)
+    {
+        string xmlResponse = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <Replies>
-  <GetAdhocReportResultReply client_ref="MarsEnquiryTool-nkuma152" run_id="oid57314303503051" status="ok">
-    <Report cob_date="20231208" report_name="Method 1 final rating 1.xml [11 Mar 2024 02:27:01 PM]" user_name="nkuma152" request_time="11-Mar-2024 08:57:10UTC" create_time="11-Mar-2024 08:57:11UTC">
+  <GetAdhocReportResultReply client_ref=""MarsEnquiryTool-nkuma152"" run_id=""oid57314303503051"" status=""ok"">
+    <Report cob_date=""20231208"" report_name=""Method 1 final rating 1.xml [11 Mar 2024 02:27:01 PM]"" user_name=""nkuma152"" request_time=""11-Mar-2024 08:57:10UTC"" create_time=""11-Mar-2024 08:57:11UTC"">
       <ReportData>
         <table>
           <thead>
@@ -295,14 +299,15 @@
               <td>F</td>
             </tr>
           </tbody>
-
         </table>
       </ReportData>
     </Report>
   </GetAdhocReportResultReply>
-</Replies>
+</Replies>";
 
-
+        return xmlResponse;
+    }
+}
 
 
 In C++, long double refers to a floating-point data type that is typically more precise than double. The size and precision of long double can vary by compiler and platform, but it is often 80 bits on systems following the IEEE 754 standard, providing more precision and a wider range than the 64-bit double type. This makes it suitable for calculations requiring high precision.

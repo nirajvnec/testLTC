@@ -1,3 +1,28 @@
+# Download config.xml files
+Invoke-WebRequest -Uri "https://odyssey.apps.csintra.net/bitbucket/projects/MARSGUI/repos/marsgui/browse/Source/enquiry_tool/config.xml?at=refs%2Fheads%2Frelease%2FMRT_GUI_ET_24.2.0" -OutFile "config-release-24.2.0.xml"
+Invoke-WebRequest -Uri "https://odyssey.apps.csintra.net/bitbucket/projects/MARSGUI/repos/marsgui/browse/Source/enquiry_tool/config.xml" -OutFile "config-master.xml"
+
+# Create a new Outlook application object
+$Outlook = New-Object -ComObject Outlook.Application
+
+# Create a new mail item
+$Mail = $Outlook.CreateItem(0)
+
+# Set the recipient, subject, and body of the email
+$Mail.To = "recipient@example.com"
+$Mail.Subject = "Config XML Files"
+$Mail.Body = "Please find the attached config.xml files."
+
+# Attach the downloaded files to the email
+$Mail.Attachments.Add("config-release-24.2.0.xml")
+$Mail.Attachments.Add("config-master.xml")
+
+# Send the email
+$Mail.Send()
+
+
+
+
 public static class XmlExtensions
 {
     public static string GetXmlResponse(this string _)

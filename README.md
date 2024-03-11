@@ -1,3 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Replies>
+  <GetAdhocReportResultReply client_ref="MarsEnquiryTool-nkuma152" run_id="oid57314303503051" status="ok">
+    <Report cob_date="20231208" report_name="Method 1 final rating 1.xml [11 Mar 2024 02:27:01 PM]" user_name="nkuma152" request_time="11-Mar-2024 08:57:10UTC" create_time="11-Mar-2024 08:57:11UTC">
+      <ReportData>
+        <table>
+          <thead>
+            <tr>
+              <th>RISKTYPE</th>
+              <th>BUSINESS ORGANISATION</th>
+              <th>ACCRUED PREMIUM</th>
+              <th>CASH EQUITY FLAG</th>
+              <th>DECOMP STATUS</th>
+              <th>DEFAULT DRC BUCKET</th>
+              <th>DEFAULT SENIORITY ASSIGNMENT</th>
+              <th>DRC BUCKET</th>
+              <th>DRC DEBT PRIORITY CLASS</th>
+              <th>DRC JTD SCALED</th>
+              <th>DRC JTD UNSCALED</th>
+              <th>DRC LONG SHORT</th>
+              <th>DRC MATURITY FRTB</th>
+              <th>DRC MATURITY SCALING FACTOR</th>
+              <th>DRC RATING</th>
+              <th>DRC RECOVERY RATE</th>
+              <th>DRC RISK WEIGHT</th>
+              <th>DRC RW JTD SCALED</th>
+              <th>DRC SENIORITY</th>
+              <th>FRTB COVERED POSITION FLAG</th>
+              <th>INDEX</th>
+              <th>INSTRUMENT</th>
+              <th>ISSUE CURRENCY</th>
+              <th>NOTIONAL USD</th>
+              <th>OBLIGOR CURRENCY</th>
+              <th>PARTICIPANT</th>
+              <th>POSITION ID</th>
+              <th>POSITION KEY</th>
+              <th>POSITION QUANTITY</th>
+              <th>PRODUCT SUB TYPE</th>
+              <th>REAL MARKET VALUE</th>
+              <th>SA DRC IDR e</th>
+              <th>SA DRC IDR 0.25</th>
+              <th>SA DRC IDR 0.75</th>
+              <th>SBA SECTOR</th>
+              <th>SENSITIVITY ID</th>
+              <th>ULTIMATE PARENT</th>
+              <th>ULTIMATE PARENT NAME</th>
+              <th>USE UNDERLYING MATURITY FLAG</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FRTBIDRCREDIT</td>
+              <td>L6 : CD0001 : CREL</td>
+              <td>120.694444444444</td>
+              <td>F</td>
+              <td>C</td>
+              <td></td>
+              <td></td>
+              <td>CORPORATE</td>
+              <td>SENIOR</td>
+              <td>10020.0</td>
+              <td>10020.0</td>
+              <td>LONG</td>
+              <td>20-Dec-2028</td>
+              <td>1</td>
+              <td>B</td>
+              <td>0.25</td>
+              <td>0.3</td>
+              <td>3006.0</td>
+              <td>SENIOR</td>
+              <td>N</td>
+              <td>INDEX</td>
+              <td>1513156921</td>
+              <td>USD</td>
+              <td>-11000</td>
+              <td>USD</td>
+              <td>XBJ410</td>
+              <td>1259481814</td>
+              <td>HY4121USNBCBM_CREL_20281220__SENIOR CREDIT DEFAULT SWAP_USD_ - Decomp[1] -STNDIN1USNBCBM</td>
+              <td>-11000</td>
+              <td>CREDIT DEFAULT SWAP</td>
+              <td>542</td>
+              <td>-12769.0</td>
+              <td>-10020.0</td>
+              <td>-4523.0</td>
+              <td>Consumer</td>
+              <td>49662134958</td>
+              <td>XBJ410</td>
+              <td>STANDARD INDUSTRIES INC</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>FRTBIDRCREDIT</td>
+              <td>L6 : CD0001 : CREL</td>
+              <td>120.694444444444</td>
+              <td>F</td>
+              <td>C</td>
+              <td></td>
+              <td></td>
+              <td>CORPORATE</td>
+              <td>SENIOR</td>
+              <td>10037.0</td>
+              <td>10037.0</td>
+              <td>LONG</td>
+              <td>20-Dec-2028</td>
+              <td>1</td>
+              <td>B</td>
+              <td>0.25</td>
+              <td>0.3</td>
+              <td>3011.1</td>
+              <td>SENIOR</td>
+              <td>N</td>
+              <td>INDEX</td>
+              <td>1513156847</td>
+              <td>USD</td>
+              <td>-11000</td>
+              <td>USD</td>
+              <td>CHH315</td>
+              <td>1259481997</td>
+              <td>HY4121USNBCBM_CREL_20281220__SENIOR CREDIT DEFAULT SWAP_USD_ - Decomp[1] -AMKOR1USNBCBM</td>
+              <td>-11000</td>
+              <td>CREDIT DEFAULT SWAP</td>
+              <td>542</td>
+              <td>-12786.0</td>
+              <td>-10037.0</td>
+              <td>-4540.0</td>
+              <td>Technology</td>
+              <td>49662151323</td>
+              <td>CHH315</td>
+              <td>AMKOR TECHNOLOGY INC</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>FRTBIDRCREDIT</td>
+              <td>L6 : CD0001 : CREL</td>
+              <td>120.694444444444</td>
+              <td>F</td>
+              <td>C</td>
+              <td></td>
+              <td></td>
+              <td>CORPORATE</td>
+              <td>SENIOR</td>
+              <td>10056.0</td>
+              <td>10056.0</td>
+              <td>LONG</td>
+              <td>20-Dec-2028</td>
+              <td>1</td>
+              <td>B</td>
+              <td>0.25</td>
+              <td>0.3</td>
+              <td>3016.8</td>
+              <td>SENIOR</td>
+              <td>N</td>
+              <td>INDEX</td>
+              <td>1513156930</td>
+              <td>USD</td>
+              <td>-11000</td>
+              <td>USD</td>
+              <td>AMT197</td>
+              <td>1259481791</td>
+              <td>HY4121USNBCBM_CREL_20281220__SENIOR CREDIT DEFAULT SWAP_USD_ - Decomp[1] -UBER1USNBCBM</td>
+              <td>-11000</td>
+              <td>CREDIT DEFAULT SWAP</td>
+              <td>542</td>
+              <td>-12805.0</td>
+              <td>-10056.0</td>
+              <td>-4558.0</td>
+              <td>Technology</td>
+              <td>49662132762</td>
+              <td>AMT197</td>
+              <td>UBER TECHNOLOGIES INC</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>FRTBIDRCREDIT</td>
+              <td>L6 : CD0001 : CREL</td>
+              <td>120.694444444444</td>
+              <td>F</td>
+              <td>C</td>
+              <td></td>
+              <td></td>
+              <td>CORPORATE</td>
+              <td>SENIOR</td>
+              <td>10074.0</td>
+              <td>10074.0</td>
+              <td>LONG</td>
+              <td>20-Dec-2028</td>
+              <td>1</td>
+              <td>BB</td>
+              <td>0.25</td>
+              <td>0.15</td>
+              <td>1511.1</td>
+              <td>SENIOR</td>
+              <td>N</td>
+              <td>INDEX</td>
+              <td>1513156933</td>
+              <td>USD</td>
+              <td>-11000</td>
+              <td>USD</td>
+              <td>FAI64</td>
+              <td>1259481663</td>
+              <td>HY4121USNBCBM_CREL_20281220__SENIOR CREDIT DEFAULT SWAP_USD_ - Decomp[1] -URI2USNBCBM</td>
+              <td>-11000</td>
+              <td>CREDIT DEFAULT SWAP</td>
+              <td>542</td>
+              <td>-12823.0</td>
+              <td>-10074.0</td>
+              <td>-4576.0</td>
+              <td>Consumer</td>
+              <td>49662120746</td>
+              <td>FAJ225</td>
+              <td>UNITED RENTALS INC</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>FRTBIDRCREDIT</td>
+              <td>L6 : CD0001 : CREL</td>
+              <td>120.694444444444</td>
+              <td>F</td>
+              <td>C</td>
+              <td></td>
+              <td></td>
+              <td>CORPORATE</td>
+              <td>SENIOR</td>
+              <td>10107.0</td>
+              <td>10107.0</td>
+              <td>LONG</td>
+              <td>20-Dec-2028</td>
+              <td>1</td>
+              <td>BB</td>
+              <td>0.25</td>
+              <td>0.15</td>
+              <td>1516.05</td>
+              <td>SENIOR</td>
+              <td>N</td>
+              <td>INDEX</td>
+              <td>1513156851</td>
+              <td>USD</td>
+              <td>-11000</td>
+              <td>USD</td>
+              <td>BAB238</td>
+              <td>1259482001</td>
+              <td>HY4121USNBCBM_CREL_20281220__SENIOR CREDIT DEFAULT SWAP_USD_ - Decomp[1] -BLL1USNBCBM</td>
+              <td>-11000</td>
+              <td>CREDIT DEFAULT SWAP</td>
+              <td>542</td>
+              <td>-12856.0</td>
+              <td>-10107.0</td>
+              <td>-4610.0</td>
+              <td>Materials</td>
+              <td>49662151750</td>
+              <td>DAB534</td>
+              <td>BALL CORPORATION</td>
+              <td>F</td>
+            </tr>
+            <tr>
+              <td>FRTBIDRCREDIT</td>
+              <td>L6 : CD0001 : CREL</td>
+              <td>120.694444444444</td>
+              <td>F</td>
+              <td>C</td>
+              <td></td>
+              <td></td>
+              <td>CORPORATE</td>
+              <td>SENIOR</td>
+              <td>10116.0</td>
+              <td>10116.0</td>
+              <td>LONG</td>
+              <td>20-Dec-2028</td>
+              <td>1</td>
+              <td>BB</td>
+              <td>0.25</td>
+              <td>0.15</td>
+              <td>1517.4</td>
+              <td>SENIOR</td>
+              <td>N</td>
+              <td>INDEX</td>
+              <td>1513156885</td>
+              <td>USD</td>
+              <td>-11000</td>
+              <td>USD</td>
+              <td>XGJ520</td>
+              <td>1259481918</td>
+              <td>HY4121USNBCBM_CREL_20281220__SENIOR CREDIT DEFAULT SWAP_USD_ - Decomp[1] -HILTDOM1USNBCBM</td>
+              <td>-11000</td>
+              <td>CREDIT DEFAULT SWAP</td>
+              <td>542</td>
+              <td>-12865.0</td>
+              <td>-10116.0</td>
+              <td>-4619.0</td>
+              <td>Consumer</td>
+              <td>49662144018</td>
+              <td>UEA413</td>
+              <td>HILTON GLOBAL HOLDINGS LLC</td>
+              <td>F</td>
+            </tr>
+          </tbody>
+
+        </table>
+      </ReportData>
+    </Report>
+  </GetAdhocReportResultReply>
+</Replies>
+
+
+
+
 In C++, long double refers to a floating-point data type that is typically more precise than double. The size and precision of long double can vary by compiler and platform, but it is often 80 bits on systems following the IEEE 754 standard, providing more precision and a wider range than the 64-bit double type. This makes it suitable for calculations requiring high precision.
 
 

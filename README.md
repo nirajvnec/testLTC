@@ -1,189 +1,65 @@
-Invoke-WebRequest -Uri "https://odyssey.apps.csintra.net/bitbucket/projects/MARSGUI/repos/marsgui/browse/Source/enquiry_tool/config.xml?at=refs%2Fheads%2Frelease%2FMRT_GUI_ET_24.2.0" -OutFile "config-release-24.2.0.xml" -Credential (Get-Credential)
+using OpenQA.Selenium;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Support.UI;
 
-
-
-
-# Download config.xml files
-Invoke-WebRequest -Uri "https://odyssey.apps.csintra.net/bitbucket/projects/MARSGUI/repos/marsgui/browse/Source/enquiry_tool/config.xml?at=refs%2Fheads%2Frelease%2FMRT_GUI_ET_24.2.0" -OutFile "config-release-24.2.0.xml"
-Invoke-WebRequest -Uri "https://odyssey.apps.csintra.net/bitbucket/projects/MARSGUI/repos/marsgui/browse/Source/enquiry_tool/config.xml" -OutFile "config-master.xml"
-
-# Create a new Outlook application object
-$Outlook = New-Object -ComObject Outlook.Application
-
-# Create a new mail item
-$Mail = $Outlook.CreateItem(0)
-
-# Set the recipient, subject, and body of the email
-$Mail.To = "recipient@example.com"
-$Mail.Subject = "Config XML Files"
-$Mail.Body = "Please find the attached config.xml files."
-
-# Attach the downloaded files to the email
-$Mail.Attachments.Add("config-release-24.2.0.xml")
-$Mail.Attachments.Add("config-master.xml")
-
-# Send the email
-$Mail.Send()
-
-
-
-
-public static class XmlExtensions
+class Program
 {
-    public static string GetXmlResponse(this string _)
+    static void Main()
     {
-        string xmlResponse = @"<?xml version=""1.0"" encoding=""UTF-8""?>
-<Replies>
-  <GetAdhocReportResultReply client_ref=""MarsEnquiryTool-nkuma152"" run_id=""oid57314303503051"" status=""ok"">
-    <Report cob_date=""20231208"" report_name=""Method 1 final rating 1.xml [11 Mar 2024 02:27:01 PM]"" user_name=""nkuma152"" request_time=""11-Mar-2024 08:57:10UTC"" create_time=""11-Mar-2024 08:57:11UTC"">
-      <ReportData>
-        <table>
-          <thead>
-            <tr>
-              <th>RISKTYPE</th>
-              <th>BUSINESS ORGANISATION</th>
-              <th>ACCRUED PREMIUM</th>
-              <th>CASH EQUITY FLAG</th>
-              <th>DECOMP STATUS</th>
-              <th>DEFAULT DRC BUCKET</th>
-              <th>DEFAULT SENIORITY ASSIGNMENT</th>
-              <th>DRC BUCKET</th>
-              <th>DRC DEBT PRIORITY CLASS</th>
-              <th>DRC JTD SCALED</th>
-              <th>DRC JTD UNSCALED</th>
-              <th>DRC LONG SHORT</th>
-              <th>DRC MATURITY FRTB</th>
-              <th>DRC MATURITY SCALING FACTOR</th>
-              <th>DRC RATING</th>
-              <th>DRC RECOVERY RATE</th>
-              <th>DRC RISK WEIGHT</th>
-              <th>DRC RW JTD SCALED</th>
-              <th>DRC SENIORITY</th>
-              <th>FRTB COVERED POSITION FLAG</th>
-              <th>INDEX</th>
-              <th>INSTRUMENT</th>
-              <th>ISSUE CURRENCY</th>
-              <th>NOTIONAL USD</th>
-              <th>OBLIGOR CURRENCY</th>
-              <th>PARTICIPANT</th>
-              <th>POSITION ID</th>
-              <th>POSITION KEY</th>
-              <th>POSITION QUANTITY</th>
-              <th>PRODUCT SUB TYPE</th>
-              <th>REAL MARKET VALUE</th>
-              <th>SA DRC IDR e</th>
-              <th>SA DRC IDR 0.25</th>
-              <th>SA DRC IDR 0.75</th>
-              <th>SBA SECTOR</th>
-              <th>SENSITIVITY ID</th>
-              <th>ULTIMATE PARENT</th>
-              <th>ULTIMATE PARENT NAME</th>
-              <th>USE UNDERLYING MATURITY FLAG</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>FRTBIDRCREDIT</td>
-              <td>L6 : CD0001 : CREL</td>
-              <td>120.694444444444</td>
-              <td>F</td>
-              <td>C</td>
-              <td></td>
-              <td></td>
-              <td>CORPORATE</td>
-              <td>SENIOR</td>
-              <td>10020.0</td>
-              <td>10020.0</td>
-              <td>LONG</td>
-              <td>20-Dec-2028</td>
-              <td>1</td>
-              <td>B</td>
-              <td>0.25</td>
-              <td>0.3</td>
-              <td>3006.0</td>
-              <td>SENIOR</td>
-              <td>N</td>
-              <td>INDEX</td>
-              <td>1513156921</td>
-              <td>USD</td>
-              <td>-11000</td>
-              <td>USD</td>
-              <td>XBJ410</td>
-              <td>1259481814</td>
-              <td>HY4121USNBCBM_CREL_20281220__SENIOR CREDIT DEFAULT SWAP_USD_ - Decomp[1] -STNDIN1USNBCBM</td>
-              <td>-11000</td>
-              <td>CREDIT DEFAULT SWAP</td>
-              <td>542</td>
-              <td>-12769.0</td>
-              <td>-10020.0</td>
-              <td>-4523.0</td>
-              <td>Consumer</td>
-              <td>49662134958</td>
-              <td>XBJ410</td>
-              <td>STANDARD INDUSTRIES INC</td>
-              <td>F</td>
-            </tr>
-            <tr>
-              <td>FRTBIDRCREDIT</td>
-              <td>L6 : CD0001 : CREL</td>
-              <td>120.694444444444</td>
-              <td>F</td>
-              <td>C</td>
-              <td></td>
-              <td></td>
-              <td>CORPORATE</td>
-              <td>SENIOR</td>
-              <td>10037.0</td>
-              <td>10037.0</td>
-              <td>LONG</td>
-              <td>20-Dec-2028</td>
-              <td>1</td>
-              <td>B</td>
-              <td>0.25</td>
-              <td>0.3</td>
-              <td>3011.1</td>
-              <td>SENIOR</td>
-              <td>N</td>
-              <td>INDEX</td>
-              <td>1513156847</td>
-              <td>USD</td>
-              <td>-11000</td>
-              <td>USD</td>
-              <td>CHH315</td>
-              <td>1259481997</td>
-              <td>HY4121USNBCBM_CREL_20281220__SENIOR CREDIT DEFAULT SWAP_USD_ - Decomp[1] -AMKOR1USNBCBM</td>
-              <td>-11000</td>
-              <td>CREDIT DEFAULT SWAP</td>
-              <td>542</td>
-              <td>-12786.0</td>
-              <td>-10037.0</td>
-              <td>-4540.0</td>
-              <td>Technology</td>
-              <td>49662151323</td>
-              <td>CHH315</td>
-              <td>AMKOR TECHNOLOGY INC</td>
-              <td>F</td>
-            </tr>
-            <tr>
-              <td>FRTBIDRCREDIT</td>
-              <td>L6 : CD0001 : CREL</td>
-              <td>120.694444444444</td>
-              <td>F</td>
-              <td>C</td>
-              <td></td>
-              <td></td>
-              <td>CORPORATE</td>
-              <td>SENIOR</td>
-              <td>10056.0</td>
-              <td>10056.0</td>
-              <td>LONG</td>
-              <td>20-Dec-2028</td>
-              <td>1</td>
-              <td>B</td>
-              <td>0.25</td>
-              <td>0.3</td>
-              <td>3016.8</td>
-              <td>SENIOR</td>
+        // Set the path to the Microsoft Edge WebDriver executable
+        string webdriverPath = @"path\to\msedgedriver.exe";
+
+        // Set the download directory
+        string downloadDir = @"path\to\downloads\folder";
+
+        // Configure Edge options
+        var edgeOptions = new EdgeOptions();
+        edgeOptions.AddUserProfilePreference("download.default_directory", downloadDir);
+        edgeOptions.AddUserProfilePreference("download.prompt_for_download", false);
+        edgeOptions.AddUserProfilePreference("download.directory_upgrade", true);
+        edgeOptions.AddUserProfilePreference("safebrowsing.enabled", true);
+
+        // Create a new instance of the Edge WebDriver
+        using var driver = new EdgeDriver(webdriverPath, edgeOptions);
+
+        try
+        {
+            // Navigate to the specified URL
+            string url = "https://odyssey.apps.csintra.net/bitbucket/projects/MARSGUI/repos/marsgui/browse/Source/enquiry_tool/config.xml?at=refs%2Fheads%2Frelease%2FMRT_GUI_ET_24.2.0";
+            driver.Navigate().GoToUrl(url);
+
+            // Wait for the "Raw" button to be present and click it
+            var rawButton = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElement(By.XPath("//a[contains(text(), 'Raw')]")));
+            rawButton.Click();
+
+            // Wait for the download to complete (adjust the timeout as needed)
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            Console.WriteLine("Download completed.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+        finally
+        {
+            // Close the browser
+            driver.Quit();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
               <td>N</td>
               <td>INDEX</td>
               <td>1513156930</td>

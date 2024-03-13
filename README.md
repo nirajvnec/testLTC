@@ -1,4 +1,35 @@
 
+const { exec } = require('child_process');
+
+function launchURL(url) {
+  const command = getCommandForPlatform(url);
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error launching URL: ${error.message}`);
+      return;
+    }
+    console.log(`URL launched: ${url}`);
+  });
+}
+
+function getCommandForPlatform(url) {
+  switch (process.platform) {
+    case 'win32':
+      return `start ${url}`;
+    case 'darwin':
+      return `open ${url}`;
+    default:
+      return `xdg-open ${url}`;
+  }
+}
+
+// Usage example
+const url = 'https://www.example.com';
+launchURL(url);
+
+
+
+
 private void SetLabelBackgroundWidth(Label label, int numChars)
 {
     if (numChars <= 0 || numChars > label.Text.Length)

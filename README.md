@@ -1,3 +1,29 @@
+
+using System;
+using System.Diagnostics;
+
+class Program
+{
+    static void Main()
+    {
+        string url = "https://www.example.com";
+        LaunchUrl(url);
+    }
+
+    static void LaunchUrl(string url)
+    {
+        try
+        {
+            Process.Start(url);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error launching URL: {ex.Message}");
+        }
+    }
+}
+
+
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 

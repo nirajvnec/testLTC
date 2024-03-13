@@ -1,3 +1,28 @@
+const puppeteer = require('puppeteer');
+
+async function clickRawFile(url) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.goto(url);
+
+  // Find the button or hyperlink with the name "Raw file"
+  const rawFileLink = await page.$x("//a[contains(text(), 'Raw file')]");
+
+  if (rawFileLink.length > 0) {
+    await rawFileLink[0].click();
+    console.log('Clicked on the "Raw file" link.');
+  } else {
+    console.log('Could not find the "Raw file" link.');
+  }
+
+  await browser.close();
+}
+
+// Usage example
+const url = 'https://example.com/page-with-raw-file-link';
+clickRawFile(url);
+
 
 const { exec } = require('child_process');
 

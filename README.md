@@ -1,3 +1,36 @@
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
+
+async function clickRawFile(url) {
+  try {
+    const dom = await JSDOM.fromURL(url);
+    const document = dom.window.document;
+
+    // Find the button or hyperlink with the name "Raw file"
+    const rawFileLink = document.querySelector("a[href*='raw']");
+
+    if (rawFileLink) {
+      // Simulate a click on the "Raw file" link
+      rawFileLink.click();
+      console.log('Clicked on the "Raw file" link.');
+    } else {
+      console.log('Could not find the "Raw file" link.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Usage example
+const url = 'https://example.com/page-with-raw-file-link';
+clickRawFile(url);
+
+
+
+
+
+
+
 const puppeteer = require('puppeteer');
 
 async function clickRawFile(url) {

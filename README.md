@@ -1,4 +1,39 @@
 
+private void SetLabelBackgroundWidth(Label label, int numChars)
+{
+    if (numChars <= 0 || numChars > label.Text.Length)
+    {
+        // Invalid number of characters, set the background color to the default color
+        label.BackColor = SystemColors.Control;
+        return;
+    }
+
+    // Create a Graphics object from the label's handle
+    using (Graphics graphics = label.CreateGraphics())
+    {
+        // Measure the width of the specified number of characters
+        string substring = label.Text.Substring(0, numChars);
+        SizeF stringSize = graphics.MeasureString(substring, label.Font);
+        int backgroundWidth = (int)Math.Ceiling(stringSize.Width);
+
+        // Create a bitmap with the measured width and label's height
+        Bitmap bitmap = new Bitmap(backgroundWidth, label.Height);
+
+        // Create a Graphics object from the bitmap
+        using (Graphics bitmapGraphics = Graphics.FromImage(bitmap))
+        {
+            // Fill the bitmap with the desired background color
+            bitmapGraphics.Clear(Color.Yellow);
+        }
+
+        // Set the label's background image to the bitmap
+        label.BackgroundImage = bitmap;
+        label.BackgroundImageLayout = ImageLayout.None;
+    }
+}
+
+
+
 Open sidebar
 ChatGPT 4
 

@@ -1,3 +1,100 @@
+using System;
+using System.Diagnostics;
+using System.Net;
+using System.Text;
+
+class HttpMonitor
+{
+    static void Main()
+    {
+        // Configure the proxy settings
+        var proxy = new WebProxy("http://localhost:8888");
+        WebRequest.DefaultWebProxy = proxy;
+
+        // Start the executable with the proxy settings
+        var processStartInfo = new ProcessStartInfo
+        {
+            FileName = "met.exe",
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            Arguments = "--proxy-server=http://localhost:8888"
+        };
+
+        using var process = new Process { StartInfo = processStartInfo };
+        process.OutputDataReceived += (sender, e) => Console.WriteLine($"Output: {e.Data}");
+        process.ErrorDataReceived += (sender, e) => Console.WriteLine($"Error: {e.Data}");
+
+        process.Start();
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+
+        // Configure the WebRequest to capture HTTP traffic
+        WebRequest.RegisterPrefix("http://", new CustomWebRequestCreator());
+
+        Console.WriteLine("Monitoring HTTP traffic. Press any key to exit.");
+        Console.ReadKey();
+
+        process.Kill();
+    }
+}
+
+class CustomWebRequestCreator : IWebRequestCreate
+{
+    public WebRequest Create(Uri uri)
+    {
+        var request = WebRequest.CreateDefault(uri);
+        request.Proxy = null; // Disable the proxy for the captured requests
+
+        // Attach event handlers to log the request and response
+        request.GetRequestStream().Close();
+        request.GetResponse().Close();
+
+        return request;
+    }
+}
+
+class CustomWebRequest : WebRequest
+{
+    private readonly WebRequest _originalRequest;
+
+    public CustomWebRequest(WebRequest originalRequest)
+    {
+        _originalRequest = originalRequest;
+    }
+
+    protected override WebResponse GetResponse()
+    {
+        var response = _originalRequest.GetResponse();
+        LogResponse(response);
+        return response;
+    }
+
+    private void LogResponse(WebResponse response)
+    {
+        Console.WriteLine("Response:");
+        Console.WriteLine($"Status Code: {((HttpWebResponse)response).StatusCode}");
+        Console.WriteLine($"Headers: {FormatHeaders(response.Headers)}");
+
+        using var responseStream = response.GetResponseStream();
+        using var reader = new StreamReader(responseStream, Encoding.UTF8);
+        var responseBody = reader.ReadToEnd();
+        Console.WriteLine($"Body: {responseBody}");
+        Console.WriteLine();
+    }
+
+    private static string FormatHeaders(WebHeaderCollection headers)
+    {
+        var sb = new StringBuilder();
+        foreach (string key in headers.Keys)
+        {
+            string value = headers[key];
+            sb.AppendLine($"{key}: {value}");
+        }
+        return sb.ToString();
+    }
+}
+
 
 using System;
 using System.Diagnostics;

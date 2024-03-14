@@ -2,6 +2,54 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
+static class StringExtensions
+{
+    public static string FormatXml(this string xml)
+    {
+        // Replace backslash characters with verbatim strings
+        string formattedXml = Regex.Replace(xml, @"\\", @"\\");
+        return formattedXml;
+    }
+
+    public static void WriteToFile(this string content, string filePath)
+    {
+        // Write the content to a file
+        File.WriteAllText(filePath, content);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        string xmlresp = @"<response>
+                            <data>
+                                <item>C:\Users\John\Documents</item>
+                                <item>D:\Backup\Files</item>
+                            </data>
+                          </response>";
+
+        // Format the XML using the extension method
+        string formattedXml = xmlresp.FormatXml();
+
+        // Assign the formatted XML to another string variable
+        string formattedXmlVariable = formattedXml;
+
+        // Write the formatted XML to a file using the extension method
+        string filePath = "response.xml";
+        formattedXmlVariable.WriteToFile(filePath);
+
+        Console.WriteLine($"XML response written to {filePath}");
+    }
+}
+
+
+
+
+using System;
+using System.IO;
+using System.Text.RegularExpressions;
+
 class Program
 {
     static void Main()

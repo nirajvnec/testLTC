@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Xml.Linq;
 
 public class C12
 {
@@ -8,18 +9,22 @@ public class C12
         string inputFilePath = "path/to/your/xmlfile.xml";
         string outputFilePath = "path/to/output/textfile.txt";
 
-        string xmlString = ReadXmlFile(inputFilePath);
+        var xmlString = ReadXmlFile(inputFilePath);
+        xmlString = FormatXmlString(xmlString);
         xmlString = EscapeXmlString(xmlString);
-        xmlString = IndentXmlString(xmlString);
         WriteToTextFile(outputFilePath, xmlString);
 
-        Console.WriteLine("XML file processed, escaped, indented, and written to text file.");
+        Console.WriteLine("XML file processed, formatted, escaped, and written to text file.");
     }
 
     public static string ReadXmlFile(string filePath)
     {
-        string xmlContent = File.ReadAllText(filePath);
-        return xmlContent;
+        return File.ReadAllText(filePath);
+    }
+
+    public static string FormatXmlString(string xmlString)
+    {
+        return XDocument.Parse(xmlString).ToString();
     }
 
     public static string EscapeXmlString(string xmlString)
@@ -31,34 +36,7 @@ public class C12
         xmlString = xmlString.Replace("\\", "\\\\");
 
         // Add verbatim string prefix and suffix
-        xmlString = "@\"" + xmlString + "\"";
-
-        return xmlString;
-    }
-
-    public static string IndentXmlString(string xmlString)
-    {
-        int indentLevel = 0;
-        string indentedXmlString = "";
-
-        foreach (string line in xmlString.Split('\n'))
-        {
-            string trimmedLine = line.Trim();
-
-            if (trimmedLine.StartsWith("</"))
-            {
-                indentLevel--;
-            }
-
-            indentedXmlString += new string(' ', indentLevel * 4) + trimmedLine + "\n";
-
-            if (trimmedLine.StartsWith("<") && !trimmedLine.EndsWith("/>") && !trimmedLine.StartsWith("</"))
-            {
-                indentLevel++;
-            }
-        }
-
-        return indentedXmlString;
+        return $@"""{xmlString}""";
     }
 
     public static void WriteToTextFile(string filePath, string content)
@@ -66,85 +44,6 @@ public class C12
         File.WriteAllText(filePath, content);
     }
 }
-
-
-
-
-using System;
-using System.IO;
-
-public class C12
-{
-    public static void Main()
-    {
-        string inputFilePath = "path/to/your/xmlfile.xml";
-        string outputFilePath = "path/to/output/textfile.txt";
-
-        string xmlString = ReadXmlFile(inputFilePath);
-        xmlString = IndentXmlString(xmlString);
-        WriteToTextFile(outputFilePath, xmlString);
-
-        Console.WriteLine("XML file processed, indented, and written to text file.");
-    }
-
-    public static string ReadXmlFile(string filePath)
-    {
-        string xmlContent = File.ReadAllText(filePath);
-
-        // Replace slashes and double quotes
-        xmlContent = xmlContent.Replace("\\\"", "\"\"");
-
-        // Add verbatim string prefix
-        xmlContent = "@\"" + xmlContent + "\"";
-
-        return xmlContent;
-    }
-
-    public static string IndentXmlString(string xmlString)
-    {
-        int indentLevel = 0;
-        string indentedXmlString = "";
-
-        foreach (string line in xmlString.Split('\n'))
-        {
-            string trimmedLine = line.Trim();
-
-            if (trimmedLine.StartsWith("</"))
-            {
-                indentLevel--;
-            }
-
-            indentedXmlString += new string(' ', indentLevel * 4) + trimmedLine + "\n";
-
-            if (trimmedLine.StartsWith("<") && !trimmedLine.EndsWith("/>") && !trimmedLine.StartsWith("</"))
-            {
-                indentLevel++;
-            }
-        }
-
-        return indentedXmlString;
-    }
-
-    public static void WriteToTextFile(string filePath, string content)
-    {
-        File.WriteAllText(filePath, content);
-    }
-}
-
-
-
-
-string filePath = "path/to/your/xmlfile.xml";
-        string xmlString = File.ReadAllText(filePath);
-
-        // Replace slashes and double quotes
-        xmlString = xmlString.Replace("\\\"", "\"\"");
-
-        // Add verbatim string prefix
-        xmlString = "@\"" + xmlString + "\"";
-
-        Console.WriteLine(xmlString);
-
 
 
 

@@ -1,3 +1,17 @@
+string filePath = "path/to/your/xmlfile.xml";
+        string xmlString = File.ReadAllText(filePath);
+
+        // Replace slashes and double quotes
+        xmlString = xmlString.Replace("\\\"", "\"\"");
+
+        // Add verbatim string prefix
+        xmlString = "@\"" + xmlString + "\"";
+
+        Console.WriteLine(xmlString);
+
+
+
+
 using System;
 using System.IO;
 using System.Text.RegularExpressions;

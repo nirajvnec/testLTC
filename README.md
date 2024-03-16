@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Xml.Linq;
+using System.Xml;
 
 public class C12
 {
@@ -24,7 +24,21 @@ public class C12
 
     public static string FormatXmlString(string xmlString)
     {
-        return XDocument.Parse(xmlString).ToString();
+        var xmlWriterSettings = new XmlWriterSettings
+        {
+            Indent = true,
+            IndentChars = "    ",
+            NewLineOnAttributes = true
+        };
+
+        using var stringWriter = new StringWriter();
+        using var xmlWriter = XmlWriter.Create(stringWriter, xmlWriterSettings);
+
+        var xmlDocument = new XmlDocument();
+        xmlDocument.LoadXml(xmlString);
+        xmlDocument.Save(xmlWriter);
+
+        return stringWriter.ToString();
     }
 
     public static string EscapeXmlString(string xmlString)
@@ -44,7 +58,6 @@ public class C12
         File.WriteAllText(filePath, content);
     }
 }
-
 
 
 using System;

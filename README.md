@@ -9,6 +9,78 @@ public class C12
         string outputFilePath = "path/to/output/textfile.txt";
 
         string xmlString = ReadXmlFile(inputFilePath);
+        xmlString = EscapeXmlString(xmlString);
+        xmlString = IndentXmlString(xmlString);
+        WriteToTextFile(outputFilePath, xmlString);
+
+        Console.WriteLine("XML file processed, escaped, indented, and written to text file.");
+    }
+
+    public static string ReadXmlFile(string filePath)
+    {
+        string xmlContent = File.ReadAllText(filePath);
+        return xmlContent;
+    }
+
+    public static string EscapeXmlString(string xmlString)
+    {
+        // Escape double quotes
+        xmlString = xmlString.Replace("\"", "\"\"");
+
+        // Escape backslashes
+        xmlString = xmlString.Replace("\\", "\\\\");
+
+        // Add verbatim string prefix and suffix
+        xmlString = "@\"" + xmlString + "\"";
+
+        return xmlString;
+    }
+
+    public static string IndentXmlString(string xmlString)
+    {
+        int indentLevel = 0;
+        string indentedXmlString = "";
+
+        foreach (string line in xmlString.Split('\n'))
+        {
+            string trimmedLine = line.Trim();
+
+            if (trimmedLine.StartsWith("</"))
+            {
+                indentLevel--;
+            }
+
+            indentedXmlString += new string(' ', indentLevel * 4) + trimmedLine + "\n";
+
+            if (trimmedLine.StartsWith("<") && !trimmedLine.EndsWith("/>") && !trimmedLine.StartsWith("</"))
+            {
+                indentLevel++;
+            }
+        }
+
+        return indentedXmlString;
+    }
+
+    public static void WriteToTextFile(string filePath, string content)
+    {
+        File.WriteAllText(filePath, content);
+    }
+}
+
+
+
+
+using System;
+using System.IO;
+
+public class C12
+{
+    public static void Main()
+    {
+        string inputFilePath = "path/to/your/xmlfile.xml";
+        string outputFilePath = "path/to/output/textfile.txt";
+
+        string xmlString = ReadXmlFile(inputFilePath);
         xmlString = IndentXmlString(xmlString);
         WriteToTextFile(outputFilePath, xmlString);
 

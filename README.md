@@ -1,3 +1,19 @@
+Subject: Notification of Compensatory Off for Release Support Participation
+
+Dear [Recipient's Name],
+
+I hope this message finds you well. I am writing to inform you that I will be availing compensatory leave for my participation in the release support activities on the following dates:
+
+For Release Support 24.1.0: March 17th and 18th, 2024
+For Release Support 24.0.2: February 17th, 2024
+Thank you for your understanding and support.
+
+Best regards,
+Niraj Kumar
+
+
+
+
 using System;
 using System.IO;
 using System.Xml;

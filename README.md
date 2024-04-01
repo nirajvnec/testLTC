@@ -1,3 +1,40 @@
+public partial class LoadingForm : Form
+{
+    private System.Windows.Forms.Label loadingLabel;
+
+    public LoadingForm()
+    {
+        InitializeComponent();
+        this.FormBorderStyle = FormBorderStyle.FixedSingle;
+        this.ControlBox = false;
+        this.StartPosition = FormStartPosition.CenterScreen;
+        this.BackColor = Color.White;
+
+        this.loadingLabel = new Label();
+        this.loadingLabel.AutoSize = true;
+        loadingLabel.Text = "Loading, please wait...";
+        loadingLabel.Visible = true;
+        loadingLabel.ForeColor = Color.Black; // Set label text color to black
+        loadingLabel.Font = new Font("Arial", 12); // Increase font size
+        loadingLabel.Location = new Point(50, 50); // Adjust label position
+
+        this.Controls.Add(this.loadingLabel);
+
+        this.FormBorderStyle = FormBorderStyle.FixedDialog;
+        this.ControlBox = false;
+        this.StartPosition = FormStartPosition.CenterScreen;
+        this.Size = new Size(300, 200); // Increase form size
+        this.Text = string.Empty;
+        this.ShowInTaskbar = true; // Show form in taskbar
+        this.TopMost = true; // Set form as topmost window
+
+        this.Paint += LoadingForm_Paint;
+    }
+
+    // Rest of the code remains the same
+}
+
+
 Subject: Notification of Compensatory Off for Release Support Participation
 
 Dear [Recipient's Name],

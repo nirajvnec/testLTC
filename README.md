@@ -1,28 +1,61 @@
-private void InitializeComponent()
+public class LoadingForm : Form
+{
+    private Label loadingLabel;
+
+    public LoadingForm()
+    {
+        InitializeComponent();
+        SetupLoadingForm();
+    }
+
+    private void InitializeComponent()
     {
         this.loadingLabel = new Label();
         this.SuspendLayout();
 
-        // LoadingForm
-        this.ClientSize = new Size(300, 200);
-        this.FormBorderStyle = FormBorderStyle.FixedSingle;
-        this.MaximizeBox = false;
-        this.MinimizeBox = false;
-        this.StartPosition = FormStartPosition.CenterScreen;
-        this.Text = "Loading";
-
-        // loadingLabel
         this.loadingLabel.AutoSize = true;
         this.loadingLabel.Font = new Font("Arial", 12, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
         this.loadingLabel.Location = new Point(50, 50);
+        this.loadingLabel.Name = "loadingLabel";
+        this.loadingLabel.Size = new Size(200, 20);
+        this.loadingLabel.TabIndex = 0;
         this.loadingLabel.Text = "Loading, please wait...";
 
+        this.AutoScaleDimensions = new SizeF(6F, 13F);
+        this.AutoScaleMode = AutoScaleMode.Font;
+        this.ClientSize = new Size(300, 120);
         this.Controls.Add(this.loadingLabel);
+        this.FormBorderStyle = FormBorderStyle.None;
+        this.Name = "LoadingForm";
+        this.StartPosition = FormStartPosition.Manual;
+        this.Text = "LoadingForm";
         this.ResumeLayout(false);
         this.PerformLayout();
     }
-   
 
+    private void SetupLoadingForm()
+    {
+        this.FormBorderStyle = FormBorderStyle.None;
+        this.BackColor = Color.White;
+        this.ShowInTaskbar = false;
+        this.TopMost = true;
+    }
+
+    public void ShowLoadingForm(Form parentForm)
+    {
+        this.StartPosition = FormStartPosition.Manual;
+        this.Location = new Point(
+            parentForm.Left + (parentForm.Width - this.Width) / 2,
+            parentForm.Top + (parentForm.Height - this.Height) / 2
+        );
+        this.Show();
+    }
+
+    public void CloseLoadingForm()
+    {
+        this.Close();
+    }
+}
 Subject: Notification of Compensatory Off for Release Support Participation
 
 Dear [Recipient's Name],

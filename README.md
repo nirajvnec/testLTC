@@ -1,3 +1,14 @@
+this.loadingLabel.AutoSize = true;
+        this.loadingLabel.Font = new Font("Arial", 12, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+        this.loadingLabel.ForeColor = Color.Blue; // Set the font color to blue
+        this.loadingLabel.Location = new Point(50, 50);
+        this.loadingLabel.Name = "loadingLabel";
+        this.loadingLabel.Size = new Size(200, 20);
+        this.loadingLabel.TabIndex = 0;
+        this.loadingLabel.Text = "Loading, please wait...";
+
+
+
 private void SetupLoadingForm()
     {
         this.FormBorderStyle = FormBorderStyle.None;

@@ -1,3 +1,97 @@
+protected void doGet(HttpServletRequest http_request, HttpServletResponse http_response)
+        throws ServletException, IOException {
+    // Set CORS headers
+    http_response.setHeader("Access-Control-Allow-Origin", "*");
+    http_response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    http_response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    http_response.setHeader("Access-Control-Max-Age", "3600");
+
+    logger.info(RequestProcessor.prepareReceiveNotification(http_request));
+
+    // Allow a request to destroy and recreate the ORB
+    String request = http_request.getParameter("request");
+
+    // downloads handled slightly differently in terms of content type,
+    if (request.startsWith("download")) {
+        int ix = request.indexOf(" ");
+
+        if ((ix == -1) || ((ix + 2) >= request.length())) {
+            http_response.setContentType("text/plain");
+            PrintWriter httpout = http_response.getWriter();
+            httpout.print("invalid server-request-id");
+        } else {
+            // Change mime type to trigger file download in the browser
+            String serverReqId = request.substring(ix + 2);
+            http_response.setContentType("application/octet-stream");
+            http_response.setHeader("Cache-Control", "public");
+            http_response.setHeader("Content-Description", "File Transfer");
+            http_response.setHeader("Content-Disposition", "attachment;filename=merlin_" + serverReqId + ".csv");
+            PrintWriter httpout = http_response.getWriter();
+            try {
+                doDownload(getUserName(http_request), serverReqId, httpout);
+            } catch (Throwable t) {
+                logger.error("Exception thrown while processing request : " + t.toString());
+                // Send error message back
+                String message = "MerlinUIServlet Exception : " + t.toString();
+                httpout.print(new XmlEscapeChars(message, false).createErrorXml("TechnicalDescription"));
+                return;
+            }
+        }
+    } else {
+        http_response.setContentType("text/plain");
+        PrintWriter httpout = http_response.getWriter();
+
+        if ("reconnect".equals(request)) {
+            RequestProcessor.reconnect(m_client);
+            out.print("Reconnected");
+        } else if ("ping".equals(request)) {
+            out.print("MerlinServlet\\n");
+            RequestProcessor.ping(m_manager, httpout);
+        } else if ("pingreq".equals(request)) {
+            try {
+                String reply = m_client.processMerlinRequest(getUserName(http_request),
+                        "<merlin-request request-type=\\"special\\" special=\\"ping-req\\" />");
+                httpout.print(reply);
+            } catch (CsMarsCorbaException e) {
+                String message = "CsMarsCorbaException : " + e.getMessage();
+                httpout.print(new XmlEscapeChars(message, false).createErrorXml("TechnicalDescription"));
+            } catch (Throwable t) {
+                logger.error("Exception thrown while processing request : " + t.toString());
+                // Send error message back
+                String message = "MerlinUIServlet Exception : " + t.toString();
+                httpout.print(new XmlEscapeChars(message, false).createErrorXml("TechnicalDescription"));
+            }
+        } else if ("user".equals(request)) { //test request to see if we can recover the user name
+            httpout.print(getUserName(http_request));
+        } else {
+            RequestProcessor.unSupportedRequest(http_request, httpout);
+            logger.warning("Unknown request received");
+        }
+    }
+}
+
+
+
+protected void doGet(HttpServletRequest http_request, HttpServletResponse http_response)
+        throws ServletException, IOException {
+    // Set CORS headers
+    http_response.setHeader("Access-Control-Allow-Origin", "*");
+    http_response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    http_response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    http_response.setHeader("Access-Control-Max-Age", "3600");
+
+
+
+
+
+
+
+
+
+
+
+
+
 // app.component.ts
 import { Component } from '@angular/core';
 import { ApiService } from './api.service';

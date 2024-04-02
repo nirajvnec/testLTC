@@ -72,13 +72,14 @@ protected void doGet(HttpServletRequest http_request, HttpServletResponse http_r
 
 
 
-protected void doGet(HttpServletRequest http_request, HttpServletResponse http_response)
+protected void doOptions(HttpServletRequest http_request, HttpServletResponse http_response)
         throws ServletException, IOException {
-    // Set CORS headers
     http_response.setHeader("Access-Control-Allow-Origin", "*");
     http_response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     http_response.setHeader("Access-Control-Allow-Headers", "Content-Type");
     http_response.setHeader("Access-Control-Max-Age", "3600");
+    http_response.setStatus(HttpServletResponse.SC_OK);
+}
 
 
 

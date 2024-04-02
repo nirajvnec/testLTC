@@ -1,3 +1,37 @@
+// app.component.ts
+import { Component } from '@angular/core';
+import { ApiService } from './api.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  data: any;
+
+  constructor(private apiService: ApiService) { }
+
+  ngOnInit() {
+    const cobDate = '01/04/2024';
+    const searchString = 'AUD';
+
+    this.apiService.getData(cobDate, searchString).subscribe(
+      (response) => {
+        this.data = response;
+        console.log(this.data);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+}
+
+
+
+
+
 
 // api.service.ts
 import { Injectable } from '@angular/core';

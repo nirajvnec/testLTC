@@ -1,3 +1,29 @@
+this.http.get('https://api.example.com/endpoint', {
+  params: {
+    cobDate: cobDate,
+    searchString: searchString
+  }
+}).pipe(
+  map((response: any) => {
+    // Transform the API response if needed
+    return response.data;
+  })
+).subscribe(
+  (data) => {
+    // Handle the transformed data
+    console.log(data);
+  },
+  (error) => {
+    // Handle any errors
+    console.error(error);
+  }
+);
+
+
+
+
+
+
 this.loadingLabel.AutoSize = true;
         this.loadingLabel.Font = new Font("Arial", 12, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
         this.loadingLabel.ForeColor = Color.Blue; // Set the font color to blue

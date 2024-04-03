@@ -1,3 +1,49 @@
+<div class="container" *ngIf="showContainer">
+  <div class="search-container">
+    <mat-form-field class="search-input">
+      <input matInput placeholder="Search" [(ngModel)]="searchText">
+    </mat-form-field>
+
+    <mat-form-field class="date-input">
+      <input matInput [matDatepicker]="picker" placeholder="Select a date" [(ngModel)]="selectedDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="search()">Search</button>
+    <button mat-raised-button color="accent" (click)="clear()">Clear</button>
+  </div>
+
+  <div class="grid-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Column definitions -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef>Age</th>
+        <td mat-cell *matCellDef="let element">{{ element.age }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let element">{{ element.city }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+
+
+
+
 protected void doGet(HttpServletRequest http_request, HttpServletResponse http_response)
         throws ServletException, IOException {
     // Set CORS headers

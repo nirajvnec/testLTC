@@ -1,3 +1,7 @@
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
 <mat-form-field appearance="fill">
   <mat-label>Choose a date</mat-label>
   <input matInput [matDatepicker]="picker">

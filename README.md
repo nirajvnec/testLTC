@@ -1,3 +1,8 @@
+"styles": [
+  "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+  "src/styles.css"
+]
+
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 

@@ -1,3 +1,23 @@
+rm -rf node_modules
+npm cache clean --force
+npm install
+
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+@NgModule({
+  ...
+  imports: [
+    ...
+    BrowserAnimationsModule,
+    ...
+  ],
+  ...
+})
+export class AppModule { }
+
+
+
 "styles": [
   "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
   "src/styles.css"

@@ -1,3 +1,19 @@
+import { MatTableDataSource } from '@angular/material/table';
+
+export class MyComponent {
+  dataSource = new MatTableDataSource([
+    { name: 'John', age: 25 },
+    { name: 'Jane', age: 30 },
+    { name: 'Bob', age: 35 }
+  ]);
+}
+
+
+displayedColumns: string[] = ['name', 'age'];
+
+
+
+
 import { NgModule } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';

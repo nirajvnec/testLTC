@@ -1,3 +1,20 @@
+<div *ngFor="let category of pagedData">
+  <app-recursive-component [item]="category" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"></app-recursive-component>
+</div>
+
+<div class="pagination">
+  <button *ngFor="let page of pages" (click)="goToPage(page)">
+    {{ page }}
+  </button>
+</div>
+
+
+
+
+
+
+
+
 
 export class AppComponent {
   data: any = {

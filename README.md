@@ -1,3 +1,58 @@
+{
+  "id": 1,
+  "name": "Parent 1",
+  "children": [
+    {
+      "idno": 2,
+      "itemName": "Child 1-1",
+      "subItems": [
+        {
+          "sno": 3,
+          "title": "Grandchild 1-1-1"
+        },
+        {
+          "id": 4,
+          "name": "Grandchild 1-1-2"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Child 1-2",
+      "items": [
+        {
+          "idno": 6,
+          "itemName": "Grandchild 1-2-1"
+        },
+        {
+          "sno": 7,
+          "title": "Grandchild 1-2-2",
+          "children": [
+            {
+              "id": 8,
+              "name": "Great Grandchild 1-2-2-1"
+            },
+            {
+              "idno": 9,
+              "itemName": "Great Grandchild 1-2-2-2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sno": 10,
+      "title": "Child 1-3"
+    }
+  ]
+}
+
+
+
+
+
+
+
 
 <div *ngIf="item">
   <h3>{{ getItemName(item) }}</h3>

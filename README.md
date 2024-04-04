@@ -1,3 +1,61 @@
+
+[
+  {
+    "idno": 1,
+    "itemName": "Parent 1",
+    "subItems": [
+      {
+        "sno": 2,
+        "title": "Child 1-1"
+      },
+      {
+        "id": 3,
+        "name": "Child 1-2",
+        "items": [
+          {
+            "id": 4,
+            "itemName": "Grandchild 1-2-1"
+          },
+          {
+            "sno": 5,
+            "title": "Grandchild 1-2-2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Parent 2",
+    "children": [
+      {
+        "idno": 7,
+        "itemName": "Child 2-1",
+        "subItems": [
+          {
+            "id": 8,
+            "name": "Grandchild 2-1-1"
+          }
+        ]
+      },
+      {
+        "sno": 9,
+        "title": "Child 2-2"
+      },
+      {
+        "id": 10,
+        "itemName": "Child 2-3"
+      }
+    ]
+  }
+]
+
+
+
+
+
+
+
 import { Component, Input } from '@angular/core';
 
 @Component({

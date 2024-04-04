@@ -1,29 +1,100 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-recursive-component',
+  selector: 'app-root',
   template: `
-    <div *ngIf="item">
-      <h3>{{ getItemName(item) }}</h3>
-      <ul *ngIf="getChildren(item)">
-        <li *ngFor="let child of getChildren(item) | slice:(currentPage - 1) * itemsPerPage:currentPage * itemsPerPage">
-          <app-recursive-component [item]="child"></app-recursive-component>
-        </li>
-      </ul>
+    <div *ngIf="data">
+      <app-recursive-component [item]="data"></app-recursive-component>
+    </div>
+
+    <div class="pagination">
+      <button *ngFor="let page of pages" (click)="goToPage(page)">
+        {{ page }}
+      </button>
     </div>
   `
 })
-export class RecursiveComponentComponent {
-  @Input() item: any;
-  @Input() itemsPerPage: number = 2;
-  @Input() currentPage: number = 1;
+export class AppComponent {
+  data: any;
 
-  getItemName(item: any): string {
-    return item.name || item.itemName || item.title || 'Unnamed';
+  itemsPerPage = 2; // Number of parent items per page
+  currentPage = 1; // Current page number
+  pages: number[] = []; // Array to store page numbers
+
+  constructor() {
+    this.fetchData();
   }
 
-  getChildren(item: any): any[] {
-    return item.children || item.items || item.subItems || [];
+  fetchData() {
+    // Simulating fetching data from an API
+    this.data = {
+      "id": 1,
+      "name": "Parent 1",
+      "children": [
+        {
+          "idno": 2,
+          "itemName": "Child 1-1",
+          "subItems": [
+            {
+              "sno": 3,
+              "title": "Grandchild 1-1-1"
+            },
+            {
+              "id": 4,
+              "name": "Grandchild 1-1-2"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Child 1-2",
+          "items": [
+            {
+              "idno": 6,
+              "itemName": "Grandchild 1-2-1"
+            },
+            {
+              "sno": 7,
+              "title": "Grandchild 1-2-2",
+              "children": [
+                {
+                  "id": 8,
+                  "name": "Great Grandchild 1-2-2-1"
+                },
+                {
+                  "idno": 9,
+                  "itemName": "Great Grandchild 1-2-2-2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "sno": 10,
+          "title": "Child 1-3"
+        }
+      ]
+    };
+    this.calculatePages();
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+  }
+
+  calculatePages() {
+    const totalItems = this.getTotalItems(this.data);
+    const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+    this.pages = Array(totalPages).fill(0).map((_, i) => i + 1);
+  }
+
+  getTotalItems(obj: any): number {
+    let count = 1; // Count the current object itself
+    if (obj.children || obj.items || obj.subItems) {
+      const children = obj.children || obj.items || obj.subItems;
+      count += children.reduce((total: number, child: any) => total + this.getTotalItems(child), 0);
+    }
+    return count;
   }
 }
 

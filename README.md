@@ -1,6 +1,23 @@
 export class AppComponent {
   // ...
 
+  pages: number[] = []; // Update the type to number[]
+
+  // ...
+
+  calculatePages() {
+    const totalItems = this.getTotalItems(this.data);
+    const totalPages = Math.ceil(totalItems / Number(this.itemsPerPage));
+    this.pages = Array(totalPages).fill(0).map((_, i) => i + 1);
+  }
+
+  // ...
+}
+
+
+export class AppComponent {
+  // ...
+
   getTotalItems(obj: any): number {
     let count = 1; // Count the current object itself
 

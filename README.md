@@ -1,3 +1,38 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-recursive-component',
+  template: `
+    <div *ngIf="item">
+      <h3>{{ getItemName(item) }}</h3>
+      <ul *ngIf="getChildren(item)">
+        <li *ngFor="let child of getChildren(item) | slice:(currentPage - 1) * itemsPerPage:currentPage * itemsPerPage">
+          <app-recursive-component [item]="child"></app-recursive-component>
+        </li>
+      </ul>
+    </div>
+  `
+})
+export class RecursiveComponentComponent {
+  @Input() item: any;
+  @Input() itemsPerPage: number = 2;
+  @Input() currentPage: number = 1;
+
+  getItemName(item: any): string {
+    return item.name || item.itemName || item.title || 'Unnamed';
+  }
+
+  getChildren(item: any): any[] {
+    return item.children || item.items || item.subItems || [];
+  }
+}
+
+
+
+
+
+
+
 import { Component } from '@angular/core';
 
 @Component({

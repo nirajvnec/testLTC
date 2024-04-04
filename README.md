@@ -1,3 +1,47 @@
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { ApiService } from './api.service';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+  styleUrls: ['./my-component.component.css']
+})
+export class MyComponent implements AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  dataSource = new MatTableDataSource([]);
+  displayedColumns: string[] = ['name', 'age']; // Example columns
+
+  constructor(private apiService: ApiService) { }
+
+  ngAfterViewInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    const cobDate = '01/04/2024';
+    const searchString = 'AUD';
+    const pageSize = 10;
+    const pageIndex = 0;
+
+    this.apiService.getData(cobDate, searchString, pageSize, pageIndex).subscribe(
+      (response) => {
+        this.dataSource.data = response.data; // Assuming the response contains a 'data' property
+        this.dataSource.paginator = this.paginator;
+        this.paginator.length = response.totalCount; // Assuming the response contains a 'totalCount' property
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+}
+
+
+
+
 import { MatTableDataSource } from '@angular/material/table';
 
 export class MyComponent {

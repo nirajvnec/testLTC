@@ -1,3 +1,17 @@
+export class AppComponent {
+  // ...
+
+  calculatePages() {
+    const totalItems = this.getTotalItems(this.data);
+    const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+    this.pages = Array(totalPages).fill(0).map((_, i) => i + 1);
+  }
+
+  // ...
+}
+
+
+
 <div *ngIf="data">
   <app-recursive-component [item]="data"></app-recursive-component>
 </div>

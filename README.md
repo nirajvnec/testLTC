@@ -1,3 +1,29 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-recursive-component',
+  templateUrl: './recursive-component.component.html',
+  styleUrls: ['./recursive-component.component.css']
+})
+export class RecursiveComponentComponent {
+  @Input() item: any;
+  @Input() itemsPerPage: number = 2;
+  @Input() currentPage: number = 1;
+
+  getItemName(item: any): string {
+    return item.name || item.itemName || item.title || 'Unnamed';
+  }
+
+  getChildren(item: any): any[] {
+    return item.children || item.items || item.subItems || [];
+  }
+}
+
+
+
+
+
+
 ng generate component components/recursive-component
 
 

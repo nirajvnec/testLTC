@@ -1,3 +1,8 @@
+ng generate component components/recursive-component
+
+
+
+
 import { Component, Input } from '@angular/core';
 
 @Component({

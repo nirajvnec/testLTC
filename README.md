@@ -1,3 +1,26 @@
+export class AppComponent {
+  data: any = {
+    // Your JSON data here
+  };
+
+  itemsPerPage = 2; // Number of categories per page
+  currentPage = 1; // Current page number
+  pages: number[] = []; // Array to store page numbers
+
+  get pagedData() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const categories = Object.values(this.data);
+    return categories.slice(startIndex, endIndex);
+  }
+
+  // Other methods and properties...
+}
+
+
+
+
+
 fetchData() {
   this.data = {
     "category1": {

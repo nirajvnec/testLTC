@@ -1,3 +1,16 @@
+<div *ngIf="data">
+  <app-recursive-component [item]="data"></app-recursive-component>
+</div>
+
+<div class="pagination">
+  <button *ngFor="let page of pages" (click)="goToPage(page)">
+    {{ page }}
+  </button>
+</div>
+
+
+
+
 <div *ngIf="item">
   <h3>{{ getItemName(item) }}</h3>
   <ul *ngIf="getChildren(item)">

@@ -1,3 +1,14 @@
+<div *ngIf="item">
+  <h3>{{ getItemName(item) }}</h3>
+  <ul *ngIf="getChildren(item)">
+    <li *ngFor="let child of getChildren(item) | slice:(currentPage - 1) * itemsPerPage:currentPage * itemsPerPage">
+      <app-recursive-component [item]="child"></app-recursive-component>
+    </li>
+  </ul>
+</div>
+
+
+
 import { Component, Input } from '@angular/core';
 
 @Component({

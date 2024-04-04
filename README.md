@@ -1,3 +1,46 @@
+
+export class AppComponent {
+  data: any = {
+    // Your JSON data here
+  };
+
+  itemsPerPage = 2; // Number of categories per page
+  currentPage = 1; // Current page number
+  pages: number[] = []; // Array to store page numbers
+
+  get pagedData() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const categories = Object.values(this.data);
+    return categories.slice(startIndex, endIndex);
+  }
+
+  constructor() {
+    this.calculatePages();
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+  }
+
+  calculatePages() {
+    const totalCategories = Object.keys(this.data).length;
+    const totalPages = Math.ceil(totalCategories / this.itemsPerPage);
+    this.pages = Array(totalPages).fill(0).map((_, i) => i + 1);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 [
   {
     "id": 1,

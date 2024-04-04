@@ -1,6 +1,29 @@
 export class AppComponent {
   // ...
 
+  getTotalItems(obj: any): number {
+    let count = 1; // Count the current object itself
+
+    if (obj.children || obj.items || obj.subItems) {
+      const children = obj.children || obj.items || obj.subItems;
+      count += children.reduce((total: number, child: any) => total + this.getTotalItems(child), 0);
+    }
+
+    return count;
+  }
+
+  // ...
+}
+
+
+
+
+
+
+
+export class AppComponent {
+  // ...
+
   calculatePages() {
     const totalItems = this.getTotalItems(this.data);
     const totalPages = Math.ceil(totalItems / this.itemsPerPage);

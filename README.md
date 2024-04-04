@@ -1,70 +1,12 @@
-
-[
-  {
-    "idno": 1,
-    "itemName": "Parent 1",
-    "subItems": [
-      {
-        "sno": 2,
-        "title": "Child 1-1"
-      },
-      {
-        "id": 3,
-        "name": "Child 1-2",
-        "items": [
-          {
-            "id": 4,
-            "itemName": "Grandchild 1-2-1"
-          },
-          {
-            "sno": 5,
-            "title": "Grandchild 1-2-2"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": 6,
-    "name": "Parent 2",
-    "children": [
-      {
-        "idno": 7,
-        "itemName": "Child 2-1",
-        "subItems": [
-          {
-            "id": 8,
-            "name": "Grandchild 2-1-1"
-          }
-        ]
-      },
-      {
-        "sno": 9,
-        "title": "Child 2-2"
-      },
-      {
-        "id": 10,
-        "itemName": "Child 2-3"
-      }
-    ]
-  }
-]
-
-
-
-
-
-
-
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-recursive-component',
   template: `
-    <div>
+    <div *ngIf="item">
       <h3>{{ getItemName(item) }}</h3>
       <ul *ngIf="getChildren(item)">
-        <li *ngFor="let child of getChildren(item)">
+        <li *ngFor="let child of getChildren(item) | slice:(currentPage - 1) * itemsPerPage:currentPage * itemsPerPage">
           <app-recursive-component [item]="child"></app-recursive-component>
         </li>
       </ul>
@@ -73,6 +15,8 @@ import { Component, Input } from '@angular/core';
 })
 export class RecursiveComponentComponent {
   @Input() item: any;
+  @Input() itemsPerPage: number = 2;
+  @Input() currentPage: number = 1;
 
   getItemName(item: any): string {
     return item.name || item.itemName || item.title || 'Unnamed';

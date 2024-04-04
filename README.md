@@ -1,3 +1,36 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-recursive-component',
+  template: `
+    <div>
+      <h3>{{ getItemName(item) }}</h3>
+      <ul *ngIf="getChildren(item)">
+        <li *ngFor="let child of getChildren(item)">
+          <app-recursive-component [item]="child"></app-recursive-component>
+        </li>
+      </ul>
+    </div>
+  `
+})
+export class RecursiveComponentComponent {
+  @Input() item: any;
+
+  getItemName(item: any): string {
+    return item.name || item.itemName || item.title || 'Unnamed';
+  }
+
+  getChildren(item: any): any[] {
+    return item.children || item.items || item.subItems || [];
+  }
+}
+
+
+
+
+
+
+
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';

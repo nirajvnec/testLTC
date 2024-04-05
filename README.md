@@ -1,3 +1,52 @@
+jsonData = {
+  "MAS Reports": {
+    "Mapping_FXVega_Stipulated_Curr": [
+      "[SNO, MAS_STIPULATED_CCY_PAIRS]",
+      "1,AUDUSD"
+    ],
+    "Format_IRVega_by_tenor": [
+      "[RANK, MRS_Template_Currencies]",
+      "1,AUD"
+    ],
+    "Mapping_Stipulated_Curr": [
+      "[RANK, MRS_Template_Currencies]",
+      "1,AUD"
+    ],
+    "Format_IRDelta": [
+      "[CURRENCY, INSTRUMENT, SNO]",
+      "AUD,Government Debt,l",
+      "AUD,Other Debt,2",
+      "AUD,Money Market Placements/Borrowings,3",
+      "AUD,Forward Rate Agreements,4",
+      "AUD,Interest rate futures,5",
+      "AUD,Futures on Government Bonds,6",
+      "AUD,Interest Rate Swaps,7",
+      "AUD,Cross Currency Swaps,8",
+      "AUD,FX Swaps and Forwards,9",
+      "AUD,Foreign exchange options,10",
+      "AUD,Interest rate options,11",
+      "AUD,Equity Derivatives,12",
+      "AUD,Credit Derivatives,13",
+      "AUD,Others,14"
+    ]
+  },
+  "CS Sensitivity Report": {
+    "Pegged and Non-Pegged Currencies List": [
+      ",AUD"
+    ]
+  },
+  "IB_GTS_KRR": {
+    "Country": [
+      "SA,EMEA,Middle East,Middle East,SAUDI ARABIA"
+    ]
+  },
+  "MR NCL Credit Cluster Report": {}
+};
+
+
+
+
+
 <div *ngFor="let reportName of reportNames">
   <div *ngIf="isReportNameMissing(reportName)">
     <p class="error-message">Missing report name: "{{ reportName }}".</p>

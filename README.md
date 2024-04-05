@@ -1,3 +1,15 @@
+isColumnHeaderValueMissing(row: string, columnHeaders: string[], reportName: string, metadataKey: string): boolean {
+  if (row) {
+    const values = row.split(',');
+    return values.length !== columnHeaders.length;
+  } else {
+    console.error(`Error: Row data is undefined for report "${reportName}" and metadata "${metadataKey}".`);
+    return true;
+  }
+}
+
+
+
 <tr *ngIf="isColumnHeaderValueMissing(row, getColumnHeaders(reportName, metadataKey), reportName, metadataKey)">
   <td colspan="100%" class="error-message">Missing column header value for one or more columns.</td>
 </tr>

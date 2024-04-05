@@ -1,3 +1,36 @@
+export class DynamicTableComponent implements OnInit {
+  // ...existing properties...
+  showErrors = false;
+  errors: string[] = [];
+
+  // ...existing methods...
+
+  isColumnHeaderValueMissing(row: string, columnHeaders: string[], reportName: string, metadataKey: string): boolean {
+    if (row) {
+      const values = row.split(',');
+      return values.length !== columnHeaders.length;
+    } else {
+      const errorMessage = `Error: Row data is undefined for report "${reportName}" and metadata "${metadataKey}".`;
+      this.errors.push(errorMessage);
+      return true;
+    }
+  }
+
+  showErrorPopup() {
+    this.showErrors = true;
+  }
+
+  hideErrorPopup() {
+    this.showErrors = false;
+  }
+}
+
+
+
+
+
+
+
 table {
   border-collapse: collapse;
   width: 100%;

@@ -1,3 +1,8 @@
+<tr *ngIf="isColumnHeaderValueMissing(row, getColumnHeaders(reportName, metadataKey), reportName, metadataKey)">
+  <td colspan="100%" class="error-message">Missing column header value for one or more columns.</td>
+</tr>
+
+
 jsonData = {
   "MAS Reports": {
     "Mapping_FXVega_Stipulated_Curr": [

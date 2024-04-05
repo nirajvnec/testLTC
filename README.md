@@ -1,7 +1,13 @@
 isColumnHeaderValueMissing(row: string, columnHeaders: string[], reportName: string, metadataKey: any): boolean {
   if (row) {
     const values = row.split(',');
-    return values.length !== columnHeaders.length;
+    if (values.length !== columnHeaders.length) {
+      const missingColumns = columnHeaders.filter((column, index) => !values[index].trim());
+      const errorMessage = `Error: Missing value(s) for column(s) "${missingColumns.join('", "')}" in report "${reportName}" and metadata "${metadataKey}".`;
+      this.errors.push(errorMessage);
+      return true;
+    }
+    return false;
   } else {
     const metadataKeyString = typeof metadataKey === 'string' ? metadataKey : JSON.stringify(metadataKey);
     const errorMessage = `Error: Row data is undefined for report "${reportName}" and metadata "${metadataKeyString}".`;
@@ -9,7 +15,6 @@ isColumnHeaderValueMissing(row: string, columnHeaders: string[], reportName: str
     return true;
   }
 }
-
 <tr *ngFor="let row of getPaginatedRows(reportName, metadataKey.key)">
   <td>{{ reportName }}</td>
   <td>{{ metadataKey.key }}</td>

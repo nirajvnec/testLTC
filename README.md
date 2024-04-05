@@ -1,3 +1,8 @@
+
+
+
+
+
 .error-popup {
   position: fixed;
   top: 50%;
@@ -8,9 +13,10 @@
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 9999;
+  width: 400px; /* Set a fixed width */
+  height: 300px; /* Set a fixed height */
+  overflow-y: auto; /* Add a vertical scrollbar when content overflows */
 }
-
-
 
 
 

@@ -1,3 +1,19 @@
+<div *ngIf="errors.length > 0">
+  <button (click)="showErrorPopup()">Show Errors</button>
+</div>
+
+<div *ngIf="showErrors" class="error-popup">
+  <h3>Errors:</h3>
+  <ul>
+    <li *ngFor="let error of errors">{{ error }}</li>
+  </ul>
+  <button (click)="hideErrorPopup()">Close</button>
+</div>
+
+<!-- Rest of the template code -->
+
+
+
 export class DynamicTableComponent implements OnInit {
   // ...existing properties...
   showErrors = false;

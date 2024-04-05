@@ -1,3 +1,16 @@
+
+Optimized User Object and Handle Count for MET: The efficiency of user object and handle counts in MET has been enhanced by updating the breakdown logic. Now, breakdowns are generated based on user demand, avoiding the previous strategy of pre-allocating memory for breakdown objects irrespective of their usage.
+
+Enhanced Responsiveness of Result Output Window for Extensive Reports: By employing the asynchronous await pattern, the responsiveness of the result output window for larger reports has been significantly improved, moving away from the previous method that relied on executing operations on the main thread.
+
+Improved Response Time in Hierarchy Manager: The loading time within the Hierarchy Manager has been dramatically reduced from 114 seconds to 14 seconds, thanks to the application of a parallel programming approach for loading all hierarchies.
+
+
+
+
+
+
+
 isColumnHeaderValueMissing(row: string, columnHeaders: string[], reportName: string, metadataKey: any): boolean {
   if (row) {
     const values = row.split(',');

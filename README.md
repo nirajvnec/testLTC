@@ -1,3 +1,17 @@
+tbody tr {
+  display: block;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+tbody tr td {
+  display: inline-block;
+  white-space: normal;
+}
+
+
+
+
 .scrollable-cell {
   overflow-x: auto;
   white-space: nowrap;

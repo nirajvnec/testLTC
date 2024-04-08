@@ -1,3 +1,20 @@
+ngOnInit() {
+  // ...existing code...
+  this.checkColumnHeaders();
+  this.checkMetadata();
+  
+  for (const reportName of this.reportNames) {
+    for (const metadataKey of Object.keys(this.jsonData[reportName])) {
+      if (this.isColumnHeaderPresent(reportName, metadataKey)) {
+        this.checkColumnValues(reportName, metadataKey);
+      }
+    }
+  }
+}
+
+
+
+
 The JSON object encapsulates data mappings for a series of reports, identified by their names: "MAS Reports", "CS Sensitivity Report", "IB_GTS_KRR", and "MR NCL Credit Cluster Report". Each report contains one or more metadata entries, which define the structure and content of the report's data. The metadata for each report comprises a single column header that describes the data fields, followed by one or more rows of corresponding values.
 
 For the "MAS Reports", the metadata and their respective structures are as follows:

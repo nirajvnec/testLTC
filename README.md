@@ -1,3 +1,57 @@
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { ViewChild } from '@angular/core';
+
+
+dataSource: MatTableDataSource<any>;
+
+
+ngOnInit() {
+  this.dataSource = new MatTableDataSource(this.getRows(this.currentReportName, this.currentMetadataKey));
+}
+
+
+
+@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+ngAfterViewInit() {
+  this.dataSource.paginator = this.paginator;
+}
+
+
+
+getTableData(reportName: string, metadataKey: string): any[] {
+  return this.getRows(reportName, metadataKey);
+}
+
+
+updateDataSource(reportName: string, metadataKey: string) {
+  this.dataSource.data = this.getTableData(reportName, metadataKey);
+}
+
+
+<table mat-table [dataSource]="dataSource">
+  <!-- Column definitions go here -->
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({

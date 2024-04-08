@@ -1,3 +1,39 @@
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: auto;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  /* ... */
+  white-space: nowrap;
+}
+
+
+
+
+<div *ngFor="let reportName of reportNames">
+  <!-- ... -->
+  <div *ngIf="!isMetadataMissing(reportName, metadataKey.key)">
+    <h3>{{ metadataKey.key }}</h3>
+    <!-- ... -->
+    <div class="table-container" *ngIf="!isColumnHeaderMissing(reportName, metadataKey.key)">
+      <table>
+        <!-- ... -->
+      </table>
+    </div>
+    <!-- ... -->
+  </div>
+  <!-- ... -->
+</div>
+
+
+
 ngOnInit() {
   // ...existing code...
   this.checkColumnHeaders();

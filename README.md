@@ -1,3 +1,56 @@
+export class DynamicTableComponent implements OnInit {
+  // ...existing properties...
+  columnHeaderErrors: string[] = [];
+  metadataErrors: string[] = [];
+  columnValueErrors: string[] = [];
+
+  // ...existing methods...
+
+  checkColumnHeaders(): void {
+    this.columnHeaderErrors = [];
+    for (const reportName of this.reportNames) {
+      for (const metadataKey of Object.keys(this.jsonData[reportName])) {
+        if (!this.isColumnHeaderPresent(reportName, metadataKey)) {
+          const errorMessage = `Column header is missing for report "${reportName}" and metadata "${metadataKey}".`;
+          this.columnHeaderErrors.push(errorMessage);
+        }
+      }
+    }
+  }
+
+  isColumnHeaderPresent(reportName: string, metadataKey: string): boolean {
+    return this.jsonData[reportName] && this.jsonData[reportName][metadataKey] && this.jsonData[reportName][metadataKey][0];
+  }
+
+  checkMetadata(): void {
+    this.metadataErrors = [];
+    for (const reportName of this.reportNames) {
+      if (Object.keys(this.jsonData[reportName]).length === 0) {
+        const errorMessage = `Metadata is missing for report "${reportName}".`;
+        this.metadataErrors.push(errorMessage);
+      }
+    }
+  }
+
+  checkColumnValues(reportName: string, metadataKey: string): void {
+    const columnHeaders = this.getColumnHeaders(reportName, metadataKey);
+    const rows = this.getRows(reportName, metadataKey);
+
+    for (const row of rows) {
+      const values = row.split(',');
+      const missingColumns = columnHeaders.filter((column, index) => !values[index].trim());
+      if (missingColumns.length > 0) {
+        const errorMessage = `Missing value(s) for column(s) "${missingColumns.join('", "')}" in report "${reportName}" and metadata "${metadataKey}".`;
+        this.columnValueErrors.push(errorMessage);
+      }
+    }
+  }
+
+  // ...existing methods...
+}
+
+
+
 
 Optimized User Object and Handle Count for MET: The efficiency of user object and handle counts in MET has been enhanced by updating the breakdown logic. Now, breakdowns are generated based on user demand, avoiding the previous strategy of pre-allocating memory for breakdown objects irrespective of their usage.
 

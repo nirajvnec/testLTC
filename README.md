@@ -1,3 +1,17 @@
+import { MatSelectModule } from '@angular/material/select';
+
+@NgModule({
+  imports: [
+    // other modules
+    MatSelectModule,
+  ],
+  // other module properties
+})
+export class AppModule { }
+
+
+
+
 <div id="tipStep6" class="border-boxs">
   <div>
     <mat-form-field>

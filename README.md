@@ -1,3 +1,100 @@
+<div id="tipStep6" class="border-boxs">
+  <div>
+    <mat-form-field>
+      <mat-label>Reports per page</mat-label>
+      <mat-select [(ngModel)]="reportsPerPage" (selectionChange)="onReportsPerPageChange()">
+        <mat-option value="5">5</mat-option>
+        <mat-option value="10">10</mat-option>
+        <mat-option value="20">20</mat-option>
+        <mat-option value="50">50</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngFor="let reportName of paginatedReports">
+    <h2>{{ reportName }}</h2>
+
+    <div *ngFor="let metadataKey of jsonData[reportName] | keyvalue">
+      <h3>{{ metadataKey.key }}</h3>
+
+      <table mat-table [dataSource]="getTableData(reportName, metadataKey.key)" class="mat-elevation-z8">
+        <ng-container *ngFor="let column of getColumnHeaders(reportName, metadataKey.key)" [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+          <td mat-cell *matCellDef="let row">{{ row[column] }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="getColumnHeaders(reportName, metadataKey.key)"></tr>
+        <tr mat-row *matRowDef="let row; columns: getColumnHeaders(reportName, metadataKey.key);"></tr>
+      </table>
+
+      <mat-paginator [length]="getTableData(reportName, metadataKey.key).length"
+                     [pageSize]="metadataPageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="onMetadataPageChange($event, reportName, metadataKey.key)">
+      </mat-paginator>
+    </div>
+  </div>
+
+  <mat-paginator [length]="reportNames.length"
+                 [pageSize]="reportsPerPage"
+                 [pageSizeOptions]="[5, 10, 20, 50]"
+                 (page)="onReportPageChange($event)">
+  </mat-paginator>
+</div>
+
+
+import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+
+@Component({
+  selector: 'app-dynamic-table',
+  templateUrl: './dynamic-table.component.html',
+  styleUrls: ['./dynamic-table.component.css']
+})
+export class DynamicTableComponent implements OnInit {
+  // ...
+
+  reportsPerPage = 10;
+  currentReportPage = 0;
+  metadataPageSize = 5;
+  metadataPageIndex: { [key: string]: { [key: string]: number } } = {};
+
+  // ...
+
+  get paginatedReports(): string[] {
+    const startIndex = this.currentReportPage * this.reportsPerPage;
+    const endIndex = startIndex + this.reportsPerPage;
+    return this.reportNames.slice(startIndex, endIndex);
+  }
+
+  onReportsPerPageChange() {
+    this.currentReportPage = 0;
+  }
+
+  onReportPageChange(event: PageEvent) {
+    this.currentReportPage = event.pageIndex;
+  }
+
+  onMetadataPageChange(event: PageEvent, reportName: string, metadataKey: string) {
+    if (!this.metadataPageIndex[reportName]) {
+      this.metadataPageIndex[reportName] = {};
+    }
+    this.metadataPageIndex[reportName][metadataKey] = event.pageIndex;
+  }
+
+  getTableData(reportName: string, metadataKey: string): any[] {
+    const rows = this.getRows(reportName, metadataKey);
+    const pageIndex = this.metadataPageIndex[reportName] && this.metadataPageIndex[reportName][metadataKey] ? this.metadataPageIndex[reportName][metadataKey] : 0;
+    const startIndex = pageIndex * this.metadataPageSize;
+    const endIndex = startIndex + this.metadataPageSize;
+    return rows.slice(startIndex, endIndex);
+  }
+
+  // ...
+}
+
+
+
 export class DynamicTableComponent implements OnInit {
   // ...
   reportsPerPage = 10;

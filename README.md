@@ -1,3 +1,30 @@
+currentPage: { [key: string]: { [key: string]: number } } = {};
+
+goToPage(reportName: string, metadataKey: string, page: number) {
+  if (!this.currentPage[reportName]) {
+    this.currentPage[reportName] = {};
+  }
+  this.currentPage[reportName][metadataKey] = page;
+}
+
+
+goToPage(reportName: string, metadataKey: string, page: number) {
+  if (!this.currentPage[reportName]) {
+    this.currentPage[reportName] = {};
+  }
+  this.currentPage[reportName][metadataKey] = page;
+}
+
+getPaginatedRows(reportName: string, metadataKey: string): any[] {
+  const rows = this.getRows(reportName, metadataKey);
+  const currentPage = this.currentPage[reportName] && this.currentPage[reportName][metadataKey] ? this.currentPage[reportName][metadataKey] : 1;
+  const startIndex = (currentPage - 1) * this.itemsPerPage;
+  const endIndex = startIndex + this.itemsPerPage;
+  return rows.slice(startIndex, endIndex);
+}
+
+
+
 <button *ngFor="let page of [].constructor(getTotalPages(reportName, metadataKey.key)); let i = index"
                   (click)="goToPage(reportName, metadataKey.key, i + 1)">
             {{ i + 1 }}

@@ -1,3 +1,42 @@
+export class DynamicTableComponent implements OnInit {
+  // ...
+  reportsPerPage = 10;
+  currentReportPage = 1;
+  totalReportPages: number[] = [];
+
+  // ...
+
+  get paginatedReports(): string[] {
+    const startIndex = (this.currentReportPage - 1) * this.reportsPerPage;
+    const endIndex = startIndex + this.reportsPerPage;
+    return this.reportNames.slice(startIndex, endIndex);
+  }
+
+  onReportsPerPageChange() {
+    this.currentReportPage = 1;
+    this.calculateTotalReportPages();
+  }
+
+  goToReportPage(page: number) {
+    this.currentReportPage = page;
+  }
+
+  calculateTotalReportPages() {
+    const totalPages = Math.ceil(this.reportNames.length / this.reportsPerPage);
+    this.totalReportPages = Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+
+  ngOnInit() {
+    // ...
+    this.calculateTotalReportPages();
+  }
+
+  // ...
+}
+
+
+
+
 <div id="tipStep6" class="border-boxs">
   <div>
     <label for="reportsPerPage">Reports per page:</label>

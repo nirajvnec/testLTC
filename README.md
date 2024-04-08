@@ -1,3 +1,39 @@
+.scrollable-cell {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+
+<table *ngIf="!isColumnHeaderMissing(reportName, metadataKey.key)" class="table">
+  <thead>
+    <tr>
+      <th>Report Name</th>
+      <th>Metadata</th>
+      <th *ngFor="let header of getColumnHeaders(reportName, metadataKey.key)">{{ header }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of getPaginatedRows(reportName, metadataKey.key)">
+      <td>{{ reportName }}</td>
+      <td>{{ metadataKey.key }}</td>
+      <!-- Create a scrollable container for the cells with many values -->
+      <td>
+        <div class="scrollable-cell">
+          <ng-container *ngFor="let value of row.split(','); let i = index">
+            <span *ngIf="value.trim()">{{ value.trim() }}</span>
+            <span *ngIf="!value.trim()" class="error-message">
+              Missing value for column "{{ getColumnHeaders(reportName, metadataKey.key)[i] }}"
+            </span>
+          </ng-container>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
 .table-responsive-custom {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;

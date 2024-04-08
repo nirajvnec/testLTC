@@ -1,11 +1,17 @@
+
+#tipStep6 {
+  max-width: 1160px;
+  overflow-x: auto;
+}
+
 .table-container {
-  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
 }
 
 table {
   width: auto;
-  min-width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
 }
 
@@ -13,7 +19,6 @@ th, td {
   /* ... */
   white-space: nowrap;
 }
-
 
 
 

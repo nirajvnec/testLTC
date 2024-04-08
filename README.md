@@ -1,3 +1,26 @@
+The JSON object encapsulates data mappings for a series of reports, identified by their names: "MAS Reports", "CS Sensitivity Report", "IB_GTS_KRR", and "MR NCL Credit Cluster Report". Each report contains one or more metadata entries, which define the structure and content of the report's data. The metadata for each report comprises a single column header that describes the data fields, followed by one or more rows of corresponding values.
+
+For the "MAS Reports", the metadata and their respective structures are as follows:
+
+"Mapping_FXVega_Stipulated_Curr" holds the column header "[SNO, MAS_STIPULATED_CCY_PAIRS]", with the value "1,AUDUSD".
+
+"Format_IRVega_by_tenor" contains the column header "[RANK, MRS_Template_Currencies]", with a single row value of "1,AUD".
+
+"Mapping_Stipulated_Curr" also uses the column header "[RANK, MRS_Template_Currencies]", with the same single row value "1,AUD".
+
+"Format_IRDelta" presents a broader set of data under the column header "[CURRENCY, INSTRUMENT, SNO]", encompassing a range of values detailing various financial instruments and their classifications.
+
+The "CS Sensitivity Report" is configured with metadata titled "Pegged and Non-Pegged Currencies List"; however, the column header for this metadata is not specified in the provided structure.
+
+Likewise, the "IB_GTS_KRR" report includes metadata "country", yet it lacks a defined column header.
+
+Lastly, the "MR NCL Credit Cluster Report" appears in the structure without any associated metadata.
+
+It is important to note that for each report, the metadata structure requires a column header, and each header must have at least one corresponding row of values. The current JSON structure needs to be updated to include the missing column headers for the "CS Sensitivity Report" and "IB_GTS_KRR" to adhere to this defined schema.
+
+
+
+
 export class DynamicTableComponent implements OnInit {
   // ...existing properties...
   columnHeaderErrors: string[] = [];

@@ -1,3 +1,9 @@
+<button *ngFor="let page of [].constructor(getTotalPages(reportName, metadataKey.key)); let i = index"
+                  (click)="goToPage(reportName, metadataKey.key, i + 1)">
+            {{ i + 1 }}
+          </button>
+
+
 
 #tipStep6 {
   max-width: 1160px;

@@ -1,3 +1,37 @@
+<div id="tipStep6" class="border-boxs">
+  <div>
+    <label for="reportsPerPage">Reports per page:</label>
+    <select id="reportsPerPage" [(ngModel)]="reportsPerPage" (change)="onReportsPerPageChange()">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+    </select>
+  </div>
+
+  <div *ngFor="let reportName of paginatedReports">
+    <!-- ... (keep the existing code for displaying each report) ... -->
+
+    <div *ngIf="!isMetadataMissing(reportName, metadataKey.key)">
+      <!-- ... -->
+      <div class="pagination" *ngIf="!isColumnHeaderMissing(reportName, metadataKey.key)">
+        <button *ngFor="let page of [].constructor(getTotalPages(reportName, metadataKey.key)); let i = index"
+                (click)="goToPage(reportName, metadataKey.key, i + 1)">
+          {{ i + 1 }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-pagination">
+    <button *ngFor="let page of totalReportPages" (click)="goToReportPage(page)">
+      {{ page }}
+    </button>
+  </div>
+</div>
+
+
+
 currentPage: { [key: string]: { [key: string]: number } } = {};
 
 goToPage(reportName: string, metadataKey: string, page: number) {

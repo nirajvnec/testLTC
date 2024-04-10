@@ -1,3 +1,56 @@
+using System;
+using System.Xml;
+
+public static class XmlExtensions
+{
+    public static string GetCobDate(this string xmlResponse)
+    {
+        // Create an XmlDocument object
+        XmlDocument xmlDoc = new XmlDocument();
+
+        // Load the XML response into the XmlDocument
+        xmlDoc.LoadXml(xmlResponse);
+
+        // Get the <Report> element
+        XmlElement reportElement = (XmlElement)xmlDoc.SelectSingleNode("//Report");
+
+        // Read the value of the cob_date attribute
+        string cobDate = reportElement.GetAttribute("cob_date");
+
+        return cobDate;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        string xmlResponse = @"<?xml version=""1.0"" encoding=""UTF-8""?>
+<Replies>
+  <GetAdhocReportResultReply client_ref=""MarsEnquiryTool-nkuma152"" run_id=""oid57314303503051"" status=""ok"">
+    <Report cob_date=""20231208"" report_name=""Method 1 final rating 1.xml [11 Mar 2024 02:27:01 PM]"" user_name=""nkuma152"" request_time=""11-Mar-2024 08:57:10UTC"" create_time=""11-Mar-2024 08:57:11UTC"">
+      <!-- Rest of the XML content -->
+    </Report>
+  </GetAdhocReportResultReply>
+</Replies>";
+
+        // Call the extension method to get the cob_date value
+        string cobDate = xmlResponse.GetCobDate();
+
+        // Print the cob_date value
+        Console.WriteLine("COB Date: " + cobDate);
+    }
+}
+
+
+
+
+
+
+
+
+
+
 tbody tr {
   display: block;
   white-space: nowrap;

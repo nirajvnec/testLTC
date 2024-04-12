@@ -1,3 +1,37 @@
+
+Certainly, here is the updated section:
+
+Subject: Uniformity Required in API Response Formats
+
+Dear Satya,
+
+I hope this message finds you well.
+
+I have observed an inconsistency in the API responses concerning the formatting of the "Responsible" column values. There are discrepancies in the presentation of names; for instance, there is a variation such as "Jain, Saurabh" versus "Kiran Paramane". It is essential that the API ensures uniformity in data presentation, as this is not an issue that should be corrected on the UI side.
+
+To illustrate, the "IRC Report Metadata" section correctly formats the name as follows:
+"Check ABS DAR(0) > 20% ABS Notional, 568850195_SAUDI1USNACBD_LTD, RECOURSE SPV OPTION, Excluded, This rule does not apply to Gap Option trades. Source IDR ladders are being used for IRC and the Notional/MV does not impact the calculation of DAR., Kiran Paramane,"
+
+However, the "Exclusions_APAC Credit" section shows the inconsistency that needs addressing:
+"Check Migration Delta is not 0 or NULL if Mig Type <> 'Non-Linear', SAUDI1USNACBD_RWO_RISK, ANNUITY_20211220_USD, Excluded, MV is very small, "Jain, Saurabh", "FALSE""
+
+I trust you will look into this matter and make the necessary adjustments to standardize the API response format.
+
+Thank you for your prompt resolution of this issue.
+
+Best regards,
+
+[Your Name]
+[Your Position]
+
+
+
+
+
+
+
+
+
 using System;
 using System.Xml;
 

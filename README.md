@@ -1,3 +1,25 @@
+public static class XmlExtensions
+{
+    public static int GetSkipErrorFrtbSensitivitiesCount(this string xmlResponse)
+    {
+        var xmlDoc = new XmlDocument();
+        xmlDoc.LoadXml(xmlResponse);
+
+        var reportNode = xmlDoc.SelectSingleNode("//Report");
+        if (reportNode != null)
+        {
+            var countAttr = reportNode.Attributes["skip_error_frtb_sensitivities_count"];
+            if (countAttr != null)
+            {
+                return int.Parse(countAttr.Value);
+            }
+        }
+
+        return 0;
+    }
+}
+
+int skipCount = xmlResponse.GetSkipErrorFrtbSensitivitiesCount();
 
 Certainly, here is the updated section:
 

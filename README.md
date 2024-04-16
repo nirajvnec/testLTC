@@ -1,3 +1,63 @@
+using System;
+using System.Timers;
+using System.Windows.Forms;
+
+namespace InactivityTimeoutExample
+{
+    public partial class Form1 : Form
+    {
+        private const double InactivityTimeout = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+        private Timer inactivityTimer;
+        private DateTime lastActivityTime;
+
+        public Form1()
+        {
+            InitializeComponent();
+            InitializeInactivityTimer();
+            Application.Idle += Application_Idle;
+        }
+
+        private void InitializeInactivityTimer()
+        {
+            inactivityTimer = new Timer(InactivityTimeout);
+            inactivityTimer.Elapsed += InactivityTimer_Elapsed;
+            inactivityTimer.AutoReset = false;
+            ResetInactivityTimer();
+        }
+
+        private void ResetInactivityTimer()
+        {
+            lastActivityTime = DateTime.Now;
+            inactivityTimer.Stop();
+            inactivityTimer.Start();
+        }
+
+        private void InactivityTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            if ((DateTime.Now - lastActivityTime).TotalMilliseconds >= InactivityTimeout)
+            {
+                Application.Exit();
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Idle -= Application_Idle;
+            inactivityTimer.Stop();
+            inactivityTimer.Dispose();
+        }
+    }
+}
+
+
+
+
+
 
 using System;
 using System.Timers;

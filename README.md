@@ -1,3 +1,69 @@
+
+using System;
+using System.Timers;
+using System.Windows.Forms;
+
+namespace InactivityTimeoutExample
+{
+    public partial class Form1 : Form
+    {
+        private const double InactivityTimeout = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+        private Timer inactivityTimer;
+        private DateTime lastActivityTime;
+
+        public Form1()
+        {
+            InitializeComponent();
+            InitializeInactivityTimer();
+        }
+
+        private void InitializeInactivityTimer()
+        {
+            inactivityTimer = new Timer(InactivityTimeout);
+            inactivityTimer.Elapsed += InactivityTimer_Elapsed;
+            inactivityTimer.AutoReset = false;
+            ResetInactivityTimer();
+        }
+
+        private void ResetInactivityTimer()
+        {
+            lastActivityTime = DateTime.Now;
+            inactivityTimer.Stop();
+            inactivityTimer.Start();
+        }
+
+        private void InactivityTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            ResetInactivityTimer();
+        }
+
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            base.OnKeyPress(e);
+            ResetInactivityTimer();
+        }
+
+        // Add more event handlers for other user interactions if needed
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            inactivityTimer.Stop();
+            inactivityTimer.Dispose();
+        }
+    }
+}
+
+
+
+
+
+
 using System;
 using System.Windows.Forms;
 

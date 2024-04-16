@@ -1,3 +1,53 @@
+using System;
+using System.Windows.Forms;
+
+namespace SlidingExpirationExample
+{
+    public partial class Form1 : Form
+    {
+        private const int ExpirationDays = 30; // Set the desired expiration period in days
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Get the installation date (you can store this in a configuration file or registry)
+            DateTime installationDate = GetInstallationDate();
+
+            // Calculate the expiration date based on the installation date and expiration period
+            DateTime expirationDate = installationDate.AddDays(ExpirationDays);
+
+            // Check if the current date is beyond the expiration date
+            if (DateTime.Now > expirationDate)
+            {
+                MessageBox.Show("The application has expired.", "Expiration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Application.Exit();
+            }
+            else
+            {
+                // The application is still valid
+                // Perform your desired actions here
+            }
+        }
+
+        private DateTime GetInstallationDate()
+        {
+            // Retrieve the installation date from a configuration file or registry
+            // For demonstration purposes, we'll use a hardcoded date
+            return new DateTime(2023, 1, 1);
+        }
+    }
+}
+
+
+
+
+
+
+
 Summarization: The tool will generate concise and coherent summaries of the meeting by identifying the most relevant information and condensing it into easily digestible minutes.
 Action Item Detection: The AI Teams Voice Recorder will automatically detect and list action items, including tasks assigned to specific team members and their respective deadlines.
 Integration: The tool will seamlessly integrate with popular productivity tools and platforms like Slack, Trello, or Asana, allowing easy sharing of meeting minutes and action items with team members.

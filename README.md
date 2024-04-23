@@ -1,3 +1,13 @@
+int totalCount = 177;
+int erroneousRecordCount = 1;
+
+string errorMessage = $"Error: The response contains an inaccurate data point.{Environment.NewLine}Erroneous record count: {erroneousRecordCount}";
+Label1.Text = errorMessage;
+
+
+
+
+
 using System;
 using System.Timers;
 using System.Windows.Forms;

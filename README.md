@@ -1,4 +1,13 @@
 
+<button (click)="onNextClick()">
+  <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Next
+</button>
+
+
+
+
+
 app.component.ts
 // prettier-ignore
 import { Component } from '@angular/core';

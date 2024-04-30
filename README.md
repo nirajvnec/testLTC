@@ -1,3 +1,52 @@
+import { Component } from '@angular/core';
+import { from, of } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-example',
+  templateUrl: './example.component.html',
+  styleUrls: ['./example.component.css']
+})
+export class ExampleComponent {
+  loading = false;
+
+  onNextClick() {
+    this.loading = true;
+
+    // Simulating an asynchronous operation using RxJS
+    const asyncOperation = from(this.performAsyncOperation());
+
+    asyncOperation.pipe(
+      catchError((error) => {
+        console.error('Error occurred:', error);
+        return of(null);
+      }),
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe((result) => {
+      console.log('Async operation result:', result);
+      // Handle the result of the asynchronous operation if needed
+    });
+  }
+
+  private performAsyncOperation(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      // Simulating an asynchronous operation with a 2-second delay
+      setTimeout(() => {
+        // Simulating a successful operation
+        resolve('Async operation completed successfully');
+
+        // Simulating an error
+        // reject('Async operation encountered an error');
+      }, 2000);
+    });
+  }
+}
+
+
+
+
 
 <button (click)="onNextClick()">
   <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

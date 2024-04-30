@@ -1,3 +1,7 @@
+return value.slice(2, -2).replace(/,/g, '').trim();
+
+
+
 getCurrentPage(reportName: string, metadataKey: string): number {
   if (!this.currentPage[reportName]) {
     this.currentPage[reportName] = {};

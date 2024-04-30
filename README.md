@@ -1,3 +1,76 @@
+
+getCurrentPage(reportName: string, metadataKey: string): number {
+  if (!this.currentPage[reportName]) {
+    this.currentPage[reportName] = {};
+  }
+  if (!this.currentPage[reportName][metadataKey]) {
+    this.currentPage[reportName][metadataKey] = 1;
+  }
+  return this.currentPage[reportName][metadataKey];
+}
+
+getPaginatedRows(reportName: string, metadataKey: string): string[] {
+  const data = this.jsonData[reportName][metadataKey];
+  const startIndex = (this.getCurrentPage(reportName, metadataKey) - 1) * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  return data.slice(1).slice(startIndex, endIndex).map(row => {
+    const values = [];
+    let currentValue = '';
+    let insideQuotes = false;
+
+    for (let i = 0; i < row.length; i++) {
+      const char = row[i];
+
+      if (char === ',' && !insideQuotes) {
+        values.push(currentValue.trim());
+        currentValue = '';
+      } else if (char === '"') {
+        if (i > 0 && row[i - 1] === '\\') {
+          currentValue = currentValue.slice(0, -1) + char;
+        } else {
+          insideQuotes = !insideQuotes;
+        }
+      } else {
+        currentValue += char;
+      }
+    }
+
+    values.push(currentValue.trim());
+
+    return values.map((value, index) => {
+      const columnName = this.getColumnName(reportName, metadataKey, index);
+      if (columnName === 'Responsible') {
+        return value.replace(/^"(.*)"$/, '$1');
+      }
+      return value;
+    }).join(', ');
+  });
+}
+
+getColumnIndex(reportName: string, metadataKey: string, columnName: string): number {
+  const headers = this.getColumnHeaders(reportName, metadataKey);
+  return headers.findIndex(header => header.toLowerCase() === columnName.toLowerCase());
+}
+
+getColumnName(reportName: string, metadataKey: string, columnIndex: number): string {
+  const headers = this.getColumnHeaders(reportName, metadataKey);
+  return headers[columnIndex];
+}
+
+goToPage(reportName: string, metadataKey: string, page: number) {
+  if (!this.currentPage[reportName]) {
+    this.currentPage[reportName] = {};
+  }
+  this.currentPage[reportName][metadataKey] = page;
+}
+
+
+
+
+
+
+
+
 getCurrentPage(reportName: string, metadataKey: string): number {
   if (!this.currentPage[reportName]) {
     this.currentPage[reportName] = {};

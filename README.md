@@ -1,3 +1,56 @@
+import { Component } from '@angular/core';
+import { from, of } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-example',
+  templateUrl: './example.component.html',
+  styleUrls: ['./example.component.css']
+})
+export class ExampleComponent {
+  loading = false;
+
+  goToPage(reportName: string, metadataKey: string, page: number) {
+    this.loading = true;
+
+    // Simulating an asynchronous operation using RxJS
+    const asyncOperation = from(this.performAsyncOperation());
+
+    asyncOperation.pipe(
+      catchError((error) => {
+        console.error('Error occurred:', error);
+        return of(null);
+      }),
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe((result) => {
+      console.log('Async operation result:', result);
+      // Update the current page after the asynchronous operation is completed
+      this.currentPage[reportName][metadataKey] = page;
+    });
+  }
+
+  private performAsyncOperation(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      // Simulating an asynchronous operation with a 2-second delay
+      setTimeout(() => {
+        // Simulating a successful operation
+        resolve('Async operation completed successfully');
+
+        // Simulating an error
+        // reject('Async operation encountered an error');
+      }, 2000);
+    });
+  }
+
+  // Rest of the component code...
+}
+
+
+
+
+
 <div class="pagination">
   <button
     [disabled]="getCurrentPage(reportName, metadatakey.key) === 1 || loading"

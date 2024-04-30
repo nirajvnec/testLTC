@@ -1,3 +1,395 @@
+
+app.component.ts
+// prettier-ignore
+import { Component } from '@angular/core';
+import { RecursiveComponentComponent } from './app/components/recursive-component/recursive-component.component';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'angular-tour-of-heroes';
+
+  jsonData = {
+    'Proxy Time Series': {
+      'ISIN Data': [
+        '[ISIN, CURRENCY, KEY]',
+        'AU000000AACA9, AUD, AU000000AACA9AUD',
+        'AU000000ABC7, AUD, AU000000ABC7AUD',
+        'AU000000ABP9, AUD, AU000000ABP9AUD',
+      ],
+    },
+    'IRC Report Metadata': {
+      'Exclusions_EMG SP': [
+        '[Rules, Position Key, Category, Reason, Responsible, Date reviewed, Review required]',
+        "Check ABS DaR(%) > 20% ABS Notional,568850195_SAUDI1USNACBD_LTD RECOURSE SPV OPTION, Excluded, This rule does not apply to Gap Option trades. Source IDR ladders are being used for IRC and the Notional/MV does not impact the calculation of DAR.,Kiran Paramane,,",
+      ],
+      'Exclusions_APAC Credit': [
+        '[Rules, Position Key, Category, Reason, Responsible, Date reviewed, Review required]',
+        "Check Migration Delta is not 0 or NULL if Mig Type <> 'Non-Linear', SAUDI1USNACBD_BWQ_RISK ANNUITY_20211220_USD, Excluded, MV is very small ,\"Jain, Saurabh\",,FALSE"
+      ],
+    },
+  };
+}
+
+app.component.html
+<h1>This is app component</h1>
+<app-recursive-component [jsonData]="jsonData"></app-recursive-component>
+
+recursive-component.component.ts
+import { Component, Input, OnInit } from '@angular/core';
+
+interface ReportData {
+  [reportName: string]: {
+    [metadataKey: string]: string[];
+  };
+}
+
+@Component({
+  selector: 'app-recursive-component',
+  templateUrl: './recursive-component.component.html',
+  styleUrls: ['./recursive-component.component.css'],
+})
+export class RecursiveComponentComponent implements OnInit {
+  @Input() jsonData: ReportData = {};
+  reportNames: string[] = [];
+  recordNumber!: number;
+  reportTitle!: string;
+  itemsPerPage = 1;
+  currentPage: { [reportName: string]: { [metadataKey: string]: number } } = {};
+  currentReportPage = 0;
+  reportsPerPage = 10;
+  pageSize = 1;
+  metadataPageIndex: {
+    [reportName: string]: { [metadataKey: string]: number };
+  } = {};
+  metadataPageSize: {
+    [reportName: string]: { [metadataKey: string]: number };
+  } = {};
+  actualTotalPages!: number;
+  aboutError = false;
+  errorMessage!: string;
+  columnHeaderSort!: string;
+  columnHeaderSortAsc = true;
+  reportInit!: {
+    this: {
+      reportNames: {
+        [key: string]: string;
+      };
+      checkedColumnNames: string[];
+      checkBoxEnable: any;
+    };
+  };
+  errorsMessages: string[] = [];
+  columnHeaderErrors: string[] = [];
+  showErrors = false;
+  metadataErrors: string[] = [];
+  columnValueErrors: string[] = [];
+
+  ngOnInit() {
+    this.reportNames = Object.keys(this.jsonData);
+    this.checkColumnHeaders();
+    this.checkMetadata();
+    for (const reportName of this.reportNames) {
+      this.currentPage[reportName] = {};
+      this.metadataPageIndex[reportName] = {};
+      this.metadataPageSize[reportName] = {};
+      for (const metadataKey of Object.keys(this.jsonData[reportName])) {
+        this.currentPage[reportName][metadataKey] = 1;
+        this.metadataPageIndex[reportName][metadataKey] = 0;
+        this.metadataPageSize[reportName][metadataKey] = 10;
+        if (this.isColumnHeaderPresent(reportName, metadataKey)) {
+          this.checkColumnValues(reportName, metadataKey);
+        }
+      }
+    }
+  }
+
+  getCurrentPage(reportName: string, metadataKey: string): number {
+    if (!this.currentPage[reportName]) {
+      this.currentPage[reportName] = {};
+    }
+    if (!this.currentPage[reportName][metadataKey]) {
+      this.currentPage[reportName][metadataKey] = 1;
+    }
+    return this.currentPage[reportName][metadataKey];
+  }
+
+  showErrorPopup() {
+    this.showErrors = true;
+  }
+
+  hideErrorPopup() {
+    this.showErrors = false;
+  }
+
+  checkColumnHeaders(): void {
+    this.columnHeaderErrors = [];
+    for (const reportName of this.reportNames) {
+      for (const metadataKey of Object.keys(this.jsonData[reportName])) {
+        if (!this.isColumnHeaderPresent(reportName, metadataKey)) {
+          const errorMessage = `Column header is missing for report "${reportName}" and metadata "${metadataKey}".`;
+          this.columnHeaderErrors.push(errorMessage);
+        }
+      }
+    }
+  }
+
+  isColumnHeaderPresent(reportName: string, metadataKey: string): boolean {
+    return (
+      this.jsonData[reportName] &&
+      this.jsonData[reportName][metadataKey] &&
+      this.jsonData[reportName][metadataKey][0] !== undefined &&
+      this.jsonData[reportName][metadataKey][0].trim() !== ''
+    );
+  }
+
+  isColumnHeaderValueMissing(
+    row: string,
+    columnHeaders: string[],
+    reportName: string,
+    metadataKey: any
+  ): boolean {
+    if (row) {
+      const values = row.split(',');
+      if (values.length !== columnHeaders.length) {
+        const missingColumns = columnHeaders.filter(
+          (_column, index) => !values[index].trim()
+        );
+        const errorMessage = `Error: Missing value(s) for column(s) "${missingColumns.join(
+          '", "'
+        )}" in report "${reportName}" and metadata "${metadataKey}".`;
+        this.errorsMessages.push(errorMessage);
+        return true;
+      }
+      return false;
+    } else {
+      const metadatakeyString =
+        typeof metadataKey === 'string'
+          ? metadataKey
+          : JSON.stringify(metadataKey);
+      const errorMessage = `Error: Row data is undefined for report "${reportName}" and metadata "${metadatakeyString}".`;
+      this.errorsMessages.push(errorMessage);
+      return true;
+    }
+  }
+
+  getTotalPages(reportName: string, metadataKey: string): number {
+    const totalRows = this.getRows(reportName, metadataKey).length;
+    return Math.ceil(totalRows / this.itemsPerPage);
+  }
+
+  getPaginatedRows(reportName: string, metadataKey: string): string[] {
+    const data = this.jsonData[reportName][metadataKey];
+    const startIndex = (this.getCurrentPage(reportName, metadataKey) - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return data.slice(1).slice(startIndex, endIndex).map(row => {
+      return row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map((value, index) => {
+        value = value.trim().replace(/^"(.*)"$/, '$1');
+        if (index === this.getColumnIndex(reportName, metadataKey, 'Responsible')) {
+          const nameParts = value.split(',').map(part => part.trim());
+          if (nameParts.length === 2) {
+            value = `${nameParts[1]} ${nameParts[0]}`;
+          }
+        }
+        return value;
+      }).join(', ');
+    });
+  }
+
+  getColumnIndex(reportName: string, metadataKey: string, columnName: string): number {
+    const headers = this.getColumnHeaders(reportName, metadataKey);
+    return headers.findIndex(header => header.toLowerCase() === columnName.toLowerCase());
+  }
+
+  goToPage(reportName: string, metadataKey: string, page: number) {
+    if (!this.currentPage[reportName]) {
+      this.currentPage[reportName] = {};
+    }
+    this.currentPage[reportName][metadataKey] = page;
+  }
+
+  isReportNameMissing(reportName: string): boolean {
+    return !this.jsonData.hasOwnProperty(reportName);
+  }
+
+  getColumnHeaders(reportName: string, metadataKey: string): string[] {
+    const data = this.jsonData[reportName][metadataKey];
+    if (data.length > 0) {
+      const headers = data[0]
+        .replace(/[\[\]]/g, '')
+        .split(',')
+        .map((header) => header.trim());
+      return headers;
+    }
+    return [];
+  }
+  getRows(reportName: string, metadataKey: string): any[] {
+    if (this.jsonData[reportName] && this.jsonData[reportName][metadataKey]) {
+      return this.jsonData[reportName][metadataKey].slice(1);
+    } else {
+      return [];
+    }
+  }
+
+  isColumnHeaderMissing(reportName: string, metadatakey: string): boolean {
+    return !this.jsonData[reportName][metadatakey][0];
+  }
+  isMetadataMissing(reportName: string, metadataKey: string): boolean {
+    return !this.jsonData[reportName].hasOwnProperty(metadataKey);
+  }
+
+  checkMetadata(): void {
+    this.metadataErrors = [];
+    for (const reportName of this.reportNames) {
+      if (Object.keys(this.jsonData[reportName]).length === 0) {
+        const errorMessage = `Metadata is missing for report "${reportName}".`;
+        this.metadataErrors.push(errorMessage);
+      }
+    }
+  }
+
+  checkColumnValues(reportName: string, metadataKey: string): void {
+    const columnHeaders = this.getColumnHeaders(reportName, metadataKey);
+    const rows = this.getRows(reportName, metadataKey);
+
+    for (const row of rows) {
+      const values = row.split(',');
+      const missingColumns = columnHeaders.filter(
+        (column, index) => !values[index].trim()
+      );
+      if (missingColumns.length > 0) {
+        const errorMessage = `Missing value(s) for column(s) "${missingColumns.join(
+          ', '
+        )}" in report "${reportName}" and metadata "${metadataKey}".`;
+        this.columnValueErrors.push(errorMessage);
+      }
+    }
+  }
+
+  paginatedReports(): string[] {
+    const startIndex = this.currentReportPage * this.reportsPerPage;
+    const endIndex = startIndex + this.reportsPerPage;
+    return this.reportNames.slice(startIndex, endIndex);
+  }
+
+  onReportsPerPageChange() {
+    this.currentReportPage = 0;
+  }
+
+  // onReportPageChange(event: PageEvent) {
+  //   this.currentReportPage = event.pageIndex;
+  // }
+
+  // onMetadataPageChange(
+  //   event: PageEvent,
+  //   reportName: string,
+  //   metadataKey: string
+  // ) {
+  //   if (!this.metadataPageIndex[reportName]) {
+  //     this.metadataPageIndex[reportName] = {};
+  //   }
+  //   this.metadataPageIndex[reportName][metadataKey] = event.pageIndex;
+  // }
+
+  getTableData(reportName: string, metadataKey: string): any[] {
+    const rows = this.getRows(reportName, metadataKey);
+    const pageIndex =
+      this.metadataPageIndex[reportName] &&
+      this.metadataPageIndex[reportName][metadataKey]
+        ? this.metadataPageIndex[reportName][metadataKey]
+        : 0;
+    const startIndex =
+      pageIndex * this.metadataPageSize[reportName][metadataKey];
+    const endIndex =
+      startIndex + this.metadataPageSize[reportName][metadataKey];
+    return rows.slice(startIndex, endIndex);
+  }
+}
+
+
+
+recursive-component.component.html
+
+<div class="table-responsive">
+  <ng-container *ngFor="let reportName of reportNames">
+    <ng-container *ngIf="!isReportNameMissing(reportName)">
+      <div *ngFor="let metadatakey of jsonData[reportName] | keyvalue">
+        <div *ngIf="!isMetadataMissing(reportName, metadatakey.key)">
+          <div *ngIf="!isColumnHeaderMissing(reportName, metadatakey.key)">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Report Name</th>
+                  <th>Metadata</th>
+                  <th
+                    *ngFor="
+                      let header of getColumnHeaders(
+                        reportName,
+                        metadatakey.key
+                      )
+                    "
+                  >
+                    {{ header }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let row of getPaginatedRows(reportName, metadatakey.key)
+                  "
+                >
+                  <td>{{ reportName }}</td>
+                  <td>{{ metadatakey.key }}</td>
+                  <td *ngFor="let value of row.split(','); let i = index">
+                    <span *ngIf="value.trim()">{{ value.trim() }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="pagination">
+              <button
+                [disabled]="getCurrentPage(reportName, metadatakey.key) === 1"
+                (click)="
+                  goToPage(
+                    reportName,
+                    metadatakey.key,
+                    getCurrentPage(reportName, metadatakey.key) - 1
+                  )
+                "
+              >
+                Previous
+              </button>
+              <button
+                [disabled]="
+                  getCurrentPage(reportName, metadatakey.key) ===
+                  getTotalPages(reportName, metadatakey.key)
+                "
+                (click)="
+                  goToPage(
+                    reportName,
+                    metadatakey.key,
+                    getCurrentPage(reportName, metadatakey.key) + 1
+                  )
+                "
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+
+
+
+
+
 int totalCount = 177;
 int erroneousRecordCount = 1;
 

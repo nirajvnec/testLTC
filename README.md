@@ -1,3 +1,41 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+  styleUrls: ['./my-component.component.css']
+})
+export class MyComponent implements OnInit {
+  // Renamed variable from jsonData to parsedJsonHierarchies
+  public parsedJsonHierarchies: any;
+
+  ngOnInit() {
+    // Simulating a fetch or data setting where jsonData might initially have the JSON string
+    const jsonData = {
+      'MAS FRS Hierarchies': {
+        'COUNTRY': [
+          "[]", // Typically, this should not be a string but an actual empty array
+          '{"nodes":[{"title":"Country","key":"_2","isFolder":false, "isLazy":false, "hierarchy":"Country/zz", "sequence":275, "reverse":false}]}'
+        ]
+      }
+    };
+
+    // Ensuring we parse the string if necessary and assign it correctly to parsedJsonHierarchies
+    this.parsedJsonHierarchies = {
+      'MAS FRS Hierarchies': {
+        'COUNTRY': jsonData['MAS FRS Hierarchies']['COUNTRY'].map(item => {
+          // Check if item is a string and parse it, otherwise just use it as is
+          return typeof item === 'string' ? JSON.parse(item) : item;
+        })
+      }
+    };
+  }
+}
+
+ 
+ 
+ 
+ 
  public parsedJsonHierarchies: any; // Define the new variable
 
 

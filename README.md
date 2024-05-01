@@ -1,3 +1,75 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+  styleUrls: ['./my-component.component.css']
+})
+export class MyComponent implements OnInit {
+  parsedJsonHierarchies: any; // Your data structure
+  hierarchiesPerPage = 10;
+  currentHierarchiesPage = 1;
+  totalNumberOfHierarchies: number;
+
+  ngOnInit() {
+    // Assuming nodes are available and valid
+    this.totalNumberOfHierarchies = this.parsedJsonHierarchies['MAS FRS Hierarchies']['COUNTRY'][1].nodes.length;
+  }
+
+  // Navigate to the previous page of hierarchies
+  previousHierarchiesPage() {
+    if (this.currentHierarchiesPage > 1) {
+      this.currentHierarchiesPage--;
+    }
+  }
+
+  // Navigate to the next page of hierarchies
+  nextHierarchiesPage() {
+    if (this.currentHierarchiesPage < this.totalHierarchiesPages()) {
+      this.currentHierarchiesPage++;
+    }
+  }
+
+  // Calculate the total number of pages
+  totalHierarchiesPages(): number {
+    return Math.ceil(this.totalNumberOfHierarchies / this.hierarchiesPerPage);
+  }
+
+  // Get the current items to display on the page
+  getCurrentHierarchiesItems(): any[] {
+    const startIndex = (this.currentHierarchiesPage - 1) * this.hierarchiesPerPage;
+    return this.parsedJsonHierarchies['MAS FRS Hierarchies']['COUNTRY'][1].nodes.slice(startIndex, startIndex + this.hierarchiesPerPage);
+  }
+}
+
+
+
+
+
+<table>
+  <tr *ngFor="let country of getCurrentHierarchiesItems()">
+    <td>{{ country.hierarchy }}</td>
+    <td>{{ country.name }}</td>
+    <td>
+      <pre>{{ country | json }}</pre>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <button (click)="previousHierarchiesPage()" [disabled]="currentHierarchiesPage === 1">Previous</button>
+  <button (click)="nextHierarchiesPage()" [disabled]="currentHierarchiesPage === totalHierarchiesPages()">Next</button>
+  <p>Page {{ currentHierarchiesPage }} of {{ totalHierarchiesPages() }}</p>
+</div>
+
+
+
+
+
+
+
+
+
 <ng-container *ngIf="parsedJsonHierarchies['MAS FRS Hierarchies']['COUNTRY'][1].nodes">
   <ng-container *ngFor="let country of parsedJsonHierarchies['MAS FRS Hierarchies']['COUNTRY'][1].nodes">
     <tr>

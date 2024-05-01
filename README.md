@@ -1,3 +1,7 @@
+ this.jsonData['MAS FRS Hierarchies']['COUNTRY'][1] = JSON.parse(this.jsonData['MAS FRS Hierarchies']['COUNTRY'][1]);
+
+
+
 <ng-container *ngIf="jsonData['MAS FRS Hierarchies'] && jsonData['MAS FRS Hierarchies']['COUNTRY'][1].nodes">
   <ng-container *ngFor="let country of jsonData['MAS FRS Hierarchies']['COUNTRY'][1].nodes">
     <tr>

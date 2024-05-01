@@ -1,3 +1,18 @@
+<ng-container *ngIf="jsonData['MAS FRS Hierarchies'] && jsonData['MAS FRS Hierarchies']['COUNTRY'][1].nodes">
+  <ng-container *ngFor="let country of jsonData['MAS FRS Hierarchies']['COUNTRY'][1].nodes">
+    <tr>
+      <td>{{ country.hierarchy }}</td>
+      <td>{{ country.name }}</td>
+      <td>
+        <pre>{{ country | json }}</pre>
+      </td>
+    </tr>
+  </ng-container>
+</ng-container>
+
+
+
+
 <ng-container *ngFor="let countryObj of jsonData['MAS FRS Hierarchies']['COUNTRY']">
   <!-- Debugging: Show entire countryObj as JSON -->
   <pre>{{ countryObj | json }}</pre>

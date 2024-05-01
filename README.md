@@ -1,3 +1,18 @@
+<ng-container *ngFor="let countryObj of jsonData['MAS FRS Hierarchies']['COUNTRY']">
+  <!-- Debugging: Show entire countryObj as JSON -->
+  <pre>{{ countryObj | json }}</pre>
+
+  <tr *ngFor="let country of countryObj.nodes">
+    <td>{{ country.hierarchy }}</td>
+    <td>{{ country.name }}</td>
+    <!-- Debugging: Show entire country as JSON -->
+    <pre>{{ country | json }}</pre>
+  </tr>
+</ng-container>
+
+
+
+
 function isHierarchyData(data: any): boolean {
     // Check if data is an array and has at least two elements
     if (Array.isArray(data) && data.length > 1) {

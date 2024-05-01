@@ -1,3 +1,25 @@
+ public parsedJsonHierarchies: any; // Define the new variable
+
+
+this.parsedJsonHierarchies = JSON.parse(this.jsonData['MAS FRS Hierarchies']['COUNTRY'][1]);
+
+
+
+<ng-container *ngIf="parsedJsonHierarchies.nodes">
+  <ng-container *ngFor="let country of parsedJsonHierarchies.nodes">
+    <tr>
+      <td>{{ country.hierarchy }}</td>
+      <td>{{ country.name }}</td>
+      <td>
+        <pre>{{ country | json }}</pre>
+      </td>
+    </tr>
+  </ng-container>
+</ng-container>
+
+
+
+
  this.jsonData['MAS FRS Hierarchies']['COUNTRY'][1] = JSON.parse(this.jsonData['MAS FRS Hierarchies']['COUNTRY'][1]);
 
 

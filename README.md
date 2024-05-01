@@ -1,4 +1,14 @@
 function isHierarchyData(data: any): data is HierarchyData[] {
+    // Check if data is an array and each element has a 'nodes' array
+    return Array.isArray(data) && data.every(item => 
+        item != null &&
+        typeof item === 'object' && 
+        'nodes' in item && Array.isArray(item.nodes) // Simplified check for 'nodes' array
+    );
+}
+
+
+function isHierarchyData(data: any): data is HierarchyData[] {
   return data != null && typeof data === 'object' && 'nodes' in data && Array.isArray(data.nodes);
 }
 

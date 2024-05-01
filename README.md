@@ -1,3 +1,20 @@
+<ng-container *ngIf="parsedJsonHierarchies['MAS FRS Hierarchies']['COUNTRY'][1].nodes">
+  <ng-container *ngFor="let country of parsedJsonHierarchies['MAS FRS Hierarchies']['COUNTRY'][1].nodes">
+    <tr>
+      <td>{{ country.hierarchy }}</td>
+      <td>{{ country.name }}</td>
+      <td>
+        <pre>{{ country | json }}</pre>
+      </td>
+    </tr>
+  </ng-container>
+</ng-container>
+
+
+
+
+
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({

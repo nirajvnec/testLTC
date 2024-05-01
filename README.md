@@ -1,3 +1,22 @@
+function isHierarchyData(data: any): boolean {
+    // Check if data is an array and has at least two elements
+    if (Array.isArray(data) && data.length > 1) {
+        try {
+            // Try parsing the second element as JSON
+            const obj = JSON.parse(data[1]);
+            // Check if the parsed object has a 'nodes' property that is an array
+            return 'nodes' in obj && Array.isArray(obj.nodes);
+        } catch (error) {
+            // If parsing fails or the nodes check fails, log the error and return false
+            console.error("Parsing failed or the 'nodes' property is not valid:", error);
+            return false;
+        }
+    }
+    return false; // If data is not an array or doesn't have at least two elements
+}
+
+
+
 function isHierarchyData(data: any): data is HierarchyData[] {
     // Check if data is an array and the first element has a 'nodes' array
     return Array.isArray(data) && data.length > 0 &&

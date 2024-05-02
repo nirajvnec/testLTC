@@ -1,3 +1,51 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  private submitClickedSubject = new Subject<void>();
+  private textSubject = new BehaviorSubject<string>('');
+  private dateSubject = new BehaviorSubject<string>('');
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+
+  submitClicked$ = this.submitClickedSubject.asObservable();
+  text$ = this.textSubject.asObservable();
+  date$ = this.dateSubject.asObservable();
+  loading$ = this.loadingSubject.asObservable();
+
+  sendSubmitClick() {
+    this.submitClickedSubject.next();
+    this.loadingSubject.next(true);
+  }
+
+  sendText(text: string) {
+    this.textSubject.next(text);
+  }
+
+  sendDate(date: string) {
+    this.dateSubject.next(date);
+  }
+
+  getApiData(text: string, date: string) {
+    // Replace 'API_URL' with your actual API endpoint
+    return this.http.get(`API_URL?text=${text}&date=${date}`);
+  }
+
+  setLoading(isLoading: boolean) {
+    this.loadingSubject.next(isLoading);
+  }
+
+  constructor(private http: HttpClient) {}
+}
+
+
+
+
+
+
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 

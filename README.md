@@ -1,3 +1,6 @@
+ng generate component components/spinner/loading-spinner
+
+
 
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';

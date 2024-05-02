@@ -1,3 +1,13 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="d-flex flex-column align-items-center">
+    <div class="spinner-border text-primary" role="status"></div>
+    <div class="mt-2">Loading...</div>
+  </div>
+</div>
+
+
+
+
 ng generate component components/spinner/loading-spinner
 
 

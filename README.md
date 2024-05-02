@@ -1,3 +1,34 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  private textSubject = new BehaviorSubject<string>('');
+  text$ = this.textSubject.asObservable();
+
+  sendText(text: string) {
+    this.textSubject.next(text);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="d-flex justify-content-center align-items-center vh-100">
   <div class="d-flex flex-column align-items-center">
     <div class="spinner-border text-primary" role="status"></div>

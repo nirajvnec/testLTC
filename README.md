@@ -1,3 +1,46 @@
+
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-my-component',
+  template: `
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <div *ngIf="!isLoading">
+      <!-- Your component content goes here -->
+    </div>
+  `,
+})
+export class MyComponent implements OnInit {
+  isLoading = true;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get('API_URL')
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        (data) => {
+          // Handle the API response data
+        },
+        (error) => {
+          // Handle any errors
+        }
+      );
+  }
+}
+
+
+
+
+
+
+
 import { Component } from '@angular/core';
 
 @Component({

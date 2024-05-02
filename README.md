@@ -13,7 +13,23 @@ export class DataService {
   }
 }
 
+import { Component } from '@angular/core';
+import { DataService } from '../data.service';
 
+@Component({
+  selector: 'app-input-component',
+  template: `
+    <input type="text" (input)="onTextInput($event)">
+  `
+})
+export class InputComponent {
+  constructor(private dataService: DataService) {}
+
+  onTextInput(event: Event) {
+    const text = (event.target as HTMLInputElement).value;
+    this.dataService.sendText(text);
+  }
+}
 
 
 

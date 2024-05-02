@@ -1,3 +1,27 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-loading-spinner',
+  template: `
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  `,
+})
+export class LoadingSpinnerComponent {}
+
+
+
+
+
+
+
+
+
+
+
 <div class="pagination">
   <button
     [disabled]="getCurrentPage(reportName, metadatakey.key) === 1 || (loading[reportName] && loading[reportName][metadatakey.key])"

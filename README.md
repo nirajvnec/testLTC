@@ -1,3 +1,119 @@
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+
+@Component({
+  selector: 'app-display-component',
+  template: `
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <div *ngIf="!isLoading">
+      <p>Received Text: {{ receivedText }}</p>
+      <p>Received Date: {{ receivedDate }}</p>
+      <p>API Response: {{ apiResponse | json }}</p>
+    </div>
+  `
+})
+export class DisplayComponent implements OnInit {
+  receivedText = '';
+  receivedDate = '';
+  apiResponse: any;
+  isLoading = false;
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.text$.subscribe(text => {
+      this.receivedText = text;
+    });
+
+    this.dataService.date$.subscribe(date => {
+      this.receivedDate = date;
+    });
+
+    this.dataService.submitClicked$.subscribe(() => {
+      this.callApi();
+    });
+
+    this.dataService.loading$.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
+  }
+
+  callApi() {
+    this.dataService.getApiData(this.receivedText, this.receivedDate)
+      .subscribe(
+        response => {
+          this.apiResponse = response;
+          this.dataService.setLoading(false);
+        },
+        error => {
+          // Handle error if needed
+          this.dataService.setLoading(false);
+        }
+      );
+  }
+}
+
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+
+@Component({
+  selector: 'app-display-component',
+  template: `
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <div *ngIf="!isLoading">
+      <p>Received Text: {{ receivedText }}</p>
+      <p>Received Date: {{ receivedDate }}</p>
+      <p>API Response: {{ apiResponse | json }}</p>
+    </div>
+  `
+})
+export class DisplayComponent implements OnInit {
+  receivedText = '';
+  receivedDate = '';
+  apiResponse: any;
+  isLoading = false;
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.text$.subscribe(text => {
+      this.receivedText = text;
+    });
+
+    this.dataService.date$.subscribe(date => {
+      this.receivedDate = date;
+    });
+
+    this.dataService.submitClicked$.subscribe(() => {
+      this.callApi();
+    });
+
+    this.dataService.loading$.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
+  }
+
+  callApi() {
+    this.dataService.getApiData(this.receivedText, this.receivedDate)
+      .subscribe(
+        response => {
+          this.apiResponse = response;
+          this.dataService.setLoading(false);
+        },
+        error => {
+          // Handle error if needed
+          this.dataService.setLoading(false);
+        }
+      );
+  }
+}
+
+
+
+
+
+
+
 import { Component } from '@angular/core';
 import { DataService } from '../data.service';
 

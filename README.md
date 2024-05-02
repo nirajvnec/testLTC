@@ -31,7 +31,26 @@ export class InputComponent {
   }
 }
 
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
 
+@Component({
+  selector: 'app-display-component',
+  template: `
+    <p>Received Text: {{ receivedText }}</p>
+  `
+})
+export class DisplayComponent implements OnInit {
+  receivedText = '';
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.text$.subscribe(text => {
+      this.receivedText = text;
+    });
+  }
+}
 
 
 

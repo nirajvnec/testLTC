@@ -1,3 +1,15 @@
+
+combineLatest([this.dataService.text$, this.dataService.date$])
+      .subscribe(([text, date]) => {
+        this.receivedText = text;
+        this.receivedDate = date;
+        this.callApi(text, date);
+      });
+
+
+
+
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 

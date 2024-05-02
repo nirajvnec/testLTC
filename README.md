@@ -25,6 +25,36 @@ export class InputComponent {
 
 
 
+
+
+
+import { Component } from '@angular/core';
+import { DataService } from '../data.service';
+
+@Component({
+  selector: 'app-input-component',
+  template: `
+    <input type="text" [(ngModel)]="text">
+    <input type="date" [(ngModel)]="date">
+    <button (click)="onSubmit()">Submit</button>
+  `
+})
+export class InputComponent {
+  text = '';
+  date = '';
+
+  constructor(private dataService: DataService) {}
+
+  onSubmit() {
+    this.dataService.sendText(this.text);
+    this.dataService.sendDate(this.date);
+    this.dataService.sendSubmitClick();
+  }
+}
+
+
+
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';

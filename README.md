@@ -1,3 +1,23 @@
+<div class="pagination">
+  <button
+    [disabled]="getCurrentPage(reportName, metadatakey.key) === 1 || (loading[reportName] && loading[reportName][metadatakey.key])"
+    (click)="goToPage(reportName, metadatakey.key, getCurrentPage(reportName, metadatakey.key) - 1)"
+  >
+    <span *ngIf="loading[reportName] && loading[reportName][metadatakey.key]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Previous
+  </button>
+
+  <button
+    [disabled]="getCurrentPage(reportName, metadatakey.key) === getTotalPages(reportName, metadatakey.key) || (loading[reportName] && loading[reportName][metadatakey.key])"
+    (click)="goToPage(reportName, metadatakey.key, getCurrentPage(reportName, metadatakey.key) + 1)"
+  >
+    <span *ngIf="loading[reportName] && loading[reportName][metadatakey.key]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Next
+  </button>
+</div>
+
+
+
 import { Component, OnInit } from '@angular/core';
 
 @Component({

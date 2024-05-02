@@ -1,3 +1,45 @@
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+
+@Component({
+  selector: 'app-display-component',
+  template: `
+    <p>Received Text: {{ receivedText }}</p>
+    <p>Received Date: {{ receivedDate }}</p>
+    <p>API Response: {{ apiResponse | json }}</p>
+  `
+})
+export class DisplayComponent implements OnInit {
+  receivedText = '';
+  receivedDate = '';
+  apiResponse: any;
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.text$.subscribe(text => {
+      this.receivedText = text;
+    });
+
+    this.dataService.date$.subscribe(date => {
+      this.receivedDate = date;
+    });
+
+    this.dataService.submitClicked$.subscribe(() => {
+      this.callApi();
+    });
+  }
+
+  callApi() {
+    this.dataService.getApiData(this.receivedText, this.receivedDate)
+      .subscribe(response => {
+        this.apiResponse = response;
+      });
+  }
+}
+
+
+
 import { Component } from '@angular/core';
 import { DataService } from '../data.service';
 

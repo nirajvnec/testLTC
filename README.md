@@ -1,3 +1,11 @@
+getApiData(text: string, date: string) {
+    // Replace 'API_URL' with your actual API endpoint
+    return this.http.get(`API_URL?text=${text}&date=${date}`);
+  }
+
+
+
+
 
 combineLatest([this.dataService.text$, this.dataService.date$])
       .subscribe(([text, date]) => {

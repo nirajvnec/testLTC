@@ -52,7 +52,20 @@ export class DisplayComponent implements OnInit {
   }
 }
 
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { InputComponent } from './input-component.component';
+import { DisplayComponent } from './display-component.component';
+import { DataService } from './data.service';
 
+@NgModule({
+  declarations: [AppComponent, InputComponent, DisplayComponent],
+  imports: [BrowserModule],
+  providers: [DataService],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
 
 
 

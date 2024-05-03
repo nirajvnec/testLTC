@@ -1,3 +1,32 @@
+@Component({
+  selector: 'app-loading-spinner',
+  template: `
+    <div class="loading-overlay d-flex justify-content-center align-items-center">
+      <div class="text-center">
+        <div class="spinner-border text-primary" role="status"></div>
+        <div class="mt-2 text-white">Loading...</div>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+    }
+  `]
+})
+export class LoadingSpinnerComponent {}
+
+
+
+
+
+
 "I am participating in AI Quest 2024, where I will develop a project focused on converting meeting voice recordings into text, and subsequently summarizing the minutes of the meeting (MoM) using Python and the ChatGPT GPT-4 model. This endeavor aims to enhance meeting efficiency by automating the documentation and summarization processes."
 
 

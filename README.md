@@ -1,3 +1,6 @@
+ng generate component components/download-data --path src/app
+
+
 import { Component } from '@angular/core';
 import { DataService } from '../data.service';
 

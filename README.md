@@ -1,3 +1,8 @@
+"I am participating in AI Quest 2024, where I will develop a project focused on converting meeting voice recordings into text, and subsequently summarizing the minutes of the meeting (MoM) using Python and the ChatGPT GPT-4 model. This endeavor aims to enhance meeting efficiency by automating the documentation and summarization processes."
+
+
+
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';

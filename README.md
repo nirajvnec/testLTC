@@ -1,3 +1,34 @@
+@Component({
+  selector: 'app-loading-spinner',
+  template: `
+    <div class="loading-overlay d-flex justify-content-center align-items-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+    }
+  `]
+})
+export class LoadingSpinnerComponent {}
+
+
+
+
+
+
+
+
+
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 

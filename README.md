@@ -1,67 +1,41 @@
-ng generate component components/download-data --path src/app
-
+ng generate component components/download-overlay --path src/app
 
 import { Component } from '@angular/core';
-import { DataService } from '../data.service';
 
 @Component({
-  selector: 'app-download-data',
-  template: `
-    <button class="btn btn-primary" (click)="downloadData()" [disabled]="isDownloading">
-      <i class="fas fa-download"></i> Download Data
-    </button>
-    <div *ngIf="isDownloading" class="mt-2">
-      <div class="spinner-border spinner-border-sm text-primary" role="status">
-        <span class="sr-only">Downloading...</span>
-      </div>
-      <span class="ml-2">Downloading...</span>
-    </div>
-  `
+  selector: 'app-download-overlay',
+  templateUrl: './download-overlay.component.html',
+  styleUrls: ['./download-overlay.component.css']
 })
-export class DownloadDataComponent {
-  isDownloading = false;
+export class DownloadOverlayComponent {}
 
-  constructor(private dataService: DataService) {}
 
-  downloadData() {
-    this.isDownloading = true;
+<div class="overlay">
+  <div class="overlay-content">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Downloading...</span>
+    </div>
+    <div class="mt-2">Downloading...</div>
+  </div>
+</div>
 
-    this.dataService.getAllData().subscribe(
-      data => {
-        this.exportToCsv(data);
-        this.isDownloading = false;
-      },
-      error => {
-        console.error('Error downloading data:', error);
-        this.isDownloading = false;
-      }
-    );
-  }
 
-  private exportToCsv(data: any[]) {
-    const csvContent = this.convertToCSV(data);
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    if (link.download !== undefined) {
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', 'data.csv');
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  }
-
-  private convertToCSV(data: any[]): string {
-    const header = Object.keys(data[0]).join(',') + '\n';
-    const rows = data.map(row => Object.values(row).join(',')).join('\n');
-    return header + rows;
-  }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-
+.overlay-content {
+  text-align: center;
+}
 
 
 

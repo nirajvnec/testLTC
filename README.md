@@ -1,3 +1,164 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  private submitClickedSubject = new Subject<void>();
+  private clearClickedSubject = new Subject<void>();
+  private textSubject = new BehaviorSubject<string>('');
+  private dateSubject = new BehaviorSubject<string>('');
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+
+  submitClicked$ = this.submitClickedSubject.asObservable();
+  clearClicked$ = this.clearClickedSubject.asObservable();
+  text$ = this.textSubject.asObservable();
+  date$ = this.dateSubject.asObservable();
+  loading$ = this.loadingSubject.asObservable();
+
+  sendSubmitClick() {
+    this.submitClickedSubject.next();
+    this.loadingSubject.next(true);
+  }
+
+  sendClearClick() {
+    this.clearClickedSubject.next();
+  }
+
+  sendText(text: string) {
+    this.textSubject.next(text);
+  }
+
+  sendDate(date: string) {
+    this.dateSubject.next(date);
+  }
+
+  getApiData(text: string, date: string) {
+    // Replace 'API_URL' with your actual API endpoint
+    return this.http.get(`API_URL?text=${text}&date=${date}`);
+  }
+
+  setLoading(isLoading: boolean) {
+    this.loadingSubject.next(isLoading);
+  }
+
+  constructor(private http: HttpClient) {}
+}
+
+
+import { Component } from '@angular/core';
+import { DataService } from '../data.service';
+
+@Component({
+  selector: 'app-input-component',
+  template: `
+    <input type="text" [(ngModel)]="text">
+    <input type="date" [(ngModel)]="date">
+    <button (click)="onSubmit()">Submit</button>
+    <button (click)="onClear()">Clear</button>
+  `
+})
+export class InputComponent {
+  text = '';
+  date = '';
+
+  constructor(private dataService: DataService) {}
+
+  onSubmit() {
+    this.dataService.sendText(this.text);
+    this.dataService.sendDate(this.date);
+    this.dataService.sendSubmitClick();
+  }
+
+  onClear() {
+    this.text = '';
+    this.date = '';
+    this.dataService.sendClearClick();
+  }
+}
+
+
+
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+
+@Component({
+  selector: 'app-display-component',
+  template: `
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <div *ngIf="!isLoading">
+      <p>Received Text: {{ receivedText }}</p>
+      <p>Received Date: {{ receivedDate }}</p>
+      <p>API Response: {{ apiResponse | json }}</p>
+    </div>
+  `
+})
+export class DisplayComponent implements OnInit {
+  receivedText = '';
+  receivedDate = '';
+  apiResponse: any;
+  isLoading = false;
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.text$.subscribe(text => {
+      this.receivedText = text;
+    });
+
+    this.dataService.date$.subscribe(date => {
+      this.receivedDate = date;
+    });
+
+    this.dataService.submitClicked$.subscribe(() => {
+      this.callApi();
+    });
+
+    this.dataService.clearClicked$.subscribe(() => {
+      this.clearFields();
+    });
+
+    this.dataService.loading$.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
+  }
+
+  callApi() {
+    this.dataService.getApiData(this.receivedText, this.receivedDate)
+      .subscribe(
+        response => {
+          this.apiResponse = response;
+          this.dataService.setLoading(false);
+        },
+        error => {
+          // Handle error if needed
+          this.dataService.setLoading(false);
+        }
+      );
+  }
+
+  clearFields() {
+    this.receivedText = '';
+    this.receivedDate = '';
+    this.apiResponse = null;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @Component({
   selector: 'app-loading-spinner',
   template: `

@@ -1,17 +1,15 @@
+this.lblErrorMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+
+this.lblErrorMessage.Location = new System.Drawing.Point(this.ClientSize.Width - this.lblErrorMessage.Width - 10, tabPage2.Top);
+
+this.lblErrorMessage.AutoSize = true;
+
+this.lblErrorMessage.Visible = true;
 
 private void FrmResults_Resize(object sender, EventArgs e)
 {
-    this.lblErrorMessage.Location = new System.Drawing.Point(tabPage2.Right + 10, tabPage2.Top + (tabPage2.Height - lblErrorMessage.Height) / 2);
+    this.lblErrorMessage.Location = new System.Drawing.Point(this.ClientSize.Width - this.lblErrorMessage.Width - 10, tabPage2.Top);
 }
-
-
-this.lblErrorMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-
-this.lblErrorMessage.Location = new System.Drawing.Point(tabPage2.Right + 10, tabPage2.Top + (tabPage2.Height - lblErrorMessage.Height) / 2);
-
-this.lblErrorMessage.AutoSize = false;
-this.lblErrorMessage.Height = tabPage2.Height;
-
 
 public FrmResults()
 {

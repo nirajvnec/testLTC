@@ -1,3 +1,7 @@
+
+Improved Visibility and Alignment of Error Message Label in FrmResults
+
+
 this.lblErrorMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
 
 this.lblErrorMessage.Location = new System.Drawing.Point(this.ClientSize.Width - this.lblErrorMessage.Width - 10, tabPage2.Top);

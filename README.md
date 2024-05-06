@@ -1,3 +1,13 @@
+public FrmResults()
+{
+    InitializeComponent();
+    this.Resize += FrmResults_Resize;
+}
+
+
+
+
+
 this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, 40);
 
 

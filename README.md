@@ -1,3 +1,12 @@
+git fetch --all
+
+git checkout release/MARS-GUI-24.1.2
+
+git checkout -b feature/MARS-GUI-24.1.2
+
+git push -u origin feature/MARS-GUI-24.1.2
+
+
 ng generate component components/download-overlay --path src/app
 
 import { Component } from '@angular/core';

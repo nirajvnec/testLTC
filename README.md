@@ -1,13 +1,9 @@
-this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, tabPage2.Bottom + 10);
+this.lblErrorMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
 
-this.lblErrorMessage.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+this.lblErrorMessage.Location = new System.Drawing.Point(tabPage2.Right + 10, tabPage2.Top + (tabPage2.Height - lblErrorMessage.Height) / 2);
 
-private void FrmResults_Resize(object sender, EventArgs e)
-{
-    this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, tabPage2.Bottom + 10);
-}
-
-
+this.lblErrorMessage.AutoSize = false;
+this.lblErrorMessage.Height = tabPage2.Height;
 
 
 public FrmResults()

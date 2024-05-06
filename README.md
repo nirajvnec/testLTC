@@ -1,3 +1,10 @@
+
+private void FrmResults_Resize(object sender, EventArgs e)
+{
+    this.lblErrorMessage.Location = new System.Drawing.Point(tabPage2.Right + 10, tabPage2.Top + (tabPage2.Height - lblErrorMessage.Height) / 2);
+}
+
+
 this.lblErrorMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
 
 this.lblErrorMessage.Location = new System.Drawing.Point(tabPage2.Right + 10, tabPage2.Top + (tabPage2.Height - lblErrorMessage.Height) / 2);

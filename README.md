@@ -1,12 +1,11 @@
-this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, tabControl1.Bottom + 10);
+this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, tabPage2.Bottom + 10);
 
 this.lblErrorMessage.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
 private void FrmResults_Resize(object sender, EventArgs e)
 {
-    this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, tabControl1.Bottom + 10);
+    this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, tabPage2.Bottom + 10);
 }
-
 
 
 

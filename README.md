@@ -1,3 +1,15 @@
+this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, 40);
+
+
+this.lblErrorMessage.Anchor = (System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right);
+
+
+private void FrmResults_Resize(object sender, EventArgs e)
+{
+    this.lblErrorMessage.Location = new System.Drawing.Point((this.ClientSize.Width - this.lblErrorMessage.Width) / 2, this.lblErrorMessage.Location.Y);
+}
+
+
 git fetch --all
 
 git checkout release/MARS-GUI-24.1.2

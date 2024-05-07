@@ -1,3 +1,10 @@
+private void FrmResults_Resize(object sender, EventArgs e)
+{
+    lblErrorMessage.Left = (this.ClientSize.Width - lblErrorMessage.Width) / 2;
+}
+
+
+
 
 Improved Visibility and Alignment of Error Message Label in FrmResults
 

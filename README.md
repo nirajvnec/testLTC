@@ -1,4 +1,54 @@
 import { Component } from '@angular/core';
+import * as JSZip from 'jszip';
+
+@Component({
+  selector: 'app-table-to-csv',
+  templateUrl: './table-to-csv.component.html',
+  styleUrls: ['./table-to-csv.component.css']
+})
+export class TableToCSVComponent {
+  async convertTableToCSV() {
+    const tables = document.querySelectorAll('table');
+    const zip = new JSZip();
+
+    tables.forEach((table, index) => {
+      let csvData = '';
+      const headers = Array.from(table.querySelectorAll('th')).map(header => header.innerText);
+      csvData += headers.join(',') + '\n';
+
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach((row) => {
+        const cells = Array.from(row.querySelectorAll('td')).map(cell => cell.innerText);
+        csvData += cells.join(',') + '\n';
+      });
+
+      zip.file(`table${index + 1}.csv`, csvData);
+    });
+
+    const zipContent = await zip.generateAsync({ type: 'blob' });
+    this.downloadZip(zipContent);
+  }
+
+  downloadZip(content: Blob) {
+    const url = window.URL.createObjectURL(content);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'tables.zip');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}
+
+
+
+
+
+
+
+
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-example',

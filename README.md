@@ -1,3 +1,8 @@
+
+npm install bootstrap@4.6.0 @fortawesome/fontawesome-free
+
+
+
 <button class="btn btn-primary" (click)="downloadData()" [disabled]="isDownloading">
   <i class="fas fa-download"></i> Download Data
 </button>

@@ -1,3 +1,11 @@
+<button class="btn btn-primary" (click)="downloadData()" [disabled]="isDownloading">
+  <i class="fas fa-download"></i> Download Data
+</button>
+<app-download-overlay *ngIf="isDownloading"></app-download-overlay>
+
+
+
+
 public string GetBaseUrl()
 {
     var request = HttpContext.Request;

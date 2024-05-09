@@ -1,3 +1,30 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  templateUrl: './example.component.html',
+  styleUrls: ['./example.component.css']
+})
+export class ExampleComponent {
+  onBlur(event: FocusEvent) {
+    // Handle the blur event here
+    console.log('Input blurred');
+    console.log('Input value:', (event.target as HTMLInputElement).value);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ChatGPT 4
 

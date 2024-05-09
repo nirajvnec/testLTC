@@ -1,4 +1,55 @@
 
+import { Component } from '@angular/core';
+import { DataService } from '../data.service';
+
+@Component({
+  selector: 'app-download-data',
+  templateUrl: './download-data.component.html',
+  styleUrls: ['./download-data.component.css']
+})
+export class DownloadDataComponent {
+  isDownloading = false;
+
+  constructor(private dataService: DataService) {}
+
+  downloadData() {
+    this.isDownloading = true;
+
+    this.dataService.getAllData().subscribe(
+      data => {
+        this.exportToCsv(data);
+        this.isDownloading = false;
+      },
+      error => {
+        console.error('Error downloading data:', error);
+        this.isDownloading = false;
+      }
+    );
+  }
+
+  private exportToCsv(data: any[]) {
+    const csvContent = this.convertToCSV(data);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'data.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
+
+  private convertToCSV(data: any[]): string {
+    const header = Object.keys(data[0]).join(',') + '\n';
+    const rows = data.map(row => Object.values(row).join(',')).join('\n');
+    return header + rows;
+  }
+}
+
+
 npm install bootstrap@4.6.0 @fortawesome/fontawesome-free
 
 

@@ -1,3 +1,20 @@
+public string GetBaseUrl()
+{
+    var request = HttpContext.Request;
+
+    // Build the base URL from the request object
+    var baseUrl = $"{request.Scheme}://{request.Host}{request.PathBase}";
+
+    return baseUrl;
+}
+
+
+
+
+
+
+
+
 private void FrmResults_Resize(object sender, EventArgs e)
 {
     lblErrorMessage.Left = (this.ClientSize.Width - lblErrorMessage.Width) / 2;

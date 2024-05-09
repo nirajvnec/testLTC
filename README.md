@@ -1,3 +1,13 @@
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+  "src/styles.css"
+],
+
+
+
+
+
 
 import { Component } from '@angular/core';
 import { DataService } from '../data.service';

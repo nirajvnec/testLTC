@@ -1,4 +1,9 @@
 
+Could you please provide the development, UAT, and production endpoints for the following URL? I understand that "https://glbu9012632.eu.hedani.net:8283/express-server/merlin/getMerlinData" is currently configured for the UAT environment. Is this correct?
+
+This information is necessary as it will enable me to accurately configure the corresponding environment settings in my Angular UI code, ensuring proper functionality across development, UAT, and production environments.
+
+
 
 Could you please provide the development, UAT, and production endpoints for the following URL? I understand that "https://glbu9012632.eu.hedani.net:8283/express-server/merlin/getMerlinData" is currently configured for the UAT environment. Is this correct?
 

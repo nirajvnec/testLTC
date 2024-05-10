@@ -1,3 +1,7 @@
+.angular/cache/15.2.11/babel-webpack
+
+.angular/cache/*/babel-webpack
+
 
 Could you please provide the development, UAT, and production endpoints for the following URL? I understand that "https://glbu9012632.eu.hedani.net:8283/express-server/merlin/getMerlinData" is currently configured for the UAT environment. Is this correct?
 

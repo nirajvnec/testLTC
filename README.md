@@ -1,3 +1,17 @@
+Subject: Merlin Release Update: Modification in Data Handling
+
+Dear John,
+
+In preparation for the upcoming Merlin release, we are discontinuing the use of pagination to integrate a comprehensive download functionality. This change will allow us to efficiently extract and convert all necessary data from the UI page directly into CSV format. We are making this adjustment to optimize our time and ensure timely completion of the project.
+
+Later, should the need arise, we may consider developing an additional page for download functionality.
+
+Please let us know if you are in agreement with these changes.
+
+Best regards,
+
+
+
 convertTableToCSV(): Promise<void> {
   return new Promise((resolve, reject) => {
     const tables = document.querySelectorAll('table');

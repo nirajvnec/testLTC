@@ -3,6 +3,42 @@ convertTableToCSV(): Promise<void> {
     const tables = document.querySelectorAll('table');
     const zip = new JSZip();
 
+    tables.forEach((table) => {
+      const firstRow = table.querySelector('tbody tr');
+      const reportName = firstRow ? firstRow.querySelector('td')?.textContent?.trim() || 'default' : 'default';
+      let csvData = '';
+
+      const headers = Array.from(table.querySelectorAll('th')).map(header => header.innerText);
+      csvData += headers.join(',') + '\n';
+
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach((row) => {
+        const cells = Array.from(row.querySelectorAll('td')).map(cell => cell.innerText);
+        csvData += cells.join(',') + '\n';
+      });
+
+      zip.file(`${reportName}.csv`, csvData);
+    });
+
+    zip.generateAsync({ type: 'blob' })
+      .then(content => {
+        this.downloadZip(content);
+        resolve();
+      })
+      .catch(error => {
+        console.error('Error generating ZIP:', error);
+        reject(error);
+      });
+  });
+}
+
+
+
+convertTableToCSV(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const tables = document.querySelectorAll('table');
+    const zip = new JSZip();
+
     tables.forEach((table, index) => {
       const reportName = table.getAttribute('data-report-name') || `table${index + 1}`;
       let csvData = '';

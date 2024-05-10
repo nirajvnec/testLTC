@@ -1,3 +1,11 @@
+.angular/cache/*/angular-webpack
+.angular/cache/*/ngcc-webpack
+
+
+
+
+
+
 .angular/cache/15.2.11/babel-webpack
 
 .angular/cache/*/babel-webpack

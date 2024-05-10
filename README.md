@@ -1,3 +1,9 @@
+
+
+Could you please provide the development, UAT, and production endpoints for the following URL? I understand that "https://glbu9012632.eu.hedani.net:8283/express-server/merlin/getMerlinData" is currently configured for the UAT environment. Is this correct?
+
+
+
 convertTableToCSV(): Promise<void> {
   return new Promise((resolve, reject) => {
     const tables = document.querySelectorAll('table');

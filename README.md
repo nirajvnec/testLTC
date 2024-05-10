@@ -1,3 +1,53 @@
+convertTableToCSV(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const tables = document.querySelectorAll('table');
+    const zip = new JSZip();
+
+    tables.forEach((table, index) => {
+      const reportName = table.getAttribute('data-report-name') || `table${index + 1}`;
+      let csvData = '';
+
+      const headers = Array.from(table.querySelectorAll('th')).map(header => header.innerText);
+      csvData += headers.join(',') + '\n';
+
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach((row) => {
+        const cells = Array.from(row.querySelectorAll('td')).map(cell => cell.innerText);
+        csvData += cells.join(',') + '\n';
+      });
+
+      zip.file(`${reportName}.csv`, csvData);
+    });
+
+    zip.generateAsync({ type: 'blob' })
+      .then(content => {
+        this.downloadZip(content);
+        resolve();
+      })
+      .catch(error => {
+        console.error('Error generating ZIP:', error);
+        reject(error);
+      });
+  });
+}
+
+downloadZip(content: Blob) {
+  const url = window.URL.createObjectURL(content);
+  const a = document.createElement('a');
+  a.setAttribute('hidden', '');
+  a.setAttribute('href', url);
+  a.setAttribute('download', 'tables.zip');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+
+
+
+
+
+
 Subject: Merlin Release Update: Modification in Data Handling
 
 Dear John,

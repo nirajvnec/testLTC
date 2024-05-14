@@ -1,3 +1,9 @@
+
+I will schedule Scala training for next week as I am currently occupied with the Merlin and MET releases.
+
+Best regards,
+
+
 import { Component } from '@angular/core';
 import { SharedService } from './shared.service';
 import { of } from 'rxjs'; // Replace this with your actual API call service

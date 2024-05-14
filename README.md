@@ -1,3 +1,21 @@
+<div>
+  <label for="searchText">Search Text:</label>
+  <input id="searchText" [formControl]="searchText" type="text" />
+</div>
+
+<div>
+  <label for="cobDate">COB Date:</label>
+  <input id="cobDate" [formControl]="cobDate" type="date" />
+</div>
+
+<div>
+  <button (click)="onSubmit()" [disabled]="isButtonDisabled">Submit</button>
+</div>
+
+
+
+
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 

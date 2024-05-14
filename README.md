@@ -1,3 +1,9 @@
+ng g p shared/pipes/dateFormat
+
+
+
+
+
 Please suggest an appropriate name for the new submenu highlighted in red in the attached screenshot.
 
 

@@ -1,6 +1,40 @@
 <div>
   <label for="searchText">Search Text:</label>
   <input id="searchText" [formControl]="searchText" type="text" />
+  <span *ngIf="searchText.invalid && (searchText.dirty || searchText.touched)">
+    <span *ngIf="searchText.errors?.required">Search text is required.</span>
+    <span *ngIf="searchText.errors?.minlength">
+      Search text must be at least {{ searchText.errors.minlength.requiredLength }} characters long.
+    </span>
+  </span>
+</div>
+
+<div>
+  <label for="cobDate">COB Date:</label>
+  <input id="cobDate" [formControl]="cobDate" type="date" />
+  <span *ngIf="cobDate.invalid && (cobDate.dirty || cobDate.touched)">
+    <span *ngIf="cobDate.errors?.required">COB Date is required.</span>
+  </span>
+</div>
+
+<div>
+  <a href="#" 
+     (click)="onSubmit($event)" 
+     [class.disabled]="isButtonDisabled">
+    Submit
+  </a>
+</div>
+
+
+
+
+
+
+
+
+<div>
+  <label for="searchText">Search Text:</label>
+  <input id="searchText" [formControl]="searchText" type="text" />
 </div>
 
 <div>

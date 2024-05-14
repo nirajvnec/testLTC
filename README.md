@@ -1,3 +1,17 @@
+formatDateToIndianFormat(dateObj: {year: number, month: number, day: number}): string {
+  const day = dateObj.day.toString().padStart(2, '0');
+  const month = dateObj.month.toString().padStart(2, '0');
+  const year = dateObj.year.toString();
+
+  return `${day}/${month}/${year}`;
+}
+
+
+
+
+
+
+
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 

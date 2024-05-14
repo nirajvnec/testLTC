@@ -1,3 +1,34 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DateService {
+  formatDateToIndianFormat(date: any): string {
+    if (typeof date === 'string' && this.isValidDateFormat(date)) {
+      return date; // Assume it's already in dd/MM/yyyy format
+    } else if (typeof date === 'object' && date.year && date.month && date.day) {
+      const day = date.day.toString().padStart(2, '0');
+      const month = date.month.toString().padStart(2, '0');
+      const year = date.year.toString();
+      return `${day}/${month}/${year}`;
+    } else {
+      throw new Error('Invalid date format');
+    }
+  }
+
+  private isValidDateFormat(dateString: string): boolean {
+    // Regex to validate the dd/MM/yyyy format
+    const regex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{4}$/;
+    return regex.test(dateString);
+  }
+}
+
+
+
+
+
+
 formatDateToIndianFormat(dateObj: {year: number, month: number, day: number}): string {
   const day = dateObj.day.toString().padStart(2, '0');
   const month = dateObj.month.toString().padStart(2, '0');

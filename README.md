@@ -1,3 +1,10 @@
+<span>Data Analysis</span>
+<i class="fas fa-chart-line" style="margin-left: 10px;"></i>
+
+
+
+
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 

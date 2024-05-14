@@ -1,3 +1,54 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-your-component',
+  templateUrl: './your-component.component.html',
+  styleUrls: ['./your-component.component.css']
+})
+export class YourComponent implements OnInit {
+  searchText: FormControl;
+  cobDate: FormControl;
+  isButtonDisabled: boolean;
+
+  ngOnInit() {
+    this.searchText = new FormControl('', Validators.required);
+    this.cobDate = new FormControl('', Validators.required);
+    
+    // Initialize button disabled state
+    this.isButtonDisabled = this.searchText.invalid || this.cobDate.invalid;
+
+    // Subscribe to value changes
+    this.searchText.valueChanges.subscribe(() => {
+      this.updateButtonState();
+    });
+
+    this.cobDate.valueChanges.subscribe(() => {
+      this.updateButtonState();
+    });
+  }
+
+  updateButtonState() {
+    this.isButtonDisabled = this.searchText.invalid || this.cobDate.invalid;
+  }
+
+  onSubmit() {
+    if (!this.isButtonDisabled) {
+      // Handle form submission
+      console.log('Search Text:', this.searchText.value);
+      console.log('COB Date:', this.cobDate.value);
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
 <span>Data Analysis</span>
 <i class="fas fa-chart-line" style="margin-left: 10px;"></i>
 

@@ -1,3 +1,42 @@
+import { Component } from '@angular/core';
+import { SharedService } from './shared.service';
+import { of } from 'rxjs'; // Replace this with your actual API call service
+
+@Component({
+  selector: 'app-first-component',
+  templateUrl: './first-component.component.html',
+  styleUrls: ['./first-component.component.css']
+})
+export class FirstComponent {
+  constructor(private sharedService: SharedService) {}
+
+  // Simulating the subscribe method where the response is received
+  fetchData() {
+    // Simulate an API call that returns a response
+    this.simulateApiCall().subscribe(response => {
+      if (response && Object.keys(response).length > 0) {
+        this.sharedService.setHasData(true);
+      } else {
+        this.sharedService.setHasData(false);
+      }
+    });
+  }
+
+  simulateApiCall() {
+    // Simulate an API call
+    return of({ data: 'example' }); // Replace with actual API call
+  }
+}
+
+
+
+
+
+
+
+
+
+
 import { Injectable } from '@angular/core';
 
 @Injectable({

@@ -1,4 +1,4 @@
-
+--
 I will schedule Scala training for next week as I am currently occupied with the Merlin and MET releases.
 
 Best regards,

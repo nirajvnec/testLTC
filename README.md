@@ -1,3 +1,28 @@
+import { DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-your-component',
+  templateUrl: './your-component.component.html',
+  styleUrls: ['./your-component.component.css'],
+  providers: [DatePipe]
+})
+export class YourComponent {
+  constructor(private datePipe: DatePipe) {}
+
+  convertDateToIndianFormat(dateString: string): string {
+    const date = new Date(dateString);
+    return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
+  }
+}
+
+
+
+
+
+
+
+
 ng g p shared/pipes/dateFormat
 
 

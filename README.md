@@ -1,3 +1,23 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MyService {
+  constructor(private http: HttpClient) { }
+
+  getData(param1: string, param2: number) {
+    const url = `${environment.apiUrl}/data?param1=${param1}&param2=${param2}`;
+
+    return this.http.get(url);
+  }
+}
+
+
+
+
 <div>
   <label for="searchText">Search Text:</label>
   <input id="searchText" [formControl]="searchText" type="text" />

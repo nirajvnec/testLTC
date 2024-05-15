@@ -1,5 +1,19 @@
 git fetch origin
 git rebase origin/feature/MARS-18388-add-dev-task
+# If there are merge conflicts:
+# 1. Open the conflicting files and look for conflict markers (<<<<<<<, =======, >>>>>>>)
+# 2. Make the necessary changes to resolve the conflicts
+# 3. Remove the conflict markers
+# 4. Save the files
+# 5. Stage the modified files: git add <file1> <file2> ...
+# 6. Continue the rebase: git rebase --continue
+git push -f origin feature/MARS-18388-add-dev-task
+
+
+
+
+git fetch origin
+git rebase origin/feature/MARS-18388-add-dev-task
 # If there are conflicts:
 # 1. Manually resolve the conflicts in the affected files
 # 2. Stage the modified files: git add <file1> <file2> ...

@@ -1,3 +1,37 @@
+# Switch to the source branch
+git checkout <source-branch>
+
+# Create a patch file
+git diff <commit-hash-1> <commit-hash-2> > patch.diff
+# Or, for a specific file or directory
+git diff <commit-hash-1> <commit-hash-2> -- path/to/file > patch.diff
+
+# Switch to the target branch
+git checkout <target-branch>
+
+# Apply the patch
+git apply patch.diff
+
+# Resolve any conflicts (if any)
+# Edit the conflicting files and resolve the conflicts
+
+# Stage the changes
+git add .
+
+# Commit the changes
+git commit -m "Apply patch"
+
+# Optionally, remove the patch file
+rm patch.diff
+
+
+
+
+
+
+
+
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';

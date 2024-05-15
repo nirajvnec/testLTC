@@ -1,3 +1,13 @@
+git fetch origin
+git rebase origin/feature/MARS-18388-add-dev-task
+# If there are conflicts:
+# 1. Manually resolve the conflicts in the affected files
+# 2. Stage the modified files: git add <file1> <file2> ...
+# 3. Continue the rebase process: git rebase --continue
+git push origin feature/MARS-18388-add-dev-task
+
+
+
 # Switch to the source branch
 git checkout <source-branch>
 

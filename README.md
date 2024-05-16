@@ -1,3 +1,14 @@
+I encountered the following error while pushing a commit to the remote branch "feature/MARS-18388-add-dev-task":
+
+"Repository hook com.isroot.stash.plugin.yacc:yaccHook failed."
+
+Could you please look into this issue?
+
+
+
+
+
+
 The error message indicates that the push was rejected due to a failed pre-receive hook (com.isroot.stash.plugin.yacc:yaccHook failed). This typically occurs because the repository has certain commit policies enforced by the Yet Another Commit Checker (YACC) plugin. Here are a few steps to resolve this issue:
 
 Check Commit Policies: Verify the commit message and ensure it adheres to the repository's policies (e.g., required JIRA ticket numbers, specific formatting).

@@ -1,3 +1,22 @@
+The error message indicates that the push was rejected due to a failed pre-receive hook (com.isroot.stash.plugin.yacc:yaccHook failed). This typically occurs because the repository has certain commit policies enforced by the Yet Another Commit Checker (YACC) plugin. Here are a few steps to resolve this issue:
+
+Check Commit Policies: Verify the commit message and ensure it adheres to the repository's policies (e.g., required JIRA ticket numbers, specific formatting).
+
+Author Validation: Ensure the commit author is correctly configured and matches the allowed format.
+
+Branch Protection: Make sure you have the necessary permissions to push to the branch. Some repositories have protected branches that restrict who can push changes.
+
+Repository Hook Logs: Check the repository hook logs for detailed error messages. This can provide more insight into why the hook failed.
+
+You might need to contact the repository administrator if you need further clarification on the specific policies and how to comply with them
+
+
+
+
+
+
+
+
 git fetch origin
 git rebase origin/feature/MARS-18388-add-dev-task
 # If there are merge conflicts:

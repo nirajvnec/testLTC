@@ -1,3 +1,13 @@
+git checkout feature/MRT_GUI_ET_24.2.0
+git rebase release/MRT_GUI_ET_24.2.0
+
+
+
+
+
+
+
+
 I encountered the following error while pushing a commit to the remote branch "feature/MARS-18388-add-dev-task":
 
 "Repository hook com.isroot.stash.plugin.yacc:yaccHook failed."

@@ -1,3 +1,9 @@
+git config --global user.email
+git config user.email
+
+
+
+
 git checkout feature/MRT_GUI_ET_24.2.0
 git rebase release/MRT_GUI_ET_24.2.0
 

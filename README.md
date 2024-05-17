@@ -1,3 +1,7 @@
+git config user.email "niraj.kumar.4@ubs.com"
+
+
+
 git config --global user.email
 git config user.email
 

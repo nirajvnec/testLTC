@@ -1,4 +1,4 @@
-
+SELECT * FROM V$VERSION;
 using System;
 using Oracle.ManagedDataAccess.Client;
 

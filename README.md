@@ -1,3 +1,48 @@
+
+using System;
+using Oracle.ManagedDataAccess.Client;
+
+class Program
+{
+    static void Main()
+    {
+        string connectionString = "User Id=<username>;Password=<password>;Data Source=<datasource>";
+
+        try
+        {
+            using (OracleConnection conn = new OracleConnection(connectionString))
+            {
+                conn.Open();
+
+                using (OracleCommand cmd = new OracleCommand("SELECT * FROM YOUR_TABLE", conn))
+                {
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader.GetString(0)); // Adjust based on your columns
+                        }
+                    }
+                }
+            }
+        }
+        catch (OracleException ex)
+        {
+            Console.WriteLine("Oracle error: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("General error: " + ex.Message);
+        }
+    }
+}
+
+
+
+
+
+
+
 git push --force origin feature/MARS-18388-add-dev-task
 
 

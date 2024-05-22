@@ -1,3 +1,5 @@
+SELECT d.PLATFORM_NAME FROM V$DATABASE d;
+
 SELECT * FROM V$VERSION;
 using System;
 using Oracle.ManagedDataAccess.Client;

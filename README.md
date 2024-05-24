@@ -1,3 +1,46 @@
+convertTableToExcel(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const tables = document.querySelectorAll('table');
+    const workbook = XLSX.utils.book_new();
+
+    tables.forEach((table, index) => {
+      const firstRow = table.querySelector('tbody tr');
+      const sheetName = firstRow ? firstRow.querySelector('td')?.textContent?.trim() || `Sheet${index + 1}` : `Sheet${index + 1}`;
+
+      const headers = Array.from(table.querySelectorAll('th')).map(header => header.innerText);
+      const rows = table.querySelectorAll('tbody tr');
+
+      const data: string[][] = [headers];
+
+      rows.forEach((row) => {
+        const cells = Array.from(row.querySelectorAll('td')).map(cell => cell.innerText);
+        data.push(cells);
+      });
+
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+      XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+    });
+
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+    this.downloadExcel(blob);
+    resolve();
+  });
+}
+
+downloadExcel(content: Blob) {
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(content);
+  link.download = 'tables.xlsx';
+  link.click();
+}
+
+
+
+
+
 SELECT d.PLATFORM_NAME FROM V$DATABASE d;
 
 SELECT * FROM V$VERSION;

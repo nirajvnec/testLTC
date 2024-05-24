@@ -1,3 +1,9 @@
+npm install xlsx
+
+import * as XLSX from 'xlsx';
+
+
+
 convertTableToExcel(): Promise<void> {
   return new Promise((resolve, reject) => {
     const tables = document.querySelectorAll('table');

@@ -1,3 +1,15 @@
+const hierarchyNames = Object.keys(this.jsonData['MAS FRS Hierarchies']);
+this.parsedJsonHierarchies = { 
+  'MAS FRS Hierarchies': hierarchyNames.reduce((acc, name) => {
+    acc[name] = this.jsonData['MAS FRS Hierarchies'][name].map(item => {
+      return typeof item === 'string' ? JSON.parse(item) : item;
+    });
+    return acc;
+  }, {})
+};
+
+
+
 convertTableToCSV(): Promise<void> {
   return new Promise((resolve, reject) => {
     const tables = document.querySelectorAll('table');

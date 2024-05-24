@@ -1,3 +1,8 @@
+const hierarchyName = Object.keys(this.parsedJsonHierarchies['MAS FRS Hierarchies'])[0];
+this.totalNumberOfHierarchies = this.parsedJsonHierarchies['MAS FRS Hierarchies'][hierarchyName][1].nodes.length;
+
+
+
 const hierarchyNames = Object.keys(this.jsonData['MAS FRS Hierarchies']);
 this.parsedJsonHierarchies = { 
   'MAS FRS Hierarchies': hierarchyNames.reduce((acc, name) => {

@@ -1,3 +1,42 @@
+convertTableToCSV(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const tables = document.querySelectorAll('table');
+    let csvData = '';
+
+    tables.forEach((table, index) => {
+      const headers = Array.from(table.querySelectorAll('th')).map(header => header.innerText);
+      csvData += headers.join(',') + '\n';
+
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach((row) => {
+        const cells = Array.from(row.querySelectorAll('td')).map(cell => cell.innerText);
+        csvData += cells.join(',') + '\n';
+      });
+
+      // Add two blank lines after each table except the last one
+      if (index < tables.length - 1) {
+        csvData += '\n\n';
+      }
+    });
+
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
+
+    this.downloadCSV(blob);
+    resolve();
+  });
+}
+
+downloadCSV(content: Blob) {
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(content);
+  link.download = 'tables.csv';
+  link.click();
+}
+
+
+
+
+
 npm install xlsx
 
 import * as XLSX from 'xlsx';

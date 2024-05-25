@@ -1,3 +1,4 @@
+This documentation is essential should there be any inquiries regarding the rationale behind these changes
 const hierarchyName = Object.keys(this.parsedJsonHierarchies['MAS FRS Hierarchies'])[0];
 this.totalNumberOfHierarchies = this.parsedJsonHierarchies['MAS FRS Hierarchies'][hierarchyName][1].nodes.length;
 

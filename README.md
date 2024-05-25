@@ -1,3 +1,6 @@
+Dear Team, I am pleased to inform you that the Mars Enquiry Tool version 24.1.4 has been successfully deployed to production and all IT checks are completed.
+
+
 This documentation is essential should there be any inquiries regarding the rationale behind these changes
 const hierarchyName = Object.keys(this.parsedJsonHierarchies['MAS FRS Hierarchies'])[0];
 this.totalNumberOfHierarchies = this.parsedJsonHierarchies['MAS FRS Hierarchies'][hierarchyName][1].nodes.length;

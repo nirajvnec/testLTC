@@ -1,5 +1,18 @@
 if (this.isJsonString(jsonString)) {
   const jsonStringValue = typeof jsonString === 'string' ? jsonString : JSON.stringify(jsonString);
+  const entryName = `${name} - ${key}`;
+
+  // Check if an entry with the same name already exists
+  const existingEntry = this.jsonParsableReports.find(entry => entry.name === entryName);
+
+  if (!existingEntry) {
+    // Push the new entry only if it doesn't already exist
+    this.jsonParsableReports.push({ name: entryName, jsonString: jsonStringValue });
+  }
+}
+
+if (this.isJsonString(jsonString)) {
+  const jsonStringValue = typeof jsonString === 'string' ? jsonString : JSON.stringify(jsonString);
   this.jsonParsableReports.push({name: `${name} - ${key}`, jsonString: jsonStringValue});
 }
 

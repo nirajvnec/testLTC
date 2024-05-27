@@ -9,7 +9,14 @@
     <tr *ngFor="let report of getCurrentHierarchiesItems()">
       <td>{{ report.name }}</td>
       <td>
-        <pre>{{ report.jsonString | json }}</pre>
+        <table class="table table-sm">
+          <tbody>
+            <tr *ngFor="let item of getJsonItems(report.jsonString)">
+              <td>{{ item.key }}</td>
+              <td>{{ item.value }}</td>
+            </tr>
+          </tbody>
+        </table>
       </td>
     </tr>
   </tbody>
@@ -22,6 +29,10 @@
 </div>
 
 
+getJsonItems(jsonString: string): { key: string, value: any }[] {
+  const jsonObject = JSON.parse(jsonString);
+  return Object.entries(jsonObject).map(([key, value]) => ({ key, value }));
+}
 
 
 getCurrentHierarchiesItems(): { name: string, jsonString: string }[] {

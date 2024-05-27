@@ -1,3 +1,6 @@
+jsonParsableReports: { name: string, jsonString: string }[] = [];
+
+
 if (this.isJsonString(jsonString)) {
   const jsonStringValue = typeof jsonString === 'string' ? jsonString : JSON.stringify(jsonString);
   this.jsonParsableReports.push({ name: `${name} - ${key}`, jsonString: jsonStringValue });

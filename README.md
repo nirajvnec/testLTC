@@ -1,4 +1,5 @@
-Jira Ticket Created for MET Issue in Production Release 24.1.4
+As discussed offline, I have created a Jira ticket for the issue observed in the Mars Enquiry Tool (MET) during the production release (24.1.4). Please attach the correct report to reproduce this issue in the non-production environment. It also appears that this issue has existed for a long time.
+
 <div *ngFor="let report of jsonParsableReports">
   <h3>{{ report.name }}</h3>
   <table class="table table-bordered">

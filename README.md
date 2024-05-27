@@ -1,36 +1,3 @@
-getJsonItems(jsonString: string): { key: string, value: any }[] {
-  const jsonObject = JSON.parse(jsonString);
-  return this.flattenObject(jsonObject);
-}
-
-flattenObject(obj: any, prefix: string = ''): { key: string, value: any }[] {
-  let result: { key: string, value: any }[] = [];
-
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      const value = obj[key];
-      const newKey = prefix ? `${prefix}.${key}` : key;
-
-      if (Array.isArray(value)) {
-        value.forEach((item, index) => {
-          const itemKey = `${newKey}[${index}]`;
-          if (typeof item === 'object' && item !== null) {
-            result = result.concat(this.flattenObject(item, itemKey));
-          } else {
-            result.push({ key: itemKey, value: item });
-          }
-        });
-      } else if (typeof value === 'object' && value !== null) {
-        result = result.concat(this.flattenObject(value, newKey));
-      } else {
-        result.push({ key: newKey, value: value });
-      }
-    }
-  }
-
-  return result;
-}
-
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -39,19 +6,14 @@ flattenObject(obj: any, prefix: string = ''): { key: string, value: any }[] {
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let report of getCurrentHierarchiesItems()">
-      <td>{{ report.name }}</td>
-      <td>
-        <table class="table table-sm">
-          <tbody>
-            <tr *ngFor="let item of getJsonItems(report.jsonString)">
-              <td>{{ item.key }}</td>
-              <td>{{ item.value }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
+    <ng-container *ngFor="let report of getCurrentHierarchiesItems()">
+      <tr *ngFor="let node of getNodes(report.jsonString)">
+        <td>{{ report.name }}</td>
+        <td>
+          <pre><code>{{ node | json }}</code></pre>
+        </td>
+      </tr>
+    </ng-container>
   </tbody>
 </table>
 
@@ -60,6 +22,12 @@ flattenObject(obj: any, prefix: string = ''): { key: string, value: any }[] {
   <button class="btn btn-success" (click)="nextHierarchiesPage()" [disabled]="currentHierarchiesPage === totalHierarchiesPages()">Next</button>
   <p class="text-success font-italic">Page {{ currentHierarchiesPage }} of {{ totalHierarchiesPages() }}</p>
 </div>
+
+
+getNodes(jsonString: string): any[] {
+  const jsonData = JSON.parse(jsonString);
+  return jsonData.nodes;
+}
 
 
 getJsonItems(jsonString: string): { key: string, value: any }[] {

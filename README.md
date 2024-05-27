@@ -1,3 +1,123 @@
+@import './styles/variables';
+
+// .left-area
+.left-area {
+  width: 232px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: calc(100%);
+  overflow-y: auto;
+  background-color: $darkgreen;
+}
+
+// .blue-bar
+.blue-bar {
+  background-color: $greenColor;
+  height: 40px;
+  line-height: 40px;
+  color: $whiteColor;
+  padding: 0 24px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+// .nav-list
+.nav-list {
+  background-color: $darkgreen;
+  li {
+    position: relative;
+    .item {
+      position: relative;
+      padding-left: 63px;
+      padding-right: 26px;
+      display: block;
+      height: 64px;
+      line-height: 1.4;
+      width: 100%;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #1676;
+
+      .txt {
+        font-size: 15px;
+        color: $whiteColor;
+      }
+
+      &:hover, &.current {
+        opacity: 1;
+        background-color: $whiteColor;
+
+        .txt {
+          color: $darkgreen;
+        }
+
+        .icons {
+          color: $darkgreen; /* Change icon color on hover/active */
+        }
+      }
+    }
+
+    .icons {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 32px;
+      width: 32px;
+      color: $whiteColor; /* Ensure icons are white */
+      /* Alternatively, if $whiteColor is not defined, use the hex code for white */
+      /* color: #ffffff; */
+    }
+  }
+}
+
+.icon-trans {
+  display: none;
+}
+
+.icon-impact {
+  background-position: -256px 0;
+}
+
+.icon-re {
+  background-position: -320px 0;
+}
+
+.icon-flags {
+  background-position: -32px -32px;
+}
+
+.icon-collections {
+  background-position: -96px -32px;
+}
+
+.icon-expansion {
+  background-position: -160px -32px;
+}
+
+.icon-composite {
+  background-position: -224px -32px;
+}
+
+.icon-report {
+  background-position: -288px -32px;
+}
+
+.icon-ancestral {
+  background-position: 0 -64px;
+}
+
+.icon-mars {
+  background-position: -64px -64px;
+}
+
+
+
+
+
 "styles": [
   "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
   "src/styles.css"

@@ -1,5 +1,4 @@
-The status of the submitted report in the Mars Enquiry Tool (MET) is not updating, causing the entire system to freeze. Users are required to restart the application
-
+I have created a Jira ticket for the issue observed in the Mars Enquiry Tool (MET) during the production release (24.1.4). Please attach the correct report to reproduce this issue in the non-production environment.
 
 <div *ngFor="let report of jsonParsableReports">
   <h3>{{ report.name }}</h3>

@@ -1,3 +1,18 @@
+isJsonString(data: string | HierarchyData): boolean {
+  if (typeof data === 'string') {
+    try {
+      JSON.parse(data);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  } else if (typeof data === 'object') {
+    return true;
+  }
+  return false;
+}
+
+
 jsonParsableReports: { name: string, jsonString: string }[] = [];
 
 

@@ -1,3 +1,9 @@
+if (this.isJsonString(jsonString)) {
+  const jsonStringValue = typeof jsonString === 'string' ? jsonString : JSON.stringify(jsonString);
+  this.jsonParsableReports.push({ name: `${name} - ${key}`, jsonString: jsonStringValue });
+}
+
+
 Summary:
 Issue with MET Freezing During 24.1.4 Release for Specific Reports
 

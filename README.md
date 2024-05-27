@@ -1,10 +1,35 @@
-Hi Bhava,
+getJsonItems(jsonString: string): { key: string, value: any }[] {
+  const jsonObject = JSON.parse(jsonString);
+  return this.flattenObject(jsonObject);
+}
 
-I am seeing mostly empty data, and it looks like a data setup will be required. Please check.
+flattenObject(obj: any, prefix: string = ''): { key: string, value: any }[] {
+  let result: { key: string, value: any }[] = [];
 
-Regards,
-Niraj
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      const newKey = prefix ? `${prefix}.${key}` : key;
 
+      if (Array.isArray(value)) {
+        value.forEach((item, index) => {
+          const itemKey = `${newKey}[${index}]`;
+          if (typeof item === 'object' && item !== null) {
+            result = result.concat(this.flattenObject(item, itemKey));
+          } else {
+            result.push({ key: itemKey, value: item });
+          }
+        });
+      } else if (typeof value === 'object' && value !== null) {
+        result = result.concat(this.flattenObject(value, newKey));
+      } else {
+        result.push({ key: newKey, value: value });
+      }
+    }
+  }
+
+  return result;
+}
 
 <table class="table table-bordered">
   <thead>

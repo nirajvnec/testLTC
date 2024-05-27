@@ -1,3 +1,14 @@
+"styles": [
+  "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+  "src/styles.css"
+]
+
+
+add the Font Awesome CSS file to your project's global styles file (e.g., styles.css):
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+
+
 <table class="table table-bordered">
   <thead>
     <tr>

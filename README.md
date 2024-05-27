@@ -4,10 +4,11 @@ Hi Milburn,
 Could you please provide the Report Definition you tried during the 24.1.4 release last Saturday, where the MET froze, and you had to restart it and start a new session?
 
 @Chickmagalurshekar, Sachin,
-Please let us know if we need to involve any specific team to do the data setup in the non-production environment.
+Please let us know if we need to involve any specific team to do the data setup in the non-production environment so that we can replicate the same issue.
 
 Regards,
 Niraj
+
 <div *ngFor="let report of jsonParsableReports">
   <h3>{{ report.name }}</h3>
   <table class="table table-bordered">

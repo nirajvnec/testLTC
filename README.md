@@ -1,3 +1,5 @@
+this.jsonParsableReports.push({name: `${name} - ${key}`, jsonString: jsonString});
+
 isJsonString(data: string | HierarchyData): boolean {
   if (typeof data === 'string') {
     try {

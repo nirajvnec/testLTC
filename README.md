@@ -1,3 +1,14 @@
+  }
+}
+Please provide an input that would generate a response containing multiple MAS FRS hierarchies, such as "COMMODITY" and "COUNTRY" in the example above. This will help me ensure that my code handles the display of multiple hierarchies effectively.
+Thank you in advance for your assistance. If you have any questions or need further clarification, please don't hesitate to let me know.
+Best regards,
+[Your Name]
+
+
+
+
+
 @import './styles/variables';
 
 // .left-area

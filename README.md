@@ -1,3 +1,10 @@
+Subject: Request for Input Resulting in Multiple MAS FRS Hierarchies
+Dear [Recipient],
+I hope this email finds you well. I am working on displaying JSON data in a structured format, specifically focusing on the "MAS FRS Hierarchies" section. To ensure that my implementation handles multiple hierarchies correctly, I would greatly appreciate if you could provide an input that would generate a response containing multiple MAS FRS hierarchies.
+The ideal input should result in a JSON response similar to the following structure:
+            
+            
+            
             "activate": false,
             "focus": false,
             "expand": false,

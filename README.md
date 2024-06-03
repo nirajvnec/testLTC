@@ -1,3 +1,24 @@
+const response = [
+  { id: 1, name: "Object 1", status: "active" },
+  { id: 2, name: "Object 2", status: "inactive" },
+  { id: 3, name: "Object 3", status: "active" },
+  { id: 4, name: "Object 4", status: "inactive" }
+];
+
+// Function to filter objects based on status
+const filterActiveObjects = (obj: { id: number, name: string, status: string }) => {
+  return obj.status !== "inactive";
+};
+
+// Filter out objects with status 'inactive'
+const filteredObjects = response.filter(filterActiveObjects);
+
+console.log(filteredObjects);
+
+
+
+
+
 const response = {
   obj1: { id: 1, name: "Object 1", status: "active" },
   obj2: { id: 2, name: "Object 2", status: "inactive" },

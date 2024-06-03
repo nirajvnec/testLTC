@@ -2,6 +2,36 @@ function processReport(reportName) {
   if (this.jsonData.hasOwnProperty(reportName)) {
     for (let y in this.jsonData[reportName]) {
       if (Array.isArray(this.jsonData[reportName][y]) && this.jsonData[reportName][y].length > 1) {
+        const value = this.jsonData[reportName][y][1];
+        if (typeof value === 'object' && value !== null) {
+          console.log("Valid object found in", reportName);
+          delete this.jsonData[reportName];
+          console.log("Removed", reportName, "from this.jsonData");
+          return true;
+        } else {
+          console.log("Invalid object in", reportName);
+        }
+      }
+    }
+  }
+  return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function processReport(reportName) {
+  if (this.jsonData.hasOwnProperty(reportName)) {
+    for (let y in this.jsonData[reportName]) {
+      if (Array.isArray(this.jsonData[reportName][y]) && this.jsonData[reportName][y].length > 1) {
         try {
           const jsonString = JSON.stringify(this.jsonData[reportName][y][1]);
           JSON.parse(jsonString);

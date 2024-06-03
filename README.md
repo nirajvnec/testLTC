@@ -3,6 +3,29 @@ function processReport(reportName) {
     for (let y in this.jsonData[reportName]) {
       if (Array.isArray(this.jsonData[reportName][y]) && this.jsonData[reportName][y].length > 1) {
         try {
+          const jsonString = JSON.stringify(this.jsonData[reportName][y][1]);
+          JSON.parse(jsonString);
+          console.log("Valid JSON found in", reportName);
+          delete this.jsonData[reportName];
+          console.log("Removed", reportName, "from this.jsonData");
+          return true;
+        } catch (error) {
+          console.log("Invalid JSON in", reportName);
+        }
+      }
+    }
+  }
+  return false;
+}
+
+
+
+
+function processReport(reportName) {
+  if (this.jsonData.hasOwnProperty(reportName)) {
+    for (let y in this.jsonData[reportName]) {
+      if (Array.isArray(this.jsonData[reportName][y]) && this.jsonData[reportName][y].length > 1) {
+        try {
           JSON.parse(this.jsonData[reportName][y][1]);
           console.log("Valid JSON found in", reportName);
           delete this.jsonData[reportName];

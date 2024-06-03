@@ -1,3 +1,23 @@
+const response = {
+  obj1: { id: 1, name: "Object 1", status: "active" },
+  obj2: { id: 2, name: "Object 2", status: "inactive" },
+  obj3: { id: 3, name: "Object 3", status: "active" },
+  obj4: { id: 4, name: "Object 4", status: "inactive" }
+};
+
+// Filter out objects with status 'inactive'
+const filteredResponse = Object.fromEntries(
+  Object.entries(response).filter(([key, obj]) => obj.status !== "inactive")
+);
+
+console.log(filteredResponse);
+
+
+
+
+
+
+
 const jsonData = {
   obj1: {},
   obj2: {},

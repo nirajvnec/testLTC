@@ -1,3 +1,55 @@
+const jsonData = {
+  obj1: {},
+  obj2: {},
+  obj3: {},
+  obj4: {}
+};
+
+// Convert the object to an array of objects
+const objectArray = Object.values(jsonData);
+
+// Now you can use the objectArray as an array of objects
+// Iterate over the objects and remove the ones with parsable JSON values
+const filteredData = objectArray.filter((obj) => {
+  // Specify the property you want to check
+  const propertyToCheck = 'someProperty';
+
+  // Check if the object has the specified property
+  if (obj.hasOwnProperty(propertyToCheck)) {
+    const propertyValue = obj[propertyToCheck];
+
+    // Check if the property value can be parsed as JSON
+    if (typeof propertyValue === 'string' && isValidJson(propertyValue)) {
+      return false; // Remove the object from the array
+    }
+  }
+
+  return true; // Keep the object in the array
+});
+
+// The filteredData array now contains the objects without parsable JSON values
+console.log(filteredData);
+
+// Function to check if a value can be parsed as JSON
+function isValidJson(value: string): boolean {
+  try {
+    JSON.parse(value);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 Subject: Compensatory Time Off for 24.1.4 Release Support
 Dear Team,
 I would like to inform you that I will be taking compensatory time off on May 31, 2024, for the additional hours I invested in supporting the 24.1.4 release on May 25, 2024

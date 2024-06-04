@@ -1,3 +1,9 @@
+git pull --rebase origin feature-branch && git push origin feature-branch
+
+
+
+
+
 function processReport(reportName) {
   if (this.jsonData.hasOwnProperty(reportName)) {
     for (let y in this.jsonData[reportName]) {

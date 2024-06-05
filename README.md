@@ -1,3 +1,9 @@
+npm install @fortawesome/fontawesome-free
+
+
+
+
+
 git pull --rebase origin feature-branch && git push origin feature-branch
 
 

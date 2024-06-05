@@ -1,3 +1,33 @@
+class MyClass {
+  private jsonData: { [reportName: string]: { [key: string]: any } };
+
+  constructor(jsonData: { [reportName: string]: { [key: string]: any } }) {
+    this.jsonData = jsonData;
+  }
+
+  getPropertyValue(reportName: string, index: number): any {
+    const propertyName = Object.keys(this.jsonData[reportName])[0] as keyof typeof this.jsonData[typeof reportName];
+    return this.jsonData[reportName][propertyName][index];
+  }
+}
+
+// Usage
+const jsonData = {
+  "report1": {
+    "COMMODITY": ["value1", "value2"]
+  },
+  "report2": {
+    "COUNTRY": ["value3", "value4"]
+  }
+};
+
+const myClass = new MyClass(jsonData);
+const value = myClass.getPropertyValue("report1", 1);
+console.log(value); // Output: "value2"
+
+
+
+
 npm install @fortawesome/fontawesome-free
 
 

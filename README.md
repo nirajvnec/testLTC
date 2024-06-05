@@ -1,3 +1,16 @@
+const myClass = new MyClass(jsonData);
+const value = myClass.getPropertyValue("report1", 1);
+console.log(value);
+
+
+
+
+
+
+
+
+
+
 class MyClass {
   private jsonData: { [reportName: string]: { [key: string]: any } };
 

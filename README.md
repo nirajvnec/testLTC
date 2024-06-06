@@ -1,7 +1,33 @@
-Hi John,
+deleteReportsWhichHasJsonParsableReponse(jsonData: ReportData) {
+    const reportNames = Object.keys(jsonData);
 
-I am currently addressing a pending issue related to duplication, which I will fix and deploy today. After today's deployment, everything I am aware of will be resolved.
+    for (let i = 0; i < reportNames.length; i++) {
+        const reportName = reportNames[i];
+        console.log("Report Name:", reportName);
 
+        if (this.isJsonDataValid(jsonData, reportName)) {
+            delete jsonData[reportName];
+            console.log("Deleted report:", reportName);
+        }
+    }
+}
+
+isJsonDataValid(jsonData: ReportData, reportName: string): boolean {
+    let propName = Object.keys(jsonData[reportName]).at(0);
+    let data = jsonData[reportName][propName].at(1);
+    let isValid: boolean = false;
+
+    try {
+        let parsedData = JSON.parse(jsonData[reportName][propName].at(1).toString());
+        console.log(parsedData);
+        isValid = true;
+    } catch (error) {
+        console.log(error);
+        isValid = false;
+    }
+
+    return isValid;
+}
 
 
 

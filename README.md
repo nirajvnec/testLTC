@@ -1,7 +1,6 @@
 Hi John,
 
-I am currently addressing a pending issue related to duplication, which I will fix and deploy today. After this deployment, everything I am aware of will be resolved.
-
+I am currently addressing a pending issue related to duplication, which I will fix and deploy today. After today's deployment, everything I am aware of will be resolved.
 
 
 

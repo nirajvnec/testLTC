@@ -1,3 +1,11 @@
+Hi John,
+
+I am currently addressing a pending issue related to duplication, which I will fix and deploy today. After this deployment, everything I am aware of will be resolved.
+
+
+
+
+
 const myClass = new MyClass(jsonData);
 const value = myClass.getPropertyValue("report1", 1);
 console.log(value);

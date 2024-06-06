@@ -1,5 +1,6 @@
-Build Pipeline Aborted: Investigation and Resolution Required
+Subject: Build Pipeline Aborted: Investigation and Resolution Required
 
+Hi [Recipient Name],
 
 This build is triggered whenever code is pushed to the following repository:
 
@@ -11,10 +12,12 @@ https://odyssey.apps.csintra.net/jenkins/blue/organizations/jenkins/MARS%2FMARS-
 
 Upon reviewing the log file, it appears that the build is failing due to an aborted pipeline. The key line in the logs states: "Aborted by s110195 (of Tailor, Ashok K)."
 
-This issue seems to have been occurring for quite some time. Could you please investigate and resolve this issue?
+This issue seems to have been occurring for quite some time and is causing us to manually merge the code, which is not a good practice to follow. Could you please investigate and resolve this issue?
 
 Thank you.
 
+Best regards,
+[Your Name]
 
 
 

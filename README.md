@@ -1,3 +1,6 @@
+You are cc'd on the email I sent to Mansi and the team.
+
+
 Hi Mansi,
 
 Could you please deploy it and notify us once the deployment is complete?

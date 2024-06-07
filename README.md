@@ -1,3 +1,21 @@
+Subject: Merlin Bug Fix: Data Extraction Logic Correction
+
+Hi Shadab,
+
+Please provide approval for this, as it is scheduled for release in version 24.2.0.
+
+Pull Request #484: MARS-18444: Merlin Dev Test Fix - Odyssey Bitbucket (csintra.net)
+
+Best regards,
+Niraj
+
+
+
+
+
+
+
+
 
 Could we connect to clarify and avoid any confusion?
 I thought we had already merged the Pull Request below. Are you suggesting that we need to seek approval on it, or is there another issue? Please confirm.

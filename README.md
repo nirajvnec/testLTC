@@ -1,4 +1,11 @@
+Hi Mansi,
 
+Could you please deploy it and notify us once the deployment is complete?
+
+Thank you.
+
+Best regards,
+Niraj
 
 
 Could you please create a JIRA ticket and coordinate with the appropriate team to resolve this? This issue needs to be addressed in due course.

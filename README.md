@@ -1,56 +1,11 @@
-You are cc'd on the email I sent to Mansi and the team.
 
 
-Hi Mansi,
+Hi John,
 
-Could you please deploy it and notify us once the deployment is complete?
-
-Thank you.
+The last issue has been resolved and was deployed today. Please provide your feedback.
 
 Best regards,
 Niraj
-
-
-Could you please create a JIRA ticket and coordinate with the appropriate team to resolve this? This issue needs to be addressed in due course.
-
-
-
-Hi Dharmendra,
-
-We do not encounter this kind of behavior with other applications like MET and MARSNET. Could you please explain why this is the case?
-
-Thank you.
-
-Best regards,
-
-
-
-
-
-Subject: Build Pipeline Aborted: Investigation and Resolution Required
-
-Hi [Recipient Name],
-
-This build is triggered whenever code is pushed to the following repository:
-
-https://odyssey.apps.csintra.net/bitbucket/projects/MARS/repos/mars_web/browse
-
-The build logs can be viewed here:
-
-https://odyssey.apps.csintra.net/jenkins/blue/organizations/jenkins/MARS%2FMARS-P%2FMARS-PL-BP%2Fmars_web/detail/feature%2FMARS-18388-Merlin-changes/17/pipeline/
-
-Upon reviewing the log file, it appears that the build is failing due to an aborted pipeline. The key line in the logs states: "Aborted by s110195 (of Tailor, Ashok K)."
-
-This issue seems to have been occurring for quite some time and is causing us to manually merge the code, which is not a good practice to follow. Could you please investigate and resolve this issue?
-
-Thank you.
-
-Best regards,
-[Your Name]
-
-
-
-
 
 24.2.0.1148
 

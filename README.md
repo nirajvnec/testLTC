@@ -1,4 +1,5 @@
 
+Could we connect to clarify and avoid any confusion?
 I thought we had already merged the Pull Request below. Are you suggesting that we need to seek approval on it, or is there another issue? Please confirm.
 
 Hi John,

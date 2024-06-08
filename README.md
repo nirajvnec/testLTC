@@ -1,3 +1,7 @@
+git config --global alias.ll 'config --local --list'
+
+
+
 git config --global alias.ar 'commit --amend --reset-author'
 git config --global alias.arn 'commit --amend --reset-author --no-edit'
 

@@ -1,3 +1,10 @@
+git config --global alias.met-clone '!git clone https://odyssey.apps.csintra.net/bitbucket/scm/marsgui/marsgui.git'
+
+git config --global --get alias.met-clone
+
+
+
+
 git config --global alias.mer-clone '!git clone https://odyssey.apps.csintra.net/bitbucket/scm/mars/mars_web.git && cd mars_web && git checkout'
 
 

@@ -1,3 +1,6 @@
+Create a file named set-git-user.bat and add the following content:
+
+
 @echo off
 set /p username="Enter your name: "
 set /p useremail="Enter your email: "

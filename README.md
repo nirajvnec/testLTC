@@ -1,3 +1,13 @@
+git config --global alias.ar 'commit --amend --reset-author'
+git config --global alias.arn 'commit --amend --reset-author --no-edit'
+
+Now you can use git ar for git commit --amend --reset-author 
+
+and 
+
+git arn for git commit --amend --reset-author --no-edit.
+
+
 Subject: Merlin Bug Fix: Data Extraction Logic Correction
 
 Hi Shadab,

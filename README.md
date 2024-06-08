@@ -12,6 +12,7 @@ code %USERPROFILE%\.gitconfig
     }; f"
 
 
+
 git config --global --get alias.glal
 
 

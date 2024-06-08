@@ -6,6 +6,7 @@ git config --global alias.glal '!f() { git stash push -m "$(date +%Y%m%d%H%M%S)"
 
 git config --global --get alias.glal
 
+
 git glal feature-branch-name
 
 

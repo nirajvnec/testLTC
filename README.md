@@ -1,3 +1,17 @@
+@echo off
+set /p username="Enter your name: "
+set /p useremail="Enter your email: "
+
+git config --global user.name "%username%"
+git config --global user.email "%useremail%"
+
+echo Git user.name set to %username%
+echo Git user.email set to %useremail%
+pause
+
+
+
+
 git config --global alias.gl 'config --global --list'
 
 Now you can simply use git gl to run git config --global --list.

@@ -1,3 +1,8 @@
+alias mer-clone="mkdir $(date +%Y-%m-%d)_mer && cd $_ && git clone https://odyssey.apps.csintra.net/bitbucket/scm/mars/mars_web.git && cd mars_web && git checkout $1"
+
+
+
+
 git config --global alias.cm "!git add -A && git commit -v"
 
 git config --global alias.un "reset --soft HEAD~1"

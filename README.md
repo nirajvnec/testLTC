@@ -1,5 +1,8 @@
 git config --global alias.glal "!f() { git stash push -m \"$(date)\" && git pull origin $1 && git stash apply; }; f"
 
+git glal feature-branch-name
+
+
 
 
 

@@ -1,4 +1,4 @@
-alias mer-clone="mkdir $(date +%Y-%m-%d)_mer && cd $_ && git clone https://odyssey.apps.csintra.net/bitbucket/scm/mars/mars_web.git && cd mars_web && git checkout $1"
+alias mer-clone="mkdir $(`date +%Y-%m-%d`)_mer && cd $_ && git clone https://odyssey.apps.csintra.net/bitbucket/scm/mars/mars_web.git && cd mars_web && git checkout $1"
 
 
 

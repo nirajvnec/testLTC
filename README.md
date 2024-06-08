@@ -1,3 +1,12 @@
+git config --global --unset alias.rmf
+
+git config --global --get alias.rmf
+
+git config --global alias.rmf '!rm -rf'
+
+
+
+
 git config --global alias.rmf = !rm -rf
 
 

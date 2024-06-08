@@ -1,7 +1,8 @@
 code %USERPROFILE%\.gitconfig
 
-git config --global --replace-all alias.glal "!f() { git stash push -m \"$(powershell -Command 'Get-Date -Format yyyyMMddHHmmss')\" && git pull origin \"$1\" && git stash apply && git status; }; f"
+git config --global --unset alias.glal
 
+git config --global alias.glal "!f() { git stash push -m \"$(powershell -Command 'Get-Date -Format yyyyMMddHHmmss')\" && git pull origin \"$1\" && git stash apply; }; f"
 
 git config --global --get alias.glal
 

@@ -1,7 +1,15 @@
-git config --global alias.glal "!f() { git stash push -m "$(powershell -Command 'Get-Date -Format yyyyMMddHHmmss')" && git pull origin "$1" && git stash apply; }; f"
+code %USERPROFILE%\.gitconfig
 
-git config --global alias.glal '!f() { git stash push -m "$(date +%Y%m%d%H%M%S)" && git pull origin "$1" && git stash apply; }; f'
-
+[alias]
+    glal = "!f() { \
+      git stash push -m \"$(powershell -Command \\\"Get-Date -Format yyyyMMddHHmmss\\\")\" && \
+      git pull origin \"$1\" && \
+      if git stash list | grep -q stash@{0}; then \
+        git stash apply; \
+      else \
+        echo \"No stash to apply\"; \
+      fi; \
+    }; f"
 
 git config --global --get alias.glal
 

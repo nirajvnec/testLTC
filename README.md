@@ -1,3 +1,6 @@
+git config --global alias.rmf = !rm -rf
+
+
 git config --global alias.met-clone '!git clone https://odyssey.apps.csintra.net/bitbucket/scm/marsgui/marsgui.git && cd marsgui && git checkout'
 
 

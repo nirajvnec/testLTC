@@ -1,10 +1,8 @@
 code %USERPROFILE%\.gitconfig
 
-git config --global --unset alias.glal
+git config --global alias.scpp "!git stash; git checkout $1; git pull; git stash pop"
 
-git config --global alias.glal "!f() { git stash push -m \"$(powershell -Command 'Get-Date -Format yyyyMMddHHmmss')\" && git pull origin \"$1\" && git stash apply; }; f"
-
-git config --global --get alias.glal
+git config --global --get-all alias.scpp
 
 
 git glal feature-branch-name

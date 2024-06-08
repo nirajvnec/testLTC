@@ -1,5 +1,6 @@
 git config --global alias.gl 'config --global --list'
 
+Now you can simply use git gl to run git config --global --list.
 
 
 alias.ll=config --local --list

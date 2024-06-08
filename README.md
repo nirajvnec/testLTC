@@ -1,16 +1,7 @@
-Create a file named set-git-user.bat and add the following content:
+git config --global alias.su '!git config --global user.name "KUMAR, NIRAJ" && git config --global user.email "niraj.kumar.4@credit-suisse.com"'
 
+git su
 
-@echo off
-set /p username="Enter your name: "
-set /p useremail="Enter your email: "
-
-git config --global user.name "%username%"
-git config --global user.email "%useremail%"
-
-echo Git user.name set to %username%
-echo Git user.email set to %useremail%
-pause
 
 
 

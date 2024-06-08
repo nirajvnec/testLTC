@@ -2,7 +2,7 @@ code %USERPROFILE%\.gitconfig
 
 [alias]
     glal = "!f() { \
-      git stash push -m \"$(powershell -Command \\\"Get-Date -Format yyyyMMddHHmmss\\\")\" && \
+      git stash push -m \"auto-stash\" && \
       git pull origin \"$1\" && \
       if git stash list | grep -q stash@{0}; then \
         git stash apply; \
@@ -10,6 +10,7 @@ code %USERPROFILE%\.gitconfig
         echo \"No stash to apply\"; \
       fi; \
     }; f"
+
 
 git config --global --get alias.glal
 

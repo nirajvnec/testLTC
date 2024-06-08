@@ -1,3 +1,9 @@
+git config --global alias.glal "!f() { git stash push -m \"$(date)\" && git pull origin $1 && git stash apply; }; f"
+
+
+
+
+
 git config --global alias.su '!git config --global user.name "KUMAR, NIRAJ" && git config --global user.email "niraj.kumar.4@credit-suisse.com"'
 
 git su

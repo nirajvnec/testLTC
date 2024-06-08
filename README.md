@@ -4,6 +4,12 @@ git su
 
 
 
+git config --global alias.su '!git config --global user.name "KUMAR, NIRAJ" && git config --global user.email "niraj.kumar.4@credit-suisse.com"'
+
+git su
+
+
+
 
 
 git config --global alias.gl 'config --global --list'

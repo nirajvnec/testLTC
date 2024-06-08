@@ -1,3 +1,15 @@
+git config --global alias.cm "!git add -A && git commit -v"
+
+git config --global alias.un "reset --soft HEAD~1"
+
+git config --global --get alias.cm
+
+git config --global --get alias.un
+
+
+
+
+
 code %USERPROFILE%\.gitconfig
 
 git config --global alias.scpp "!git stash; git checkout $1; git pull; git stash pop"

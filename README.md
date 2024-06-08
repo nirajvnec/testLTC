@@ -1,5 +1,6 @@
 git config --global alias.ll 'config --local --list'
 
+Now, you can simply use git ll to run git config --local --list.
 
 
 git config --global alias.ar 'commit --amend --reset-author'

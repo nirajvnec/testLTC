@@ -1,3 +1,9 @@
+git config --global alias.homedir '!start cmd.exe /K "cd /d c:/Users/nkuma152"'
+
+git config --global --get alias.homedir
+
+
+
 git config --global --unset alias.rmf
 
 git config --global --get alias.rmf

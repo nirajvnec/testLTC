@@ -1,3 +1,6 @@
+[System.Environment]::SetEnvironmentVariable('EMAIL_SCRIPT', 'C:\\Users\\nkumar152\\compose_email.ps1', [System.EnvironmentVariableTarget]::User)
+
+
 git config --global alias.openvsc '!code .'
 
 

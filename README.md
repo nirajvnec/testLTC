@@ -1,3 +1,13 @@
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+
+git config --global alias.composeemail '!powershell -Command "& \"$env:EMAIL_SCRIPT\""'
+
+
+
+
+
+
 param (
     [string]$recipient,
     [string]$subject,

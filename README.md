@@ -6,6 +6,8 @@ git config --global --unset alias.homedir
 
 git config --global alias.homedir '!cmd /C "cd /d c:/Users/nkuma152 && start cmd.exe /K"'
 
+git config --global alias.homedir '!cd /d c:/Users/nkuma152'
+
 
 
 

@@ -1,3 +1,23 @@
+param (
+    [string]$recipient,
+    [string]$subject,
+    [string]$body
+)
+
+# Create a new Outlook Application COM object
+$Outlook = New-Object -ComObject Outlook.Application
+$Mail = $Outlook.CreateItem(0)
+
+# Set the email properties
+$Mail.To = $recipient
+$Mail.Subject = $subject
+$Mail.Body = $body
+
+# Display the email
+$Mail.Display()
+
+
+
 [System.Environment]::SetEnvironmentVariable('EMAIL_SCRIPT', 'C:\\Users\\nkumar152\\compose_email.ps1', [System.EnvironmentVariableTarget]::User)
 
 

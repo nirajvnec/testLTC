@@ -1,3 +1,7 @@
+Set-Alias -Name homedir -Value {cd "C:\Users\nkuma152"}  # Replace path if needed
+
+
+
 git config --global alias.homedir '!start cmd.exe /K "cd /d c:/Users/nkuma152"'
 git config --global alias.homedir '!start cmd.exe /K \"cd /d c:/Users/nkuma152\"'
 

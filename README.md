@@ -1,3 +1,7 @@
+git composeemail "recipient@example.com" "Subject Line" "Email body text."
+
+
+
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 

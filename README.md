@@ -1,3 +1,7 @@
+git config --global alias.openvsc '!code .'
+
+
+
 git config --global --unset alias.closevscode
 
 git config --global alias.closevscode '!cmd.exe /C \"taskkill /IM Code.exe /F\"'

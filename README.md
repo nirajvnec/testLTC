@@ -1,3 +1,12 @@
+git config --global alias.closevst '!taskkill /IM devenv.exe /F'
+
+git config --global alias.closevscode '!taskkill /IM Code.exe /F'
+
+git config --global alias.closeallcmd '!taskkill /IM cmd.exe /F'
+
+
+
+
 Oracs Client 12c x86:-
 ComponentName=04381 ORADataClil 2cR132,ComponentVersion = 1.2.3_1 ,Packa
 geSuffix= Pkg 1 »PackageVersion = 1.2.3_1

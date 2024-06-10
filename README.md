@@ -1,3 +1,17 @@
+USE YourDatabaseName; -- Replace with your database name
+
+-- Query to get the stored procedure definition
+SELECT 
+    sm.definition 
+FROM 
+    sys.sql_modules sm
+    INNER JOIN sys.objects o ON sm.object_id = o.object_id
+WHERE 
+    o.type = 'P'
+    AND o.name = 'spsGetAuraV4ITAccess';
+
+
+
 Get-OutlookClient | Select-Object SmtpServer
 
 

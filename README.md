@@ -1,3 +1,9 @@
+Oracs Client 12c x86:-
+ComponentName=04381 ORADataClil 2cR132,ComponentVersion = 1.2.3_1 ,Packa
+geSuffix= Pkg 1 »PackageVersion = 1.2.3_1
+
+
+
 I'm glad to hear you had a good break, even though it was short. Spending quality time with your boy must have been wonderful!
 
 

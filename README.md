@@ -1,3 +1,6 @@
+Get-OutlookClient | Select-Object SmtpServer
+
+
 git composeemail "recipient@example.com" "Subject Line" "Email body text."
 
 

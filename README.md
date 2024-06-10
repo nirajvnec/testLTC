@@ -1,3 +1,9 @@
+git config --global --unset alias.closeallcmd
+
+git config --global alias.closeallcmd '!cmd.exe /C \"taskkill /IM cmd.exe /F\"'
+
+
+
 git config --global --unset alias.closevst
 
 git config --global alias.closevst '!cmd.exe /C \"taskkill /IM devenv.exe /F\"'

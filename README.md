@@ -1,3 +1,33 @@
+-- Assuming you have tables AURASYNCV4RIGHT, AURASYNCV4PERMISSION, and AURASYNCV4LOGIN
+
+-- Get the RIGHTID for '2NDLEVEL SUPPORT READ WRITE'
+DECLARE @RightID INT;
+SELECT @RightID = RIGHTID 
+FROM AURASYNCV4RIGHT 
+WHERE RightName = '2NDLEVEL SUPPORT READ WRITE';
+
+-- Get the LOGINID for the user 'nkuma152'
+DECLARE @LoginID INT;
+SELECT @LoginID = LOGINID 
+FROM AURASYNCV4LOGIN 
+WHERE LoginName = 'nkuma152';
+
+-- Insert into the AURASYNCV4PERMISSION table
+INSERT INTO AURASYNCV4PERMISSION (RIGHTID, LOGINID)
+VALUES (@RightID, @LoginID);
+
+-- Optional: if you need to insert into AURASYNCV4RIGHT directly
+-- Ensure the combination of RIGHTID and LoginName is unique if required.
+INSERT INTO AURASYNCV4RIGHT (RightName)
+VALUES ('2NDLEVEL SUPPORT READ WRITE');
+
+-- Insert the user login if it's not already present
+INSERT INTO AURASYNCV4LOGIN (LoginName)
+VALUES ('nkuma152');
+
+
+
+
 USE YourDatabaseName; -- Replace with your database name
 
 -- Query to get the stored procedure definition

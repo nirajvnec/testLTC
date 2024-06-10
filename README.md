@@ -1,3 +1,5 @@
+How are you? How was your break? Did you find it to be short or long enough?
+
 Set-Alias -Name homedir -Value {cd "C:\Users\nkuma152"}  # Replace path if needed
 
 

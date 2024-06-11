@@ -1,3 +1,7 @@
+git config --global alias.closeonenote '!close_onenote.bat'
+
+
+
 $newPath = "C:\Scripts"
 [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";$newPath", [System.EnvironmentVariableTarget]::Machine)
 

@@ -1,5 +1,6 @@
 git config --global alias.closeonenote '!taskkill /IM onenote.exe /F'
 
+git config --global alias.closeonenote '!cmd /c taskkill /IM onenote.exe /F'
 
 git config --global alias.onenote '!start onenote'
 

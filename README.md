@@ -1,3 +1,7 @@
+EXEC sp_helptext 'myProcedure';
+
+
+
 git config --global alias.closeonenote '!close_onenote.bat'
 
 

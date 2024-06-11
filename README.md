@@ -1,13 +1,4 @@
-[alias]
-    lock = "!rundll32.exe user32.dll,LockWorkStation"
-
-
-
-
-
-
-[alias]
-    lock = "!rundll32.exe user32.dll,LockWorkStation"
+git config --global alias.lock '!rundll32.exe user32.dll,LockWorkStation'
 
 
 

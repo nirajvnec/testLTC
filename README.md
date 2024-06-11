@@ -1,3 +1,8 @@
+git config --global alias.vs2022 "!\"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/devenv.exe\" ."
+
+
+
+
 -- Assuming you have tables AURASYNCV4RIGHT, AURASYNCV4PERMISSION, and AURASYNCV4LOGIN
 
 -- Get the RIGHTID for '2NDLEVEL SUPPORT READ WRITE'

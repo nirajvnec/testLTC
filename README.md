@@ -1,3 +1,7 @@
+git config --global alias.cdhome '!cd /d C:\\Users\\nkuma152'
+
+
+
 git config --global alias.lock '!rundll32.exe user32.dll,LockWorkStation'
 
 

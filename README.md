@@ -1,4 +1,5 @@
 git config --global --unset alias.cmd
+git config --global alias.cmdhome '!start cmd /K "cd /d C:\\Users\\nkuma152"'
 
 
 

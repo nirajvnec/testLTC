@@ -1,3 +1,8 @@
+"Update .gitignore to Exclude .csproj.user Files in RiskPortal"
+
+
+
+
 EXEC sp_helptext 'myProcedure';
 
 

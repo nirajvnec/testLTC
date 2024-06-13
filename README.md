@@ -1,3 +1,7 @@
+git config --global alias.unload-myproject '!git rm --cached MyProject/MyProject.csproj.user && echo "MyProject unloaded from Git tracking"'
+
+
+
 "Update .gitignore to Exclude .csproj.user Files in RiskPortal"
 
 

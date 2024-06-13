@@ -1,3 +1,10 @@
+Hi Nigel,Could you please confirm if we need to discontinue using the old Adapt executable path? If so, could you guide us to the new Adapt executable path in case the old one is outdated? Additionally, please provide any further steps required for local HM application debugging.Thank you.
+
+
+
+
+
+
 git config --global alias.unload-myproject '!git rm --cached MyProject/MyProject.csproj.user && echo "MyProject unloaded from Git tracking"'
 
 

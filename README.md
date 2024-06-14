@@ -1,3 +1,11 @@
+Hi Divya,
+
+It looks like this email might not be for me, as I'm not from Wipro. Just making sure!
+
+Thanks,
+Niraj Kumar
+
+
 <section name="environments" type="CS.ADAPT.Client.Configuration.EnvironmentsSectionSerializerHandler, CS.ADAPT.Client" requirePermission="false" />
 
 

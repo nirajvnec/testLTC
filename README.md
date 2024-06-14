@@ -1,3 +1,7 @@
+gacutil /u "Oracle.DataAccess,Version=2.121.2.0,Culture=neutral,PublicKeyToken=89b483f429c47342,processorArchitecture=x86"
+
+
+
 gacutil /u Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
 gacutil /u Policy.2.102.Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
 gacutil /u Policy.2.111.Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86

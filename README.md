@@ -1,3 +1,7 @@
+<section name="environments" type="CS.ADAPT.Client.Configuration.EnvironmentsSectionSerializerHandler, CS.ADAPT.Client" requirePermission="false" />
+
+
+
 Quick question: was I added to this group by mistake, or am I supposed to be here? 😄 Apologies for the lighthearted question!
 
 

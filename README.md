@@ -1,3 +1,16 @@
+847765
+
+
+<configuration>
+  <configSections>
+    <section name="environments" type="..." requirePermission="false" />
+  </configSections>
+  ...
+</configuration>
+
+
+
+
 Hi Nigel,Could you please confirm if we need to discontinue using the old Adapt executable path? If so, could you guide us to the new Adapt executable path in case the old one is outdated? Additionally, please provide any further steps required for local HM application debugging.Thank you.
 
 

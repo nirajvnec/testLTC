@@ -1,3 +1,10 @@
+git config --global alias.navtools '!cd C:/Program\\ Files\\ \\(x86\\)/Microsoft\\ SDKs/Windows/v10.0A/bin/NETFX\\ 4.8\\ Tools && cmd'
+
+git config --global alias.findoracle '!gacutil /l | findstr Oracle.DataAccess'
+
+
+
+
 C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\gacutil.exe
 
 

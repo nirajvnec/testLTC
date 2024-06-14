@@ -1,3 +1,16 @@
+gacutil /u Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+gacutil /u Policy.2.102.Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+gacutil /u Policy.2.111.Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+gacutil /u Policy.2.112.Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+gacutil /u Policy.2.121.Oracle.DataAccess, Version=2.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+gacutil /u Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+gacutil /u Oracle.DataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+gacutil /u Policy.4.112.Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+gacutil /u Policy.4.121.Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86
+
+
+
+
 git config --global alias.navtools '!cd C:/Program\\ Files\\ \\(x86\\)/Microsoft\\ SDKs/Windows/v10.0A/bin/NETFX\\ 4.8\\ Tools && cmd'
 
 git config --global alias.findoracle '!gacutil /l | findstr Oracle.DataAccess'

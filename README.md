@@ -1,3 +1,44 @@
+using System;
+using System.Reflection;
+
+public class Example
+{
+    public static void Main()
+    {
+        try
+        {
+            var catalogElement = new CatalogElement();
+            var methodInfo = typeof(CatalogElement).GetMethod("GetModules", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            
+            if (methodInfo != null)
+            {
+                var result = methodInfo.Invoke(catalogElement, null);
+                Console.WriteLine($"Modules: {string.Join(", ", (string[])result)}");
+            }
+            else
+            {
+                Console.WriteLine("Method not found.");
+            }
+        }
+        catch (MethodAccessException ex)
+        {
+            Console.WriteLine($"MethodAccessException: {ex.Message}");
+        }
+    }
+}
+
+public class CatalogElement
+{
+    // Make sure this method is accessible
+    public string[] GetModules()
+    {
+        return new string[] { "Module1", "Module2" };
+    }
+}
+
+
+
+
 
 Hi Hari,
 

@@ -1,3 +1,11 @@
+# Define a function to launch Google.com in Microsoft Edge
+function open-google {
+    Start-Process "msedge.exe" "https://www.google.com"
+}
+
+
+
+
 # Define a function to build the Angular project with the production configuration
 function ngprod {
     ng build --configuration=production

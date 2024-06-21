@@ -1,3 +1,20 @@
+# Define a function to find and kill the ng.cmd process
+function Stop-NgProcess {
+    $ngProcess = Get-Process | Where-Object { $_.Path -like "*ng.cmd" }
+    if ($ngProcess) {
+        $ngProcess | Stop-Process -Force
+        Write-Output "ng serve process stopped."
+    } else {
+        Write-Output "ng serve process not found."
+    }
+}
+
+
+
+
+
+
+
 # Define a function to launch Google.com in Microsoft Edge
 function open-google {
     Start-Process "msedge.exe" "https://www.google.com"

@@ -1,3 +1,34 @@
+# Load the Outlook COM object
+$outlook = New-Object -ComObject Outlook.Application
+
+# Get the namespace
+$namespace = $outlook.GetNamespace("MAPI")
+
+# Loop through each account
+foreach ($account in $namespace.Accounts) {
+    Write-Output "Account Name: $($account.DisplayName)"
+    Write-Output "Email Address: $($account.SmtpAddress)"
+    Write-Output "Account Type: $($account.AccountType)"
+
+    # Get account properties
+    $accountProperties = $account.CurrentUser.PropertyAccessor
+
+    # Retrieve the SMTP server details
+    try {
+        $smtpServer = $accountProperties.GetProperty("http://schemas.microsoft.com/mapi/proptag/0x6612001F")
+        Write-Output "SMTP Server: $smtpServer"
+    } catch {
+        Write-Output "SMTP Server details not found for $($account.DisplayName)"
+    }
+
+    Write-Output "`n"  # Add a newline for better readability
+}
+
+
+
+
+
+
 # Define a function to find and kill the ng.cmd process
 function Stop-NgProcess {
     $ngProcess = Get-Process | Where-Object { $_.Path -like "*ng.cmd" }

@@ -1,6 +1,31 @@
 # Get the current Path environment variable
 $currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User)
 
+# Get the path of the PowerShell profile script on the network share
+$profilePath = "\\NetworkShare\Path\To\Your\Profile\Microsoft.PowerShell_profile.ps1"
+
+# Append the profile path to the current Path variable
+$newPath = "$currentPath;$profilePath"
+
+# Set the new Path environment variable
+[System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::User)
+
+# Verify the updated Path environment variable
+echo $env:Path
+
+
+
+
+
+
+
+
+
+
+
+# Get the current Path environment variable
+$currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User)
+
 # Get the path of the PowerShell profile script in OneDrive
 $profilePath = "$env:USERPROFILE\OneDrive\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"
 

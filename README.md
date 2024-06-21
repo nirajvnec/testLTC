@@ -1,3 +1,11 @@
+Test-Path $PROFILE
+
+
+
+
+
+
+
 ng build --configuration=production
 
 

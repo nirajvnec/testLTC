@@ -1,3 +1,9 @@
+ng build --configuration=production
+
+
+
+
+
 # Get the current PATH variable
 $oldPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User)
 

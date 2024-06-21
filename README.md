@@ -1,3 +1,7 @@
+($env:PATH -split ';') | Where-Object { $_ -like '*npm*' }
+
+
+
 using System;
 using System.Reflection;
 

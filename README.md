@@ -1,3 +1,18 @@
+# Get the path of the PowerShell profile script
+$profilePath = $PROFILE
+
+# Add the profile path to the environment variables for the current user
+[System.Environment]::SetEnvironmentVariable("POWERSHELL_PROFILE_PATH", $profilePath, [System.EnvironmentVariableTarget]::User)
+
+# Verify the new environment variable
+echo $env:POWERSHELL_PROFILE_PATH
+
+
+
+
+
+
+
 Test-Path $PROFILE
 
 New-Item -Path $PROFILE -Type File -Force

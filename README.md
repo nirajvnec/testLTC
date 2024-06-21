@@ -1,3 +1,13 @@
+# Define a function to build the Angular project with the production configuration
+function ngprod {
+    ng build --configuration=production
+}
+
+
+
+
+
+
 # Get the current Path environment variable
 $currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User)
 

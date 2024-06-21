@@ -1,3 +1,13 @@
+PS C:\> $path = $env:PATH -split ';'
+PS C:\> $path | ForEach-Object { $_ }
+
+C:\Program Files\nodejs\
+C:\Users\YourUsername\AppData\Roaming\npm
+C:\Windows\System32
+...
+
+
+
 ($env:PATH -split ';') | Where-Object { $_ -like '*npm*' }
 
 

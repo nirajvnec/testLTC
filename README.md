@@ -1,5 +1,16 @@
 Test-Path $PROFILE
 
+New-Item -Path $PROFILE -Type File -Force
+
+notepad $PROFILE
+
+Set-Alias ngprod "ng build --configuration=production"
+ 
+
+. $PROFILE
+
+ngprod
+
 
 
 

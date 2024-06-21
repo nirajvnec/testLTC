@@ -1,3 +1,26 @@
+# Get the current Path environment variable
+$currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User)
+
+# Get the path of the PowerShell profile script
+$profilePath = $PROFILE
+
+# Append the profile path to the current Path variable
+$newPath = "$currentPath;$profilePath"
+
+# Set the new Path environment variable
+[System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::User)
+
+# Verify the updated Path environment variable
+echo $env:Path
+
+
+
+
+
+
+
+
+
 # Get the path of the PowerShell profile script
 $profilePath = $PROFILE
 

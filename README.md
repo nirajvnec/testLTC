@@ -1,3 +1,21 @@
+# Get the current PATH variable
+$oldPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User)
+
+# Add the npm path
+$newPath = $oldPath + ";C:\Users\YourUsername\AppData\Roaming\npm"
+
+# Set the new PATH variable
+[System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::User)
+
+# Verify the PATH variable
+echo $env:PATH
+
+
+
+
+
+
+
 PS C:\> $path = $env:PATH -split ';'
 PS C:\> $path | ForEach-Object { $_ }
 

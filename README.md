@@ -1,3 +1,11 @@
+Hi John,
+
+I noticed that the new changes for Merlin are now available in production. Could you please provide your sign-off?
+
+Best regards,
+Niraj
+
+
 Hi Binoy,
 
 Could you please confirm if the deployment of Merlin Jap has commenced? If it hasn't, please let me know the expected start time.

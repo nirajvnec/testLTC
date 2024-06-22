@@ -1,3 +1,8 @@
+Hi Binoy,
+
+Could you please confirm if the deployment of Merlin Jap has commenced? If it hasn't, please let me know the expected start time.
+
+
 # Define a function to get Outlook SMTP details
 function Get-OutlookSMTPDetails {
     # Load the Outlook COM object

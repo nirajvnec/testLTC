@@ -1,3 +1,9 @@
+Hi Shadab,
+
+I had a great discussion with Siva, and I appreciate his time. He wants to know when I can join the team.
+
+
+
 Hi Siva,
 
 Please reach out to me on my mobile if I go offline. My number is 9886978189.

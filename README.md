@@ -1,3 +1,10 @@
+const config = await this.http.get(configFile).toPromise();
+
+
+
+
+
+
 import { Injectable } from '@angular/core';
 
 @Injectable({

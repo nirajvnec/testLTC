@@ -1,3 +1,55 @@
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AppConfigService } from './app/app-config.service';
+import { EnvironmentParserService } from './app/environment-parser.service';
+import { Injector, enableProdMode } from '@angular/core';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+// Create an injector for HttpClient and EnvironmentParserService manually
+const injector = Injector.create({
+  providers: [
+    { provide: HttpClientModule, deps: [] },
+    { provide: HttpClient, deps: [HttpClientModule] },
+    { provide: EnvironmentParserService, deps: [] }
+  ]
+});
+
+const httpClient = injector.get(HttpClient);
+const environmentParserService = injector.get(EnvironmentParserService);
+const appConfigService = new AppConfigService(httpClient, environmentParserService);
+
+appConfigService.configLoaded().then(loaded => {
+  if (loaded) {
+    const fileDetails = appConfigService.getConfigFileDetails();
+    console.log('Configuration loaded successfully');
+    if (fileDetails) {
+      console.log(`File: ${fileDetails.fileName}`);
+      console.log(`Size: ${fileDetails.fileSize} bytes`);
+      console.log(`Loaded at: ${fileDetails.loadTime.toISOString()}`);
+      console.log(`Environment: ${fileDetails.environment} (${fileDetails.envType})`);
+    }
+    const currentEnv = appConfigService.getCurrentEnvironment();
+    console.log(`Current environment: ${currentEnv.environment} (${currentEnv.envType})`);
+    platformBrowserDynamic([
+      { provide: AppConfigService, useValue: appConfigService },
+      { provide: EnvironmentParserService, useValue: environmentParserService }
+    ])
+      .bootstrapModule(AppModule)
+      .catch(err => console.error(err));
+  } else {
+    console.error('Failed to load configuration. Cannot bootstrap the application.');
+  }
+});
+
+
+
+
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentParserService } from './environment-parser.service';

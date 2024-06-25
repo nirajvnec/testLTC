@@ -12,6 +12,46 @@ if (environment.production) {
 // Create an injector for HttpClient manually
 const injector = Injector.create({
   providers: [
+    { provide: HttpClientModule, deps: [] },
+    { provide: HttpClient, deps: [HttpClientModule] }
+  ]
+});
+
+const httpClient = injector.get(HttpClient);
+const appConfigService = new AppConfigService(httpClient);
+
+appConfigService.loadAppConfig().then(() => {
+  platformBrowserDynamic([{ provide: AppConfigService, useValue: appConfigService }])
+    .bootstrapModule(AppModule)
+    .catch(err => console.error(err));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AppConfigService } from './app/app-config.service';
+import { Injector, enableProdMode } from '@angular/core';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+// Create an injector for HttpClient manually
+const injector = Injector.create({
+  providers: [
     HttpClientModule,
     HttpClient
   ]

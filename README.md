@@ -20,6 +20,50 @@ const injector = Injector.create({
 const httpClient = injector.get(HttpClient);
 const appConfigService = new AppConfigService(httpClient);
 
+appConfigService.configLoaded().then(loaded => {
+  if (loaded) {
+    const fileDetails = appConfigService.getConfigFileDetails();
+    console.log('Configuration loaded successfully');
+    if (fileDetails) {
+      console.log(`File: ${fileDetails.fileName}`);
+      console.log(`Size: ${fileDetails.fileSize} bytes`);
+      console.log(`Loaded at: ${fileDetails.loadTime.toISOString()}`);
+    }
+    platformBrowserDynamic([{ provide: AppConfigService, useValue: appConfigService }])
+      .bootstrapModule(AppModule)
+      .catch(err => console.error(err));
+  } else {
+    console.error('Failed to load configuration. Cannot bootstrap the application.');
+  }
+});
+
+
+
+
+
+
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AppConfigService } from './app/app-config.service';
+import { Injector, enableProdMode } from '@angular/core';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+// Create an injector for HttpClient manually
+const injector = Injector.create({
+  providers: [
+    { provide: HttpClientModule, deps: [] },
+    { provide: HttpClient, deps: [HttpClientModule] }
+  ]
+});
+
+const httpClient = injector.get(HttpClient);
+const appConfigService = new AppConfigService(httpClient);
+
 appConfigService.loadAppConfig().then(() => {
   platformBrowserDynamic([{ provide: AppConfigService, useValue: appConfigService }])
     .bootstrapModule(AppModule)

@@ -1,3 +1,42 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { EnvironmentParserService } from './environment-parser.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AppConfigService {
+  private config: any;
+
+  constructor(private http: HttpClient, private envParser: EnvironmentParserService) {}
+
+  async loadConfig() {
+    const envType = this.envParser.getEnvironmentFromUrl(window.location.hostname).envType;
+    let configFile = '/assets/config.prod.json';
+
+    if (envType === 'SIT') {
+      configFile = '/assets/config.sit.json';
+    } else if (envType === 'UAT') {
+      configFile = '/assets/config.uat.json';
+    }
+
+    const config = await firstValueFrom(this.http.get(configFile));
+    this.envParser.loadConfig(config);
+    this.config = this.envParser.getConfig();
+  }
+
+  getConfig() {
+    return this.config;
+  }
+}
+
+
+
+
+
+
+
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';

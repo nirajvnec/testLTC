@@ -1,4 +1,48 @@
 import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EnvironmentParserService {
+  private config: any;
+  private environment: string;
+  private envType: string;
+
+  constructor() {}
+
+  loadConfig(config: any) {
+    this.config = config;
+    const envFromUrl = this.getEnvironmentFromUrl(window.location.hostname);
+    this.environment = envFromUrl.environment;
+    this.envType = envFromUrl.envType;
+  }
+
+  getEnvironmentFromUrl(hostname: string): { environment: string, envType: string } {
+    const envPattern = /(ft\d+|uat\d+)/i;
+    const match = hostname.match(envPattern);
+    if (match && match[0]) {
+      const environment = match[0].toUpperCase();
+      const envType = environment.startsWith('FT') ? 'SIT' : 'UAT';
+      return { environment, envType };
+    }
+    return { environment: 'PRODUCTION', envType: 'PRODUCTION' };
+  }
+
+  getConfig() {
+    if (this.envType && this.config[this.environment]) {
+      return this.config[this.environment];
+    }
+    return this.config['production'];
+  }
+}
+
+
+
+
+
+
+
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { EnvironmentParserService } from './environment-parser.service';

@@ -1,3 +1,41 @@
+import React, { useState } from 'react';
+
+const NameChanger = () => {
+  // Define an array of names
+  const names = [
+    'Niraj Kumar',
+    'Aarav Singh',
+    'Ishaan Sharma',
+    'Vivaan Patel',
+    'Aditya Verma',
+    'Kavya Menon',
+    'Aadhya Gupta',
+    'Aryan Mehta',
+  ];
+
+  // Initialize state with a default name
+  const [randomName, setRandomName] = useState('Niraj Kumar');
+
+  // Function to set a random name from the array
+  const handleChangeName = () => {
+    const randomIndex = Math.floor(Math.random() * names.length);
+    setRandomName(names[randomIndex]);
+  };
+
+  return (
+    <div>
+      <h1>{randomName}</h1>
+      <button onClick={handleChangeName}>Change Name</button>
+    </div>
+  );
+};
+
+export default NameChanger;
+
+
+
+
+
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';

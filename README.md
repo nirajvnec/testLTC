@@ -1,3 +1,18 @@
+Subject: Request to Raise RFC for 20th July 2024 FRTB Release for MARS GUI Apps
+
+Hi Binoy,
+
+I hope you are doing well.
+
+Could you please raise an RFC for the upcoming FRTB release for the MARS GUI Apps, scheduled for July 20th, 2024?
+
+Thank you for your attention to this matter.
+
+Best Regards
+Niraj
+
+
+
 Subject: Urgent: Build Failure Notification for RiskPortal Project
 
 Hi Dharmendra,

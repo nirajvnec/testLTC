@@ -1,3 +1,27 @@
+<sites>
+  <site name="RiskPortal" id="1" serverAutoStart="true">
+    <application path="/" applicationPool="Clr4IntegratedAppPool">
+      <virtualDirectory path="/" physicalPath="C:\Users\nkuma152\riskportal\ASP.Net\SourceCode\RiskPortal.www" />
+    </application>
+  </site>
+</sites>
+
+
+<system.webServer>
+  <security>
+    <authentication>
+      <anonymousAuthentication enabled="false" />
+      <windowsAuthentication enabled="true" />
+    </authentication>
+  </security>
+</system.webServer>
+
+
+
+
+
+
+
 using System;
 using System.Diagnostics;
 using System.Security.Claims;

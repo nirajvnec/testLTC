@@ -1,3 +1,29 @@
+Subject: Urgent: Build Failure Notification for RiskPortal Project
+
+Hi Dharmendra,
+
+I hope this message finds you well.
+
+I am writing to inform you about a build failure in the RiskPortal project that needs your immediate attention. Below are the details of the failure:
+
+Project: RiskPortal
+Branch: feature/RISKPORTAL-270
+Commit: c2453fe7d00fa5f63a6aec5f66d4bac2881d9664
+Build Number: #7
+Date and Time: 2024-06-27T06:42:17.027Z
+Error Message: Error: No such object: docker-win.odyssey.apps.csintra.net/com/csg/caas/images/windows/build/vsbuildtools2017-15.9.13-office:4.7.2-dotnet-framework-10.0.14393.3506
+It appears that the Docker image required for the build could not be found. This issue has caused the build to fail during the "Publish Artifactory" stage.
+
+Could you please investigate this issue and take the necessary actions to resolve it?
+
+Thank you for your prompt attention to this matter.
+
+Best regards,
+Niraj
+
+
+
+
 import React, { useState } from 'react';
 
 const NameChanger = () => {

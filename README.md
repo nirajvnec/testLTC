@@ -1,3 +1,31 @@
+Prerequisites for Teams Convenience Recording:
+In order to be able to record a Teams meeting, both the meeting organizer and the person starting the recording (if they are different people) need to meet the following criteria:
+
+Authorization Requirements:
+
+Have one of the following authorizations approved in BBS:
+System: AZTS - AZURE TEAMS SERVICE
+Sub System: HOS - Service Center Global Production
+Profile: AZTS-END USER - ADDITIONAL FEATURES AND FUNCTIONALITY
+Authorization Options (one of the four options below):
+
+Internal Conf. + Recording - Conv. Recording only; no External Conf.
+External Conf. + Recording - Conv. Recording and External Conf.
+Internal Conf. + Recording + DT Sharing - Record + DT Share; no External Conf.
+External Conf. + Recording + DT Sharing - Record and DT Share and External Conf.
+Click here to learn more about Teams entitlements.
+
+Mode Requirements:
+
+Be a user of Teams Island Mode or Teams Only Mode (learn more at goto/Teams).
+BBS Role Approval:
+
+Once your BBS role is approved, please sign out of your Microsoft Teams application:
+Click the profile icon at the top-right of the application.
+Select Sign out.
+Close your Microsoft Teams application, then re-open it and sign in again.
+
+
 It appears that the Docker image required for the build could not be found, which caused the build to fail during the "Publish Artifactory" stage.
 
 However, when we retriggered the build, it was able to find the image docker-win.odyssey.apps.csintra.net/com/csg/caas/images/windows/build/vsbuildtools2017-15.9.13-office:4.7.2-dotnet-framework-10.0.14393.3506 successfully. This suggests that the issue might be intermittent.

@@ -1,3 +1,13 @@
+ <system.webServer>
+      <security>
+        <authentication>
+          <anonymousAuthentication enabled="false" />
+          <windowsAuthentication enabled="true" />
+        </authentication>
+      </security>
+    </system.webServer>
+
+
 <sites>
   <site name="RiskPortal" id="1" serverAutoStart="true">
     <application path="/" applicationPool="Clr4IntegratedAppPool">

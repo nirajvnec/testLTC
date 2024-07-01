@@ -1,3 +1,40 @@
+using System;
+using System.Diagnostics;
+using System.Security.Claims;
+using System.Web;
+using System.Xml;
+
+namespace RiskPortal.www
+{
+    public class PortalPage : Page
+    {
+        // Your existing constants, fields, properties, and methods
+
+        protected override void OnPreLoad(EventArgs e)
+        {
+            base.OnPreLoad(e);
+
+            // Your existing OnPreLoad logic
+
+            // Debugging code to log user identity information
+            var identity = HttpContext.Current.User.Identity;
+            Debug.WriteLine($"IsAuthenticated: {identity.IsAuthenticated}");
+            Debug.WriteLine($"Name: {identity.Name}");
+            foreach (var claim in ((ClaimsIdentity)identity).Claims)
+            {
+                Debug.WriteLine($"Claim Type: {claim.Type}, Value: {claim.Value}");
+            }
+
+            // Your existing OnPreLoad logic continuation
+        }
+
+        // Your existing methods
+    }
+}
+
+
+
+
 https://rmm-uat.csintra.net/RiskPortal/PortalHome.aspx?App=RiskNet
 
 

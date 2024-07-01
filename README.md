@@ -1,3 +1,6 @@
+https://rmm-uat.csintra.net/RiskPortal/PortalHome.aspx?App=RiskNet
+
+
 Prerequisites for Teams Convenience Recording:
 In order to be able to record a Teams meeting, both the meeting organizer and the person starting the recording (if they are different people) need to meet the following criteria:
 

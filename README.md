@@ -1,3 +1,11 @@
+It appears that the Docker image required for the build could not be found, which caused the build to fail during the "Publish Artifactory" stage.
+
+However, when we retriggered the build, it was able to find the image docker-win.odyssey.apps.csintra.net/com/csg/caas/images/windows/build/vsbuildtools2017-15.9.13-office:4.7.2-dotnet-framework-10.0.14393.3506 successfully. This suggests that the issue might be intermittent.
+
+
+
+
+
 Subject: Request to Raise RFC for 20th July 2024 FRTB Release for MARS GUI Apps
 
 Hi Binoy,

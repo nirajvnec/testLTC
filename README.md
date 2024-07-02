@@ -1,3 +1,30 @@
+Subject: Request for Approval of Access to Record Microsoft Teams Meetings
+
+Hi Gordon,
+
+Greetings of the day,
+
+I hope you are doing well. I am writing to request your approval for the following access request, which will enable me to record meetings in Microsoft Teams:
+
+Request Details:
+
+Request for: Kumar Niraj
+System: AZTS - Azure Teams Service
+Function: AZTS-END USER - Additional Features and Functionality
+Authorization: Internal Conf. + Recording - Conv. Recording only
+Period of Validity: 02.07.2024 to 02.07.2025
+Reason: Need it for recording ongoing training sessions
+Approval Route ID: T205626
+Current Status: Pending approval
+Your timely approval of this request will greatly assist in effectively documenting and sharing training sessions.
+
+Best regards,
+Niraj Kumar
+
+
+
+
+
  <system.webServer>
       <security>
         <authentication>

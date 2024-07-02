@@ -1,3 +1,11 @@
+Could you please approve the following pull request? It is scheduled to be included in the 24.2.0 FRTB release.
+
+Pull Request #801: MARSGUI-4065 - DRC crif method name correction - Odyssey Bitbucket (csintra.net)
+
+Best regards,
+Niraj
+
+
 Subject: Request for Approval of Access to Record Microsoft Teams Meetings
 
 Hi Gordon,

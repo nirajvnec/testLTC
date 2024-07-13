@@ -8,24 +8,20 @@ import { ENVIRONMENT_CONFIGS } from './config/app-config';
 export class AppConfigService {
   private config: any;
 
-  constructor(private environmentParserService: EnvironmentParserService) {}
+  constructor(private environmentParserService: EnvironmentParserService) {
+    this.loadAppConfig();
+  }
 
-  loadAppConfig(): boolean {
-    try {
-      const hostname = window.location.hostname;
-      this.environmentParserService.parseEnvironment(hostname);
-      const environment = this.environmentParserService.getEnvironment();
-      
-      this.config = ENVIRONMENT_CONFIGS[environment];
-      if (!this.config) {
-        throw new Error(`No configuration found for environment: ${environment}`);
-      }
-      console.log(`Config loaded for ${environment}`);
-      return true;
-    } catch (error) {
-      console.error('Could not load configuration', error);
-      return false;
+  private loadAppConfig(): void {
+    const hostname = window.location.hostname;
+    this.environmentParserService.parseEnvironment(hostname);
+    const environment = this.environmentParserService.getEnvironment();
+    
+    this.config = ENVIRONMENT_CONFIGS[environment];
+    if (!this.config) {
+      throw new Error(`No configuration found for environment: ${environment}`);
     }
+    console.log(`Config loaded for ${environment}`);
   }
 
   getConfig(): any {

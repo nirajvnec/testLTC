@@ -1,3 +1,35 @@
+export const DevConfig = {
+  apiUrl: 'http://localhost:3000/api',
+  environment: 'DEV',
+  // ... other dev configurations
+};
+
+export const SitConfig = {
+  apiUrl: 'http://sit-api.example.com',
+  environment: 'SIT',
+  // ... other SIT configurations
+};
+
+export const UatConfig = {
+  apiUrl: 'http://uat-api.example.com',
+  environment: 'UAT',
+  // ... other UAT configurations
+};
+
+export const ProdConfig = {
+  apiUrl: 'https://api.example.com',
+  environment: 'PRODUCTION',
+  // ... other production configurations
+};
+
+export const CONFIG_FILES = {
+  DEV: DevConfig,
+  SIT: SitConfig,
+  UAT: UatConfig,
+  PRODUCTION: ProdConfig
+};
+
+
 import { AppConfigService
 
 import { EnvironmentParserService

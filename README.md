@@ -1,48 +1,38 @@
-main.ts
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.module';
-import { AppConfigService } from './app/app-config.service';
-import { EnvironmentParserService } from './app/environment-parser.service';
-import { Injector, enableProdMode } from '@angular/core';
-import { environment } from './environments/environment';
+import { AppComponent } from './app.component';
+import { AppConfigService } from './app-config.service';
+import { EnvironmentParserService } from './environment-parser.service';
 
-if (environment.production) {
-  enableProdMode();
+export function initializeApp(appConfigService: AppConfigService) {
+  return () => appConfigService.loadAppConfig();
 }
 
-async function bootstrapApplication() {
-  // Create an injector for EnvironmentParserService manually
-  const injector = Injector.create({
-    providers: [
-      { provide: EnvironmentParserService, deps: [] }
-    ]
-  });
-
-  const environmentParserService = injector.get(EnvironmentParserService);
-  const appConfigService = await AppConfigService.getInstance(environmentParserService);
-
-  if (appConfigService.isConfigLoaded()) {
-    const fileDetails = appConfigService.getConfigFileDetails();
-    console.log('Configuration loaded successfully');
-    if (fileDetails) {
-      console.log(`Loaded at: ${fileDetails.loadTime.toISOString()}`);
-      console.log(`Environment: ${fileDetails.environment}`);
+@NgModule({
+  declarations: [
+    AppComponent,
+    // ... other components
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    // ... other modules
+  ],
+  providers: [
+    EnvironmentParserService,
+    AppConfigService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [AppConfigService],
+      multi: true
     }
-    const currentEnv = appConfigService.getCurrentEnvironment();
-    console.log(`Current environment: ${currentEnv}`);
-    platformBrowserDynamic([
-      { provide: AppConfigService, useValue: appConfigService },
-      { provide: EnvironmentParserService, useValue: environmentParserService }
-    ])
-      .bootstrapModule(AppModule)
-      .catch(err => console.error(err));
-  } else {
-    console.error('Failed to load configuration. Cannot bootstrap the application.');
-  }
-}
-
-bootstrapApplication().catch(err => console.error('Error bootstrapping the application:', err));
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
 
 config-constants.ts
 
@@ -110,29 +100,12 @@ interface ConfigFileDetails {
   providedIn: 'root'
 })
 export class AppConfigService {
-  private static instance: AppConfigService | null = null;
-  private static instancePromise: Promise<AppConfigService> | null = null;
   private config: any;
   private configFileDetails: ConfigFileDetails | null = null;
 
-  private constructor(private environmentParserService: EnvironmentParserService) {}
+  constructor(private environmentParserService: EnvironmentParserService) {}
 
-  static async getInstance(environmentParserService: EnvironmentParserService): Promise<AppConfigService> {
-    if (AppConfigService.instance === null) {
-      if (AppConfigService.instancePromise === null) {
-        AppConfigService.instancePromise = (async () => {
-          const instance = new AppConfigService(environmentParserService);
-          await instance.loadAppConfig();
-          AppConfigService.instance = instance;
-          return instance;
-        })();
-      }
-      await AppConfigService.instancePromise;
-    }
-    return AppConfigService.instance!;
-  }
-
-  private async loadAppConfig(): Promise<boolean> {
+  async loadAppConfig(): Promise<boolean> {
     try {
       const startTime = new Date();
       this.environmentParserService.parseEnvironment(window.location.hostname);

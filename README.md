@@ -1,5 +1,5 @@
 
-ng generate class config/app-config --type=config --skip-tests
+ng g class infrastructure/config/app-config --skip-tests
 
 
 app.module.ts

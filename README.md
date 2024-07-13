@@ -1,4 +1,5 @@
-
+ng g s infrastructure/AppConfig
+ng g s infrastructure/EnvironmentParser
 ng g class infrastructure/config/app-config --skip-tests
 
 

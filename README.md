@@ -1,35 +1,176 @@
+main.ts
+
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+import { AppConfigService } from './app/app-config.service';
+import { EnvironmentParserService } from './app/environment-parser.service';
+import { Injector, enableProdMode } from '@angular/core';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+async function bootstrapApplication() {
+  // Create an injector for EnvironmentParserService manually
+  const injector = Injector.create({
+    providers: [
+      { provide: EnvironmentParserService, deps: [] }
+    ]
+  });
+
+  const environmentParserService = injector.get(EnvironmentParserService);
+  const appConfigService = await AppConfigService.getInstance(environmentParserService);
+
+  if (appConfigService.isConfigLoaded()) {
+    const fileDetails = appConfigService.getConfigFileDetails();
+    console.log('Configuration loaded successfully');
+    if (fileDetails) {
+      console.log(`Loaded at: ${fileDetails.loadTime.toISOString()}`);
+      console.log(`Environment: ${fileDetails.environment}`);
+    }
+    const currentEnv = appConfigService.getCurrentEnvironment();
+    console.log(`Current environment: ${currentEnv}`);
+    platformBrowserDynamic([
+      { provide: AppConfigService, useValue: appConfigService },
+      { provide: EnvironmentParserService, useValue: environmentParserService }
+    ])
+      .bootstrapModule(AppModule)
+      .catch(err => console.error(err));
+  } else {
+    console.error('Failed to load configuration. Cannot bootstrap the application.');
+  }
+}
+
+bootstrapApplication().catch(err => console.error('Error bootstrapping the application:', err));
+
+config-constants.ts
+
+import devConfig from '../assets/config.dev.json';
+import sitConfig from '../assets/config.sit.json';
+import uatConfig from '../assets/config.uat.json';
+import prodConfig from '../assets/config.prod.json';
+
+export const CONFIG_FILES = {
+  DEV: devConfig,
+  SIT: sitConfig,
+  UAT: uatConfig,
+  PRODUCTION: prodConfig
+};
 
 
-Open a terminal or command prompt.
-Run the following command to install packages and bypass errors:
+environment-parser.service.ts
 
-npm i --f
-Install Angular CLI globally:
+import { Injectable } from '@angular/core';
 
-Run the following command to install Angular CLI version 15.2.9 globally:
-npm install -g @angular/cli@15.2.9
-Explanation of Flags and Versions
---f flag: This flag stands for --force. 
-It tells npm to force the installation of packages even if some conflicts or errors would generally prevent the installation.
+@Injectable({
+  providedIn: 'root'
+})
+export class EnvironmentParserService {
+  private environment: string;
 
-Version 15.2.9 for Angular CLI specifies the exact version of the Angular CLI to be installed. Version 15.2.9 ensures you use a specific release with its associated features and fixes. This can be important for compatibility with your existing projects or other dependencies.
+  constructor() {}
 
-By following these steps, you will have Node.js version 18 installed, the necessary npm packages installed with force if needed, and Angular CLI version 15.2.9 installed globally.
+  parseEnvironment(hostname: string): void {
+    const sitEnvironments = ['FT', 'LT', 'ERC', 'FRTB'];
+    const uatEnvironments = ['UAT', 'PTE'];
+
+    if (sitEnvironments.some(env => hostname.toUpperCase().includes(env))) {
+      this.environment = 'SIT';
+    } else if (uatEnvironments.some(env => hostname.toUpperCase().includes(env))) {
+      this.environment = 'UAT';
+    } else if (hostname.includes('localhost')) {
+      this.environment = 'DEV';
+    } else {
+      this.environment = 'PRODUCTION';
+    }
+  }
+
+  getEnvironment(): string {
+    return this.environment;
+  }
+}
 
 
 
 
 
-Subject: Request for Access to "CS iDesktop Strategy" Repo and Zip FolderDear [Recipient's Name],I hope this message finds you well.I am writing to request access to the repository discussed during yesterday's meeting on the "CS iDesktop Strategy." Additionally, there was a zip folder link mentioned, which I would like to download. This is part of a .NET POC that I intend to share with the team.Could you please provide me with the necessary access at your earliest convenience?Thank you for your assistance.Best regards,Niraj Kumar
+app-config.service.ts
 
+import { Injectable } from '@angular/core';
+import { EnvironmentParserService } from './environment-parser.service';
+import { CONFIG_FILES } from './config.constants';
 
+interface ConfigFileDetails {
+  loadTime: Date;
+  environment: string;
+}
 
+@Injectable({
+  providedIn: 'root'
+})
+export class AppConfigService {
+  private static instance: AppConfigService | null = null;
+  private static instancePromise: Promise<AppConfigService> | null = null;
+  private config: any;
+  private configFileDetails: ConfigFileDetails | null = null;
 
-I can access the following link without any issues:
+  private constructor(private environmentParserService: EnvironmentParserService) {}
 
-However, we also need access to the POC link:
+  static async getInstance(environmentParserService: EnvironmentParserService): Promise<AppConfigService> {
+    if (AppConfigService.instance === null) {
+      if (AppConfigService.instancePromise === null) {
+        AppConfigService.instancePromise = (async () => {
+          const instance = new AppConfigService(environmentParserService);
+          await instance.loadAppConfig();
+          AppConfigService.instance = instance;
+          return instance;
+        })();
+      }
+      await AppConfigService.instancePromise;
+    }
+    return AppConfigService.instance!;
+  }
 
+  private async loadAppConfig(): Promise<boolean> {
+    try {
+      const startTime = new Date();
+      this.environmentParserService.parseEnvironment(window.location.hostname);
+      const environment = this.environmentParserService.getEnvironment();
 
-Please advise on how we can obtain access.
+      this.config = CONFIG_FILES[environment];
 
+      if (!this.config) {
+        throw new Error(`No configuration found for environment: ${environment}`);
+      }
 
+      this.configFileDetails = {
+        loadTime: new Date(),
+        environment
+      };
+
+      console.log(`Config loaded for ${environment} in ${this.configFileDetails.loadTime.getTime() - startTime.getTime()} ms`);
+      return true;
+    } catch (error) {
+      console.error('Could not load configuration', error);
+      this.configFileDetails = null;
+      return false;
+    }
+  }
+
+  getConfig(): any {
+    return this.config;
+  }
+
+  getConfigFileDetails(): ConfigFileDetails | null {
+    return this.configFileDetails;
+  }
+
+  isConfigLoaded(): boolean {
+    return this.configFileDetails !== null;
+  }
+
+  getCurrentEnvironment(): string {
+    return this.configFileDetails ? this.configFileDetails.environment : 'UNKNOWN';
+  }
+}

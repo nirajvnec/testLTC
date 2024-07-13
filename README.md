@@ -22,13 +22,12 @@ export const ProdConfig = {
   // ... other production configurations
 };
 
-export const CONFIG_FILES = {
+export const ENVIRONMENT_CONFIGS = {
   DEV: DevConfig,
   SIT: SitConfig,
   UAT: UatConfig,
   PRODUCTION: ProdConfig
 };
-
 
 import { AppConfigService
 

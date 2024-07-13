@@ -1,3 +1,7 @@
+
+ng generate class config/app-config --type=config --skip-tests
+
+
 app.module.ts
 
 import { NgModule, APP_INITIALIZER } from '@angular/core';

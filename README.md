@@ -1,3 +1,47 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EnvironmentParserService {
+  private environment: string = '';
+
+  parseEnvironment(hostname: string): void {
+    const lowerHostname = hostname.toLowerCase();
+
+    if (lowerHostname.includes('mars-frtb-pte')) {
+      this.environment = 'UAT';
+    } else if (lowerHostname.includes('mars-frtb')) {
+      this.environment = 'PRODUCTION';
+    } else {
+      // Existing logic for other environments
+      const sitEnvironments = ['FT', 'LT', 'ERC'];
+      const uatEnvironments = ['UAT', 'PTE'];
+
+      const sitMatch = sitEnvironments.find(env => new RegExp(`\\b${env.toLowerCase()}\\b`).test(lowerHostname));
+      const uatMatch = uatEnvironments.find(env => new RegExp(`\\b${env.toLowerCase()}\\b`).test(lowerHostname));
+
+      if (sitMatch) {
+        this.environment = 'SIT';
+      } else if (uatMatch) {
+        this.environment = 'UAT';
+      } else if (lowerHostname.includes('localhost')) {
+        this.environment = 'DEV';
+      } else {
+        this.environment = 'PRODUCTION';
+      }
+    }
+  }
+
+  getEnvironment(): string {
+    return this.environment;
+  }
+}
+
+
+
+
+
 # Path to the log file
 $logFilePath = "$env:USERPROFILE\LastSelectedCert.log"
 

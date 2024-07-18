@@ -1,3 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "edge",
+      "request": "launch",
+      "name": "Debug Karma Tests in Edge",
+      "url": "http://localhost:9876/debug.html",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "trace": true,
+      "sourceMapPathOverrides": {
+        "webpack://_N_E/./*": "${webRoot}/*",
+        "webpack:///./*": "${webRoot}/*",
+        "webpack://./*": "${webRoot}/*"
+      }
+    }
+  ]
+}
+
+
+
+
+
+
+
+
 module.exports = function(config) {
   config.set({
     basePath: '',

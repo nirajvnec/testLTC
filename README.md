@@ -1,3 +1,45 @@
+OidcGaiaConnector/
+│
+├── Config/
+│   └── OidcClientConfig.cs
+│
+├── Interfaces/
+│   ├── IIdpClient.cs
+│   ├── IAuthorizationHeaderSetter.cs
+│   ├── IHttpListener.cs
+│   ├── IProcessStarter.cs
+│   ├── IOidcClient.cs
+│   ├── IEnvironmentTypeResolver.cs
+│   ├── IGaiaUrlProvider.cs
+│   └── IGaiaEndpointProvider.cs
+│
+├── Implementations/
+│   ├── HttpListenerWrapper.cs
+│   ├── ProcessStarter.cs
+│   ├── OidcClientWrapper.cs
+│   ├── OidcIdpClient.cs
+│   ├── AuthorizationHeaderSetter.cs
+│   ├── AppConfigEnvironmentResolver.cs
+│   ├── AppSettingsGaiaUrlProvider.cs
+│   └── GaiaEndpointProvider.cs
+│
+├── Factories/
+│   ├── IdpClientFactory.cs
+│   ├── AuthorizationHeaderSetterFactory.cs
+│   └── GaiaEndpointProviderFactory.cs
+│
+├── Clients/
+│   └── GaiaClient.cs
+│
+├── Program.cs
+└── App.config
+
+
+
+
+
+
+
 // OidcGaiaConnector.cs
 using System;
 using System.Collections.Concurrent;

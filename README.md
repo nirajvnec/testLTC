@@ -1,3 +1,11 @@
+Subject: Salary Not Received for JulyHi [Payroll Team],I hope this message finds you well.I did not receive my salary for this month. I suspect it may be due to an issue with my account details. Could you please assist me in updating my account information to ensure this is resolved?Thank you for your attention to this matter.
+
+
+
+
+
+
+
 OidcGaiaConnector/
 │
 ├── Config/

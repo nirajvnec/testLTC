@@ -1,3 +1,13 @@
+http://127.0.0.1:8080/CsMarsMerlinUI/ui/
+
+http://192.168.x.x:8080/CsMarsMerlinUI/ui/
+
+http-server -p 8080 --cors -c-1 -P http://localhost:8080/
+
+http://localhost:8080
+
+
+
 Subject: Salary Not Received for JulyHi [Payroll Team],I hope this message finds you well.I did not receive my salary for this month. I suspect it may be due to an issue with my account details. Could you please assist me in updating my account information to ensure this is resolved?Thank you for your attention to this matter.
 
 

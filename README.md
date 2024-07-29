@@ -1,3 +1,12 @@
-Hi All,
+# Request for Individual Authorizations
 
-Following up on my previous email, I would like to emphasize the importance of addressing the queries listed for a smooth migration of CS apps to the UBS workspace. Your input is crucial to ensure we cover all aspects and avoid any potential issues.
+| Function | Profile                                      | Authorization                                 |
+|----------|----------------------------------------------|-----------------------------------------------|
+| ADD      | HSJ-DEV_OBSERVER - OBSERVER READ ONLY ROLE   | AT40377 - MARKET RISK DEFAULT RISK DEV        |
+| ADD      | HSJ-DEV_OBSERVER - OBSERVER READ ONLY ROLE   | AT40379 - MARKET RISK DEFAULT RISK PREPROD    |
+| ADD      | HSJ-TE_DEVELOP - STANDARD DEVELOPER ROLE     | AT39392 - DevCloud Desktop DEV FRRI           |
+
+## Period of Validity
+
+* **Valid from**: 29.07.2024
+* **Valid to**: 29.07.2026

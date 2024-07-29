@@ -5,6 +5,9 @@
 | ADD      | HSJ-DEV_OBSERVER - OBSERVER READ ONLY ROLE   | AT40377 - MARKET RISK DEFAULT RISK DEV        |
 | ADD      | HSJ-DEV_OBSERVER - OBSERVER READ ONLY ROLE   | AT40379 - MARKET RISK DEFAULT RISK PREPROD    |
 | ADD      | HSJ-TE_DEVELOP - STANDARD DEVELOPER ROLE     | AT39392 - DevCloud Desktop DEV FRRI           |
+| ADD      | HSJ-DEV_DEVELOP - WORKSPA.                   | AT16738                                       |
+| ADD      | HSJ-DEV_DEVELOP - WORKSPA.                   | AT39392                                       |
+| ADD      | HSJ-DEV_DEVOPS - WORKSPAC.                   | AT40377                                       |
 
 ## Period of Validity
 

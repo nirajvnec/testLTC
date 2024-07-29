@@ -1,3 +1,69 @@
+
+using System;
+using System.Collections.Generic;
+using System.DirectoryServices;
+
+public class ActiveDirectoryHelper
+{
+    public static Dictionary<string, List<string>> GetAllUserProperties(string username)
+    {
+        Dictionary<string, List<string>> userProperties = new Dictionary<string, List<string>>();
+
+        try
+        {
+            // Set the path to the directory entry (Active Directory root)
+            DirectoryEntry entry = new DirectoryEntry("LDAP://YourDomainController");
+            
+            // Create a directory searcher
+            DirectorySearcher searcher = new DirectorySearcher(entry);
+            
+            // Set the filter to search for the specified sAMAccountName
+            searcher.Filter = $"(sAMAccountName={username})";
+            
+            // Perform the search
+            SearchResult result = searcher.FindOne();
+            
+            if (result != null)
+            {
+                // Iterate through all properties and add them to the dictionary
+                foreach (string propertyName in result.Properties.PropertyNames)
+                {
+                    List<string> values = new List<string>();
+                    foreach (object propertyValue in result.Properties[propertyName])
+                    {
+                        values.Add(propertyValue.ToString());
+                    }
+                    userProperties[propertyName] = values;
+                }
+            }
+            else
+            {
+                Console.WriteLine("User not found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+
+        return userProperties;
+    }
+}
+
+// Usage
+var userProps = ActiveDirectoryHelper.GetAllUserProperties("YourUsername");
+
+// Display the properties
+foreach (var property in userProps)
+{
+    Console.WriteLine($"Property: {property.Key}");
+    foreach (var value in property.Value)
+    {
+        Console.WriteLine($"    Value: {value}");
+    }
+}
+
+
 using System;
 using System.DirectoryServices;
 

@@ -1,3 +1,9 @@
+ have amended my previous access request submission as it was missing some essential access rights. The corrected request has now been submitted and is awaiting your approval.
+
+
+
+
+
 # Request for Individual Authorizations
 
 | Function | Profile                                      | Authorization                                 |

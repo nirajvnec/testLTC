@@ -1,3 +1,29 @@
+Here's the content from the screenshot presented in a tabular format:
+
+| ID       | Name                                |
+|----------|-------------------------------------|
+| ADRG215259 | app_Global_MARS_DEV_Publisher       |
+| ADRG216616 | app_Global_MARS_DEV_User            |
+| ADRG215263 | app_Global_MARS_PROD_Publisher      |
+| ADRG215288 | app_Global_MARS_PROD_Support        |
+| ADRG215260 | app_Global_MARS_QA_Publisher        |
+| ADRG215285 | app_Global_MARS_QA_Support          |
+| ADRG208909 | app_Global_MARS_QA_User             |
+| ADRG213087 | app_Global_Smart_Dev_Publisher      |
+| ADRG213092 | app_Global_Smart_Dev_Support        |
+| ADRG213082 | app_Global_Smart_Dev_User           |
+| ADRG213091 | app_Global_Smart_Prod_Publisher     |
+| ADRG213096 | app_Global_Smart_Prod_Support       |
+| ADRG213088 | app_Global_Smart_QA_Publisher       |
+| ADRG213093 | app_Global_Smart_QA_Support         |
+| ADRG213083 | app_Global_Smart_QA_User            |
+| ADRG213089 | app_Global_Smart_UAT_Publisher      |
+| ADRG213094 | app_Global_Smart_UAT_Support        |
+| ADRG213084 | app_Global_Smart_UAT_User           |
+
+This table represents the ID and Name columns visible in the image. The IDs are in the left column, and the corresponding names are in the right column.
+
+
 As a newly joined team member, I request that my email ID be added to the  distribution list(s) to ensure I receive all necessary communications.
 
 

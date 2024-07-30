@@ -1,3 +1,42 @@
+Dear [Recipient's Name],
+
+I hope this message finds you well.
+
+I am writing to bring to your attention an inconsistency I have encountered in the authorization system. When selecting the first three dropdowns—System, Authorization Domain, and Operational Environment—the rest of the fields should be automatically populated. However, I have noticed a discrepancy between two different instances.
+
+In the first instance, based on the email screenshot sent by Ganesh Mali:
+
+System: CONFLUENCE WMSB — H2I
+Authorization Domain: IT4IT Services — 997
+Operational Environment: PRODUCTION
+This selection should populate the following fields:
+4. Subsystem: IT4IT Services Production — ITS
+5. *Profile ( mandatory)**: PROFILE FOR OCE INSTANCE — H2I-CONFL-OCE
+6. Authorization (maximum number 999):
+- For support personnel ONLY - Admin role — CONFLUENCE-ADMINISTRATOR
+- User permission for application access — CONFLUENCE-USER
+
+
+When I am raising the request today in goto/bbs, I see the following with the same selections for the first three dropdowns:
+
+System: CONFLUENCE WMSB — H2I
+Authorization Domain: IT4IT Services — 997
+Operational Environment: PRODUCTION
+The populated fields are slightly different:
+4. Subsystem: IT4IT Services Production — ITS
+5. *Profile ( mandatory)**: PROFILE FOR CENTRAL CONFLUENCE — H2I-CONFL-OCE
+6. Authorization (maximum number 999):
+- For support personnel ONLY - Admin role — CONFLUENCE-ADMINISTRATOR
+
+The field User permission for application access — CONFLUENCE-USER is missing in this instance as well.
+
+Could you please look into this discrepancy and provide guidance on how to resolve it? If additional information is needed, feel free to reach out.
+
+Thank you for your assistance.
+
+
+
+
 
 using System;
 using System.Collections.Generic;

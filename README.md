@@ -1,3 +1,8 @@
+FXOPS-XAUUSD
+
+
+
+
 Here's the content from the screenshot presented in a tabular format:
 
 | ID       | Name                                |

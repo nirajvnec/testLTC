@@ -1,3 +1,6 @@
+As a newly joined team member, I request that my email ID be added to the  distribution list(s) to ensure I receive all necessary communications.
+
+
 Dear [Recipient's Name],
 
 I hope this message finds you well.

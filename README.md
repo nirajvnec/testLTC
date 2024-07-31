@@ -1,3 +1,18 @@
+```mermaid
+graph TD
+    A[Desktop and Web Applications] --> B[Register in GAIA]
+    B --> C[GAIA provides unique client ID for environments (PROD, UAT, SIT)]
+    C --> D[Application makes requests for authentication]
+    D --> E{GAIA Endpoint (PROD, UAT, SIT)}
+    E --> F[GAIA responds with access token]
+    F --> G[Application fetches user identity details from access token]
+    G --> H[Complete authorization]
+
+
+
+
+
+
 FXOPS-XAUUSD
 
 

@@ -1,4 +1,4 @@
-Clarification on Access Token Usage for Client-Server Communication
+As discussed, please find below the proof of concept (POC) for the client-server communication flow using access tokens:
 
 
 # Client

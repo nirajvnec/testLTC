@@ -1,3 +1,6 @@
+Clarification on Access Token Usage for Client-Server Communication
+
+
 # Client
 
 1. **Request Access Token:**

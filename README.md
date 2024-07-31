@@ -1,3 +1,9 @@
+dotnet dev-certs https --clean
+
+dotnet dev-certs https --trust
+
+
+
 As discussed, please find below the proof of concept (POC) for the client-server communication flow using access tokens:
 
 

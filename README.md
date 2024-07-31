@@ -1,3 +1,19 @@
+Hi Adrian,
+
+This POC uses User Certificate to get Access Token, but my doubt is on UBS workspace. Do we have user certificates installed?
+
+I am asking this question because if the user certificate is not selected, this code will throw an exception. Access denied.
+
+However, we thought we were using GAIA/IDP to eliminate user certificates. Please let me know if I am wrong.
+
+Regards
+Niraj
+
+
+
+
+
+
 {flowchart}
   "Desktop and Web Applications" -> "Register in GAIA/IDP"
   "Register in GAIA/IDP" -> "GAIA provides a unique Client ID and endpoints for the PROD, UAT, and SIT environments."

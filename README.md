@@ -25,6 +25,26 @@ public class HttpInterceptorMiddleware
 
     public async Task Invoke(HttpContext context)
     {
+        // Check for bearer token
+        var authHeader = context.Request.Headers["Authorization"].ToString();
+        if (authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+        {
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+            Console.WriteLine($"Bearer token found: {token}");
+            
+            // TODO: Validate the token here
+            // For example:
+            // if (!IsValidToken(token))
+            // {
+            //     context.Response.StatusCode = 401; // Unauthorized
+            //     return;
+            // }
+        }
+        else
+        {
+            Console.WriteLine("No bearer token found in the request.");
+        }
+
         // Capture the original request body
         var originalBodyStream = context.Request.Body;
         var requestBody = await new StreamReader(context.Request.Body).ReadToEndAsync();
@@ -59,15 +79,13 @@ public class HttpInterceptorMiddleware
             await responseBody.CopyToAsync(originalResponseBody);
         }
     }
-}
 
-// Extension method to make it easier to add the middleware to the pipeline
-public static class HttpInterceptorMiddlewareExtensions
-{
-    public static IApplicationBuilder UseHttpInterceptor(this IApplicationBuilder builder)
-    {
-        return builder.UseMiddleware<HttpInterceptorMiddleware>();
-    }
+    // TODO: Implement token validation logic
+    // private bool IsValidToken(string token)
+    // {
+    //     // Implement your token validation logic here
+    //     // Return true if the token is valid, false otherwise
+    // }
 }
 
 

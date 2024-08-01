@@ -1,5 +1,30 @@
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
+    if (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseRouting();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    // Add your custom middleware here
+    app.UseHttpInterceptor();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+}
+
+
+
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
     // Other middleware...
     app.UseHttpInterceptor();
     // More middleware...

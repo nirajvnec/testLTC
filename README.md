@@ -1,3 +1,13 @@
+public static class HttpInterceptorMiddlewareExtensions
+{
+    public static IApplicationBuilder UseHttpInterceptor(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<HttpInterceptorMiddleware>();
+    }
+}
+
+
+
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
     if (env.IsDevelopment())

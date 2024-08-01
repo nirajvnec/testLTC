@@ -2,9 +2,13 @@ Sure, I'll outline the steps to create two .NET Framework 4.5.2 projects: a cons
 
 Step 1: Create the API Server Project
 Open Visual Studio and create a new project.
+
 Choose ASP.NET Web Application (.NET Framework).
+
 Name the project ApiServerWebApi and select .NET Framework 4.5.2.
+
 In the next dialog, choose Web API and click OK.
+
 Configure the API
 Install JWT Authentication Packages:
 Open the Package Manager Console and run the following commands:

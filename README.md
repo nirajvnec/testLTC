@@ -1,3 +1,6 @@
+These certificates are not meant for production but are helpful for development and testing purposes to simulate an HTTPS environment.
+
+
 The dotnet dev-certs https command manages development certificates for running secured sites locally.
 
 public static class HttpInterceptorMiddlewareExtensions

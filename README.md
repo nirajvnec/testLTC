@@ -1,3 +1,5 @@
+The dotnet dev-certs https command manages development certificates for running secured sites locally.
+
 public static class HttpInterceptorMiddlewareExtensions
 {
     public static IApplicationBuilder UseHttpInterceptor(this IApplicationBuilder builder)

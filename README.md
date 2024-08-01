@@ -1,3 +1,82 @@
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    // Other middleware...
+    app.UseHttpInterceptor();
+    // More middleware...
+}
+
+
+
+
+
+using Microsoft.AspNetCore.Http;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
+public class HttpInterceptorMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public HttpInterceptorMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task Invoke(HttpContext context)
+    {
+        // Capture the original request body
+        var originalBodyStream = context.Request.Body;
+        var requestBody = await new StreamReader(context.Request.Body).ReadToEndAsync();
+
+        // Log or process the request
+        Console.WriteLine($"Request Body: {requestBody}");
+
+        // Replace the body stream so it can be read again in the pipeline
+        var memoryStream = new MemoryStream();
+        var streamWriter = new StreamWriter(memoryStream);
+        await streamWriter.WriteAsync(requestBody);
+        await streamWriter.FlushAsync();
+        memoryStream.Position = 0;
+        context.Request.Body = memoryStream;
+
+        // Create a new response body stream
+        var originalResponseBody = context.Response.Body;
+        using (var responseBody = new MemoryStream())
+        {
+            context.Response.Body = responseBody;
+
+            // Call the next middleware in the pipeline
+            await _next(context);
+
+            // Log or process the response
+            responseBody.Seek(0, SeekOrigin.Begin);
+            var responseBodyText = await new StreamReader(responseBody).ReadToEndAsync();
+            Console.WriteLine($"Response Body: {responseBodyText}");
+
+            // Copy the response body to the original stream
+            responseBody.Seek(0, SeekOrigin.Begin);
+            await responseBody.CopyToAsync(originalResponseBody);
+        }
+    }
+}
+
+// Extension method to make it easier to add the middleware to the pipeline
+public static class HttpInterceptorMiddlewareExtensions
+{
+    public static IApplicationBuilder UseHttpInterceptor(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<HttpInterceptorMiddleware>();
+    }
+}
+
+
+
+
+
+
+
+
 Sure! Here is the content for the README.md file written in Markdown format:
 
 markdown

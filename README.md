@@ -1,3 +1,9 @@
+dotnet restore
+dotnet clean
+dotnet build
+
+
+
 dotnet --list-sdks
 
 

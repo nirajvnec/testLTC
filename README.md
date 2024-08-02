@@ -1,3 +1,7 @@
+dotnet --list-sdks
+
+
+
 weatherforecast
 
 

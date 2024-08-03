@@ -2,7 +2,6 @@ using Microsoft.Web.WebView2.WinForms;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography.X509Certificates;
 
@@ -12,7 +11,7 @@ namespace WinFormsWebView2
     {
         // ... (previous code remains unchanged)
 
-        private async void CoreWebView2OnClientCertificateRequested(object sender, 
+        private void CoreWebView2OnClientCertificateRequested(object sender, 
             CoreWebView2ClientCertificateRequestedEventArgs e)
         {
             e.Handled = true;
@@ -24,8 +23,16 @@ namespace WinFormsWebView2
                 return;
             }
 
-            // Use Task.Run to show dialog on a separate thread
-            var selectedCert = await Task.Run(() => ShowCertificateSelectionDialog(e.MutuallyTrustedCertificates));
+            var resetEvent = new ManualResetEvent(false);
+            X509Certificate2 selectedCert = null;
+
+            WebView.Invoke((MethodInvoker)delegate
+            {
+                selectedCert = ShowCertificateSelectionDialog(e.MutuallyTrustedCertificates);
+                resetEvent.Set();
+            });
+
+            resetEvent.WaitOne();
 
             if (selectedCert != null)
             {

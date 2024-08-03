@@ -3,7 +3,7 @@ using Microsoft.Web.WebView2.Core;
 using System;
 using System.Threading;
 using System.Windows.Forms;
-using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
 
 namespace WinFormsWebView2
 {
@@ -24,7 +24,7 @@ namespace WinFormsWebView2
             }
 
             var resetEvent = new ManualResetEvent(false);
-            X509Certificate2 selectedCert = null;
+            CoreWebView2ClientCertificate selectedCert = null;
 
             WebView.Invoke((MethodInvoker)delegate
             {
@@ -45,7 +45,7 @@ namespace WinFormsWebView2
             }
         }
 
-        private X509Certificate2 ShowCertificateSelectionDialog(X509Certificate2Collection certificates)
+        private CoreWebView2ClientCertificate ShowCertificateSelectionDialog(IReadOnlyList<CoreWebView2ClientCertificate> certificates)
         {
             using (var form = new Form())
             {
@@ -60,7 +60,7 @@ namespace WinFormsWebView2
 
                 foreach (var cert in certificates)
                 {
-                    listBox.Items.Add(cert.Subject);
+                    listBox.Items.Add($"{cert.Subject} (Issuer: {cert.Issuer})");
                 }
 
                 var okButton = new Button

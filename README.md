@@ -48,7 +48,7 @@ flowchart TD
 ```mermaid
 
 flowchart TD
-    reg1["Register Client Application (Windows Forms Application) with GAIA IDP: Obtain Client ID, Client Secret, and Authority"] --> step1
+    reg1["Register Client Application (Windows Forms Application) with GAIA IDP: Obtain Client ID, Client Secret, and Tenant ID"] --> step1
     step1["Step 1: Windows Forms Application Initialization"] --> A
     A[Windows Forms Application]
     A -->|"Step 2: Request Token
@@ -72,5 +72,15 @@ flowchart TD
     Bearer {access_token}"| C
     C[ASP.NET Web API]
     C -->|"Step 6: Validate Access Token
-    API validates the JWT access token"| D
-    D[API Processes Request]
+    API validates the JWT access token"| F
+    F[Token Validation]
+    F --> F1[Verify Issuer]
+    F --> F2[Check Expiration]
+    F --> F3[Validate Audience]
+    F --> F4[Verify Signature]
+    F1 & F2 & F3 & F4 -->|"Valid"| G[Allow Access]
+    F1 & F2 & F3 & F4 -->|"Invalid"| H[Deny Access]
+    H --> H1[Set 401 Unauthorized]
+    H1 --> H2[Prepare Error Response]
+    H2 --> H3[Set Error Code]
+    H2 --> H4[Set Error Description]

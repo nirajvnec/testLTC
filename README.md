@@ -67,7 +67,9 @@ flowchart TD
     - Expiry
     - IssuedAt
     - Scopes"| A
-    A -->|"Step 5: Send API Request
+    A -->|"Step 4: Store Access Token
+    Store the JWT securely in the application"| step4
+    step4 -->|"Step 5: Send API Request
     HTTP GET with Authorization header:
     Bearer {access_token}"| C
     C[ASP.NET Web API]

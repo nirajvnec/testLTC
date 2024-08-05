@@ -84,3 +84,4 @@ flowchart TD
     H1 --> H2[Prepare Error Response]
     H2 --> H3[Set Error Code]
     H2 --> H4[Set Error Description]
+    G --> I[Request Processed]

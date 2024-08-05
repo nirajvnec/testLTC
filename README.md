@@ -2,7 +2,7 @@
 
 
 ---
-title: Token Validation Flowchart
+title: App to App flow
 ---
 flowchart TD
     reg1["Register Client Application (Windows Service) with GAIA IDP: Obtain Client ID, Client Secret, and Tenant ID"] --> step1

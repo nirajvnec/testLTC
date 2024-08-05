@@ -1,4 +1,6 @@
-```mermaid
+---
+
+---
 
 
 ---
@@ -41,3 +43,34 @@ flowchart TD
     F[Token Validation]
     F -->|"Step 11: Returns Validation Result
     Allow or deny API access"| C
+---
+
+```mermaid
+
+flowchart TD
+    reg1["Register Client Application (Windows Forms Application) with GAIA IDP: Obtain Client ID, Client Secret, and Authority"] --> step1
+    step1["Step 1: Windows Forms Application Initialization"] --> A
+    A[Windows Forms Application]
+    A -->|"Step 2: Request Token
+    Client calls GAIA IDP via HTTP POST to token endpoint:
+    - ClientId
+    - ClientSecret
+    - Scope
+    - GrantType
+    Requests Access Token"| B
+    B[GAIA Identity Provider]
+    B -->|"Step 3: Returns Access Token
+    JWT containing claims:
+    - Issuer
+    - Subject
+    - Audience
+    - Expiry
+    - IssuedAt
+    - Scopes"| A
+    A -->|"Step 5: Send API Request
+    HTTP GET with Authorization header:
+    Bearer {access_token}"| C
+    C[ASP.NET Web API]
+    C -->|"Step 6: Validate Access Token
+    API validates the JWT access token"| D
+    D[API Processes Request]

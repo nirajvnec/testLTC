@@ -1,3 +1,31 @@
+Hi Arif,
+
+We are encountering the following issues:
+
+Since the Proof of Concept (POC) uses a User Certificate and we see that the UBS workspace has a User Certificate, we cannot run the POC on the Workspace. We need to use the UBS development cloud host.
+
+Could you please guide us on how to order a User Certificate on the UBS development cloud host and how to establish trust with the GAIA IDP? The POC code required a User Certificate when we ran it.
+
+For Winform applications:
+Assume we have a Windows Forms application using OIDC to call GAIA IDP to receive a JWT bearer access token. We must register the application with GAIA IDP to obtain a Client ID, Client Secret, and Authority (the endpoint to call IDP over HTTP to get the access token for a given environment).
+
+We need detailed steps to register and obtain these details.
+
+Will the CS Infrastructure continue or eventually be migrated to UBS infrastructure? Currently, we have LT, FT, UAT, and PROD servers hosted on CS infrastructure. Will these continue, or will they be migrated to UBS infrastructure?
+
+For Web applications:
+We have a web app hosted by IIS using Marsnet for app-to-app connections. When it calls the IDP, what kind of certificate will it use, and how will the access token be fetched from GAIA IDP?
+
+Also, what request would we need to raise to register it and obtain the Client ID, Client Secret, and Authority (the endpoint to call IDP over HTTP to get the access token for a given environment)?
+
+We need the exact steps.
+
+Regards,
+Niraj
+
+
+
+
 ---
 
 ---

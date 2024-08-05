@@ -7,7 +7,7 @@
 title: App to App flow
 ---
 flowchart TD
-    reg1["Register Client Application (Windows Service) with GAIA IDP: Obtain Client ID, Client Secret, and Tenant ID"] --> step1
+    reg1["Register Client Application (Windows Service) with GAIA IDP: Obtain Client ID, Client Secret, and Authority"] --> step1
     reg2["Register Resource Application (ASP.NET Web API) with GAIA IDP: Obtain Resource ID (API Identifier)"] --> step1
     step1["Step 1: Windows Service Initialization"] --> A
     A[Windows Service]

@@ -1,3 +1,57 @@
+# Windows Form Application User Information Flow
+
+This document describes the flow of user information retrieval and processing in a Windows Form Application using SmartCard and UserCertificate. The retrieved information is then used to interact with various external systems.
+
+## Flow Steps
+
+1. **Windows Form Application Initiates Process**
+   - The Windows Form Application starts the process.
+
+2. **Interaction with SmartCard**
+   - The application interacts with the SmartCard to gather user-related information.
+
+3. **Interaction with UserCertificate**
+   - Simultaneously, the application uses the UserCertificate to gather additional user-related information.
+
+4. **Retrieve User Information**
+   - Information from the SmartCard and UserCertificate is used to retrieve the user information.
+
+5. **Pass Information to Security Server**
+   - The retrieved user information is then passed to the Security Server.
+
+6. **Get User Access/Permissions**
+   - The Security Server processes the user information to determine and provide user access or permissions.
+
+7. **Attach User Certificate to HTTP Request**
+   - The user certificate is attached to HTTP requests for additional operations.
+
+8. **Call External Systems**
+   - The application calls various external systems, such as:
+     - MARS System
+     - UDM
+     - Myriad
+
+This flow ensures that user information is securely retrieved and processed, and that necessary permissions are granted before interacting with external systems.
+
+## Diagram
+
+```mermaid
+graph TD;
+    A[Windows Form Application] --> B[SmartCard];
+    A --> C[UserCertificate];
+    B --> D[Get User Information];
+    C --> D;
+    D --> E[Security Server];
+    E --> F[Get User Access/Permissions];
+    F --> G[HTTP Request with User Certificate];
+    G --> H[MARS System];
+    G --> I[UDM];
+    G --> J[Myriad];
+
+
+
+
+
 graph TD;
     A[Windows Form Application] --> B[SmartCard];
     A --> C[UserCertificate];

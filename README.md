@@ -1,76 +1,45 @@
-# Define the Test-Port function
-function Test-Port {
-    param (
-        [string]$Host,
-        [int]$Port
-    )
-    
-    $result = Test-NetConnection -ComputerName $Host -Port $Port -WarningAction SilentlyContinue
-    [PSCustomObject]@{
-        Port   = $Port
-        Open   = $result.TcpTestSucceeded
-    }
+const fs = require('fs');
+const spawn = require('child_process').spawn;
+const path = require('path');
+
+const baseFolder = 
+  process.env.APPDATA !== undefined && process.env.APPDATA !== ''
+    ? `${process.env.APPDATA}/ASP.NET/https`
+    : `${process.env.HOME}/.aspnet/https`;
+
+console.log('Base folder for certificates:', baseFolder);
+
+const certificateArg = process.argv.map(arg => arg.match(/--name=(?<value>.+)/i)).filter(Boolean)[0];
+const certificateName = certificateArg ? certificateArg.groups.value : process.env.npm_package_name;
+
+console.log('Certificate name:', certificateName);
+
+if (!certificateName) {
+  console.error('Invalid certificate name. Run this script in the context of an npm/yarn script or pass --name=<<app>> explicitly.');
+  process.exit(-1);
 }
 
-# Create an alias for the Test-Port function
-New-Alias -Name tp -Value Test-Port
+const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
+const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
 
-# Example usage of the alias
-$host = "hostname_or_ip" # Replace with the target hostname or IP address
-$startPort = 1
-$endPort = 1024
+console.log('Certificate file path:', certFilePath);
+console.log('Key file path:', keyFilePath);
 
-# Test the ports and output the results using the alias
-$results = @()
-for ($port = $startPort; $port -le $endPort; $port++) {
-    $results += tp -Host $host -Port $port
+if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
+  console.log('Certificate or key file not found. Generating new certificate...');
+  spawn('dotnet', [
+    'dev-certs',
+    'https',
+    '--export-path',
+    certFilePath,
+    '--format',
+    'Pem',
+    '--no-password',
+  ], { stdio: 'inherit', })
+  .on('exit', (code) => {
+    console.log(`Certificate generation process exited with code ${code}`);
+    process.exit(code);
+  });
+} else {
+  console.log('Certificate and key files already exist.');
 }
-
-# Display the results
-$results | Format-Table -AutoSize
-
-
-
-
-
-
-# Windows Form Application User Information Flow
-
-This document describes the flow of user information retrieval and processing in a Windows Form Application using a SmartCard and its certificate. The retrieved information is then used to interact with various external systems.
-
-## Flow Steps
-
-1. **Windows Form Application Initiates Process**
-   - The Windows Form Application starts the process.
-
-2. **Retrieve User Information with SmartCard**
-   - Information from the SmartCard is used to retrieve the user information.
-
-3. **Attach SmartCard Certificate to HTTP Request**
-   - The SmartCard Certificate must be attached to any HTTP request for the TLS handshake. This is crucial for calling the security server, MARS System, UDM, or Myriad. Without this certificate, the request will be rejected.
-
-4. **Pass Information to Security Server**
-   - The retrieved user information is then passed to the Security Server.
-
-5. **Get User Access/Permissions**
-   - The Security Server processes the user information to determine and provide user access or permissions.
-
-6. **Call External Systems**
-   - The application calls various external systems, such as:
-     - MARS System
-     - UDM
-     - Myriad
-
-This flow ensures that user information is securely retrieved and processed, and that necessary permissions are granted before interacting with external systems.
-
-## Diagram
-
-```mermaid
-graph TD;
-    A[Windows Form Application] --> B[Retrieve User Information with SmartCard];
-    B --> C[Attach SmartCard Certificate to HTTP Request];
-    C --> D[Security Server];
-    D --> E[Get User Access/Permissions];
-    C --> F[MARS System];
-    C --> G[UDM];
-    C --> H[Myriad];

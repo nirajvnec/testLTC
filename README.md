@@ -1,3 +1,11 @@
+"start:windows": "ng serve --port 44449 --ssl --ssl-cert %APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem --ssl-key %APPDATA%\\ASP.NET\\https\\%npm_package_name%.key --open --browser=\"msedge\" --browser-args=\"--auto-open-devtools-for-tabs\"",
+
+
+"start:default": "ng serve --port 44449 --ssl --ssl-cert $HOME/.aspnet/https/${npm_package_name}.pem --ssl-key $HOME/.aspnet/https/${npm_package_name}.key --open --browser=\"msedge\" --browser-args=\"--auto-open-devtools-for-tabs\"",
+
+
+
+
 const fs = require('fs');
 const spawn = require('child_process').spawn;
 const path = require('path');

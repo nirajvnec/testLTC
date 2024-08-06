@@ -1,3 +1,22 @@
+graph TD;
+    A[Windows Form Application] --> B[SmartCard];
+    A --> C[UserCertificate];
+    B --> D[Get User Information];
+    C --> D;
+    D --> E[Security Server];
+    E --> F[Get User Access/Permissions];
+    F --> G[HTTP Request with User Certificate];
+    G --> H[MARS System];
+    G --> I[UDM];
+    G --> J[Myriad];
+
+
+
+
+
+
+
+
 Subject: Assistance Required with User Certificate and GAIA IDP Integration for UBS Dev Cloud Host
 
 

@@ -1,3 +1,39 @@
+# Define the Test-Port function
+function Test-Port {
+    param (
+        [string]$Host,
+        [int]$Port
+    )
+    
+    $result = Test-NetConnection -ComputerName $Host -Port $Port -WarningAction SilentlyContinue
+    [PSCustomObject]@{
+        Port   = $Port
+        Open   = $result.TcpTestSucceeded
+    }
+}
+
+# Create an alias for the Test-Port function
+New-Alias -Name tp -Value Test-Port
+
+# Example usage of the alias
+$host = "hostname_or_ip" # Replace with the target hostname or IP address
+$startPort = 1
+$endPort = 1024
+
+# Test the ports and output the results using the alias
+$results = @()
+for ($port = $startPort; $port -le $endPort; $port++) {
+    $results += tp -Host $host -Port $port
+}
+
+# Display the results
+$results | Format-Table -AutoSize
+
+
+
+
+
+
 # Windows Form Application User Information Flow
 
 This document describes the flow of user information retrieval and processing in a Windows Form Application using a SmartCard and its certificate. The retrieved information is then used to interact with various external systems.

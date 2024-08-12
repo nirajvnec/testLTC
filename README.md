@@ -1,3 +1,4 @@
+https://marketplace.visualstudio.com/items?itemName=NeVeS.MermaidEditorForVisualStudio&ssr=false#overview 
 Mermaid editor for Visual Studio
 
 

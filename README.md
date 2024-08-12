@@ -1,9 +1,10 @@
-const os = require('os');
+Hi Ashok,
 
-// Get the full username including domain (if part of the username)
-const fullUsername = os.userInfo().username;
+We currently have the following AD groups within the CS infrastructure:
 
-// Assuming the username is in the format DOMAIN\username, split by the backslash
-const domain = fullUsername.includes('\\') ? fullUsername.split('\\')[0] : 'No domain detected';
+GBLADHEDANI: DSQ-ALL-00-10819CS0EnquiryToolCvaUat_GBL
+CHADHEDANI: DSP-ALL-00-10819CS0EnquiryToolCvaUat_CH
+EURADHEDANI: DSO-ALL-00-10819CS0EnquiryToolCvaUat_EUR
+As we prepare to migrate to the UBS Workspace, could you please confirm whether these Active Directory groups and all associated users will remain accessible in their current form from the UBS Workspace and the UBS Cloud VM host?
 
-console.log('Domain:', domain);
+Thank you so much for your help.

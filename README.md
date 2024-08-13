@@ -1,3 +1,36 @@
+## Application Workflow Block Diagram
+
+```mermaid
+flowchart TD
+    A[Application Initialization] --> B[Get User's Name and Domain]
+    B --> C[Retrieve PID using LDAP from AD]
+    C --> D[Open X509 Certificate Store]
+    D --> E[API Calls (Mars, UDM, Myriad)]
+
+    subgraph Step 2: Get User's Name and Domain
+        B1[Environment.UserName]
+        B2[Environment.UserDomainName]
+    end
+
+    subgraph Step 4: Open X509 Certificate Store
+        D1[Search for Valid Certificates]
+        D2[Prompt User to Select Certificate]
+        D3[Retrieve Selected Certificate]
+        D4[Close Certificate Store]
+    end
+
+    subgraph Step 5: API Calls (Mars, UDM, Myriad)
+        E1[Create HTTP POST Request]
+        E2[Add Client Certificate]
+        E3[Configure Request Properties]
+        E4[Set Content-Type & Request Body]
+        E5[Enable TCP Keep-Alive]
+    end
+
+
+
+
+
 ## Detailed Steps
 
 ### Step 1: Application Initialization

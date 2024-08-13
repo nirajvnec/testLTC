@@ -6,34 +6,34 @@ flowchart TD
     F --> D[Open X509 Certificate Store]
     D --> E[API Calls Mars, UDM, Myriad]
 
-    subgraph "Step 1"
+    subgraph "<b><font color=green>Step 1</font></b>"
     direction LR
     A --> A1[Initialize Application]
     A1 --> A2[Set Up Logging]
     A2 --> A3[Load Configuration]
     end
 
-    subgraph "Step 2"
+    subgraph "<b><font color=green>Step 2</font></b>"
     direction LR
     B --> B1[Environment.UserName]
     B1 --> B2[Environment.UserDomainName]
     end
 
-    subgraph "Step 3"
+    subgraph "<b><font color=green>Step 3</font></b>"
     direction LR
     C --> C1[Connect to Active Directory]
     C1 --> C2[Perform LDAP Query]
     C2 --> C3[Extract PID from LDAP Result]
     end
 
-    subgraph "Step 4"
+    subgraph "<b><font color=green>Step 4</font></b>"
     direction LR
     F --> F1[Connect to Security Server]
     F1 --> F2[Send PID to Security Server]
     F2 --> F3[Receive User App Permissions]
     end
 
-    subgraph "Step 5"
+    subgraph "<b><font color=green>Step 5</font></b>"
     direction LR
     D --> D1[Search for Valid Certificates]
     D1 --> D2[Prompt User to Select Certificate]
@@ -41,7 +41,7 @@ flowchart TD
     D3 --> D4[Close Certificate Store]
     end
 
-    subgraph "Step 6"
+    subgraph "<b><font color=green>Step 6</font></b>"
     direction LR
     E --> E1[Create HTTP POST Request]
     E1 --> E2[Add Client Certificate]

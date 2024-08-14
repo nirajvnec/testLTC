@@ -1,3 +1,7 @@
+Get-ChildItem -Path Cert:\CurrentUser\My | Select-Object -ExpandProperty Subject
+
+
+
 Get-ChildItem -Path Cert:\LocalMachine\My | Where-Object { $_.Subject -match "Your Name" }
 
 

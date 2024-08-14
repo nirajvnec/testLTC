@@ -1,3 +1,10 @@
+Get-ChildItem -Path Cert:\LocalMachine\My | Where-Object { $_.Subject -match "Your Name" }
+
+
+
+Get-ChildItem -Path Cert:\CurrentUser\My | Where-Object { $_.Subject -match "Your Name" }
+
+
 Get-ChildItem -Path Cert:\LocalMachine\ -Recurse
 
 Get-ChildItem -Path Cert:\CurrentUser\ -Recurse

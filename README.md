@@ -1,3 +1,10 @@
+Get-ChildItem -Path Cert:\LocalMachine\ -Recurse
+
+Get-ChildItem -Path Cert:\CurrentUser\ -Recurse
+
+
+
+
 ```mermaid
 flowchart TD
     A[Application Initialization] --> B[Get User's Name and Domain]

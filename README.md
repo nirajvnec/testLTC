@@ -463,4 +463,4 @@ namespace OidcGaiaConnector
         private readonly ITokenManager _tokenManager;
         private readonly IAuthorizationHeaderSetter _headerSetter;
         private readonly IGaiaEndpointProvider _endpointProvider;
-        private readonly
+        private readonly HttpClient _http

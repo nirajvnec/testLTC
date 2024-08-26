@@ -53,6 +53,12 @@ public class EPPlusExcelReader : IExcelReader
 
 
 
+
+
+private List<string> _sensitivitiesHeader;
+    private List<string> _sensitivitiesData;
+    private List<string> _varData;
+
     private async Task GetMaRSAggregatedVARAsync()
     {
         try

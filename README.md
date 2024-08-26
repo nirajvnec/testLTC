@@ -3,15 +3,14 @@ using System.Collections.Generic;
 
 namespace MaRSRiskServerGateway.Core.Interfaces
 {
-    public interface IExcelReader
+    public interface IExcelProcessor
     {
-        (List<string> headers, List<List<string>> data, IXLRange varRange) ReadExcelData(string filePath);
-        List<string> GetHeaders(IXLWorksheet sheet, string startCell, string endCell);
-        List<List<string>> GetData(IXLWorksheet sheet, string startCell, string endCell);
-        IXLRange GetRange(IXLWorksheet sheet, string range);
+        void ProcessExcelData(string filePath);
+        void ProcessSensitivitiesAndVaR(List<string> headers, List<List<string>> data, IXLRange varRange);
+        double CalculateAggregatedVaR(List<List<string>> data);
+        void UpdateVaRRange(IXLRange varRange, double aggregatedVaR);
     }
 }
-
 
 
 

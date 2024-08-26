@@ -1,70 +1,84 @@
 using System.Collections.Generic;
-using ClosedXML.Excel;
-
-namespace MaRSRiskServerGateway.Core.Interfaces
-{
-    public interface IExcelReader
-    {
-        List<string> GetHeaders(string sheetName, string startCell, string endCell);
-        List<List<string>> GetData(string sheetName, string startCell, string endCell);
-        IXLRange GetRange(string sheetName, string range);
-        List<string> GetSheetNames();
-    }
-}
-
-
-using System.Collections.Generic;
-using System.Linq;
-using ClosedXML.Excel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using MaRSRiskServerGateway.Core.Interfaces;
 
-namespace MaRSRiskServerGateway.Core.Services
+namespace MaRSRiskServerGateway.UI.ViewModels
 {
-    public class ExcelReader : IExcelReader
+    public class MainViewModel : INotifyPropertyChanged
     {
-        private readonly IXLWorkbook _workbook;
+        private readonly IExcelReader _excelReader;
+        private readonly IExcelProcessor _excelProcessor;
 
-        public ExcelReader(IXLWorkbook workbook)
-        {
-            _workbook = workbook;
-        }
+        public ICommand ProcessExcelCommand { get; }
 
-        public List<string> GetHeaders(string sheetName, string startCell, string endCell)
+        private string _statusMessage;
+        public string StatusMessage
         {
-            var sheet = _workbook.Worksheet(sheetName);
-            var headers = new List<string>();
-            for (char col = startCell[0]; col <= endCell[0]; col++)
+            get => _statusMessage;
+            set
             {
-                headers.Add(sheet.Cell($"{col}{startCell.Substring(1)}").GetValue<string>());
+                _statusMessage = value;
+                OnPropertyChanged();
             }
-            return headers;
         }
 
-        public List<List<string>> GetData(string sheetName, string startCell, string endCell)
+        public MainViewModel(IExcelReader excelReader, IExcelProcessor excelProcessor)
         {
-            var sheet = _workbook.Worksheet(sheetName);
-            var data = new List<List<string>>();
-            for (int row = int.Parse(startCell.Substring(1)); row <= int.Parse(endCell.Substring(1)); row++)
-            {
-                var rowData = new List<string>();
-                for (char col = startCell[0]; col <= endCell[0]; col++)
-                {
-                    rowData.Add(sheet.Cell($"{col}{row}").GetValue<string>());
-                }
-                data.Add(rowData);
-            }
-            return data;
+            _excelReader = excelReader;
+            _excelProcessor = excelProcessor;
+            ProcessExcelCommand = new RelayCommand(async () => await ProcessExcelAsync());
         }
 
-        public IXLRange GetRange(string sheetName, string range)
+        private async Task ProcessExcelAsync()
         {
-            var sheet = _workbook.Worksheet(sheetName);
-            return sheet.Range(range);
+            StatusMessage = "Processing...";
+            
+            // This is where you would typically open a file dialog to select an Excel file
+            // For this example, we'll assume a file path
+            string filePath = @"C:\path\to\your\excel\file.xlsx";
+
+            // Read Excel data
+            var headers = _excelReader.GetHeaders("Sheet1", "A1", "Z1");
+            var data = _excelReader.GetData("Sheet1", "A2", "Z100");
+
+            // Process data
+            _excelProcessor.ProcessExcelData(headers, data);
+
+            // Calculate risk metric
+            double riskMetric = _excelProcessor.CalculateRiskMetric(data);
+
+            // Update status
+            StatusMessage = $"Processing complete. Risk Metric: {riskMetric}";
         }
 
-        public List<string> GetSheetNames()
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            return _workbook.Worksheets.Select(ws => ws.Name).ToList();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    // You'll need to implement this RelayCommand class or use an existing implementation
+    public class RelayCommand : ICommand
+    {
+        private readonly Func<Task> _execute;
+
+        public RelayCommand(Func<Task> execute)
+        {
+            _execute = execute;
+        }
+
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter) => true;
+
+        public async void Execute(object parameter)
+        {
+            await _execute();
         }
     }
 }

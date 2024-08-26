@@ -1,13 +1,14 @@
-private void ConfigureServices(IServiceCollection services)
+using ClosedXML.Excel;
+
+public class ExcelReader : IExcelReader
 {
-    // Register the ExcelReader with the specific file path
-    services.AddSingleton<IExcelReader>(provider => 
-        new ExcelReader("C:/Users/nkuma152/Complex_user.xlsm"));
+    private readonly IXLWorkbook _workbook;
 
-    // Register other services that might depend on IExcelReader
-    services.AddSingleton<IExcelProcessor, ExcelProcessor>();
+    public ExcelReader(string filePath)
+    {
+        // Create the workbook using the provided file path
+        _workbook = new XLWorkbook(filePath);
+    }
 
-    // Register your view models and MainWindow
-    services.AddSingleton<MainViewModel>();
-    services.AddSingleton<MainWindow>();
+    // Add methods here to read data from the workbook
 }

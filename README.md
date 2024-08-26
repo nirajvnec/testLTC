@@ -1,65 +1,32 @@
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using MaRSRiskServerGateway.Core.Interfaces;
-using MaRSRiskServerGateway.UI.Commands;
-
-namespace MaRSRiskServerGateway.UI.ViewModels
-{
-    public class MainViewModel : INotifyPropertyChanged
-    {
-        private readonly IExcelReader _excelReader;
-        private readonly IExcelProcessor _excelProcessor;
-
-        public ICommand ProcessExcelCommand { get; }
-
-        private string _statusMessage;
-        public string StatusMessage
-        {
-            get => _statusMessage;
-            set
-            {
-                _statusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public MainViewModel(IExcelReader excelReader, IExcelProcessor excelProcessor)
-        {
-            _excelReader = excelReader;
-            _excelProcessor = excelProcessor;
-            ProcessExcelCommand = new RelayCommand(ProcessExcelAsync);
-        }
-
-        private async Task ProcessExcelAsync()
-        {
-            StatusMessage = "Processing...";
+<Window x:Class="MaRSRiskServerGateway.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:MaRSRiskServerGateway.UI.ViewModels"
+        mc:Ignorable="d"
+        Title="MaRS Risk Server Gateway" Height="450" Width="800">
+    
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="Process Excel" 
+                    Command="{Binding ProcessExcelCommand}" 
+                    Width="200" 
+                    Height="50" 
+                    Margin="0,10,0,10"/>
             
-            // This is where you would typically open a file dialog to select an Excel file
-            // For this example, we'll assume a file path
-            string filePath = @"C:\path\to\your\excel\file.xlsx";
-
-            // Read Excel data
-            var headers = _excelReader.GetHeaders("Sheet1", "A1", "Z1");
-            var data = _excelReader.GetData("Sheet1", "A2", "Z100");
-
-            // Process data
-            _excelProcessor.ProcessExcelData(headers, data);
-
-            // Calculate risk metric
-            double riskMetric = _excelProcessor.CalculateRiskMetric(data);
-
-            // Update status
-            StatusMessage = $"Processing complete. Risk Metric: {riskMetric}";
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-}
+            <TextBlock Text="{Binding StatusMessage}" 
+                       Margin="0,20,0,0" 
+                       HorizontalAlignment="Center" />
+            
+            <!-- Placeholder for future DataGrid or other data display -->
+            <TextBlock Text="Data will be displayed here" 
+                       Margin="0,20,0,0" 
+                       HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,41 +1,107 @@
-<Window x:Class="MaRSRiskServerGateway.UI.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodels="clr-namespace:MaRSRiskServerGateway.UI.ViewModels"
-        mc:Ignorable="d"
-        Title="MaRS Risk Server Gateway" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}">
-    <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10,5"/>
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-    </Window.Resources>
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Button Grid.Row="0" 
-                Content="Select Excel File" 
-                Command="{Binding SelectFileCommand}"
-                HorizontalAlignment="Left"/>
-        <TextBlock Grid.Row="1" 
-                   Text="{Binding SelectedFilePath}" 
-                   TextWrapping="Wrap"/>
-        <Button Grid.Row="2" 
-                Content="Process Excel" 
-                Command="{Binding ProcessExcelCommand}"
-                HorizontalAlignment="Left"/>
-        <TextBlock Grid.Row="3" 
-                   Text="{Binding StatusMessage}" 
-                   TextWrapping="Wrap"/>
-    </Grid>
-</Window>
+public class AsyncRelayCommand : ICommand
+{
+    private readonly Func<Task> _execute;
+    private readonly Func<bool> _canExecute;
+    private bool _isExecuting;
+
+    public AsyncRelayCommand(Func<Task> execute, Func<bool> canExecute = null)
+    {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        _canExecute = canExecute;
+    }
+
+    public event EventHandler CanExecuteChanged
+    {
+        add { CommandManager.RequerySuggested += value; }
+        remove { CommandManager.RequerySuggested -= value; }
+    }
+
+    public bool CanExecute(object parameter)
+    {
+        return !_isExecuting && (_canExecute?.Invoke() ?? true);
+    }
+
+    public async void Execute(object parameter)
+    {
+        if (CanExecute(parameter))
+        {
+            try
+            {
+                _isExecuting = true;
+                await _execute();
+            }
+            finally
+            {
+                _isExecuting = false;
+            }
+        }
+
+        RaiseCanExecuteChanged();
+    }
+
+    public void RaiseCanExecuteChanged()
+    {
+        CommandManager.InvalidateRequerySuggested();
+    }
+}
+
+
+
+
+public class MainViewModel : INotifyPropertyChanged
+{
+    private readonly IExcelReader _excelReader;
+    private string _statusMessage;
+
+    public ICommand SelectFileCommand { get; }
+    public ICommand ProcessExcelCommand { get; }
+    public ICommand GetMaRSAggregatedVARCommand { get; }
+
+    public MainViewModel(IExcelReader excelReader)
+    {
+        _excelReader = excelReader;
+        SelectFileCommand = new RelayCommand(SelectFile);
+        ProcessExcelCommand = new AsyncRelayCommand(ProcessExcelAsync, CanProcessExcel);
+        GetMaRSAggregatedVARCommand = new AsyncRelayCommand(GetMaRSAggregatedVARAsync, CanGetMaRSAggregatedVAR);
+    }
+
+    private async Task GetMaRSAggregatedVARAsync()
+    {
+        StatusMessage = "Calculating MaRS Aggregated VAR...";
+        try
+        {
+            // Simulating a long-running operation
+            await Task.Delay(2000); // Replace this with your actual async calculation
+            StatusMessage = "MaRS Aggregated VAR calculation completed.";
+            // Add your actual calculation logic here
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Error calculating MaRS Aggregated VAR: {ex.Message}";
+        }
+    }
+
+    private bool CanGetMaRSAggregatedVAR()
+    {
+        return !string.IsNullOrEmpty(SelectedFilePath);
+    }
+
+    public string StatusMessage
+    {
+        get => _statusMessage;
+        set
+        {
+            _statusMessage = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Implement INotifyPropertyChanged
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    // Other properties and methods...
+}

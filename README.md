@@ -1,5 +1,5 @@
 function New-MaRSProject {
-    $scriptPath = "C:\Scripts\SetupMaRSRiskServerGateway.ps1"
+    $scriptPath = "C:\Users\nkuma152\SetupMaRSRiskServerGateway.ps1"
     $projectPath = "C:\Users\nkuma152\MaRSRiskServerGateway"
     
     if (Test-Path $scriptPath) {

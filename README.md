@@ -20,16 +20,13 @@ namespace MaRSRiskServerGateway.Core.Services
         {
             var worksheet = _excelPackage.Workbook.Worksheets[sheetName];
             var headers = new List<string>();
+            var startAddress = new ExcelAddress(startCell);
+            var endAddress = new ExcelAddress(endCell);
 
-            int startColumn = ExcelCellAddress.GetColumn(startCell);
-            int startRow = ExcelCellAddress.GetRow(startCell);
-            int endColumn = ExcelCellAddress.GetColumn(endCell);
-
-            for (int col = startColumn; col <= endColumn; col++)
+            for (int col = startAddress.Start.Column; col <= endAddress.End.Column; col++)
             {
-                headers.Add(worksheet.Cells[startRow, col].Text);
+                headers.Add(worksheet.Cells[startAddress.Start.Row, col].Text);
             }
-
             return headers;
         }
 
@@ -37,44 +34,39 @@ namespace MaRSRiskServerGateway.Core.Services
         {
             var worksheet = _excelPackage.Workbook.Worksheets[sheetName];
             var data = new List<List<string>>();
+            var range = worksheet.Cells[startCell + ":" + endCell];
 
-            int startColumn = ExcelCellAddress.GetColumn(startCell);
-            int startRow = ExcelCellAddress.GetRow(startCell);
-            int endColumn = ExcelCellAddress.GetColumn(endCell);
-            int endRow = ExcelCellAddress.GetRow(endCell);
-
-            for (int row = startRow; row <= endRow; row++)
+            for (int row = range.Start.Row; row <= range.End.Row; row++)
             {
                 var rowData = new List<string>();
-
-                for (int col = startColumn; col <= endColumn; col++)
+                for (int col = range.Start.Column; col <= range.End.Column; col++)
                 {
                     rowData.Add(worksheet.Cells[row, col].Text);
                 }
-
                 data.Add(rowData);
             }
-
             return data;
         }
 
         public string GetRange(string sheetName, string range)
         {
             var worksheet = _excelPackage.Workbook.Worksheets[sheetName];
-            var cells = worksheet.Cells[range];
-            return cells.Text;
+            return worksheet.Cells[range].Text;
         }
 
         public List<string> GetSheetNames()
         {
             var sheetNames = new List<string>();
-
             foreach (var worksheet in _excelPackage.Workbook.Worksheets)
             {
                 sheetNames.Add(worksheet.Name);
             }
-
             return sheetNames;
+        }
+
+        public void Close()
+        {
+            _excelPackage.Dispose();
         }
     }
 }

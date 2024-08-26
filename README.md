@@ -1,13 +1,77 @@
-using ClosedXML.Excel;
-using System.Collections.Generic;
-
-namespace MaRSRiskServerGateway.Core.Interfaces
+public class MainViewModel : INotifyPropertyChanged
 {
-    public interface IExcelReader
+    private readonly IExcelProcessor _excelProcessor;
+    private string _selectedFilePath;
+    private string _statusMessage;
+
+    public ICommand SelectFileCommand { get; }
+    public ICommand ProcessExcelCommand { get; }
+
+    public string SelectedFilePath
     {
-        (List<string> headers, List<List<string>> data, IXLRange varRange) ReadExcelData(string filePath);
-        List<string> GetHeaders(IXLWorksheet sheet, string startCell, string endCell);
-        List<List<string>> GetData(IXLWorksheet sheet, string startCell, string endCell);
-        IXLRange GetRange(IXLWorksheet sheet, string range);
+        get => _selectedFilePath;
+        set
+        {
+            _selectedFilePath = value;
+            OnPropertyChanged();
+            ((RelayCommand)ProcessExcelCommand).RaiseCanExecuteChanged();
+        }
+    }
+
+    public string StatusMessage
+    {
+        get => _statusMessage;
+        set
+        {
+            _statusMessage = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public MainViewModel(IExcelProcessor excelProcessor)
+    {
+        _excelProcessor = excelProcessor;
+        SelectFileCommand = new RelayCommand(SelectFile);
+        ProcessExcelCommand = new RelayCommand(ProcessExcel, CanProcessExcel);
+    }
+
+    private void SelectFile()
+    {
+        var openFileDialog = new OpenFileDialog
+        {
+            Filter = "Excel Files|*.xlsx;*.xls",
+            Title = "Select an Excel file"
+        };
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            SelectedFilePath = openFileDialog.FileName;
+            StatusMessage = "File selected: " + SelectedFilePath;
+        }
+    }
+
+    private void ProcessExcel()
+    {
+        try
+        {
+            _excelProcessor.ProcessExcelData(SelectedFilePath);
+            StatusMessage = "Excel file processed successfully.";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = "Error processing Excel file: " + ex.Message;
+        }
+    }
+
+    private bool CanProcessExcel()
+    {
+        return !string.IsNullOrEmpty(SelectedFilePath);
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

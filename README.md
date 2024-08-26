@@ -7,89 +7,40 @@
         mc:Ignorable="d"
         Title="MaRS Risk Server Gateway" Height="450" Width="800">
 
-    <Window.DataContext>
-        <viewmodels:MainViewModel/>
-    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
 
-    <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Content="Process Excel" 
-                    Command="{Binding ProcessExcelCommand}" 
-                    Width="200" 
-                    Height="50" 
-                    Margin="0,10,0,10"/>
-            
-            <TextBlock Text="{Binding StatusMessage}" 
-                       Margin="0,20,0,0" 
-                       HorizontalAlignment="Center" />
-            
-            <!-- Placeholder for future DataGrid or other data display -->
-            <TextBlock Text="Data will be displayed here" 
-                       Margin="0,20,0,0" 
-                       HorizontalAlignment="Center" />
-        </StackPanel>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" 
+                Content="Select Excel File" 
+                Command="{Binding SelectFileCommand}"
+                HorizontalAlignment="Left"/>
+
+        <TextBlock Grid.Row="1" 
+                   Text="{Binding SelectedFilePath}" 
+                   TextWrapping="Wrap"/>
+
+        <Button Grid.Row="2" 
+                Content="Process Excel" 
+                Command="{Binding ProcessExcelCommand}"
+                HorizontalAlignment="Left"/>
+
+        <TextBlock Grid.Row="3" 
+                   Text="{Binding StatusMessage}" 
+                   TextWrapping="Wrap"/>
     </Grid>
 </Window>
-
-
-
-
-
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using MaRSRiskServerGateway.Core.Interfaces;
-using MaRSRiskServerGateway.UI.Commands;
-
-namespace MaRSRiskServerGateway.UI.ViewModels
-{
-    public class MainViewModel : INotifyPropertyChanged
-    {
-        private IExcelReader _excelReader;
-        private IExcelProcessor _excelProcessor;
-
-        public ICommand ProcessExcelCommand { get; private set; }
-
-        private string _statusMessage;
-        public string StatusMessage
-        {
-            get => _statusMessage;
-            set
-            {
-                _statusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        // Add a public parameterless constructor
-        public MainViewModel()
-        {
-            // Initialize with default implementations or null
-            // You'll need to set these later, perhaps through a method
-            _excelReader = null;
-            _excelProcessor = null;
-            ProcessExcelCommand = new RelayCommand(ProcessExcelAsync);
-        }
-
-        // Keep the existing constructor
-        public MainViewModel(IExcelReader excelReader, IExcelProcessor excelProcessor)
-        {
-            _excelReader = excelReader;
-            _excelProcessor = excelProcessor;
-            ProcessExcelCommand = new RelayCommand(ProcessExcelAsync);
-        }
-
-        private async Task ProcessExcelAsync()
-        {
-            // Existing implementation
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-}

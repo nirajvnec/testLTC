@@ -3,14 +3,16 @@ using System.Collections.Generic;
 
 namespace MaRSRiskServerGateway.Core.Interfaces
 {
-    public interface IExcelProcessor
+    public interface IExcelReader
     {
-        void ProcessExcelData(string filePath);
-        void ProcessSensitivitiesAndVaR(List<string> headers, List<List<string>> data, IXLRange varRange);
-        double CalculateAggregatedVaR(List<List<string>> data);
-        void UpdateVaRRange(IXLRange varRange, double aggregatedVaR);
+        (List<string> headers, List<List<string>> data, IXLRange varRange) ReadExcelData(string filePath);
+        List<string> GetHeaders(IXLWorksheet sheet, string startCell, string endCell);
+        List<List<string>> GetData(IXLWorksheet sheet, string startCell, string endCell);
+        IXLRange GetRange(IXLWorksheet sheet, string range);
     }
 }
+
+
 
 
 using ClosedXML.Excel;
@@ -32,7 +34,7 @@ namespace MaRSRiskServerGateway.Core.Services
 
         public void ProcessExcelData(string filePath)
         {
-            var (headers, data, varRange) = _excelReader.ReadExcelData(filePath);
+            (List<string> headers, List<List<string>> data, IXLRange varRange) = _excelReader.ReadExcelData(filePath);
 
             if (headers.Count > 0 && data.Count > 0 && varRange != null)
             {
@@ -55,8 +57,7 @@ namespace MaRSRiskServerGateway.Core.Services
 
         public double CalculateAggregatedVaR(List<List<string>> data)
         {
-            // This is a placeholder implementation. You should replace this with your actual VaR calculation logic.
-            // For demonstration purposes, let's assume the VaR is the sum of all numeric values in the data.
+            // This is a placeholder implementation. Replace with your actual VaR calculation logic.
             double sum = 0;
             foreach (var row in data)
             {
@@ -64,18 +65,23 @@ namespace MaRSRiskServerGateway.Core.Services
                 {
                     if (double.TryParse(cell, out double value))
                     {
-                        sum += value;
+                        sum += Math.Abs(value); // Using absolute values for demonstration
                     }
                 }
             }
-            return sum;
+            return sum / data.Count; // Simple average for demonstration
         }
 
         public void UpdateVaRRange(IXLRange varRange, double aggregatedVaR)
         {
-            // This is a placeholder implementation. You should replace this with your actual logic for updating the VaR range.
-            // For demonstration purposes, let's just write the aggregated VaR to the first cell of the range.
+            // This is a placeholder implementation. Replace with your actual logic for updating the VaR range.
             varRange.FirstCell().Value = aggregatedVaR;
+
+            // Assuming you want to fill the entire range with the same value
+            foreach (var cell in varRange.Cells())
+            {
+                cell.Value = aggregatedVaR;
+            }
 
             // Save the changes to the workbook
             varRange.Worksheet.Workbook.Save();

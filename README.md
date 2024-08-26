@@ -1,4 +1,19 @@
 using ClosedXML.Excel;
+using System.Collections.Generic;
+
+namespace MaRSRiskServerGateway.Core.Interfaces
+{
+    public interface IExcelProcessor
+    {
+        void ProcessExcelData(string filePath);
+        void ProcessSensitivitiesAndVaR(List<string> headers, List<List<string>> data, IXLRange varRange);
+        double CalculateAggregatedVaR(List<List<string>> data);
+        void UpdateVaRRange(IXLRange varRange, double aggregatedVaR);
+    }
+}
+
+
+using ClosedXML.Excel;
 using MaRSRiskServerGateway.Core.Interfaces;
 using System;
 using System.Collections.Generic;

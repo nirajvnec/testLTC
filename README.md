@@ -1,46 +1,88 @@
-<Window x:Class="MaRSRiskServerGateway.UI.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodels="clr-namespace:MaRSRiskServerGateway.UI.ViewModels"
-        mc:Ignorable="d"
-        Title="MaRS Risk Server Gateway" Height="450" Width="800">
+using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Microsoft.Win32;
+using MaRSRiskServerGateway.Core.Interfaces;
+using MaRSRiskServerGateway.UI.Commands;
 
-    <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10,5"/>
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-    </Window.Resources>
+namespace MaRSRiskServerGateway.UI.ViewModels
+{
+    public class MainViewModel : INotifyPropertyChanged
+    {
+        private readonly IExcelProcessor _excelProcessor;
+        private string _selectedFilePath;
+        private string _statusMessage;
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        public string SelectedFilePath
+        {
+            get => _selectedFilePath;
+            set
+            {
+                _selectedFilePath = value;
+                OnPropertyChanged();
+                ((RelayCommand)ProcessExcelCommand).RaiseCanExecuteChanged();
+            }
+        }
 
-        <Button Grid.Row="0" 
-                Content="Select Excel File" 
-                Command="{Binding SelectFileCommand}"
-                HorizontalAlignment="Left"/>
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
 
-        <TextBlock Grid.Row="1" 
-                   Text="{Binding SelectedFilePath}" 
-                   TextWrapping="Wrap"/>
+        public ICommand SelectFileCommand { get; }
+        public ICommand ProcessExcelCommand { get; }
 
-        <Button Grid.Row="2" 
-                Content="Process Excel" 
-                Command="{Binding ProcessExcelCommand}"
-                HorizontalAlignment="Left"/>
+        public MainViewModel(IExcelProcessor excelProcessor)
+        {
+            _excelProcessor = excelProcessor;
+            SelectFileCommand = new RelayCommand(SelectFile);
+            ProcessExcelCommand = new RelayCommand(ProcessExcel, CanProcessExcel);
+        }
 
-        <TextBlock Grid.Row="3" 
-                   Text="{Binding StatusMessage}" 
-                   TextWrapping="Wrap"/>
-    </Grid>
-</Window>
+        private void SelectFile()
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "Excel Files|*.xlsx;*.xls",
+                Title = "Select an Excel file"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SelectedFilePath = openFileDialog.FileName;
+                StatusMessage = "File selected: " + SelectedFilePath;
+            }
+        }
+
+        private void ProcessExcel()
+        {
+            try
+            {
+                _excelProcessor.ProcessExcelData(SelectedFilePath);
+                StatusMessage = "Excel file processed successfully.";
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = "Error processing Excel file: " + ex.Message;
+            }
+        }
+
+        private bool CanProcessExcel()
+        {
+            return !string.IsNullOrEmpty(SelectedFilePath);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}

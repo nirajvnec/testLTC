@@ -1,4 +1,70 @@
 
+using OfficeOpenXml;
+using System;
+using System.Data;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace MaRSRiskServerGateway.Services
+{
+    public class EPPlusExcelDataService : IExcelDataService
+    {
+        public EPPlusExcelDataService()
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        }
+
+        public async Task<DataTable> GetSensitivitiesDataAsync(string filePath)
+        {
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                await package.LoadAsync(filePath);
+                var worksheet = package.Workbook.Worksheets["Sensitivities"];
+                return await ExtractDataFromWorksheetAsync(worksheet, "A10:W70");
+            }
+        }
+
+        public async Task<DataTable> GetVaRDataAsync(string filePath)
+        {
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                await package.LoadAsync(filePath);
+                var worksheet = package.Workbook.Worksheets["VaR"];
+                return await ExtractDataFromWorksheetAsync(worksheet, "B20:C35");
+            }
+        }
+
+        private async Task<DataTable> ExtractDataFromWorksheetAsync(ExcelWorksheet worksheet, string range)
+        {
+            return await Task.Run(() =>
+            {
+                var dataTable = new DataTable();
+                var excelRange = worksheet.Cells[range];
+
+                // Add columns
+                for (int col = excelRange.Start.Column; col <= excelRange.End.Column; col++)
+                {
+                    dataTable.Columns.Add(worksheet.Cells[excelRange.Start.Row, col].Value?.ToString() ?? $"Column {col}");
+                }
+
+                // Add data
+                for (int row = excelRange.Start.Row + 1; row <= excelRange.End.Row; row++)
+                {
+                    var dataRow = dataTable.NewRow();
+                    for (int col = excelRange.Start.Column; col <= excelRange.End.Column; col++)
+                    {
+                        dataRow[col - excelRange.Start.Column] = worksheet.Cells[row, col].Value?.ToString() ?? string.Empty;
+                    }
+                    dataTable.Rows.Add(dataRow);
+                }
+
+                return dataTable;
+            });
+        }
+    }
+}
+
+
 using System.Data;
 using System.Threading.Tasks;
 

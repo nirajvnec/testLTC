@@ -1,79 +1,120 @@
-public interface IExcelReader
+
+using System.Data;
+using System.Windows.Input;
+using System.Threading.Tasks;
+using MaRSRiskServerGateway.Services;
+
+namespace MaRSRiskServerGateway.ViewModels
 {
-    List<string> GetSensitivitiesHeader(string filePath);
-    List<string> GetSensitivitiesData(string filePath);
-    List<string> GetVarData(string filePath);
+    public class MainViewModel : INotifyPropertyChanged
+    {
+        private readonly IExcelDataService _excelDataService;
+        private string _selectedFilePath;
+        private DataTable _sensitivitiesData;
+        private DataTable _varData;
+        private string _statusMessage;
+
+        public MainViewModel(IExcelDataService excelDataService)
+        {
+            _excelDataService = excelDataService;
+            SelectFileCommand = new RelayCommand(SelectFile);
+            ProcessExcelCommand = new AsyncRelayCommand(ProcessExcelAsync, CanProcessExcel);
+            GetMaRSAggregatedVARCommand = new AsyncRelayCommand(GetMaRSAggregatedVARAsync, CanGetMaRSAggregatedVAR);
+        }
+
+        public ICommand SelectFileCommand { get; }
+        public ICommand ProcessExcelCommand { get; }
+        public ICommand GetMaRSAggregatedVARCommand { get; }
+
+        public string SelectedFilePath
+        {
+            get => _selectedFilePath;
+            set
+            {
+                _selectedFilePath = value;
+                OnPropertyChanged();
+                ProcessExcelAsync().ConfigureAwait(false);
+            }
+        }
+
+        public DataTable SensitivitiesData
+        {
+            get => _sensitivitiesData;
+            set
+            {
+                _sensitivitiesData = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DataTable VaRData
+        {
+            get => _varData;
+            set
+            {
+                _varData = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private async Task ProcessExcelAsync()
+        {
+            if (string.IsNullOrEmpty(SelectedFilePath) || !File.Exists(SelectedFilePath))
+            {
+                StatusMessage = "Please select a valid Excel file.";
+                return;
+            }
+
+            try
+            {
+                StatusMessage = "Processing Excel file...";
+                SensitivitiesData = await _excelDataService.GetSensitivitiesDataAsync(SelectedFilePath);
+                VaRData = await _excelDataService.GetVaRDataAsync(SelectedFilePath);
+                StatusMessage = "Excel file processed successfully.";
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error processing Excel file: {ex.Message}";
+            }
+        }
+
+        private async Task GetMaRSAggregatedVARAsync()
+        {
+            // Implement your GetMaRSAggregatedVAR logic here
+        }
+
+        private bool CanProcessExcel() => !string.IsNullOrEmpty(SelectedFilePath) && File.Exists(SelectedFilePath);
+        private bool CanGetMaRSAggregatedVAR() => SensitivitiesData != null && VaRData != null;
+
+        // Implement INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void SelectFile()
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "Excel Files|*.xlsx;*.xls",
+                Title = "Select an Excel file"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SelectedFilePath = openFileDialog.FileName;
+            }
+        }
+    }
 }
-
-
-using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-public class EPPlusExcelReader : IExcelReader
-{
-    public EPPlusExcelReader()
-    {
-        // Set the EPPlus license context
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-    }
-
-    public List<string> GetSensitivitiesHeader(string filePath)
-    {
-        using (var package = new ExcelPackage(new FileInfo(filePath)))
-        {
-            var worksheet = package.Workbook.Worksheets["Sensitivities"];
-            var range = worksheet.Cells["A10:W10"];
-            return range.Select(cell => cell.Text).ToList();
-        }
-    }
-
-    public List<string> GetSensitivitiesData(string filePath)
-    {
-        using (var package = new ExcelPackage(new FileInfo(filePath)))
-        {
-            var worksheet = package.Workbook.Worksheets["Sensitivities"];
-            var range = worksheet.Cells["A11:X70"];
-            return range.Select(cell => cell.Text).ToList();
-        }
-    }
-
-    public List<string> GetVarData(string filePath)
-    {
-        using (var package = new ExcelPackage(new FileInfo(filePath)))
-        {
-            var worksheet = package.Workbook.Worksheets["VaR"];
-            var range = worksheet.Cells["B20:C35"];
-            return range.Select(cell => cell.Text).ToList();
-        }
-    }
-}
-
-
-
-
-
-private List<string> _sensitivitiesHeader;
-    private List<string> _sensitivitiesData;
-    private List<string> _varData;
-
-    private async Task GetMaRSAggregatedVARAsync()
-    {
-        try
-        {
-            _sensitivitiesHeader = _excelReader.GetSensitivitiesHeader(SelectedFilePath);
-            _sensitivitiesData = _excelReader.GetSensitivitiesData(SelectedFilePath);
-            _varData = _excelReader.GetVarData(SelectedFilePath);
-
-            // Process the data as needed
-            // ...
-
-            StatusMessage = "MaRS Aggregated VAR calculation completed.";
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = $"Error calculating MaRS Aggregated VAR: {ex.Message}";
-        }
-    

@@ -1,5 +1,20 @@
 
 using System.Data;
+using System.Threading.Tasks;
+
+namespace MaRSRiskServerGateway.Services
+{
+    public interface IExcelDataService
+    {
+        Task<DataTable> GetSensitivitiesDataAsync(string filePath);
+        Task<DataTable> GetVaRDataAsync(string filePath);
+    }
+}
+
+
+
+
+using System.Data;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using MaRSRiskServerGateway.Services;

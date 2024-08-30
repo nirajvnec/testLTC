@@ -1,10 +1,31 @@
+using System;
+using System.Reflection;
 
+class Program
+{
+    static void Main(string[] args)
+    {
+        // 1. Load the DLL
+        string dllPath = @"path\to\your\dll\file.dll";
+        Assembly assembly = Assembly.LoadFrom(dllPath);
 
-RegAsm.exe "C:\Users\Niraj\source\repos\ClassLibrary1\bin\Debug\ClassLibrary1.dll" /codebase
+        // 2. Get all types from the assembly
+        Type[] types = assembly.GetTypes();
 
-TlbExp.exe "C:\Users\Niraj\source\repos\ClassLibrary1\bin\Debug\ClassLibrary1.dll" /out:"C:\Users\Niraj\source\repos\ClassLibrary1\bin\Debug\ClassLibrary1.tlb"
+        // 3. Iterate through each type and its methods
+        foreach (Type type in types)
+        {
+            Console.WriteLine($"Class: {type.FullName}");
 
+            // Get all methods of the type
+            MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 
-RegSvr32.exe "C:\Users\Niraj\source\repos\ClassLibrary1\bin\Debug\ClassLibrary1.tlb"
+            foreach (MethodInfo method in methods)
+            {
+                Console.WriteLine($"  Method: {method.Name}");
+            }
 
-keep all the above three commands in one place
+            Console.WriteLine();
+        }
+    }
+}

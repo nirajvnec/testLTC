@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 class Program
 {
-    private const string DllPath = @"C:\Users\nkuma152\aggregator.dll";
+    private const string DllPath = @"C:\Users\nkuma152\MaRSVaRSystem\aggregator.dll";
 
     [DllImport(DllPath, CallingConvention = CallingConvention.Cdecl)]
     static extern int GetClassCount();

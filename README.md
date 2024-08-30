@@ -5,8 +5,11 @@ class Program
 {
     private const string DllPath = @"C:\Users\nkuma152\MaRSVaRSystem\aggregator.dll";
 
-    [DllImport(DllPath, CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(DllPath, EntryPoint = "_GetClassCount@0", CallingConvention = CallingConvention.Cdecl)]
     static extern int GetClassCount();
+
+
+    
 
     [DllImport(DllPath, CallingConvention = CallingConvention.Cdecl)]
     static extern IntPtr GetClassName(int index);

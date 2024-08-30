@@ -1,31 +1,52 @@
 using System;
-using System.Reflection;
+using System.Runtime.InteropServices;
 
 class Program
 {
+    private const string DllPath = @"C:\Users\nkuma152\aggregator.dll";
+
+    [DllImport(DllPath, CallingConvention = CallingConvention.Cdecl)]
+    static extern int GetClassCount();
+
+    [DllImport(DllPath, CallingConvention = CallingConvention.Cdecl)]
+    static extern IntPtr GetClassName(int index);
+
+    [DllImport(DllPath, CallingConvention = CallingConvention.Cdecl)]
+    static extern int GetMethodCount(int classIndex);
+
+    [DllImport(DllPath, CallingConvention = CallingConvention.Cdecl)]
+    static extern IntPtr GetMethodName(int classIndex, int methodIndex);
+
+    static string PtrToString(IntPtr ptr) => Marshal.PtrToStringAnsi(ptr);
+
     static void Main(string[] args)
     {
-        // 1. Load the DLL
-        string dllPath = @"path\to\your\dll\file.dll";
-        Assembly assembly = Assembly.LoadFrom(dllPath);
-
-        // 2. Get all types from the assembly
-        Type[] types = assembly.GetTypes();
-
-        // 3. Iterate through each type and its methods
-        foreach (Type type in types)
+        try
         {
-            Console.WriteLine($"Class: {type.FullName}");
-
-            // Get all methods of the type
-            MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-
-            foreach (MethodInfo method in methods)
+            int classCount = GetClassCount();
+            for (int i = 0; i < classCount; i++)
             {
-                Console.WriteLine($"  Method: {method.Name}");
+                string className = PtrToString(GetClassName(i));
+                Console.WriteLine($"Class: {className}");
+                int methodCount = GetMethodCount(i);
+                for (int j = 0; j < methodCount; j++)
+                {
+                    string methodName = PtrToString(GetMethodName(i, j));
+                    Console.WriteLine($"  Method: {methodName}");
+                }
             }
-
-            Console.WriteLine();
+        }
+        catch (DllNotFoundException)
+        {
+            Console.WriteLine($"Error: Could not find the DLL at {DllPath}");
+        }
+        catch (EntryPointNotFoundException ex)
+        {
+            Console.WriteLine($"Error: Could not find a required function in the DLL. Details: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An unexpected error occurred: {ex.Message}");
         }
     }
 }

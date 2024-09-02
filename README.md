@@ -1,1 +1,11 @@
-"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\bin\Hostx64\x64\dumpbin.exe" /exports "C:\Users\nkuma152\MaRSVaRSystem\aggregator.dll"
+Function TestCar() As String
+    Dim myCar As Object
+    Set myCar = CreateObject("MyCarLibrary.Car")
+
+    ' Check if the object was created successfully
+    If Not myCar Is Nothing Then
+        TestCar = "Number of wheels: " & myCar.GetNumberOfWheel
+    Else
+        TestCar = "Failed to create MyCarLibrary.Car object"
+    End If
+End Function

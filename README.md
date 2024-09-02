@@ -1,7 +1,7 @@
 =TestCar()
 
 
-Function TestCar() As String
+Public Function TestCar() As String
     Dim myCar As Object
     Set myCar = CreateObject("MyCarLibrary.Car")
 

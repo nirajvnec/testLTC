@@ -1,3 +1,38 @@
+using System;
+using System.Runtime.InteropServices;
+using Microsoft.Office.Interop.Excel;
+
+namespace MyCarLibrary
+{
+    [ComVisible(true)]
+    [Guid("Your-GUID-Here")]  // Replace with an actual GUID
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    public class ExcelDataProcessor
+    {
+        public string GetFormattedData(Range headerRange, Range valueRange)
+        {
+            string result = "";
+            int rowCount = valueRange.Rows.Count;
+
+            for (int i = 1; i <= rowCount; i++)
+            {
+                string header1 = headerRange.Cells[1, 1].Value.ToString();
+                string value1 = valueRange.Cells[i, 1].Value.ToString();
+                string header2 = headerRange.Cells[1, 2].Value.ToString();
+                string value2 = valueRange.Cells[i, 2].Value.ToString();
+
+                result += $"{header1}: {value1}, {header2}: {value2}\n";
+            }
+
+            return result;
+        }
+    }
+}
+
+
+
+
+
 Public m_objExcelProcessor As MyCarLibrary.ExcelDataProcessor
 
 Sub UseProcessor()

@@ -1,3 +1,7 @@
+=GetFormattedData(A4:B4, A5:B7)
+
+
+
 Function GetFormattedData(headerRange As Range, valueRange As Range) As String
     Dim result As String
     Dim i As Integer

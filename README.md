@@ -1,4 +1,22 @@
+
+
 =UseCarProcessor(A4:B4, A5:B7)
+
+
+Public m_objCar As MyCarLibrary.Car
+
+Public Function UseCarProcessor(headerRange As Range, valueRange As Range) As String
+    ' Create an instance of the Car object
+    Set m_objCar = New MyCarLibrary.Car
+    
+    Dim result As String
+
+    ' Call the GetFormattedData method with the provided ranges
+    result = m_objCar.GetFormattedData(headerRange, valueRange)
+
+    ' Return the result
+    UseCarProcessor = result
+End Function
 
 
 

@@ -1,3 +1,22 @@
+Public m_objExcelProcessor As MyCarLibrary.ExcelDataProcessor
+
+Sub UseProcessor()
+    ' Create an instance of the ExcelDataProcessor object
+    Set m_objExcelProcessor = New MyCarLibrary.ExcelDataProcessor
+    
+    Dim result As String
+
+    ' Assuming headerRange and valueRange are already defined
+    result = m_objExcelProcessor.GetFormattedData(Range("A4:B4"), Range("A5:B7"))
+
+    ' Output the result (you can also return it to a cell)
+    MsgBox result
+End Sub
+
+
+
+
+
 Public Function GetFormattedDataFromCSharp(headerRange As Range, valueRange As Range) As String
     Dim excelProcessor As Object
     Set excelProcessor = CreateObject("MyNamespace.ExcelDataProcessor")

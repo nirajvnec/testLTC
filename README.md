@@ -1,3 +1,13 @@
+Public Function GetFormattedDataFromCSharp(headerRange As Range, valueRange As Range) As String
+    Dim excelProcessor As Object
+    Set excelProcessor = CreateObject("MyNamespace.ExcelDataProcessor")
+    
+    GetFormattedDataFromCSharp = excelProcessor.GetFormattedData(headerRange, valueRange)
+End Function
+
+
+
+
 =TestCar()
 
 

@@ -1,13 +1,13 @@
 using System;
-using System.Runtime.InteropServices;
 using Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace MyCarLibrary
 {
     [ComVisible(true)]
-    [Guid("Your-GUID-Here")]  // Replace with an actual GUID
-    [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class ExcelDataProcessor
+    [Guid("Another-GUID-Here")]  // Replace with an actual GUID
+    [ClassInterface(ClassInterfaceType.None)]
+    public class Car : ICar
     {
         public string GetFormattedData(Range headerRange, Range valueRange)
         {
@@ -26,8 +26,27 @@ namespace MyCarLibrary
 
             return result;
         }
+
+        // Implement other methods of ICar here if necessary
     }
 }
+
+
+
+Public m_objCar As MyCarLibrary.Car
+
+Sub UseCarProcessor()
+    ' Create an instance of the Car object
+    Set m_objCar = New MyCarLibrary.Car
+    
+    Dim result As String
+
+    ' Assuming headerRange and valueRange are already defined
+    result = m_objCar.GetFormattedData(Range("A4:B4"), Range("A5:B7"))
+
+    ' Output the result (you can also return it to a cell)
+    MsgBox result
+End Sub
 
 
 

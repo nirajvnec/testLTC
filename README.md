@@ -1,3 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Grpc.Core;
+using Phonebook;
+using Microsoft.Extensions.Logging;
+
+namespace GrpcServer
+{
+    public class ContactServiceImpl : ContactService.ContactServiceBase
+    {
+        private readonly ILogger<ContactServiceImpl> _logger;
+        private readonly List<Contact> contacts = new List<Contact>();
+
+        public ContactServiceImpl(ILogger<ContactServiceImpl> logger)
+        {
+            _logger = logger;
+        }
+
+        public override Task<ContactResponse> AddContact(Contact request, ServerCallContext context)
+        {
+            _logger.LogInformation($"Adding contact: {request.Name}");
+            contacts.Add(request);
+            return Task.FromResult(new ContactResponse
+            {
+                Success = true,
+                Message = $"Contact {request.Name} added successfully."
+            });
+        }
+
+        public override Task<ContactList> GetAllContacts(Empty request, ServerCallContext context)
+        {
+            _logger.LogInformation("Getting all contacts");
+            var response = new ContactList();
+            response.Contacts.AddRange(contacts);
+            return Task.FromResult(response);
+        }
+
+        public override Task<ContactList> SearchContacts(SearchRequest request, ServerCallContext context)
+        {
+            _logger.LogInformation($"Searching contacts for: {request.Name}");
+            var matchingContacts = contacts
+                .Where(c => c.Name.Contains(request.Name, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            var response = new ContactList();
+            response.Contacts.AddRange(matchingContacts);
+            return Task.FromResult(response);
+        }
+    }
+
+    public class Program
+    {
+        const int Port = 50051;
+
+        public static void Main(string[] args)
+        {
+            var logger = LoggerFactory.Create(logging =>
+            {
+                logging.AddConsole();
+                logging.SetMinimumLevel(LogLevel.Information);
+            }).CreateLogger<ContactServiceImpl>();
+
+            Server server = new Server
+            {
+                Services = { ContactService.BindService(new ContactServiceImpl(logger)) },
+                Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
+            };
+
+            server.Start();
+
+            Console.WriteLine($"gRPC server listening on port {Port}");
+            Console.WriteLine("Press any key to stop the server...");
+            Console.ReadKey();
+
+            server.ShutdownAsync().Wait();
+        }
+    }
+}
+
+
+
+
 =UseCarProcessor(A4:B4, A5:B7)
 
 Public m_objCar As Object

@@ -1,4 +1,59 @@
 using System;
+using System.Threading.Tasks;
+using Grpc.Net.Client;
+using Phonebook;
+
+namespace GrpcClient
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            using var channel = GrpcChannel.ForAddress("http://localhost:50051");
+            var client = new ContactService.ContactServiceClient(channel);
+
+            // Add a contact
+            var newContact = new Contact
+            {
+                Name = "John Doe",
+                Email = "john.doe@example.com"
+            };
+            newContact.PhoneNumbers.Add("123-456-7890");
+            newContact.PhoneNumbers.Add("098-765-4321");
+
+            var addResponse = await client.AddContactAsync(newContact);
+            Console.WriteLine($"Add Contact Response: {addResponse.Message}");
+
+            // Get all contacts
+            var allContacts = await client.GetAllContactsAsync(new Empty());
+            Console.WriteLine("All Contacts:");
+            foreach (var contact in allContacts.Contacts)
+            {
+                Console.WriteLine($"- {contact.Name}: {string.Join(", ", contact.PhoneNumbers)}");
+            }
+
+            // Search contacts
+            var searchResponse = await client.SearchContactsAsync(new SearchRequest { Name = "John" });
+            Console.WriteLine("Search Results:");
+            foreach (var contact in searchResponse.Contacts)
+            {
+                Console.WriteLine($"- {contact.Name}: {string.Join(", ", contact.PhoneNumbers)}");
+            }
+
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

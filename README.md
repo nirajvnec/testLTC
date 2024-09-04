@@ -1,178 +1,96 @@
-using System;
-using System.Threading.Tasks;
+ProtoAttributor extension in Visual Studio
+
+Grpc.Net.Client
+
+
 using Grpc.Net.Client;
-using Phonebook;
+using Google.Protobuf.WellKnownTypes;
+using YourNamespace; // The namespace where your generated classes are
 
-namespace GrpcClient
+// Create a gRPC channel
+using var channel = GrpcChannel.ForAddress("https://your-server-address");
+
+// Create a client
+var client = new BridgeG2C.BridgeG2CClient(channel);
+
+// Create and populate the input message
+var input = new CalcInputRepriceables
 {
-    class Program
+    Repriceables = new Repriceables
     {
-        static async Task Main(string[] args)
+        Sequence = 
         {
-            using var channel = GrpcChannel.ForAddress("http://localhost:50051");
-            var client = new ContactService.ContactServiceClient(channel);
-
-            // Add a contact
-            var newContact = new Contact
+            new Repriceable
             {
-                Name = "John Doe",
-                Email = "john.doe@example.com"
-            };
-            newContact.PhoneNumbers.Add("123-456-7890");
-            newContact.PhoneNumbers.Add("098-765-4321");
-
-            var addResponse = await client.AddContactAsync(newContact);
-            Console.WriteLine($"Add Contact Response: {addResponse.Message}");
-
-            // Get all contacts
-            var allContacts = await client.GetAllContactsAsync(new Empty());
-            Console.WriteLine("All Contacts:");
-            foreach (var contact in allContacts.Contacts)
-            {
-                Console.WriteLine($"- {contact.Name}: {string.Join(", ", contact.PhoneNumbers)}");
+                TheType = "SomeType",
+                TheExprCcy = "USD",
+                TheValue = 100.0,
+                TheSurface = new Surface
+                {
+                    Version = 1,
+                    Label = new Strings { Sequence = { "Label1", "Label2" } },
+                    Origin = new Doubles { Sequence = { 0.0, 0.0 } },
+                    Points = new RevalPoints
+                    {
+                        Sequence = 
+                        {
+                            new RevalPoint
+                            {
+                                CoOrd = new Doubles { Sequence = { 1.0, 1.0 } },
+                                Value = 10.0
+                            }
+                        }
+                    }
+                },
+                TheStrip = new DatedPLStrip
+                {
+                    Sequence = 
+                    {
+                        new DatedPL
+                        {
+                            TheDate = new Date { Day = 1, Month = 1, Year = 2024 },
+                            TheValue = 1000.0
+                        }
+                    }
+                },
+                TheAttributes = new RepriceableAttributes
+                {
+                    Sequence = 
+                    {
+                        new RepriceableAttribute { Name = "Attr1", Value = "Value1" }
+                    }
+                }
             }
+        }
+    },
+    Ctx = new VaRContext
+    {
+        Sequence = 
+        {
+            new KeyValuePair { Key = "ContextKey", Value = "ContextValue" }
+        }
+    }
+};
 
-            // Search contacts
-            var searchResponse = await client.SearchContactsAsync(new SearchRequest { Name = "John" });
-            Console.WriteLine("Search Results:");
-            foreach (var contact in searchResponse.Contacts)
-            {
-                Console.WriteLine($"- {contact.Name}: {string.Join(", ", contact.PhoneNumbers)}");
-            }
+try
+{
+    // Call the gRPC method
+    CalcOutputVaRNumber response = await client.aggregatedVaRAsync(input);
 
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+    // Process the response
+    Console.WriteLine($"VaR: {response.Out.Val}");
+    foreach (var record in response.Log.Sequence)
+    {
+        foreach (var kvp in record.Sequence)
+        {
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
         }
     }
 }
-
-
-
-
-
-
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Grpc.Core;
-using Phonebook;
-using Microsoft.Extensions.Logging;
-
-namespace GrpcServer
+catch (RpcException e)
 {
-    public class ContactServiceImpl : ContactService.ContactServiceBase
-    {
-        private readonly ILogger<ContactServiceImpl> _logger;
-        private readonly List<Contact> contacts = new List<Contact>();
-
-        public ContactServiceImpl(ILogger<ContactServiceImpl> logger)
-        {
-            _logger = logger;
-        }
-
-        public override Task<ContactResponse> AddContact(Contact request, ServerCallContext context)
-        {
-            _logger.LogInformation($"Adding contact: {request.Name}");
-            contacts.Add(request);
-            return Task.FromResult(new ContactResponse
-            {
-                Success = true,
-                Message = $"Contact {request.Name} added successfully."
-            });
-        }
-
-        public override Task<ContactList> GetAllContacts(Empty request, ServerCallContext context)
-        {
-            _logger.LogInformation("Getting all contacts");
-            var response = new ContactList();
-            response.Contacts.AddRange(contacts);
-            return Task.FromResult(response);
-        }
-
-        public override Task<ContactList> SearchContacts(SearchRequest request, ServerCallContext context)
-        {
-            _logger.LogInformation($"Searching contacts for: {request.Name}");
-            var matchingContacts = contacts
-                .Where(c => c.Name.Contains(request.Name, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            var response = new ContactList();
-            response.Contacts.AddRange(matchingContacts);
-            return Task.FromResult(response);
-        }
-    }
-
-    public class Program
-    {
-        const int Port = 50051;
-
-        public static void Main(string[] args)
-        {
-            var logger = LoggerFactory.Create(logging =>
-            {
-                logging.AddConsole();
-                logging.SetMinimumLevel(LogLevel.Information);
-            }).CreateLogger<ContactServiceImpl>();
-
-            Server server = new Server
-            {
-                Services = { ContactService.BindService(new ContactServiceImpl(logger)) },
-                Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
-            };
-
-            server.Start();
-
-            Console.WriteLine($"gRPC server listening on port {Port}");
-            Console.WriteLine("Press any key to stop the server...");
-            Console.ReadKey();
-
-            server.ShutdownAsync().Wait();
-        }
-    }
+    Console.WriteLine($"RPC failed: {e.Status}");
 }
-
-
-
-
-=UseCarProcessor(A4:B4, A5:B7)
-
-Public m_objCar As Object
-
-Public Function UseCarProcessor(headerRange As Range, valueRange As Range) As String
-    ' Create an instance of the Car object using CreateObject
-    Set m_objCar = CreateObject("MyCarLibrary.Car")
-    
-    Dim result As String
-
-    ' Call the GetFormattedData method with the provided ranges
-    result = m_objCar.GetFormattedData(headerRange, valueRange)
-
-    ' Return the result
-    UseCarProcessor = result
-End Function
-
-
-=UseCarProcessor(A4:B4, A5:B7)
-
-
-Public m_objCar As MyCarLibrary.Car
-
-Public Function UseCarProcessor(headerRange As Range, valueRange As Range) As String
-    ' Create an instance of the Car object
-    Set m_objCar = New MyCarLibrary.Car
-    
-    Dim result As String
-
-    ' Call the GetFormattedData method with the provided ranges
-    result = m_objCar.GetFormattedData(headerRange, valueRange)
-
-    ' Return the result
-    UseCarProcessor = result
-End Function
-
 
 
 using System;

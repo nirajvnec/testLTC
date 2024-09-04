@@ -1,5 +1,65 @@
 
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Office.Interop.Excel;
+
+public class ExcelDataProcessor
+{
+    public static List<List<string>> GetFormattedData(Range headerRange, Range dataRange, Range additionalDataRange)
+    {
+        var formattedData = new List<List<string>>();
+
+        // Process header
+        formattedData.Add(GetRangeValues(headerRange).FirstOrDefault()?.ToList() ?? new List<string>());
+
+        // Process main data
+        formattedData.AddRange(GetRangeValues(dataRange));
+
+        // Process additional data
+        var additionalDataDict = GetRangeValues(additionalDataRange)
+            .ToDictionary(row => row.FirstOrDefault() ?? "", row => row.ElementAtOrDefault(1) ?? "");
+
+        // Apply additional data to formatted data
+        for (int i = 1; i < formattedData.Count; i++)
+        {
+            var key = formattedData[i].FirstOrDefault() ?? "";
+            if (additionalDataDict.TryGetValue(key, out var value))
+            {
+                formattedData[i].Add(value);
+            }
+        }
+
+        return formattedData;
+    }
+
+    private static List<List<string>> GetRangeValues(Range range)
+    {
+        var result = new List<List<string>>();
+        if (range?.Value is object[,] values)
+        {
+            int rows = values.GetLength(0);
+            int cols = values.GetLength(1);
+
+            for (int i = 1; i <= rows; i++)
+            {
+                var row = new List<string>();
+                for (int j = 1; j <= cols; j++)
+                {
+                    row.Add(values[i, j]?.ToString() ?? "");
+                }
+                result.Add(row);
+            }
+        }
+        return result;
+    }
+}
+
+
+
+
+
 =GetFormattedData(Sheet2!A10:W10, Sheet2!A11:X70, Sheet3!B20:C35)
 
 

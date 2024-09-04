@@ -1,6 +1,51 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
+public class ExcelDataProcessor
+{
+    public static List<List<string>> GetFormattedData(string[,] headerRange, string[,] dataRange, string[,] additionalDataRange)
+    {
+        var formattedData = new List<List<string>>
+        {
+            // Process header using string interpolation and nameof expression
+            Enumerable.Range(0, headerRange.GetLength(1))
+                .Select(i => $"{nameof(headerRange)}[0, {i}]: {headerRange[0, i]}")
+                .ToList()
+        };
+
+        // Process main data using element access expression
+        formattedData.AddRange(
+            Enumerable.Range(0, dataRange.GetLength(0))
+                .Select(row => Enumerable.Range(0, dataRange.GetLength(1))
+                    .Select(col => dataRange[row, col])
+                    .ToList())
+        );
+
+        // Process additional data using dictionary initializer and null-conditional operator
+        var additionalDataDict = Enumerable.Range(0, additionalDataRange.GetLength(0))
+            .ToDictionary(i => additionalDataRange[i, 0], i => additionalDataRange[i, 1]);
+
+        // Apply additional data to formatted data using index initializer
+        for (int i = 1; i < formattedData.Count; i++)
+        {
+            var key = formattedData[i][0];
+            if (additionalDataDict.TryGetValue(key, out var value))
+            {
+                formattedData[i].Add(value);
+            }
+        }
+
+        return formattedData;
+    }
+}
+
+
+
+
+using System;
+using System.Collections.Generic;
 
 public class ExcelDataProcessor
 {

@@ -1,3 +1,64 @@
+
+using System;
+using System.Collections.Generic;
+
+public class ExcelDataProcessor
+{
+    public static List<List<string>> GetFormattedData(
+        string[,] headerRange,
+        string[,] dataRange,
+        string[,] additionalDataRange)
+    {
+        List<List<string>> formattedData = new List<List<string>>();
+
+        // Process header
+        List<string> header = new List<string>();
+        for (int i = 0; i < headerRange.GetLength(1); i++)
+        {
+            header.Add(headerRange[0, i]);
+        }
+        formattedData.Add(header);
+
+        // Process main data
+        for (int row = 0; row < dataRange.GetLength(0); row++)
+        {
+            List<string> rowData = new List<string>();
+            for (int col = 0; col < dataRange.GetLength(1); col++)
+            {
+                rowData.Add(dataRange[row, col]);
+            }
+            formattedData.Add(rowData);
+        }
+
+        // Process additional data
+        Dictionary<string, string> additionalDataDict = new Dictionary<string, string>();
+        for (int i = 0; i < additionalDataRange.GetLength(0); i++)
+        {
+            string key = additionalDataRange[i, 0];
+            string value = additionalDataRange[i, 1];
+            additionalDataDict[key] = value;
+        }
+
+        // Apply additional data to formatted data (assuming it modifies existing data)
+        for (int i = 1; i < formattedData.Count; i++) // Start from 1 to skip header
+        {
+            string key = formattedData[i][0]; // Assume first column is the key
+            if (additionalDataDict.ContainsKey(key))
+            {
+                formattedData[i].Add(additionalDataDict[key]);
+            }
+        }
+
+        return formattedData;
+    }
+}
+
+
+
+
+
+
+
 ProtoAttributor extension in Visual Studio
 
 Grpc.Net.Client

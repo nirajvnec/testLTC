@@ -1,4 +1,9 @@
 
+
+=GetFormattedData(Sheet2!A10:W10, Sheet2!A11:X70, Sheet3!B20:C35)
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

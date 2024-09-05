@@ -1,3 +1,63 @@
+
+
+using System;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+
+public static class WorksheetExtensions
+{
+    public static Excel.Range Range(this Excel.Worksheet worksheet, object cellOrRange)
+    {
+        return worksheet.Range[cellOrRange];
+    }
+
+    public static Excel.Range Range(this Excel.Worksheet worksheet, object startCell, object endCell)
+    {
+        return worksheet.Range[startCell, endCell];
+    }
+}
+
+public class ExcelOperations
+{
+    private Excel.Application excelApp;
+    private Excel.Workbook workbook;
+    private Excel.Worksheet worksheet;
+
+    public ExcelOperations()
+    {
+        excelApp = new Excel.Application();
+        workbook = excelApp.Workbooks.Add();
+        worksheet = workbook.ActiveSheet;
+    }
+
+    public void ExampleUsage()
+    {
+        // Equivalent to VBA: Set myRange = Application.Range("A1:B5")
+        Excel.Range myRange1 = worksheet.Range("A1:B5");
+
+        // Equivalent to VBA: Set myRange = Application.Range(Cells(1, 1), Cells(5, 2))
+        Excel.Range myRange2 = worksheet.Range(worksheet.Cells[1, 1], worksheet.Cells[5, 2]);
+
+        // Do something with the ranges
+        myRange1.Value = "Hello";
+        myRange2.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Yellow);
+    }
+
+    public void CleanUp()
+    {
+        // Clean up COM objects
+        System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
+        workbook.Close();
+        System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+        excelApp.Quit();
+        System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+    }
+}
+
+
+
+
+
 # Proposed Solution for C++ to C# Integration - Using C++ HTTPS API
 
 ## Overview

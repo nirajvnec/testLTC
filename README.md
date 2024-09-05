@@ -1,3 +1,22 @@
+Sub DisplayRangeValues()
+    Dim rng As Range
+    Dim cell As Range
+    Dim displayString As String
+    
+    Set rng = Application.Range("A10:D10")
+    
+    For Each cell In rng
+        displayString = displayString & cell.Value & vbTab
+    Next cell
+    
+    MsgBox displayString, vbInformation, "Range A10:D10 Values"
+End Sub
+
+
+
+
+
+
 
 using System;
 using Microsoft.Office.Interop.Excel;

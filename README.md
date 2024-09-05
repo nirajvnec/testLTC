@@ -1,3 +1,36 @@
+# Proposed Solution for C++ to C# Integration - Using C++ HTTPS API
+
+## Overview
+
+Following our talk about the challenges of converting our C++ risk calculation module to C#, we'd like to propose a solution to help us better understand our approach while leveraging our existing C++ expertise.
+
+## Proposed Solution
+
+Instead of converting the entire C++ codebase to C#, we suggest creating a C++ HTTPS API that encapsulates our existing C++ logic. The C# code would then only be responsible for passing Excel range references to this API.
+
+### How It Works
+
+1. **C# Responsibility:**
+   - The C# code would handle the Excel interaction, extracting necessary data.
+   - It would then pass Excel range references (e.g., "A10:W10", "A11:W70") to the C++ HTTPS API.
+
+2. **C++ HTTPS API:**
+   - We would create a new C++ HTTPS API that exposes endpoints for our risk calculation functions.
+   - This API would internally use our existing C++ logic for calculations.
+   - It would accept Excel range references as input and return calculated results.
+
+3. **Integration:**
+   - The C# code would make HTTPS calls to the C++ API, passing the Excel ranges as parameters.
+   - The C++ API would process these ranges and return the results.
+   - C# would then handle the response and update Excel as needed.
+
+This solution allows us to maintain our C++ codebase's integrity while providing a clean interface for C# integration. It also opens up possibilities for future enhancements and scalability.
+
+
+
+
+
+
 # Challenges in C++ to C# Conversion
 
 After a thorough review, we've identified several challenges that make this conversion a significant undertaking:
@@ -22,6 +55,10 @@ The code deals with complex data structures, for instance:
 ```csharp
 objRepriceable.SetSurface(adblPoint, astrLabel);
 objRepriceable.SetInputPLStrip(adteCOBDate, adblPL);
+
+
+
+
 
 
 

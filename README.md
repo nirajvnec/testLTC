@@ -1,3 +1,30 @@
+# Challenges in C++ to C# Conversion
+
+After a thorough review, we've identified several challenges that make this conversion a significant undertaking:
+
+## 1. Mixed Language Integration
+
+Our current system uses VBA code that interacts with C++ classes and methods from the CreditSuisseRiskServer namespace. For example:
+
+- `ConstructSensDetailList` instantiates `MarsRiskRepriceables`
+- Methods like `Add`, `SetSurface`, and `SetInputPLStrip` are called on C++ objects
+
+Translating these C++ components to C# while ensuring seamless interaction with the existing VBA code will be complex.
+
+## 2. COM Interop Considerations
+
+The current C++ code likely uses COM for interoperability with VBA. Switching to C# will require careful management of COM interop to maintain compatibility with the existing VBA code.
+
+## 3. Complex Data Structures
+
+The code deals with complex data structures, for instance:
+
+```csharp
+objRepriceable.SetSurface(adblPoint, astrLabel);
+objRepriceable.SetInputPLStrip(adteCOBDate, adblPL);
+
+
+
 using System;
 using Microsoft.Office.Interop.Excel;
 using CreditSuisseRiskServer;

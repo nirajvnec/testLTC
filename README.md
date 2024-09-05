@@ -1,3 +1,24 @@
+
+Sub DisplayRangeValues()
+    Dim rng As Range
+    Dim cell As Range
+    Dim displayString As String
+    
+    Set rng = Application.Range("A10:D10")
+    
+    For Each cell In rng
+        displayString = displayString & cell.Value & vbTab
+        Debug.Print cell.Address & ": " & cell.Value
+    Next cell
+    
+    MsgBox displayString, vbInformation, "Range A10:D10 Values"
+    
+    Debug.Print "Complete range: " & displayString
+End Sub
+
+
+
+
 Sub DisplayRangeValues()
     Dim rng As Range
     Dim cell As Range

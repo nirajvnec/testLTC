@@ -1,4 +1,39 @@
 
+Sub PrintMarsRepriceablesInfo()
+    Dim marsRepriceables As Object  ' Assuming MarsRepriceables is your C++ type
+    Dim item As Variant
+    Dim count As Long
+    
+    ' Create or get your MarsRepriceables object here
+    ' Set marsRepriceables = CreateObject("YourLibrary.MarsRepriceables") or however you instantiate it
+    
+    ' Assuming Item is a collection or array-like member
+    For Each item In marsRepriceables.Item
+        Debug.Print "Item: " & item
+    Next item
+    
+    ' Assuming Count is a numeric value
+    count = marsRepriceables.Count
+    Debug.Print "Count: " & count
+    
+    ' If you want to display in a message box as well
+    Dim displayString As String
+    displayString = "Items:" & vbNewLine
+    
+    For Each item In marsRepriceables.Item
+        displayString = displayString & item & vbNewLine
+    Next item
+    
+    displayString = displayString & vbNewLine & "Count: " & count
+    
+    MsgBox displayString, vbInformation, "MarsRepriceables Info"
+End Sub
+```
+
+This subroutine does the following:
+
+
+
 Sub DisplayRangeValues()
     Dim rng As Range
     Dim cell As Range

@@ -1,4 +1,68 @@
 
+using System;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+
+public class ExcelOperations
+{
+    private static Excel.Application excelApp;
+    private static Excel.Workbook workbook;
+    private static Excel.Worksheet worksheet;
+
+    static ExcelOperations()
+    {
+        excelApp = new Excel.Application();
+        workbook = excelApp.Workbooks.Add();
+        worksheet = workbook.ActiveSheet;
+    }
+
+    public static Excel.Range Range(string rangeAddress)
+    {
+        if (string.IsNullOrEmpty(rangeAddress))
+        {
+            throw new ArgumentException("Range address cannot be null or empty", nameof(rangeAddress));
+        }
+
+        try
+        {
+            return worksheet.Range[rangeAddress];
+        }
+        catch (System.Runtime.InteropServices.COMException ex)
+        {
+            throw new ArgumentException($"Invalid range address: {rangeAddress}", nameof(rangeAddress), ex);
+        }
+    }
+
+    public static void ExampleUsage()
+    {
+        // Using the static Range method
+        Excel.Range myRange = Range("A10:W10");
+
+        // Do something with the range
+        myRange.Value = "Hello from C#";
+        myRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Yellow);
+
+        Console.WriteLine($"Set value in range {myRange.Address}");
+    }
+
+    public static void CleanUp()
+    {
+        // Clean up COM objects
+        System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
+        workbook.Close();
+        System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+        excelApp.Quit();
+        System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+    }
+}
+
+
+
+
+
+
+
+
 
 using System;
 using Microsoft.Office.Interop.Excel;

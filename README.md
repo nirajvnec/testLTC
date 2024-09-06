@@ -1,4 +1,8 @@
 
+ to follow up regarding the training session held on August 28, 2024. I have received emails indicating that I have not attended the session, but I can confirm that I participated in the training on the mentioned date.Could you kindly check and update the records to reflect my attendance?Thank you for your assistance.
+
+
+
 Sub PrintMarsRepriceablesInfo()
     Dim marsRepriceables As Object  ' Assuming MarsRepriceables is your C++ type
     Dim item As Variant

@@ -1,3 +1,6 @@
+I’m following up regarding the training session I attended on August 28, 2024. It seems that I haven’t received any confirmation from Shreesha that my attendance has been marked as complete for this session.
+
+
 
  to follow up regarding the training session held on August 28, 2024. I have received emails indicating that I have not attended the session, but I can confirm that I participated in the training on the mentioned date.Could you kindly check and update the records to reflect my attendance?Thank you for your assistance.
 

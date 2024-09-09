@@ -1,85 +1,42 @@
-using var channel = GrpcChannel.ForAddress("http://gbld9065051.eu.hedani.net:54911");
-var client = new mars.proto.risk_server.BridgeG2C.BridgeG2CClient(channel);
+syntax = "proto3";
 
-try
-{
-    var request = new req_exchangeRate
-    {
-        NumeratorCcy = "INR",
-        DenominatorCcy = "GBP",
-        Ctx = new VaRContext()
-    };
+option csharp_namespace = "Mars.Proto.RiskServer";
 
-    request.Ctx.Sequence.Add(new GrpcClient1.KeyValuePair { Key = "REFERENCEDATE", Value = "20240509" });
+package mars.proto.risk_server;
 
-    var responseVaR = await client.exchangeRateAsync(request);
-    // Process the response here
-}
-catch (Exception ex)
-{
-    // Handle the exception
-    Console.WriteLine($"An error occurred: {ex.Message}");
+service BridgeG2C {
+  rpc aggregatedVaR(CalcInputRepriceables) returns (CalcOutputVaRNumber) {}
+  rpc exchangeRate(req_exchangeRate) returns (resp_exchangeRate) {}
 }
 
+message req_exchangeRate {
+  string numerator_ccy = 1;
+  string denominator_ccy = 2;
+  VaRContext ctx = 3;
+}
 
+message resp_exchangeRate {
+  VaRNumber out = 1;
+}
 
-var request = new req_exchangeRate
-{
-    NumeratorCcy = "INR",
-    DenominatorCcy = "GBP",
-    Ctx = new VaRContext
-    {
-        Values = { ["REFERENCEDATE"] = "20240509" }
-    }
-};
-To provide a more accurate solution, we would need to see the prot
+message VaRNumber {
+  double val = 1;
+}
 
+message VaRContext {
+  repeated KeyValuePair sequence = 1;
+}
 
-var request = new req_exchangeRate
-{
-    NumeratorCcy = "INR",
-    DenominatorCcy = "GBP",
-    Ctx = new VaRContext()
-};
+message KeyValuePair {
+  string key = 1;
+  string value = 2;
+}
 
-request.Ctx.Add(new KeyValuePair { Key = "REFERENCEDATE", Value = "20240509" });
+// You need to define CalcInputRepriceables and CalcOutputVaRNumber
+message CalcInputRepriceables {
+  // Define fields here
+}
 
-
-
-using System;
-using System.Threading.Tasks;
-using Grpc.Net.Client;
-using Mars.Proto.RiskServer;
-
-class Program
-{
-    static async Task Main(string[] args)
-    {
-        // Use the unsecure endpoint for this example
-        using var channel = GrpcChannel.ForAddress("http://gbld9065051.eu.hedani.net:54911");
-        var client = new BridgeG2C.BridgeG2CClient(channel);
-
-        try
-        {
-            // Prepare the request
-            var request = new ExchangeRateRequest
-            {
-                NumeratorCcy = "INR",
-                DenominatorCcy = "GBP",
-                CommonVarContextCtx = "3"
-            };
-
-            // Call the aggregatedVaR method
-            var responseVaR = await client.AggregatedVaRAsync(request);
-            Console.WriteLine($"AggregatedVaR response: {responseVaR.CommonVarNumberOut}");
-
-            // Call the aggregatedPL method
-            var responsePL = await client.AggregatedPLAsync(request);
-            Console.WriteLine($"AggregatedPL response: {responsePL.CommonVarNumberOut}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
-    }
+message CalcOutputVaRNumber {
+  // Define fields here
 }

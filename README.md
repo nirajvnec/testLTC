@@ -2,6 +2,18 @@ var request = new req_exchangeRate
 {
     NumeratorCcy = "INR",
     DenominatorCcy = "GBP",
+    Ctx = new VaRContext
+    {
+        Values = { ["REFERENCEDATE"] = "20240509" }
+    }
+};
+To provide a more accurate solution, we would need to see the prot
+
+
+var request = new req_exchangeRate
+{
+    NumeratorCcy = "INR",
+    DenominatorCcy = "GBP",
     Ctx = new VaRContext()
 };
 

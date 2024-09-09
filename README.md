@@ -1,3 +1,14 @@
+var request = new req_exchangeRate
+{
+    NumeratorCcy = "INR",
+    DenominatorCcy = "GBP",
+    Ctx = new VaRContext()
+};
+
+request.Ctx.Add(new KeyValuePair { Key = "REFERENCEDATE", Value = "20240509" });
+
+
+
 using System;
 using System.Threading.Tasks;
 using Grpc.Net.Client;

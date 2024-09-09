@@ -1,3 +1,28 @@
+using var channel = GrpcChannel.ForAddress("http://gbld9065051.eu.hedani.net:54911");
+var client = new mars.proto.risk_server.BridgeG2C.BridgeG2CClient(channel);
+
+try
+{
+    var request = new req_exchangeRate
+    {
+        NumeratorCcy = "INR",
+        DenominatorCcy = "GBP",
+        Ctx = new VaRContext()
+    };
+
+    request.Ctx.Sequence.Add(new GrpcClient1.KeyValuePair { Key = "REFERENCEDATE", Value = "20240509" });
+
+    var responseVaR = await client.exchangeRateAsync(request);
+    // Process the response here
+}
+catch (Exception ex)
+{
+    // Handle the exception
+    Console.WriteLine($"An error occurred: {ex.Message}");
+}
+
+
+
 var request = new req_exchangeRate
 {
     NumeratorCcy = "INR",

@@ -3,6 +3,28 @@ using System;
 
 public static class StringExtensions
 {
+    public static string ToCapitalizedBoolean(this string input)
+    {
+        if (bool.TryParse(input, out bool boolValue))
+        {
+            // Return the capitalized version of the boolean value
+            return boolValue.ToString().ToUpper();
+        }
+        else
+        {
+            // Return the original string if it's not a valid boolean
+            return input;
+        }
+    }
+}
+
+
+
+
+using System;
+
+public static class StringExtensions
+{
     public static string ToFormattedDate(this string input)
     {
         if (DateTime.TryParse(input, out DateTime tempDate))

@@ -1,4 +1,7 @@
 
+dotnet add package Microsoft.Office.Interop.Excel
+
+
 using System;
 
 public static class StringExtensions

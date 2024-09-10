@@ -1,42 +1,51 @@
-syntax = "proto3";
 
-option csharp_namespace = "Mars.Proto.RiskServer";
+using System;
+using System.Collections.Generic;
+using Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
-package mars.proto.risk_server;
+public List<KeyValuePair<string, string>> PopulateFromExcelRange(Range excelRange)
+{
+    List<KeyValuePair<string, string>> result = new List<KeyValuePair<string, string>>();
 
-service BridgeG2C {
-  rpc aggregatedVaR(CalcInputRepriceables) returns (CalcOutputVaRNumber) {}
-  rpc exchangeRate(req_exchangeRate) returns (resp_exchangeRate) {}
+    try
+    {
+        // Assume the first column is the key and the second column is the value
+        for (int row = 1; row <= excelRange.Rows.Count; row++)
+        {
+            string key = Convert.ToString((excelRange.Cells[row, 1] as Range).Value2);
+            string value = Convert.ToString((excelRange.Cells[row, 2] as Range).Value2);
+
+            // Add the key-value pair to the list
+            result.Add(new KeyValuePair<string, string>(key, value));
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error reading Excel data: {ex.Message}");
+    }
+    finally
+    {
+        // Clean up COM objects
+        if (excelRange != null)
+            Marshal.ReleaseComObject(excelRange);
+    }
+
+    return result;
 }
+```
 
-message req_exchangeRate {
-  string numerator_ccy = 1;
-  string denominator_ccy = 2;
-  VaRContext ctx = 3;
-}
+To use this method, you would call it like this:
 
-message resp_exchangeRate {
-  VaRNumber out = 1;
-}
+```csharp
+// Assuming you have already opened the Excel workbook and worksheet
+Worksheet worksheet = (Worksheet)workbook.Worksheets[1];
+Range range = worksheet.UsedRange;
 
-message VaRNumber {
-  double val = 1;
-}
+List<KeyValuePair<string, string>> myList = PopulateFromExcelRange(range);
 
-message VaRContext {
-  repeated KeyValuePair sequence = 1;
-}
-
-message KeyValuePair {
-  string key = 1;
-  string value = 2;
-}
-
-// You need to define CalcInputRepriceables and CalcOutputVaRNumber
-message CalcInputRepriceables {
-  // Define fields here
-}
-
-message CalcOutputVaRNumber {
-  // Define fields here
-}
+// Don't forget to clean up COM objects when you're done
+Marshal.ReleaseComObject(worksheet);
+Marshal.ReleaseComObject(workbook);
+Marshal.ReleaseComObject(excelApp);
+```

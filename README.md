@@ -1,5 +1,26 @@
 
 using System;
+
+public static class StringExtensions
+{
+    public static string ToFormattedDate(this string input)
+    {
+        if (DateTime.TryParse(input, out DateTime tempDate))
+        {
+            // Return the date in YYYYMMDD format
+            return tempDate.ToString("yyyyMMdd");
+        }
+        else
+        {
+            // Return an empty string or any error message
+            return string.Empty;
+        }
+    }
+}
+
+
+
+using System;
 using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;

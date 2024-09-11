@@ -1,4 +1,40 @@
 
+using Grpc.Net.Client;
+using Grpc.Net.Client.Web;
+using System;
+using System.Threading.Tasks;
+
+namespace GrpcClient
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            // Configure the HttpClient to use gRPC-Web
+            var httpClientHandler = new HttpClientHandler();
+            var grpcWebHandler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, httpClientHandler);
+
+            // Create a channel to connect to the gRPC service
+            var channel = GrpcChannel.ForAddress("http://localhost:5000", new GrpcChannelOptions
+            {
+                HttpHandler = grpcWebHandler
+            });
+
+            // Create a client using the generated client class
+            var client = new Greeter.GreeterClient(channel);
+
+            // Call the gRPC service
+            var reply = await client.SayHelloAsync(new HelloRequest { Name = "Niraj" });
+
+            // Print the response
+            Console.WriteLine("Greeting: " + reply.Message);
+        }
+    }
+}
+
+
+
+
 dotnet add package Microsoft.Office.Interop.Excel
 
 

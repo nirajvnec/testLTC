@@ -1,3 +1,8 @@
+Hi Marlena,
+
+I attended the session on August 20th and am attaching a screenshot of the Microsoft Teams invite for reference. I recall participating in the group discussion as well, but I am unable to find the conversation in Teams, as it seems to have been deleted.
+
+
 Update-Package System.Memory -Version 4.0.1
 
 

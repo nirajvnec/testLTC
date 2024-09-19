@@ -1,3 +1,34 @@
+using System;
+using System.Text.RegularExpressions;
+
+public static class StringExtensions
+{
+    // Extension method to extract the value inside (Mxxxxx) format
+    public static string ExtractCode(this string input)
+    {
+        string pattern = @"(M\d+)";
+        Match match = Regex.Match(input, pattern);
+        
+        return match.Success ? match.Groups[1].Value : string.Empty;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        string sub = "CN=niraj.kumar.4 (M850326), OU=st, DC=edit, DC=hedani, DC=net";
+        
+        // Use the extension method
+        string extractedValue = sub.ExtractCode();
+        
+        Console.WriteLine("Extracted Value: " + extractedValue);
+    }
+}
+
+
+
+
 
 "Kindly update my attendance record to reflect my presence, as I attended the session but was mistakenly marked as absent."
 

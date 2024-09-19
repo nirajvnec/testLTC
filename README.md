@@ -1,3 +1,8 @@
+
+string pattern = @"\(M(\d+)\)";
+
+
+
 using System;
 using System.Text.RegularExpressions;
 

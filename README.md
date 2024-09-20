@@ -1,4 +1,11 @@
 
+ lacks technical expertise and is unsure of how to assign tasks to the appropriate teams. He shows favoritism, often crediting individuals who do little to no work, while failing to acknowledge those who truly deserve recognition. Working with him is quite unpleasant.
+
+
+
+
+
+
 
 @"\((.*?)\)";
 

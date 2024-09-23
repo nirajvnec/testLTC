@@ -1,3 +1,8 @@
+Install-Package Microsoft.Extensions.Caching.Memory
+
+
+Install-Package Microsoft.Extensions.Options
+Install-Package Microsoft.Extensions.DependencyInjection.Abstractions
 
 
 using Microsoft.Extensions.Caching.Memory;

@@ -3,6 +3,37 @@
 using Microsoft.Extensions.Caching.Memory;
 using System;
 
+public static class CacheService
+{
+    // Static IMemoryCache instance
+    private static IMemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
+
+    // Static method to cache a value without expiration
+    public static void CacheValue(string key, string value)
+    {
+        _cache.Set(key, value);
+    }
+
+    // Static method to retrieve a cached value
+    public static string GetCachedValue(string key)
+    {
+        _cache.TryGetValue(key, out string cachedValue);
+        return cachedValue;
+    }
+
+    // Static method to remove a cached value
+    public static void RemoveCachedValue(string key)
+    {
+        _cache.Remove(key);
+    }
+}
+
+
+
+
+using Microsoft.Extensions.Caching.Memory;
+using System;
+
 public class CacheService
 {
     private IMemoryCache _cache;

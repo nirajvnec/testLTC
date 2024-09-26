@@ -1,4 +1,8 @@
 
+"When we launched the TSRD application today, we did not encounter a client certificate pop-up. We are unsure how the client certificate is being passed to the server, as this portion of the code is not within our control. To gain a better understanding of this process, further investigation is required. If we need to enable the client certificate pop-up for our web applications, like MarsNet and others, we would need to configure the client certificate settings in IIS where the MarsNet web app is hosted."
+
+
+
 "When the MET application is launched, the user is prompted with a client certificate pop-up. The user selects a certificate, and the application retrieves the PID and other necessary details from the subject of the selected certificate. Additionally, the application utilizes the Windows NTID, obtained through Windows authentication, to query Active Directory for further information."
 
 Does that sound good, or would you like any adjustments?

@@ -1,4 +1,12 @@
 
+"When the MET application is launched, the user is prompted with a client certificate pop-up. The user selects a certificate, and the application retrieves the PID and other necessary details from the subject of the selected certificate. Additionally, the application utilizes the Windows NTID, obtained through Windows authentication, to query Active Directory for further information."
+
+Does that sound good, or would you like any adjustments?
+
+
+
+
+
 flowchart TD
     A[Application Initialization] --> B[Get User's Name and Domain]
     B --> C[Retrieve PID using LDAP from AD]

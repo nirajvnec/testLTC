@@ -1,4 +1,61 @@
 
+flowchart TD
+    A[Application Initialization] --> B[Get User's Name and Domain]
+    B --> C[Retrieve PID using LDAP from AD]
+    C --> F[User app permissions are fetched by passing User's Windows NTId To Security Server]
+    F --> D[API Calls Mars, UDM, Myriad]
+    A --> E[Open X509 Certificate Store]
+
+    subgraph "Step 1: Application Initialization (All Apps)"
+    A --> A1[Initialize Application]
+    A1 --> A2[Set Up Logging]
+    A2 --> A3[Load Configuration]
+    end
+
+    subgraph "Step 2: Get User's Name and Domain (Only Windows app)"
+    B --> B1[Environment.UserName]
+    B --> B2[Environment.UserDomainName]
+    end
+
+    subgraph "Step 3: Retrieve PID using LDAP from AD (Only Windows app)"
+    C --> C1[Connect to Active Directory]
+    C1 --> C2[Perform LDAP Query using NTID]
+    C2 --> C3[Extract PID from LDAP Result]
+    end
+
+    subgraph "Step 4: Fetch User Access"
+    F --> F1[Connect to Security Server]
+    F1 --> F2[Send UserName i.e., Windows NTID to Security Server]
+    F2 --> F3[Receive User App Permissions]
+    end
+
+    subgraph "Step 5: API Calls Mars, UDM, Myriad"
+    D --> D1[Create HTTP GET/POST Request]
+    D1 --> D2[Add Client Certificate]
+    D2 --> D3[Configure Request Properties]
+    D3 --> D4[Set Content-Type & Request Body]
+    D4 --> D5[Enable TCP Keep-Alive]
+    end
+
+    subgraph "Step 6: Open X509 Certificate Store"
+    E --> E1[Search for Valid Certificates]
+    E1 --> E2[Prompt User to Select Certificate]
+    E2 --> E3[Retrieve Selected Certificate]
+    E3 --> E4[Close Certificate Store]
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 using Microsoft.Extensions.Caching.Memory;
 using System;

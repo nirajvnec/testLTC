@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
   A[Application Initialization] --> |Get User's Name and Domain| B
   B --> C[Retrieve PID using LDAP from AD]

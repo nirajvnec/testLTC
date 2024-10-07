@@ -1,51 +1,62 @@
-```mermaid
-flowchart LR
-A[Application Initialization] --> B(Get User's Name and Domain)
-B --> C{Retrieve PID using LDAP from AD}
-C --> D{Fetch App Permissions AD fetched by PID To Security Server}
-D --> E[Open X509 Certificate Store]
-E --> F[API Calls Mars, GEM, Myriad]
 
-subgraph "Step 1: Application Initialization"
-direction TB
-A --> A1[Initialize Application]
-A1 --> A2[Set Up Logging]
-A2 --> A3[Load Configuration]
-end
 
-subgraph "Step 2: Get User's Name and Domain"
-direction TB
-B --> B1[Environment.UserName]
-B --> B2[Environment.UserDomainName]
-end
 
-subgraph "Step 3: Retrieve PID using LDAP from AD"
-direction TB
-C --> C1[Connect To Active Directory]
-C1 --> C2[Perform LDAP Query]
-C2 --> C3[Extract PID from AD using LDAP Result]
-end
+public class CertificateMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly IClientCertificateService _clientCertificateService;
 
-subgraph "Step 4: Fetch User Apps Permissions"
-direction TB
-D --> F1[Connect to Security Server]
-F1 --> F2[Send PID to Security Server]
-F2 --> F3[Receive User App Permissions]
-end
+    public CertificateMiddleware(RequestDelegate next, IClientCertificateService clientCertificateService)
+    {
+        _next = next;
+        _clientCertificateService = clientCertificateService;
+    }
 
-subgraph "Step 5: Open X509 Certificate Store"
-direction TB
-E --> D1[Search for Valid Certificates]
-D1 --> D2[Prompt User to Select Certificate]
-D2 --> D3[Retrieve Selected Certificate]
-D3 --> D4[Close Certificate Store]
-end
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var clientCertificate = await context.Connection.GetClientCertificateAsync();
 
-subgraph "Step 6: API Calls Mars, GEM, Myriad"
-direction TB
-F --> E1[Create HTTP POST Request]
-E1 --> E2[Add Client Certificate]
-E2 --> E3[Configure Request Properties]
-E3 --> E4[Set Content-Type & Request Body]
-E4 --> E5[Enable TCP Keep-Alive]
-end
+        if (clientCertificate != null)
+        {
+            var subject = clientCertificate.Subject;
+            _clientCertificateService.Subject = ExtractSubjectFromCertificate(clientCertificate);
+        }
+
+        await _next(context);
+    }
+
+    private string ExtractSubjectFromCertificate(X509Certificate2 certificate)
+    {
+        // Assuming the "sub" (subject) is in the Subject field of the certificate
+        var subjectName = certificate.Subject;
+        // Extract "sub" from the subject if necessary. Adjust according to your certificate format.
+        return subjectName;
+    }
+}
+
+
+
+public interface IClientCertificateService
+{
+    string Subject { get; set; }
+}
+
+public class ClientCertificateService : IClientCertificateService
+{
+    public string Subject { get; set; }
+}
+
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSingleton<IClientCertificateService, ClientCertificateService>();
+}
+
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    // Other middlewares...
+    
+    app.UseMiddleware<CertificateMiddleware>();
+
+    // Other middlewares...
+}

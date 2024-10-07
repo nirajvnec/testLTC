@@ -1,3 +1,26 @@
+public class SomeController : ControllerBase
+{
+    private readonly IClientCertificateService _clientCertificateService;
+
+    public SomeController(IClientCertificateService clientCertificateService)
+    {
+        _clientCertificateService = clientCertificateService;
+    }
+
+    public IActionResult SomeAction()
+    {
+        var clientCertificateSubject = _clientCertificateService.Subject;
+        var clientCertificatePid = _clientCertificateService.Pid;
+
+        // Use the subject and Pid for your business logic
+        return Ok(new { Subject = clientCertificateSubject, Pid = clientCertificatePid });
+    }
+}
+
+
+
+
+
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
     // This should come early in the pipeline if the certificate is required for subsequent middlewares

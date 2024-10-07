@@ -1,60 +1,11 @@
-public class SomeController : ControllerBase
-{
-    private readonly IClientCertificateService _clientCertificateService;
-
-    public SomeController(IClientCertificateService clientCertificateService)
+public async Task InvokeAsync(HttpContext context)
     {
-        _clientCertificateService = clientCertificateService;
-    }
-
-    public IActionResult SomeAction()
-    {
-        var clientCertificateSubject = _clientCertificateService.Subject;
-        var clientCertificatePid = _clientCertificateService.Pid;
-
-        // Use the subject and Pid for your business logic
-        return Ok(new { Subject = clientCertificateSubject, Pid = clientCertificatePid });
-    }
-}
-
-
-
-
-
-public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-{
-    // This should come early in the pipeline if the certificate is required for subsequent middlewares
-    app.UseMiddleware<CertificateMiddleware>();
-
-    // Authentication Middleware (if you need to authenticate based on the client certificate)
-    app.UseAuthentication();
-
-    // Authorization Middleware (if you want to authorize based on the client certificate)
-    app.UseAuthorization();
-
-    // Other middlewares (like routing, endpoints, etc.)
-    app.UseRouting();
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllers();
-    });
-}
-
-
-
-public class CertificateMiddleware
-{
-    private readonly RequestDelegate _next;
-    private readonly IClientCertificateService _clientCertificateService;
-
-    public CertificateMiddleware(RequestDelegate next, IClientCertificateService clientCertificateService)
-    {
-        _next = next;
-        _clientCertificateService = clientCertificateService;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
+#if DEBUG
+        // Hardcoded values for debugging in Visual Studio
+        _clientCertificateService.Subject = "This is subject";
+        _clientCertificateService.Pid = "This is Pid";
+#else
+        // Use real client certificate in other environments (non-debug)
         var clientCertificate = await context.Connection.GetClientCertificateAsync();
 
         if (clientCertificate != null)
@@ -62,48 +13,7 @@ public class CertificateMiddleware
             _clientCertificateService.Subject = ExtractSubjectFromCertificate(clientCertificate);
             _clientCertificateService.Pid = ExtractPidFromCertificate(clientCertificate);
         }
+#endif
 
         await _next(context);
     }
-
-    private string ExtractSubjectFromCertificate(X509Certificate2 certificate)
-    {
-        // Logic to extract "sub" (subject) from the certificate
-        return certificate.Subject;
-    }
-
-    private string ExtractPidFromCertificate(X509Certificate2 certificate)
-    {
-        // Logic to extract Pid (from subject alternative names or other certificate fields)
-        var pid = certificate.Subject; // Placeholder, adjust according to actual certificate structure
-        
-        return pid;
-    }
-}
-
-
-
-public interface IClientCertificateService
-{
-    string Subject { get; set; }
-}
-
-public class ClientCertificateService : IClientCertificateService
-{
-    public string Subject { get; set; }
-}
-
-
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddSingleton<IClientCertificateService, ClientCertificateService>();
-}
-
-public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-{
-    // Other middlewares...
-    
-    app.UseMiddleware<CertificateMiddleware>();
-
-    // Other middlewares...
-}

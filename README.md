@@ -18,8 +18,8 @@ public class CertificateMiddleware
 
         if (clientCertificate != null)
         {
-            var subject = clientCertificate.Subject;
             _clientCertificateService.Subject = ExtractSubjectFromCertificate(clientCertificate);
+            _clientCertificateService.Pid = ExtractPidFromCertificate(clientCertificate);
         }
 
         await _next(context);
@@ -27,10 +27,16 @@ public class CertificateMiddleware
 
     private string ExtractSubjectFromCertificate(X509Certificate2 certificate)
     {
-        // Assuming the "sub" (subject) is in the Subject field of the certificate
-        var subjectName = certificate.Subject;
-        // Extract "sub" from the subject if necessary. Adjust according to your certificate format.
-        return subjectName;
+        // Logic to extract "sub" (subject) from the certificate
+        return certificate.Subject;
+    }
+
+    private string ExtractPidFromCertificate(X509Certificate2 certificate)
+    {
+        // Logic to extract Pid (from subject alternative names or other certificate fields)
+        var pid = certificate.Subject; // Placeholder, adjust according to actual certificate structure
+        
+        return pid;
     }
 }
 

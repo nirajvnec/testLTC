@@ -1,3 +1,21 @@
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    // This should come early in the pipeline if the certificate is required for subsequent middlewares
+    app.UseMiddleware<CertificateMiddleware>();
+
+    // Authentication Middleware (if you need to authenticate based on the client certificate)
+    app.UseAuthentication();
+
+    // Authorization Middleware (if you want to authorize based on the client certificate)
+    app.UseAuthorization();
+
+    // Other middlewares (like routing, endpoints, etc.)
+    app.UseRouting();
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+}
 
 
 

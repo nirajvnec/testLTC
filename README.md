@@ -1,19 +1,15 @@
-public async Task InvokeAsync(HttpContext context)
+public static class StringExtensions
+{
+    public static string ExtractPid(this string input)
     {
-#if DEBUG
-        // Hardcoded values for debugging in Visual Studio
-        _clientCertificateService.Subject = "This is subject";
-        _clientCertificateService.Pid = "This is Pid";
-#else
-        // Use real client certificate in other environments (non-debug)
-        var clientCertificate = await context.Connection.GetClientCertificateAsync();
-
-        if (clientCertificate != null)
-        {
-            _clientCertificateService.Subject = ExtractSubjectFromCertificate(clientCertificate);
-            _clientCertificateService.Pid = ExtractPidFromCertificate(clientCertificate);
-        }
-#endif
-
-        await _next(context);
+        string pattern = @"\((.*?)\)";
+        Match match = Regex.Match(input, pattern);
+        return match.Success ? match.Groups[1].Value : string.Empty;
     }
+}
+
+
+string input = "Process (12345) completed";
+string pid = input.ExtractPid();
+
+Console.WriteLine(pid);  // Output: 12345

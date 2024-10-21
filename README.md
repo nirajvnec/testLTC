@@ -1,3 +1,27 @@
+// Static method to get all personal certificates
+    public static X509Certificate2Collection GetPersonalCertificates()
+    {
+        // Create a collection to hold the certificates
+        X509Certificate2Collection certCollection = new X509Certificate2Collection();
+        
+        // Open the "My" store in the Current User context (Personal store)
+        using (X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser))
+        {
+            store.Open(OpenFlags.ReadOnly); // Open the store in read-only mode
+            
+            // Iterate over the certificates in the store and add them to the collection
+            foreach (X509Certificate2 cert in store.Certificates)
+            {
+                certCollection.Add(cert);
+            }
+        }
+
+        return certCollection;
+    }
+
+
+
+
 
 using System;
 using System.Linq;

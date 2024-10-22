@@ -416,3 +416,74 @@ namespace MyWinFormsApp
         }
     }
 }
+
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace MyWinFormsApp
+{
+    public class XmlRequestItemCollection : CollectionBase
+    {
+        public XmlRequestItemCollection() { }
+
+        public XmlRequestItem this[int index]
+        {
+            get => (List[index] as XmlRequestItem) ?? throw new InvalidCastException($"Item at index {index} is not an XmlRequestItem");
+            set => List[index] = value;
+        }
+
+        public XmlRequestItem? this[string requestItemName]
+        {
+            get
+            {
+                requestItemName = requestItemName.ToLower();
+                foreach (XmlRequestItem requestItem in this)
+                {
+                    if (requestItem.Name.ToLower().Equals(requestItemName))
+                        return requestItem;
+                }
+                return null;
+            }
+        }
+
+        public int Add(XmlRequestItem requestItem)
+        {
+            return List.Add(requestItem);
+        }
+
+        public void Insert(int index, XmlRequestItem requestItem)
+        {
+            List.Insert(index, requestItem);
+        }
+
+        public void Remove(XmlRequestItem requestItem)
+        {
+            List.Remove(requestItem);
+        }
+
+        public bool Contains(XmlRequestItem requestItem)
+        {
+            return List.Contains(requestItem);
+        }
+
+        public int IndexOf(XmlRequestItem requestItem)
+        {
+            return List.IndexOf(requestItem);
+        }
+
+        public void CopyTo(XmlRequestItem[] array, int index)
+        {
+            List.CopyTo(array, index);
+        }
+
+        public XmlRequestItem[] ToArray()
+        {
+            XmlRequestItem[] requests = new XmlRequestItem[this.Count];
+            this.CopyTo(requests, 0);
+            return requests;
+        }
+    }
+}
+

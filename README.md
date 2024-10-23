@@ -33,40 +33,46 @@ namespace ConsoleApp38
     </DATA>
 </ROOT>";
 
-            using (var store = new X509Store(StoreName.My, StoreLocation.CurrentUser))
+            // Replace the X509Store code with GetCertificateCollection()
+            X509Certificate2Collection certificates = GetCertificateCollection();
+
+            using (var handler = new HttpClientHandler())
             {
-                store.Open(OpenFlags.ReadOnly);
-                X509Certificate2Collection col = store.Certificates.Find(X509FindType.FindByTimeValid, DateTime.Now, true);
+                handler.ClientCertificates.AddRange(certificates);
+                handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
 
-                using (var handler = new HttpClientHandler())
+                using (var client = new HttpClient(handler))
                 {
-                    handler.ClientCertificates.AddRange(col);
-                    handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
-
-                    using (var client = new HttpClient(handler))
+                    client.Timeout = TimeSpan.FromMilliseconds(3600000);
+                    
+                    // Replace the StringContent with MultipartFormDataContent
+                    var content = new MultipartFormDataContent("CSMarsXMLHttp_MIME_BOUNDARY");
+                    content.Add(new StringContent(xmlContent, Encoding.UTF8, "application/xml"), "xmlContent");
+                    
+                    try
                     {
-                        client.Timeout = TimeSpan.FromMilliseconds(3600000);
-                        
-                        // Replace the StringContent with MultipartFormDataContent
-                        var content = new MultipartFormDataContent("CSMarsXMLHttp_MIME_BOUNDARY");
-                        content.Add(new StringContent(xmlContent, Encoding.UTF8, "application/xml"), "xmlContent");
-                        
-                        try
-                        {
-                            HttpResponseMessage response = await client.PostAsync(url, content);
-                            response.EnsureSuccessStatusCode();
-                            string responseBody = await response.Content.ReadAsStringAsync();
-                            Console.WriteLine("Response:");
-                            Console.WriteLine(responseBody);
-                        }
-                        catch (HttpRequestException e)
-                        {
-                            Console.WriteLine("Error sending request:");
-                            Console.WriteLine(e.Message);
-                        }
+                        HttpResponseMessage response = await client.PostAsync(url, content);
+                        response.EnsureSuccessStatusCode();
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Response:");
+                        Console.WriteLine(responseBody);
+                    }
+                    catch (HttpRequestException e)
+                    {
+                        Console.WriteLine("Error sending request:");
+                        Console.WriteLine(e.Message);
                     }
                 }
             }
+        }
+
+        // Add this method to your Program class
+        private static X509Certificate2Collection GetCertificateCollection()
+        {
+            var spidCertificate = new X509Certificate2Collection();
+            spidCertificate.Import(@"C:\Users\nkuma152\MarsNet_T (S114415) - .pfx", "Pa49stels009igne", 
+                X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+            return spidCertificate;
         }
     }
 }

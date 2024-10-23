@@ -46,7 +46,10 @@ namespace ConsoleApp38
                     using (var client = new HttpClient(handler))
                     {
                         client.Timeout = TimeSpan.FromMilliseconds(3600000);
-                        var content = new StringContent(xmlContent, Encoding.UTF8, "multipart/form-data; boundary=CSMarsXMLHttp_MIME_BOUNDARY");
+                        
+                        // Replace the StringContent with MultipartFormDataContent
+                        var content = new MultipartFormDataContent("CSMarsXMLHttp_MIME_BOUNDARY");
+                        content.Add(new StringContent(xmlContent, Encoding.UTF8, "application/xml"), "xmlContent");
                         
                         try
                         {

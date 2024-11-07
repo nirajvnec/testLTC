@@ -1,3 +1,6 @@
+Setup and Authentication Guidelines for Accessing CS Web Applications on UBS Workspace VDI
+
+
 - **Testing Setup**: Guidelines are in place for accessing PKI and Kerberos-authenticated CS web applications within UBS Workspace VDIs on Azure or Standard environments (Windows 10/11).
 
 - **PKI Requirement**: Ensure a CS User Certificate is installed and available in the UBS Workspace to authenticate securely.

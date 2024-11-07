@@ -1,3 +1,10 @@
+I’m sharing a summary of the setup and authentication requirements for accessing PKI and Kerberos-authenticated CS web applications within the UBS Workspace VDI. These guidelines cover essential points such as certificate requirements, supported environments, and steps for setting up and verifying authentication.
+
+Please note, until the wrapper package is fully distributed, the CSRunAs-Package.zip will need to be manually installed for each session, as the UBS Workspace is ephemeral.
+
+Let me know if there are any questions or if further clarification is needed on any of the steps.
+
+
 Setup and Authentication Guidelines for Accessing CS Web Applications on UBS Workspace VDI
 
 

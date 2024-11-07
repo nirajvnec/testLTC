@@ -1,1 +1,1 @@
-
+In summary, Negotiate enables the client and server to dynamically choose Kerberos (if available) or fall back to NTLM if Kerberos cannot be used. This makes Negotiate a flexible authentication mechanism for mixed or variable environments.

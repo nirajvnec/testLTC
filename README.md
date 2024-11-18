@@ -1,36 +1,33 @@
-https://learn.microsoft.com/en-us/windows/win32/secauthn/microsoft-negotiate
+# Negotiate Security Support Provider (SSP)
 
+"Negotiate" is a security support provider (SSP) used in Windows that acts as an intermediary to determine the optimal authentication protocol to use between Kerberos and NTLM.
 
-how to check if Kerberos is enabled windows 11 or not?
+## Key Points about "Negotiate"
 
+### Protocol Selection
+- **Kerberos**: Chosen if both the client and server are in the same Active Directory (AD) domain or in trusted domains. Kerberos is a more secure and efficient protocol.
+- **NTLM**: Falls back to NTLM (NT LAN Manager) if Kerberos is not feasible, such as in cases where the client or server is not in an AD domain or in a workgroup environment.
 
+### Functionality
+- Negotiate simplifies application development by abstracting the choice of authentication protocol. Developers can use Negotiate without explicitly coding for Kerberos or NTLM.
 
-Using Command Prompt (cmd) as administrator:
+## Kerberos
+- Relies on a trusted third party, typically a Key Distribution Center (KDC), provided by Active Directory.
+- Provides mutual authentication and is more secure due to its use of tickets and encryption.
 
-klist tgt
+## NTLM
+- A challenge-response-based authentication protocol used for older systems or systems not joined to an AD domain.
+- Less secure compared to Kerberos, as it is vulnerable to replay and certain brute-force attacks.
 
-If Kerberos is enabled and you have a valid ticket, you'll see ticket information. If not enabled/no ticket, you'll see "No Kerberos tickets cached"
+## Use Case in Windows
+- "Negotiate" is often used in scenarios like:
+  - Authenticating to web services.
+  - Remote Desktop Protocol (RDP) connections.
+  - Accessing shared network resources.
 
+## Mechanism
+- When authentication is required:
+  1. Negotiate first attempts Kerberos.
+  2. If Kerberos cannot be used (e.g., lack of AD configuration), it automatically falls back to NTLM.
 
-
-Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa | Select-Object LmCompatibilityLevel
-
-
-From October 18, 2023 to November 18, 2024 = 13 months
-The command will show all code changes (commits) made by these team members during this 13-month period. 
-
-git log --author="example@email.com" --since="YYYY-MM-DD" --until="YYYY-MM-DD"
-
-
-git log --author="author_email@example.com" --oneline
-
-
-
-git shortlog -s -n
-
-
-git log --author="user@example.com" --since="1 year ago"
-
-git log --author="username1|username2|username3|username4" --since="2023-10-18" --until="2024-11-18"
-
-
+This dual-protocol approach ensures compatibility across a wide range of network environments while preferring the more secure Kerberos when possible.

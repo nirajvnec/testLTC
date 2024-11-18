@@ -1,3 +1,6 @@
+https://learn.microsoft.com/en-us/windows/win32/secauthn/microsoft-negotiate
+
+
 how to check if Kerberos is enabled windows 11 or not?
 
 

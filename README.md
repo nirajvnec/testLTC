@@ -1,3 +1,7 @@
+git log --author="author_email@example.com" --oneline
+
+
+
 git shortlog -s -n
 
 

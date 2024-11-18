@@ -1,3 +1,18 @@
+how to check if Kerberos is enabled windows 11 or not?
+
+
+
+Using Command Prompt (cmd) as administrator:
+
+klist tgt
+
+If Kerberos is enabled and you have a valid ticket, you'll see ticket information. If not enabled/no ticket, you'll see "No Kerberos tickets cached"
+
+
+
+Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa | Select-Object LmCompatibilityLevel
+
+
 From October 18, 2023 to November 18, 2024 = 13 months
 The command will show all code changes (commits) made by these team members during this 13-month period. 
 

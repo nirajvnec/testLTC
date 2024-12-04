@@ -1,10 +1,26 @@
-We are encountering issues with Kerberos authentication after upgrading from Oracle 12c to Oracle 19c. Previously, everything was functioning correctly in the Oracle 12c environment.
-
-The following error is being reported during the authentication process:
-
-
-NetworkException: NA KerberosS: Authentication handshake failure at stage: Could not load file or assembly ‘Oracle.ManagedDataAccessIOP, Version=4.122.19.1, Culture=neutral, PublicKeyToken=896483f429c47342 or one of its dependencies. The system cannot find the file specified.
-Kavitha and I are currently investigating this issue but would appreciate any assistance or guidance you can provide to help us resolve it.
+Newly Added Lines
+Variables for Grouped Data and Selected Radio State:
 
 
+groupedResultsData: { [key: string]: ResultSet[] } = {}; // Grouped data by reportName
+selectedResultSet: { [key: string]: string } = {}; // Selected radio value for each group
+Call to Grouping Method:
 
+
+this.groupBatchResultsByReportName();
+Grouping Logic:
+
+
+groupBatchResultsByReportName(): void {
+  this.groupedResultsData = this.batchResultsData.reduce((groups, item) => {
+    const groupName = item.reportName || 'Unknown'; // Default key if reportName is null/undefined
+    if (!groups[groupName]) {
+      groups[groupName] = [];
+    }
+    groups[groupName].push(item);
+    return groups;
+  }, {});
+}
+Collect Selected Radio Values:
+
+const selectedIds = Object.values(this.selectedResultSet); // Collect selected radio val

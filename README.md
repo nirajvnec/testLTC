@@ -1,3 +1,6 @@
+Object.keys(groupedResultsData)
+
+
 <div *ngIf="groupedResultsData && Object.keys(groupedResultsData).length > 0" class="table-responsive">
   <table class="table table-bordered table-sm w-auto">
     <thead>

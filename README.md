@@ -1,4 +1,4 @@
-<div *ngIf="groupedResultsData" class="table-responsive">
+<div *ngIf="groupedResultsData && Object.keys(groupedResultsData).length > 0" class="table-responsive">
   <table class="table table-bordered table-sm w-auto">
     <thead>
       <tr>
@@ -18,7 +18,7 @@
           <td>
             <input
               type="radio"
-              [name]="groupName" <!-- Group radio buttons by reportName -->
+              [name]="groupName"
               [value]="data.id"
               [(ngModel)]="selectedResultSet[groupName]"
             />
@@ -36,12 +36,6 @@
     </tbody>
   </table>
 </div>
-<div class="mb-3 d-grid gap-2 d-md-flex justify-content-md-end">
-  <button
-    type="submit"
-    class="btn btn-primary me-md-2"
-    (click)="btn_SaveClick()"
-  >
-    Save
-  </button>
+<div *ngIf="!groupedResultsData || Object.keys(groupedResultsData).length === 0">
+  <p>No data available.</p>
 </div>

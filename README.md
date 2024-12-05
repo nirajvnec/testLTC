@@ -1,3 +1,6 @@
+console.log('Selected Report Mapping on Init:', this.selectedReport);
+
+
 selectedReport: { [reportName: string]: string } = {}; // Tracks selected IDs for each report name
 
 ngOnInit(): void {

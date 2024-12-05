@@ -1,37 +1,13 @@
-batchNameSelected() {
-  this.loadSpinnerService.start(); // Start loading spinner
-  this.resultStorageService
-    .getBatchDataByID(this.batchValue.id, this.toCobDate)
-    .pipe(
-      finalize(() => {
-        this.loadSpinnerService.stop(); // Stop loading spinner
-        if (this.batchResultsData && this.batchResultsData.length > 0) {
-          this.groupBatchResultsByReportName();
-          console.log('Batch results grouped:', this.groupedResultsData);
-        } else {
-          console.warn('No results to group');
-        }
-      })
-    )
-    .subscribe(
-      (result: ResultSetDef) => {
-        if (result.resultSets !== undefined) {
-          this.headers = [
-            'Result Set',
-            'Version',
-            'Create User',
-            'Create Date(GMT)',
-            'Start Time(GMT)',
-            'User',
-            'Calc Duration',
-            'Result Writing Duration',
-            'No.Of Results'
-          ];
-          this.batchResultsData = result.resultSets;
-        }
-      },
-      (error) => {
-        console.error('Error fetching batch data:', error);
+selectedReport: { [reportName: string]: string } = {}; // Tracks selected IDs for each report name
+
+ngOnInit(): void {
+  // Initialize selectedReport for pre-selecting radio buttons
+  this.batchResultsData.forEach((data) => {
+    if (data.isVersioned) {
+      // Only set the first `isVersioned` ID for each reportName
+      if (!this.selectedReport[data.reportName]) {
+        this.selectedReport[data.reportName] = data.id;
       }
-    );
+    }
+  });
 }

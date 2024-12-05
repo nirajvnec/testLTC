@@ -1,3 +1,23 @@
+<div class="mb-3">
+  <label for="status" class="form-label">Status:</label>
+  <select
+    id="status"
+    class="form-select"
+    [(ngModel)]="selectedStatus"
+  >
+    <option *ngFor="let status of statuses" [value]="status">
+      {{ status }}
+    </option>
+  </select>
+</div>
+
+<!-- Display selected value for debugging -->
+<p>Selected Status: {{ selectedStatus }}</p>
+
+
+
+
+
 <input
             type="radio"
             [id]="data.id"

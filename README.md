@@ -1,3 +1,6 @@
+[(ngModel)]="selectedReport[data.reportName]"
+
+
 console.log('Selected Report Mapping on Init:', this.selectedReport);
 
 

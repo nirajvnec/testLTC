@@ -1,9 +1,10 @@
-type="radio"
-[id]="data.id"
-[value]="data.id"
-[name]="data.reportName"
-[(ngModel)]="selectedReport[data.reportName]"
-
+<input
+            type="radio"
+            [id]="data.id"
+            [value]="data.id"
+            [name]="data.reportName"
+            [(ngModel)]="selectedReport[data.reportName]"
+          />
 
 
 

@@ -1,3 +1,8 @@
+New-Item -Path $PROFILE -ItemType File -Force
+
+
+
+
 function ifSuccess { if(-Not ($?)) { exit 1 }}
 function gaa { git add --all }
 function gca { git commit --amend }

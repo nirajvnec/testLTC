@@ -2,3 +2,5 @@ git config --global alias.grb25.1.2 "!git fetch origin feature/Marvel_25.1.2:fea
 
 git config --global alias.gedit "!git config --global --edit"
 
+git config --global alias.gedit "!code ~/.gitconfig"
+

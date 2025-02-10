@@ -8,5 +8,7 @@ git config --global alias.gedit "!git config --global core.editor 'code --wait'"
 
 git config --global --unset alias.gedit
 
+%USERPROFILE%\.gitconfig
+
 
 

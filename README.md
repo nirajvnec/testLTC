@@ -4,3 +4,6 @@ git config --global alias.gedit "!git config --global --edit"
 
 git config --global alias.gedit "!code ~/.gitconfig"
 
+git config --global alias.gedit "!git config --global core.editor 'code --wait'"
+
+

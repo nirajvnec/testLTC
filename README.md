@@ -14,5 +14,7 @@ git config --global --edit
 
 git config --global core.editor "notepad"
 
+git config --global --edit
+
 
 

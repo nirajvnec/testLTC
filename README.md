@@ -10,5 +10,7 @@ git config --global --unset alias.gedit
 
 %USERPROFILE%\.gitconfig
 
+git config --global --edit
+
 
 

@@ -12,5 +12,7 @@ git config --global --unset alias.gedit
 
 git config --global --edit
 
+git config --global core.editor "notepad"
+
 
 

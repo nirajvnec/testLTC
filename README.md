@@ -1,17 +1,5 @@
-useEffect(() => {
-    const fetchData = async () => {
-      if (!fromDate || !toDate) return;
-      
-      try {
-        const response = await fetch(
-          `your-api-endpoint?fromDate=${fromDate}&toDate=${toDate}`
-        );
-        const data = await response.json();
-        setGridData(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+I want to call api and pass page sizer and pagenumber, like whatever user has searched 
 
-    fetchData();
-  }, [fromDate, toDate]); // This useEffect runs when dates change
+let us say user is on 10th Page and he clicks on on next page icon, and assume if the pageSize is 20 then i should reload the grid with fresh data and pass the api pageSize=20 and PageNumber=11 and then reload the grid
+
+how can i achieve it

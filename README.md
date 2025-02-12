@@ -1,5 +1,11 @@
-I want to call api and pass page sizer and pagenumber, like whatever user has searched 
+# Stash the changes
+git stash push -m "Saving changes before switching branches"
 
-let us say user is on 10th Page and he clicks on on next page icon, and assume if the pageSize is 20 then i should reload the grid with fresh data and pass the api pageSize=20 and PageNumber=11 and then reload the grid
+# Create and switch to the new branch
+git checkout -b feature/Marvel_25.2.1_NodeClose_Summary
 
-how can i achieve it
+# Apply the latest stash
+git stash apply
+
+# Drop the stash after applying it (optional)
+git stash drop

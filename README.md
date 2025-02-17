@@ -1,11 +1,24 @@
-# Stash the changes
-git stash push -m "Saving changes before switching branches"
+const onExportClick = async () => {
+  try {
+    const formattedFromDate = fromDate.replace(/-/g, "");
+    const formattedToDate = toDate.replace(/-/g, "");
+    const fileName = `Export_${formattedFromDate}_to_${formattedToDate}.xlsx`;
 
-# Create and switch to the new branch
-git checkout -b feature/Marvel_25.2.1_NodeClose_Summary
+    // Fetch all data from the server
+    const response = await fetch("https://your-api.com/export-data");
+    const fullData = await response.json(); // Assume the API returns all records
 
-# Apply the latest stash
-git stash apply
+    // Set rowData temporarily for export
+    gridRef.current.api.setRowData(fullData);
 
-# Drop the stash after applying it (optional)
-git stash drop
+    // Export the full dataset
+    gridRef.current.api.exportDataAsExcel({
+      fileName: fileName,
+    });
+
+    // Restore paginated data (optional, if needed)
+    fetchPaginatedData(); 
+  } catch (error) {
+    console.error("Error fetching export data:", error);
+  }
+};

@@ -1,3 +1,7 @@
+git config --global alias.gnb '!f() { git stash && git checkout -b "$1" && git stash apply; }; f'
+
+
+
 const onExportClick = async () => {
   try {
     const formattedFromDate = fromDate.replace(/-/g, "");

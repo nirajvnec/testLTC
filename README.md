@@ -1,28 +1,5 @@
-git config --global alias.gnb '!f() { git stash && git checkout -b "$1" && git stash apply; }; f'
-
-
-
-const onExportClick = async () => {
-  try {
-    const formattedFromDate = fromDate.replace(/-/g, "");
-    const formattedToDate = toDate.replace(/-/g, "");
-    const fileName = `Export_${formattedFromDate}_to_${formattedToDate}.xlsx`;
-
-    // Fetch all data from the server
-    const response = await fetch("https://your-api.com/export-data");
-    const fullData = await response.json(); // Assume the API returns all records
-
-    // Set rowData temporarily for export
-    gridRef.current.api.setRowData(fullData);
-
-    // Export the full dataset
-    gridRef.current.api.exportDataAsExcel({
-      fileName: fileName,
-    });
-
-    // Restore paginated data (optional, if needed)
-    fetchPaginatedData(); 
-  } catch (error) {
-    console.error("Error fetching export data:", error);
-  }
-};
+// If no records, create a manual Excel file
+      const worksheet = XLSX.utils.aoa_to_sheet([["Zero records were found"]]);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.writeFile(workbook, "No_Records.xlsx");

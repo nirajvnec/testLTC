@@ -1,3 +1,6 @@
+git config --global alias.pushup "push --set-upstream origin"
+
+
 import * as XLSX from "xlsx";
 
 /**

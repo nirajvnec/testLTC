@@ -1,3 +1,6 @@
+
+git config --global alias.c "commit -m"
+
 git config --global alias.pushup "push --set-upstream origin"
 
 

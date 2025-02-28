@@ -1,4 +1,3 @@
-button#accordionEvents,
-button#accordionSubscriptions {
+:where(button#accordionEvents, button#accordionSubscriptions) {
   height: 80px !important;
 }

@@ -2,15 +2,16 @@ import { useEffect } from "react";
 
 const MyComponent = () => {
   useEffect(() => {
-    console.log("DOM fully loaded, running JavaScript...");
+    console.log("DOM fully loaded, applying styles...");
 
-    // Example: Modify button height after DOM is ready
-    document.querySelectorAll("#accordionEvents, #accordionSubscriptions").forEach((btn) => {
-      (btn as HTMLElement).style.height = "80px";
-      (btn as HTMLElement).style.minHeight = "80px";
-    });
+    // Select the div with the dynamic class
+    const divElement = document.querySelector('[class^="UWR_Accordion_header-content"]');
 
-  }, []); // Empty dependency array ensures this runs only once
+    if (divElement) {
+      (divElement as HTMLElement).style.marginTop = "14px";
+    }
+
+  }, []); // Runs only once after component mounts
 
   return <div>My Component</div>;
 };

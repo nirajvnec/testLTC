@@ -4,12 +4,12 @@ const MyComponent = () => {
   useEffect(() => {
     console.log("DOM fully loaded, applying styles...");
 
-    // Select the div with the dynamic class
-    const divElement = document.querySelector('[class^="UWR_Accordion_header-content"]');
+    // Select all divs whose class starts with "UWR_Accordion_header-content"
+    const divElements = document.querySelectorAll('[class^="UWR_Accordion_header-content"]');
 
-    if (divElement) {
-      (divElement as HTMLElement).style.marginTop = "14px";
-    }
+    divElements.forEach((div) => {
+      (div as HTMLElement).style.marginTop = "14px";
+    });
 
   }, []); // Runs only once after component mounts
 

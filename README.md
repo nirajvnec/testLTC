@@ -1,3 +1,7 @@
-Hi Jaydeep,
+import moment from "moment";
 
-Could you please send an email detailing the enhancements we would like to have implemented?
+const fromCobDate = "07-Mar-2024"; // Original date in DD-MMM-YYYY format
+
+const fromCobDateISO = moment(fromCobDate, "DD-MMM-YYYY").format("YYYY-MM-DD");
+
+console.log(fromCobDateISO); // Output: 2024-03-07

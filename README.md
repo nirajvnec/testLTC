@@ -1,7 +1,7 @@
 import moment from "moment";
 
-const fromCobDate = "07-Mar-2024"; // Original date in DD-MMM-YYYY format
+const rawDateTime = "1/28/2025 1:05:36 PM"; // Non-ISO format
 
-const fromCobDateISO = moment(fromCobDate, "DD-MMM-YYYY").format("YYYY-MM-DD");
+const formattedDateTime = moment(rawDateTime, "M/D/YYYY h:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
 
-console.log(fromCobDateISO); // Output: 2024-03-07
+console.log(formattedDateTime); // Output: 2025-01-28 13:05:36

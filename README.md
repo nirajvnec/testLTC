@@ -5,14 +5,14 @@ const fromCobDateChange = (value: any) => {
 
     if (!value) return;
 
-    let selectedDate;
-    
-    // If value is a Date object, use it directly, else try parsing
-    if (value instanceof Date) {
-        selectedDate = value;
-    } else if (typeof value === "string") {
-        selectedDate = moment(value, "DD-MMM-YYYY").toDate();
-    } else {
+    const selectedDate =
+        value instanceof Date
+            ? value
+            : typeof value === "string"
+            ? moment(value, "DD-MMM-YYYY").toDate()
+            : null;
+
+    if (!selectedDate) {
         console.error("Unexpected date format:", value);
         return;
     }
@@ -27,8 +27,18 @@ const fromCobDateChange = (value: any) => {
 const toCobDateChange = (value: any) => {
     if (!value) return;
 
-    let selectedDate = value instanceof Date ? value : moment(value, "DD-MMM-YYYY").toDate();
-    const formattedDate = moment(selectedDate).format("DD-MMM-YYYY");
+    const selectedDate =
+        value instanceof Date
+            ? value
+            : typeof value === "string"
+            ? moment(value, "DD-MMM-YYYY").toDate()
+            : null;
 
+    if (!selectedDate) {
+        console.error("Unexpected date format:", value);
+        return;
+    }
+
+    const formattedDate = moment(selectedDate).format("DD-MMM-YYYY");
     setToCobDate(formattedDate);
 };

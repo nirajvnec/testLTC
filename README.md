@@ -1,7 +1,23 @@
 import moment from "moment";
 
-const rawDateTime = "1/28/2025 1:05:36 PM"; // Non-ISO format
+const fromCobDateChange = (value: any) => {
+    if (!value) return;
 
-const formattedDateTime = moment(rawDateTime, "M/D/YYYY h:mm:ss A").format("YYYY-MM-DD HH:mm:ss");
+    // Check if `value` is a Date object or an event
+    const selectedDate = value instanceof Date ? value : value?.target?.value;
 
-console.log(formattedDateTime); // Output: 2025-01-28 13:05:36
+    // Convert to DD-MMM-YYYY format before storing
+    const formattedDate = moment(selectedDate).format("DD-MMM-YYYY");
+
+    setFromCobDate(formattedDate);
+    console.log("fromCobDateChange:", formattedDate);
+};
+
+const toCobDateChange = (value: any) => {
+    if (!value) return;
+
+    const selectedDate = value instanceof Date ? value : value?.target?.value;
+    const formattedDate = moment(selectedDate).format("DD-MMM-YYYY");
+
+    setToCobDate(formattedDate);
+};

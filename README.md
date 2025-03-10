@@ -1,1 +1,1 @@
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f ~/.ssh/id_rsa_odyssey
+ssh-keygen -t rsa -b 4096 -C "niraj.kumar.4@credit-suisse.com" -f ~/.ssh/id_rsa_odyssey

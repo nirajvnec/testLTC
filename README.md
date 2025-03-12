@@ -1,3 +1,13 @@
+const moment = require("moment");
+
+const dateString = "1/28/2025 11:55:59 AM";
+const formattedDateTime = moment(dateString, "M/D/YYYY h:mm:ss A").format("DD-MM-YYYY HH:mm:ss");
+
+console.log(formattedDateTime); // Output: 28-01-2025 11:55:59
+
+
+
+
 import React, { useState, useEffect } from "react";
 
 const App = () => {

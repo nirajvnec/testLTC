@@ -1,4 +1,4 @@
-Subject: Discussion Summary on Component 1 Licensing Logic and WIX Script Toolset
+Subject: Discussion Summary on Component one Licensing Logic and WIX Script Toolset
 
 I wanted to update you on the discussion I had with Avish and Yash regarding two key topics:
 

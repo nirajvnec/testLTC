@@ -1,18 +1,43 @@
+import React, { useState, useEffect } from "react";
 
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+const App = () => {
+  // State to store the fetched data
+  const [data, setData] = useState([]);
 
-const DateSelector = () => {
-  // Keep fromCobDate as a string (ISO format)
-  const [fromCobDate, setFromCobDate] = useState("");
+  // Function to fetch data from API
+  const fetchData = () => {
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=5") // Sample API
+      .then((response) => response.json()) // Convert response to JSON
+      .then((result) => {
+        // Update the state with fetched data
+        const transformedData = result.map((item) => ({
+          id: item.id,
+          title: item.title,
+          value: Math.floor(Math.random() * 100), // Adding a random value field
+        }));
+        setData(transformedData);
+      })
+      .catch((error) => console.error("Error fetching data:", error)); // Handle errors
+  };
 
-  const dayAfterTomorrow = new Date();
-  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+  // Fetch data on component mount
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
-    <DatePicker
-      selected={fromCobDate ? new Date(fromCobDate) : null} // Convert string to Date
-      onChange={(date) => setFromCobDate(date ? date.toISOString().split("T")[0] : "")} // Convert Date to string
-      maxDate={dayAfterTomorrow}
-      dateFormat
+    <div>
+      <h2>Fetched Data</h2>
+      <ul>
+        {data.map((item) => (
+          <li key={item.id}>
+            {item.title}: {item.value}
+          </li>
+        ))}
+      </ul>
+      <button onClick={fetchData}>Refresh Data</button>
+    </div>
+  );
+};
+
+export default App;

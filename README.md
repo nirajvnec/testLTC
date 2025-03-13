@@ -1,3 +1,5 @@
+console.log("Grid data loaded:", gridRef.current.api.getRowData());
+
 <AgGridReact
   ref={gridRef}
   columnDefs={columnDefs}

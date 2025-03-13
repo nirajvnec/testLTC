@@ -1,7 +1,13 @@
-Subject: Discussion Summary on Component one Licensing Logic and WIX Script Toolset
+response.forEach((i) => {
+  let formattedDateTime = i.eventTimeStamp; // Default to existing timestamp
 
-I wanted to update you on the discussion I had with Avish and Yash regarding two key topics:
+  // Try parsing the timestamp using the expected format
+  const parsedDate = moment(i.eventTimeStamp, 'DD-MMM-YYYY h:mm:ss A', true);
 
-Component One Licensing Logic in CI/CD: After our discussion, it was concluded that the existing licensing logic for Component One, as initially outlined by Avish, does not require any changes. The current setup remains intact and functional.
+  if (!parsedDate.isValid()) {
+    // Convert only if the existing timestamp is NOT already in the desired format
+    formattedDateTime = moment(i.eventTimeStamp, 'M/D/YYYY h:mm:ss A').format('DD-MMM-YYYY h:mm:ss A');
+  }
 
-WiX Script Toolset: We encountered an issue with the WiX Script toolset, which is no longer supported and does not work as expected. I have asked Avish and Yash to coordinate with the UBS packaging team, who specialize in Excel plugin deployments, to explore possible solutions or alternatives.
+  console.log(formattedDateTime);
+});

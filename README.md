@@ -1,3 +1,6 @@
+console.log(gridRef.current.api.getDisplayedRowAtIndex(0)?.data);
+
+
 valueSetter: (params: { newValue: string; data: { eventTimeStamp: string } }) => {
   if (!params.newValue) return false;
 

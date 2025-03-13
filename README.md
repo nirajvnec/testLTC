@@ -1,15 +1,6 @@
-console.log("Grid data loaded:", gridRef.current.api.getRowData());
-
-<AgGridReact
-  ref={gridRef}
-  columnDefs={columnDefs}
-  rowData={rowData}
-  onGridReady={(params) => {
-    gridRef.current = params.api;
-    console.log("Grid is ready!");
-  }}
-  onFirstDataRendered={() => {
+onFirstDataRendered={() => {
+  setTimeout(() => {
     console.log("First data rendered:");
-    console.log(gridRef.current.api.getRowData()); // Logs when data is available
-  }}
-/>
+    console.log(gridRef.current?.api?.getRowData()); // Check if API is accessible
+  }, 500); // Delay to ensure data is loaded
+}}

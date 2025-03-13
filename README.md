@@ -1,13 +1,28 @@
-response.forEach((i) => {
-  let formattedDateTime = i.eventTimeStamp; // Default to existing timestamp
+const [columnDefs] = useState([
+  {
+    field: 'eventTimeStamp',
+    headerName: 'Event Time Stamp',
+    width: 190,
+    filter: 'agTextColumnFilter',
+    sortable: true,
+    filterParams: {
+      buttons: ['reset', 'apply'],
+    },
+    cellStyle: () => textColumnStyle,
 
-  // Try parsing the timestamp using the expected format
-  const parsedDate = moment(i.eventTimeStamp, 'DD-MMM-YYYY h:mm:ss A', true);
+    // 🔥 Conditionally format only if needed
+    valueGetter: (params) => {
+      const timestamp = params.data?.eventTimeStamp;
+      if (!timestamp) return ''; // Handle empty cases
 
-  if (!parsedDate.isValid()) {
-    // Convert only if the existing timestamp is NOT already in the desired format
-    formattedDateTime = moment(i.eventTimeStamp, 'M/D/YYYY h:mm:ss A').format('DD-MMM-YYYY h:mm:ss A');
-  }
+      // Check if it's already in 'DD-MMM-YYYY h:mm:ss A' format
+      const parsedDate = moment(timestamp, 'DD-MMM-YYYY h:mm:ss A', true);
+      if (parsedDate.isValid()) {
+        return timestamp; // Already formatted correctly
+      }
 
-  console.log(formattedDateTime);
-});
+      // Convert if it's not already formatted
+      return moment(timestamp, 'M/D/YYYY h:mm:ss A').format('DD-MMM-YYYY h:mm:ss A');
+    }
+  },
+]);

@@ -1,3 +1,5 @@
+ onFirstDataRendered={onFirstDataRendered}
+
 const onGridReady = useCallback((params: any) => {
   gridRef.current = { api: params.api, columnApi: params.columnApi };
   console.log("Grid is ready!", gridRef.current);

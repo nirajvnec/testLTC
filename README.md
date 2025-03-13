@@ -1,6 +1,15 @@
-onFirstDataRendered={() => {
-  setTimeout(() => {
-    console.log("First data rendered:");
-    console.log(gridRef.current?.api?.getRowData()); // Check if API is accessible
-  }, 500); // Delay to ensure data is loaded
-}}
+const onFirstDataRendered = useCallback(() => {
+    setTimeout(() => {
+      console.log("First data rendered!");
+      logGridData();
+    }, 500); // Ensure data is fully loaded
+  }, []);
+
+  const logGridData = () => {
+    if (!gridRef.current) return;
+
+    const rowDataArray: any[] = [];
+    gridRef.current.forEachNode((node: any) => rowDataArray.push(node.data));
+
+    console.log("Grid Data:", rowDataArray);
+  };

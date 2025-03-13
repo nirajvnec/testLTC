@@ -1,15 +1,9 @@
-import moment from "moment";
-import { RowNode } from "ag-grid-community";
-
 gridRef.current.api.forEachNode((node: RowNode) => {
   if (node.data && node.data.eventTimeStamp) {
-    // Format the date to YYYYMMDD
+    // Get the formatted value using the existing valueGetter logic
     const formattedDate = moment(node.data.eventTimeStamp, ["M/D/YYYY h:mm:ss A", "YYYYMMDD"], true)
       .format("YYYYMMDD");
 
-    // Update the row data
-    node.setDataValue("eventTimeStamp", formattedDate);
-
-    console.log("Updated Row:", node.data);
+    console.log("Formatted eventTimeStamp:", formattedDate);
   }
 });

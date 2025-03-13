@@ -1,17 +1,21 @@
- onFirstDataRendered={onFirstDataRendered}
+const onFirstDataRendered = useCallback(() => {
+    setTimeout(() => {
+      console.log("First data rendered!");
 
-const onGridReady = useCallback((params: any) => {
-  gridRef.current = { api: params.api, columnApi: params.columnApi };
-  console.log("Grid is ready!", gridRef.current);
-}, []);
+      if (!gridRef.current) {
+        console.warn("Grid API is not available yet!");
+        return;
+      }
 
+      logGridData();
+    }, 500);
+  }, []);
 
-const logGridData = () => {
-  if (!gridRef.current) {
-    console.warn("Grid API is not available yet!");
-    return;
-  }
-  const rowDataArray: any[] = [];
-  gridRef.current.forEachNode((node: any) => rowDataArray.push(node.data));
-  console.log("Grid Data:", rowDataArray);
-};
+  const logGridData = () => {
+    if (!gridRef.current) return;
+
+    const rowDataArray: any[] = [];
+    gridRef.current.forEachNode((node: any) => rowDataArray.push(node.data));
+
+    console.log("Grid Data:", rowDataArray);
+  };

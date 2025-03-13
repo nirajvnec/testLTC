@@ -1,11 +1,19 @@
-const logGridData = () => {
-  if (!gridRef.current || !gridRef.current.api) {
-    console.warn("Grid API is not available yet!");
-    return;
+valueSetter: (params) => {
+  if (!params.newValue) return false;
+
+  // Try to parse with full date-time format
+  let parsedDate = moment(params.newValue, 'M/D/YYYY h:mm:ss A', true);
+
+  // If it's not valid, try parsing with YYYYMMDD format
+  if (!parsedDate.isValid()) {
+    parsedDate = moment(params.newValue, 'YYYYMMDD', true);
   }
 
-  const rowDataArray: any[] = [];
-  gridRef.current.api.forEachNode((node: any) => rowDataArray.push(node.data));
+  // If still invalid, reject the change
+  if (!parsedDate.isValid()) return false;
 
-  console.log("Grid Data:", rowDataArray);
-};
+  // Store in YYYYMMDD format
+  params.data.eventTimeStamp = parsedDate.format('YYYYMMDD');
+
+  return true; // Indicate successful update
+},

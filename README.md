@@ -1,15 +1,12 @@
-const onFirstDataRendered = useCallback(() => {
-    setTimeout(() => {
-      console.log("First data rendered!");
-      logGridData();
-    }, 500); // Ensure data is fully loaded
-  }, []);
+const logGridData = () => {
+  console.log("gridRef.current:", gridRef.current);
+  if (!gridRef.current) {
+    console.warn("Grid API is null, skipping data fetch.");
+    return;
+  }
 
-  const logGridData = () => {
-    if (!gridRef.current) return;
+  const rowDataArray: any[] = [];
+  gridRef.current.forEachNode((node: any) => rowDataArray.push(node.data));
 
-    const rowDataArray: any[] = [];
-    gridRef.current.forEachNode((node: any) => rowDataArray.push(node.data));
-
-    console.log("Grid Data:", rowDataArray);
-  };
+  console.log("Grid Data:", rowDataArray);
+};

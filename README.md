@@ -1,4 +1,4 @@
-valueSetter: (params) => {
+valueSetter: (params: { newValue: string; data: { eventTimeStamp: string } }) => {
   if (!params.newValue) return false;
 
   // Try to parse with full date-time format

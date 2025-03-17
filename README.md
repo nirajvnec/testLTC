@@ -1,9 +1,16 @@
-gridRef.current.api.forEachNode((node: RowNode) => {
-  if (node.data && node.data.eventTimeStamp) {
-    // Get the formatted value using the existing valueGetter logic
-    const formattedDate = moment(node.data.eventTimeStamp, ["M/D/YYYY h:mm:ss A", "YYYYMMDD"], true)
-      .format("YYYYMMDD");
+.buttonWrapper {
+  position: relative;  /* Ensures Alert is positioned relative to this container */
+  display: inline-block; /* Prevents expanding to full width */
+}
 
-    console.log("Formatted eventTimeStamp:", formattedDate);
-  }
-});
+.alertBadge {
+  position: absolute;
+  top: -5px;   /* Move slightly above */
+  right: -5px; /* Move to the right */
+  background-color: red; /* Ensures visibility */
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%; /* Circular appearance */
+}

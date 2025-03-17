@@ -1,16 +1,19 @@
-.buttonWrapper {
-  position: relative;  /* Ensures Alert is positioned relative to this container */
-  display: inline-block; /* Prevents expanding to full width */
-}
+<div className={styles.gridMessageBoxesContainer}>
+  <div className={styles.buttonWrapper}>
+    {/* Alert Positioned Absolutely */}
+    <Alert className={styles.alertBadge}>9</Alert>
 
-.alertBadge {
-  position: absolute;
-  top: -5px;   /* Move slightly above */
-  right: -5px; /* Move to the right */
-  background-color: red; /* Ensures visibility */
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 50%; /* Circular appearance */
-}
+    {/* Button */}
+    <Button
+      size={Button.size.LARGE}
+      type={Button.type.SECONDARY}
+      icon={<Envelope16px />}
+      disabled={readOnly}
+      id="btnAddnewreportconfiguration"
+      aria-label="Request Email For CoB"
+      onClick={() => {
+        addReportConfig();
+      }}
+    />
+  </div>
+</div>

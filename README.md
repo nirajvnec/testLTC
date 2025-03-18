@@ -2,7 +2,7 @@ import React from "react";
 
 const CoBEmailRequestPopup = ({ show, onClose }) => {
   return (
-    <>
+    <React.Fragment>
       <Overlay
         style={{ maxWidth: "95%", width: "1530px", marginTop: "5px", maxHeight: "auto" }}
         id="cob-email-request-dialog"
@@ -38,7 +38,7 @@ const CoBEmailRequestPopup = ({ show, onClose }) => {
           </div>
         </Overlay.Body>
       </Overlay>
-    </>
+    </React.Fragment>
   );
 };
 

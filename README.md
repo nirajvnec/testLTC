@@ -1,15 +1,22 @@
 import React from "react";
+import { Overlay } from "@uwr/react"; // Assuming correct import
 
-const CoBEmailRequestPopup = ({ show, onClose }) => {
+// Define the type for props
+type CoBEmailRequestPopupProps = {
+  show: boolean;
+  onClose: () => void;
+};
+
+function CoBEmailRequestPopup(props: CoBEmailRequestPopupProps) {
   return (
     <React.Fragment>
       <Overlay
         style={{ maxWidth: "95%", width: "1530px", marginTop: "5px", maxHeight: "auto" }}
         id="cob-email-request-dialog"
-        show={show}
+        show={props.show}
         closeLabel="Close"
         hasCloseButton
-        onHide={onClose}
+        onHide={props.onClose}
       >
         <Overlay.Header>
           <h2>Request for Historical CoB Smartclose Email</h2>
@@ -40,6 +47,6 @@ const CoBEmailRequestPopup = ({ show, onClose }) => {
       </Overlay>
     </React.Fragment>
   );
-};
+}
 
 export default CoBEmailRequestPopup;

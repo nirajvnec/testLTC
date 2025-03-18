@@ -1,17 +1,45 @@
-.markTickIcon {
-  position: absolute;
-  bottom: -5px; /* Adjust position if needed */
-  right: -5px;
-}
+import React from "react";
 
-.riskIcon {
-  color: yellow; /* 🟡 Set Risk16px24px to Yellow */
-}
+const CoBEmailRequestPopup = ({ show, onClose }) => {
+  return (
+    <>
+      <Overlay
+        style={{ maxWidth: "95%", width: "1530px", marginTop: "5px", maxHeight: "auto" }}
+        id="cob-email-request-dialog"
+        show={show}
+        closeLabel="Close"
+        hasCloseButton
+        onHide={onClose}
+      >
+        <Overlay.Header>
+          <h2>Request for Historical CoB Smartclose Email</h2>
+        </Overlay.Header>
 
-.closeIcon {
-  color: red; /* 🔴 Set MarkCloseBold16px to Red */
-}
+        <Overlay.Body>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {/* Historical CoB Date Input */}
+            <div>
+              <label htmlFor="historical-cob-date">Historical CoB Date:</label>
+              <input type="date" id="historical-cob-date" />
+            </div>
 
-<Risk16px24px className={`${styles.markTickIcon} ${styles.riskIcon}`} />
+            {/* Reason Input */}
+            <div>
+              <label htmlFor="reason">Reason:</label>
+              <input type="text" id="reason" placeholder="Enter reason..." />
+            </div>
 
-<MarkCloseBold16px className={`${styles.markTickIcon} ${styles.closeIcon}`} />
+            {/* Request Button */}
+            <div>
+              <button style={{ backgroundColor: "#007bff", color: "white", padding: "10px 15px", border: "none", cursor: "pointer" }}>
+                Request
+              </button>
+            </div>
+          </div>
+        </Overlay.Body>
+      </Overlay>
+    </>
+  );
+};
+
+export default CoBEmailRequestPopup;

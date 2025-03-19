@@ -1,7 +1,13 @@
-<AgGridReact
-  rowData={reportData}
-  columnDefs={columnDefs}
-  masterDetail={true} // ✅ Enables Master-Detail
-  detailCellRenderer={DetailPanel} // ✅ Uses DetailPanel inside the grid
-  getRowHeight={(params) => (params.node.detail ? 200 : 50)} // Adjust height dynamically
-/>
+const DetailPanel = (props: { data: RowData }) => { 
+  if (!props.data) return null; // ✅ Check if data exists
+
+  return (
+    <div className="detail-panel">
+      <h4>Details for {props.data.pvReportName}</h4>
+      <p><strong>Description:</strong> {props.data.pvReportDescription}</p>
+      <p><strong>Updated By:</strong> {props.data.modifiedBy}</p>
+    </div>
+  );
+};
+
+export default DetailPanel;

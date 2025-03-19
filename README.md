@@ -1,13 +1,16 @@
-const DetailPanel = (props: { data: RowData }) => { 
-  if (!props.data) return null; // ✅ Check if data exists
-
-  return (
-    <div className="detail-panel">
-      <h4>Details for {props.data.pvReportName}</h4>
-      <p><strong>Description:</strong> {props.data.pvReportDescription}</p>
-      <p><strong>Updated By:</strong> {props.data.modifiedBy}</p>
-    </div>
-  );
-};
-
-export default DetailPanel;
+<AgGridReact
+  rowData={reportData}
+  columnDefs={columnDefs}
+  defaultColDef={defaultColumnDefinition}
+  pagination={true}
+  paginationPageSize={MIN_GRID_PAGE_SIZE}
+  paginationAutoPageSize={false}
+  rowSelection="single"
+  suppressRowClickSelection={true}
+  onPaginationChanged={onPaginationChanged}
+  onFirstDataRendered={onFirstDataRendered}
+  masterDetail={true} // ✅ Enables Master-Detail
+  detailCellRenderer={DetailPanel} // ✅ Uses DetailPanel inside the grid
+  getRowHeight={(params) => (params.node.detail ? 200 : 50)} // Adjust height dynamically
+  **isRowMaster={(data) => !!data.pvReportName}** // ✅ Ensure grid knows which rows have details
+/>

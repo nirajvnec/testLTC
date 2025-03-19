@@ -1,5 +1,5 @@
 const [expandedRowData, setExpandedRowData] = useState(null);
 
-const onRowClicked = (params) => {
-  setExpandedRowData((prev) => (prev?.id === params.data.id ? null : params.data)); 
+const onRowClicked = (params: { data: ReportInfo }) => {
+  setExpandedRowData((prev) => (prev?.pvReportKey === params.data.pvReportKey ? null : params.data));
 };

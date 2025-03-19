@@ -1,4 +1,10 @@
-const DetailPanel = ({ rowData }) => {
+interface RowData {
+  pvReportName: string;
+  pvReportDescription: string;
+  modifiedBy: string;
+}
+
+const DetailPanel = ({ rowData }: { rowData: RowData | null }) => {
   if (!rowData) return null;
 
   return (

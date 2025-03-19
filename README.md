@@ -1,19 +1,5 @@
-interface RowData {
-  pvReportName: string;
-  pvReportDescription: string;
-  modifiedBy: string;
-}
+const [expandedRowData, setExpandedRowData] = useState(null);
 
-const DetailPanel = ({ rowData }: { rowData: RowData | null }) => {
-  if (!rowData) return null;
-
-  return (
-    <div className="detail-panel">
-      <h4>Details for {rowData.pvReportName}</h4>
-      <p><strong>Description:</strong> {rowData.pvReportDescription}</p>
-      <p><strong>Updated By:</strong> {rowData.modifiedBy}</p>
-    </div>
-  );
+const onRowClicked = (params) => {
+  setExpandedRowData((prev) => (prev?.id === params.data.id ? null : params.data)); 
 };
-
-export default DetailPanel;

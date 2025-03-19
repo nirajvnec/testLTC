@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import CoBEmailRequestPopup from "./CoBEmailRequestPopup";
-
-const App = () => {
-  const [showPopup, setShowPopup] = useState(false);
+const DetailPanel = ({ rowData }) => {
+  if (!rowData) return null;
 
   return (
-    <div>
-      <button onClick={() => setShowPopup(true)}>Open Popup</button>
-      {showPopup && <CoBEmailRequestPopup show={showPopup} onClose={() => setShowPopup(false)} />}
+    <div className="detail-panel">
+      <h4>Details for {rowData.pvReportName}</h4>
+      <p><strong>Description:</strong> {rowData.pvReportDescription}</p>
+      <p><strong>Updated By:</strong> {rowData.modifiedBy}</p>
     </div>
   );
 };
 
-export default App;
+export default DetailPanel;

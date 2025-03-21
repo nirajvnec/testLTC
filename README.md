@@ -1,49 +1,52 @@
-.container {
-    width: 400px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin: auto;
-    text-align: center;
-}
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-h2 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 15px;
-}
+const HistoricalCoBRequest = () => {
+    const [fromCobDate, setFromCobDate] = useState(null);
+    const [reason, setReason] = useState("");
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    text-align: left;
-}
+    const handleDateChange = (date) => {
+        setFromCobDate(date);
+    };
 
-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+    const handleSubmit = () => {
+        alert("Request Submitted!");
+    };
 
-.input-field {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    return (
+        <div className="container">
+            <h2>Request for Historical CoB Smartclose Email</h2>
 
-.submit-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
+            <div className="form-group">
+                <label htmlFor="fromDatePicker">Select a Date</label>
+                <DatePicker
+                    required
+                    name="fromDatePicker"
+                    selected={fromCobDate}
+                    onChange={handleDateChange}
+                    className="input-field"
+                    dateFormat="yyyy-MM-dd"
+                />
+            </div>
 
-.submit-button:hover {
-    background-color: #0056b3;
-}
+            <div className="form-group">
+                <label htmlFor="reason">Reason</label>
+                <input
+                    type="text"
+                    id="reason"
+                    name="reason"
+                    className="input-field"
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                />
+            </div>
+
+            <button onClick={handleSubmit} className="submit-button">
+                Request
+            </button>
+        </div>
+    );
+};
+
+export default HistoricalCoBRequest;

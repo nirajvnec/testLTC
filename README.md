@@ -24,6 +24,7 @@ const MyComponent = () => {
               minWidth: 52,
               maxWidth: 52,
               sortable: false,
+              suppressRowClickSelection: true, 
               cellRenderer: RadioButtonCellRenderer,
               cellRendererParams: {
                 onRowSelected: handleRowSelection, // Pass function to child

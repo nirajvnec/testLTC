@@ -1,15 +1,10 @@
-.container {
-    border: none; /* Remove border */
-    background: transparent; /* Optional: if the background is causing the box effect */
-    box-shadow: none; /* Remove shadow */
+
+
+getEmailStatusData(): Promise<EmailStatusData> {
+  return Promise.resolve({
+    sent: 9999,
+    pending: 9999,
+    failed: 9999,
+  });
 }
 
-.formGroup {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-    text-align: left;
-    border: none; /* Remove border */
-    background: transparent; /* Remove background */
-    box-shadow: none; /* Remove any shadow */
-}

@@ -1,14 +1,13 @@
-async function loadEmailStatusData(): Promise<void> { 
-    try {
-        const data = await service.getEmailStatusData();
-        
-        // Ensure the data is valid and replace null/undefined with default values
-        setEmailData({
-            sent: data.sent ?? 0,
-            pending: data.pending ?? 0,
-            failed: data.failed ?? 0
-        });
-    } catch (error) {
-        console.error("Failed to load email status data:", error);
-    }
-}
+const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+
+setIsButtonDisabled(selectedRows && selectedRows.length === 0);
+
+
+const onSelectionChanged = () => {
+    const selectedRows = gridRef.current?.api.getSelectedRows();
+    setIsButtonDisabled(selectedRows && selectedRows.length === 0);
+  };
+
+
+ disabled={isButtonDisabled} // Disable if no row is selected

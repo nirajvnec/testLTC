@@ -1,18 +1,18 @@
 import moment from "moment";
 
-export const formatDateSafely = (dateStr: string): string => {
+export const formatISODateTimeSafely = (dateTimeStr: string): string => {
   try {
-    if (!moment(dateStr, "YYYY-MM-DD", true).isValid()) {
-      throw new Error(`Contract broken: Date '${dateStr}' is not in YYYY-MM-DD format`);
+    // Validate the input format strictly
+    if (!moment(dateTimeStr, moment.ISO_8601, true).isValid()) {
+      throw new Error(
+        `Contract broken: Datetime '${dateTimeStr}' is not in the correct format (YYYY-MM-DDTHH:mm:ss.SSSZ)`
+      );
     }
-    return moment(dateStr).format("DD-MMM-YYYY"); // Converts to 'DD-MMM-YYYY'
+
+    // Convert to "DD-MMM-YYYY HH:mm:ss"
+    return moment.utc(dateTimeStr).format("DD-MMM-YYYY HH:mm:ss"); 
   } catch (error) {
     console.error(error.message);
-    return "Invalid Date"; // Fallback for UI
+    return "Invalid Datetime"; // Fallback UI in case of invalid format
   }
 };
-
-
-valueGetter: (params: any) => formatDateSafely(params.data.fromDate)
-
- valueGetter: (params: any) => formatDateSafely(params.data.toDate)

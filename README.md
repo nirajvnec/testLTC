@@ -1,3 +1,7 @@
+catch (error) {
+  console.error((error as Error).message);
+}
+
 import moment from "moment";
 
 export class DateTimeUtils {

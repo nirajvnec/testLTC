@@ -1,5 +1,5 @@
 valueGetter: (params: { data: { eventTimeStamp?: string } }) =>
-      DateTimeUtils.formatDateTimestampSafely(params.data?.eventTimeStamp),
+      Utilities.formatDateTimestampSafely(params.data?.eventTimeStamp),
   },
 
 import moment from "moment";

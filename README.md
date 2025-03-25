@@ -1,44 +1,22 @@
-catch (error) {
-  console.error((error as Error).message);
-}
-
 import moment from "moment";
 
 export class DateTimeUtils {
   /**
-   * Formats an ISO datetime string safely.
-   * Expected input format: YYYY-MM-DDTHH:mm:ss.SSSZ (ISO 8601).
-   * Output format: DD-MMM-YYYY HH:mm:ss (UTC preserved).
+   * Safely formats a timestamp.
+   * - If the timestamp is already in 'DD-MMM-YYYY h:mm:ss A' format, return it as is.
+   * - Otherwise, convert it from 'M/D/YYYY h:mm:ss A' to 'DD-MMM-YYYY h:mm:ss A'.
+   * - Returns an empty string if the input is invalid or empty.
    */
-  public static formatISODateTimeSafely(dateTimeStr: string): string {
-    try {
-      if (!moment(dateTimeStr, moment.ISO_8601, true).isValid()) {
-        throw new Error(
-          `Contract broken: Datetime '${dateTimeStr}' is not in the correct format (YYYY-MM-DDTHH:mm:ss.SSSZ)`
-        );
-      }
-      return moment.utc(dateTimeStr).format("DD-MMM-YYYY HH:mm:ss");
-    } catch (error) {
-      console.error(error.message);
-      return "Invalid Datetime";
-    }
-  }
+  public static formatMDYDateTimeWithAMPM(timestamp?: string): string {
+    if (!timestamp) return ""; // Handle empty cases
 
-  /**
-   * Formats a date string safely.
-   * Expected input format: YYYY-MM-DD.
-   * Output format: DD-MMM-YYYY.
-   */
-  public static formatDateSafely(dateStr: string): string {
-    try {
-      if (!moment(dateStr, "YYYY-MM-DD", true).isValid()) {
-        throw new Error(`Contract broken: Date '${dateStr}' is not in YYYY-MM-DD format`);
-      }
-      return moment(dateStr).format("DD-MMM-YYYY");
-    } catch (error) {
-      console.error(error.message);
-      return "Invalid Date";
+    // Check if it's already in the target format
+    const parsedDate = moment(timestamp, "DD-MMM-YYYY h:mm:ss A", true);
+    if (parsedDate.isValid()) {
+      return timestamp; // Already formatted correctly
     }
+
+    // Convert if it’s not already formatted
+    return moment(timestamp, "M/D/YYYY h:mm:ss A").format("DD-MMM-YYYY h:mm:ss A");
   }
 }
-

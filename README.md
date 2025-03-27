@@ -1,4 +1,8 @@
-const userRoles = userContext.assignedRoles || [];
+const userRoles = (userContext.assignedRoles || []).map(role => 
+    role.replace("MIM_ABT-GWG_", "")
+);
+
+console.log("User Roles:", userRoles); // Check the modified roles in the console
 
 console.log("User Roles:", userRoles); // Log all assigned roles
 

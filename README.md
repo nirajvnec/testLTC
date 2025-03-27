@@ -1,5 +1,7 @@
-const isViewOnly = hasViewAccess && !hasEditAccess;
+const [isViewOnly, setIsViewOnly] = useState(false);
 
-if (isViewOnly) {
-  console.log("User has only view access");
-}
+useEffect(() => {
+  setIsViewOnly(hasViewAccess && !hasEditAccess);
+}, [hasViewAccess, hasEditAccess]);
+
+console.log("User has only view access:", isViewOnly);

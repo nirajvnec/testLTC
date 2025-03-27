@@ -1,2 +1,3 @@
- console.log("ConfigureReport props:", props);
-    console.log("ConfigureReport readOnly:", props.readOnly);
+function ConfigureReport(props: ConfigurePreverificationReportProps) {
+  console.log("ConfigureReport props:", JSON.stringify(props, null, 2));
+}

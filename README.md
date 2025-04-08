@@ -1,5 +1,3 @@
-.gridMessageBoxesTopContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 16px; /* Spacing between children */
+.gridActionButtonsContainer {
+  margin-top: 16px; /* Adjust spacing */
 }

@@ -1,44 +1,40 @@
-export interface ReportData {
-  id: number;
-  reportName: string;
-  description: string;
-  status: "Approved" | "Pending Approval" | "Rejected" | "Draft" | "Pending";
-  approvedBy?: string; // Optional because not all reports are approved
+import React, { useEffect, useState } from 'react';
+import { EmailStatusData } from './EmailStatusData'; // Adjust path if needed
+
+interface PreverificationReportsProps {
+  // Define your prop types here
 }
 
+export default function ManageReports(props: PreverificationReportsProps) {
+  const [emailStatus, setEmailStatus] = useState<EmailStatusData>({
+    sent: null,
+    pending: null,
+    failed: null,
+  });
 
-export const mockReportData: ReportData[] = [
-  {
-    id: 1,
-    reportName: "Report_25March2025_01",
-    description: "Report_25March2025_01",
-    status: "Approved",
-    approvedBy: "John Smith",
-  },
-  {
-    id: 2,
-    reportName: "Report_10March2025_01",
-    description: "Report_10March2025_01",
-    status: "Pending Approval",
-    approvedBy: "John Smith",
-  },
-  {
-    id: 3,
-    reportName: "Report_21March2025_Mail_Word",
-    description: "Report_21March2025_Mail_Word",
-    status: "Rejected",
-    approvedBy: "John Smith",
-  },
-  {
-    id: 4,
-    reportName: "Report_21March2025_Mail_PPTX",
-    description: "Report_21March2025_Mail_PPTX",
-    status: "Draft",
-  },
-  {
-    id: 5,
-    reportName: "Report_Test",
-    description: "Report_Test",
-    status: "Pending",
-  },
-];
+  useEffect(() => {
+    const fetchEmailStatus = async () => {
+      const data = await getEmailStatusData();
+      setEmailStatus(data);
+    };
+
+    fetchEmailStatus();
+  }, []);
+
+  // Simulated API call – replace with actual service call
+  const getEmailStatusData = async (): Promise<EmailStatusData> => {
+    return Promise.resolve({
+      sent: 9991,
+      pending: 9999,
+      failed: 9999,
+    });
+  };
+
+  return (
+    <div>
+      <div>Sent Emails: {emailStatus.sent}</div>
+      <div>Pending Emails: {emailStatus.pending}</div>
+      <div>Failed Emails: {emailStatus.failed}</div>
+    </div>
+  );
+}

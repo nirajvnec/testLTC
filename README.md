@@ -1,40 +1,89 @@
-import React, { useEffect, useState } from 'react';
-import { EmailStatusData } from './EmailStatusData'; // Adjust path if needed
+<div className={styles.gridMessageBoxesTopContainer}>
+  <div className={styles.gridMessageBoxesContainer}>
+    
+    {/* Add New */}
+    <Button
+      size={Button.size.MEDIUM}
+      type={Button.type.SECONDARY}
+      id="btnAddNewReportConfiguration"
+      aria-label="Add New"
+      onClick={addReportConfig}
+      className={styles.buttonWrapper}
+    >
+      <div className={styles.iconWrapper}>
+        <Envelope16px />
+        <span className={styles.alertBadge}>{emailStatus.sent}</span>
+        <MarkTick12px className={styles.markTickIcon} />
+      </div>
+    </Button>
 
-interface PreverificationReportsProps {
-  // Define your prop types here
+    {/* Edit */}
+    <Button
+      size={Button.size.MEDIUM}
+      type={Button.type.SECONDARY}
+      id="btnEditReportConfiguration"
+      onClick={editReportConfig}
+      className={styles.buttonWrapper}
+    >
+      <div className={styles.iconWrapper}>
+        <Envelope16px />
+        <span className={styles.alertBadge}>{emailStatus.pending}</span>
+        <RiskHigh16px className={styles.riskIcon} />
+      </div>
+    </Button>
+
+    {/* Delete */}
+    <Button
+      size={Button.size.MEDIUM}
+      type={Button.type.SECONDARY}
+      id="btnDeleteReportConfiguration"
+      onClick={deleteReportConfig}
+      className={styles.buttonWrapper}
+    >
+      <div className={styles.iconWrapper}>
+        <Envelope16px />
+        <span className={styles.alertBadge}>{emailStatus.failed}</span>
+        <MarkClose12px className={styles.closeIcon} />
+      </div>
+    </Button>
+
+  </div>
+</div>
+
+
+
+
+
+.iconWrapper {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
 }
 
-export default function ManageReports(props: PreverificationReportsProps) {
-  const [emailStatus, setEmailStatus] = useState<EmailStatusData>({
-    sent: null,
-    pending: null,
-    failed: null,
-  });
+.alertBadge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #367588;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 12px;
+  min-width: 20px;
+  text-align: center;
+  z-index: 2;
+}
 
-  useEffect(() => {
-    const fetchEmailStatus = async () => {
-      const data = await getEmailStatusData();
-      setEmailStatus(data);
-    };
-
-    fetchEmailStatus();
-  }, []);
-
-  // Simulated API call – replace with actual service call
-  const getEmailStatusData = async (): Promise<EmailStatusData> => {
-    return Promise.resolve({
-      sent: 9991,
-      pending: 9999,
-      failed: 9999,
-    });
-  };
-
-  return (
-    <div>
-      <div>Sent Emails: {emailStatus.sent}</div>
-      <div>Pending Emails: {emailStatus.pending}</div>
-      <div>Failed Emails: {emailStatus.failed}</div>
-    </div>
-  );
+.markTickIcon,
+.riskIcon,
+.closeIcon {
+  position: absolute;
+  bottom: -8px;
+  left: -6px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 1px;
+  font-size: 12px;
+  color: inherit;
 }

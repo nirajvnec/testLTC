@@ -1,15 +1,11 @@
-function formatMMDDYYYYorYYYYMMDD(dateStr: string | null | undefined): string {
-  if (!dateStr) {
-    throw new Error('Date string is null or undefined');
+import moment from 'moment';
+
+export class DateUtils {
+  static formatDateToShortMonth(inputDate: string): string {
+    const parsed = moment(inputDate, 'DD/MM/YYYY', true);
+    if (!parsed.isValid()) {
+      throw new Error('Invalid date format. Expected DD/MM/YYYY.');
+    }
+    return parsed.format('DD-MMM-YYYY');
   }
-
-  // Input formats supported: 'MM-DD-YYYY' or 'YYYY-MM-DD'
-  // Output format: 'DD-MMM-YYYY' (example: 27-Sep-2024)
-  const date = moment(dateStr, ['MM-DD-YYYY', 'YYYY-MM-DD'], true); // strict parsing
-
-  if (!date.isValid()) {
-    throw new Error(`Invalid date format: "${dateStr}". Expected formats: MM-DD-YYYY or YYYY-MM-DD.`);
-  }
-
-  return date.format('DD-MMM-YYYY');
 }

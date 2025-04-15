@@ -1,75 +1,84 @@
-export interface ReportData {
-  id: number;
-  reportName: string;
-  description: string;
-  status: 'Approved' | 'Pending Approval' | 'Rejected' | 'Draft' | 'Pending';
-  approvedBy: string;
-  comment: string;
-  canSendForApproval: boolean;
-  approvalStatus: 'PENDING' | 'APPROVED' | 'REJECTED';
-  hasAccess: boolean;
-  reportLink: string;
-}
+import React from 'react';
+import { AgGridReact } from 'ag-grid-react';
+import { ColDef } from 'ag-grid-community';
+import CommentIcon from '@mui/icons-material/Comment';
+import SendIcon from '@mui/icons-material/Send';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import ArticleIcon from '@mui/icons-material/Article';
+import Tooltip from '@mui/material/Tooltip';
 
-export const mockReportData: ReportData[] = [
+const columnDefs: ColDef[] = [
   {
-    id: 1,
-    reportName: 'Report_25March2025_01',
-    description: 'Report_25March2025_01',
-    status: 'Approved',
-    approvedBy: 'John Smith',
-    comment: 'Last updated by reviewer',
-    canSendForApproval: false,
-    approvalStatus: 'APPROVED',
-    hasAccess: false,
-    reportLink: 'https://example.com/report/25march2025_01',
+    headerName: 'Comment',
+    field: 'comment',
+    cellRenderer: CommentCellRenderer,
   },
   {
-    id: 2,
-    reportName: 'Report_10March2025_01',
-    description: 'Report_10March2025_01',
-    status: 'Pending Approval',
-    approvedBy: 'John Smith',
-    comment: '',
-    canSendForApproval: true,
-    approvalStatus: 'PENDING',
-    hasAccess: true,
-    reportLink: 'https://example.com/report/10march2025_01',
+    headerName: 'Send for Approval',
+    field: 'canSendForApproval',
+    cellRenderer: SendForApprovalRenderer,
   },
   {
-    id: 3,
-    reportName: 'Report_21March2025_Mail_Word',
-    description: 'Report_21March2025_Mail_Word',
-    status: 'Rejected',
-    approvedBy: 'John Smith',
-    comment: 'Rejected due to missing attachment',
-    canSendForApproval: true,
-    approvalStatus: 'REJECTED',
-    hasAccess: true,
-    reportLink: 'https://example.com/report/21march2025_mail_word',
+    headerName: 'Approve/Reject',
+    field: 'approvalStatus',
+    cellRenderer: ApproveRejectRenderer,
   },
   {
-    id: 4,
-    reportName: 'Report_15April2025_QA',
-    description: 'Report_15April2025_QA',
-    status: 'Draft',
-    approvedBy: '',
-    comment: '',
-    canSendForApproval: true,
-    approvalStatus: 'PENDING',
-    hasAccess: false,
-    reportLink: 'https://example.com/report/15april2025_qa',
-  },
-  {
-    id: 5,
-    reportName: 'Report_01April2025_Client',
-    description: 'Report_01April2025_Client',
-    status: 'Pending',
-    approvedBy: '',
-    comment: 'Awaiting client confirmation',
-    canSendForApproval: false,
-    approvalStatus: 'PENDING',
-    hasAccess: true,
-    reportLink: 'https://example.com/report/01april2025_client',
+    headerName: 'Report',
+    field: 'reportLink',
+    cellRenderer: ReportLinkRenderer,
   },
 ];
+
+
+
+// 1. Comment Icon Renderer
+const CommentCellRenderer = (params: any) => {
+  const comment = params.value;
+  if (!comment) return null;
+
+  return (
+    <Tooltip title={comment}>
+      <CommentIcon style={{ cursor: 'pointer', color: '#1976d2' }} />
+    </Tooltip>
+  );
+};
+
+// 2. Send for Approval Renderer
+const SendForApprovalRenderer = (params: any) => {
+  const canSend = params.value;
+  if (!canSend) return null;
+
+  return (
+    <Tooltip title="Send for approval">
+      <SendIcon style={{ cursor: 'pointer', color: 'orange' }} />
+    </Tooltip>
+  );
+};
+
+// 3. Approve/Reject Renderer
+const ApproveRejectRenderer = (params: any) => {
+  const { approvalStatus, hasAccess } = params.data;
+
+  if (approvalStatus !== 'PENDING' || !hasAccess) return null;
+
+  return (
+    <Tooltip title="Approve / Reject">
+      <TaskAltIcon style={{ cursor: 'pointer', color: 'green' }} />
+    </Tooltip>
+  );
+};
+
+// 4. Report Link Renderer
+const ReportLinkRenderer = (params: any) => {
+  const link = params.value;
+  if (!link) return null;
+
+  return (
+    <Tooltip title="View report">
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        <ArticleIcon style={{ color: '#333' }} />
+      </a>
+    </Tooltip>
+  );
+};

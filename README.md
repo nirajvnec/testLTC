@@ -1,3 +1,6 @@
-// Format dates as "DD-MMM-YYYY" using moment
-const formattedFromDate: string = moment(datePickerStart, 'YYYY-MM-DD').format('DD-MMM-YYYY');
-const formattedToDate: string = moment(datePickerEnd, 'YYYY-MM-DD').format('DD-MMM-YYYY');
+const [formattedFromDate, setFormattedFromDate] = useState<string>('');
+const [formattedToDate, setFormattedToDate] = useState<string>('');
+
+
+setFormattedFromDate(moment(data, 'YYYY-MM-DD').format('DD-MMM-YYYY'));
+setFormattedToDate(moment(data, 'YYYY-MM-DD').format('DD-MMM-YYYY'));

@@ -1,10 +1,11 @@
-const READABLE_UTC_DATE_TIME_FORMAT = 'DD-MMM-YYYY HH:mm:ss';
+public static formatISODateTimeSafely(dateTimeStr: string): string {
+  console.log('dateTimeStr:', dateTimeStr);
 
-
-public static parseAndFormatIsoDateTime(dateTimeStr: string): string {
   try {
     if (!moment(dateTimeStr, moment.ISO_8601, true).isValid()) {
-      console.log(`Invalid format: Datetime '${dateTimeStr}' is not ISO 8601`);
+      console.log(
+        `Contract broken: Datetime '${dateTimeStr}' is not in the correct format (YYYY-MM-DDTHH:mm:ss.SSSZ)`
+      );
       return 'Invalid Datetime';
     }
 

@@ -1,6 +1,12 @@
-const [formattedFromDate, setFormattedFromDate] = useState<string>('');
-const [formattedToDate, setFormattedToDate] = useState<string>('');
+const [rollToDateLabel, setRollToDateLabel] = useState<string>('');
+const [rollFromDateLabel, setRollFromDateLabel] = useState<string>('');
 
 
-setFormattedFromDate(moment(data, 'YYYY-MM-DD').format('DD-MMM-YYYY'));
-setFormattedToDate(moment(data, 'YYYY-MM-DD').format('DD-MMM-YYYY'));
+useEffect(() => {
+  if (props.toDate) {
+    setRollToDateLabel(Utilities.formatMMDDYYYYorYYYYMMDD(props.toDate));
+  }
+  if (props.fromDate) {
+    setRollFromDateLabel(Utilities.formatMMDDYYYYorYYYYMMDD(props.fromDate));
+  }
+}, [props.toDate, props.fromDate]);

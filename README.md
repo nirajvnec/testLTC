@@ -1,3 +1,6 @@
+const READABLE_UTC_DATE_TIME_FORMAT = 'DD-MMM-YYYY HH:mm:ss';
+
+
 public static parseAndFormatIsoDateTime(dateTimeStr: string): string {
   try {
     if (!moment(dateTimeStr, moment.ISO_8601, true).isValid()) {

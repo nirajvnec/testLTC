@@ -1,1 +1,5 @@
-git show-branch feature/Marvel_25.4.2_Pbi_Report_Approval_Flow feature/Marvel_25.4.2
+export interface IAttributeConfigurationService {
+  getAllConfigTables(): Promise<Array<IConfigTable>>;
+  getSelectedTableInfo(name: string): Promise<Array<IColumnsInfo>>;
+  getSelectedTableColumnData(name: string): Promise<Array<Record<string, any>>>;
+}

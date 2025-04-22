@@ -1,7 +1,7 @@
 import { IAttributeConfigurationService } from './AttributeConfigurationService';
 import { IConfigTable, IColumnsInfo } from './AttributeConfigurationModels';
 
-export class AttributeConfigurationServiceMock implements IAttributeConfigurationService {
+export class AttributeConfigurationService implements IAttributeConfigurationService {
   async getAllConfigTables(): Promise<IConfigTable[]> {
     return [
       { tableName: 'reference.attribute_filter_master_key', displayName: 'Attribute Filter Master' },

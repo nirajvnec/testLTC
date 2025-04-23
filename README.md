@@ -1,79 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { AgGridReact } from 'ag-grid-react';
-import { ColDef } from 'ag-grid-community';
+const handleOnChange = async (value: any) => {
+  const tableName = value.selectedItemId;
+  console.log('selectedDropdownValue', tableName);
 
-import { AttributeConfigurationService } from '../services/AttributeConfigurationService'; // or the mock one
-import { IColumnsInfo } from '../services/AttributeConfigurationModels';
+  setSelectedTable(tableName);
 
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+  // Fetch columns metadata
+  const columns: IColumnsInfo[] = await attributeConfigurationService.getSelectedTableInfo(tableName);
 
-const attributeConfigurationService = new AttributeConfigurationService();
-
-export const ConfigureAttributes: React.FC = () => {
-  const [allTableNames, setAllTableNames] = useState<string[]>([]);
-  const [selectedTable, setSelectedTable] = useState<string>('');
-  const [columnDefs, setColumnDefs] = useState<ColDef[]>([]);
-  const [rowData, setRowData] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchAllTables = async () => {
-      const tables = await attributeConfigurationService.getAllConfigTables();
-      setAllTableNames(tables.map(t => t.tableName));
-    };
-    fetchAllTables();
-  }, []);
-
-  const handleOnChange = async (value: any) => {
-    const tableName = value.selectedItemId;
-    console.log('selectedDropdownValue', tableName);
-
-    setSelectedTable(tableName);
-
-    // Fetch columns
-    const columns: IColumnsInfo[] = await attributeConfigurationService.getSelectedTableInfo(tableName);
-    const colDefs: ColDef[] = columns.map(col => ({
-      headerName: col.displayName || col.name,
-      field: col.name,
-      sortable: true,
-      filter: true,
-      resizable: true,
-    }));
-    setColumnDefs(colDefs);
-
-    // Fetch data
-    const data = await attributeConfigurationService.getSelectedTableColumnData(tableName);
-    setRowData(data);
+  // Define radio button column (first column)
+  const radioColumn: ColDef = {
+    headerName: '',
+    field: 'radio',
+    width: 50,
+    suppressMenu: true,
+    suppressSorting: true,
+    cellRenderer: (params: any) => (
+      <input
+        type="radio"
+        name="gridRadioGroup"
+        checked={params.node.isSelected()}
+        onChange={() => {
+          params.api.deselectAll();
+          params.node.setSelected(true);
+        }}
+      />
+    )
   };
 
-  return (
-    <>
-      <div className={styles.pageLayout}>
-        <div className={layoutStyles.pageHeader}>
-          <h2>Configure Attributes</h2>
-        </div>
+  // Define dynamic metadata columns
+  const metaColumns: ColDef[] = columns.map(col => ({
+    headerName: col.displayName || col.name,
+    field: col.name,
+    sortable: true,
+    filter: true,
+    resizable: true
+  }));
 
-        <div className={styles.formRow}>
-          <Dropdown
-            id="ddlDataSource"
-            labelBeforeSelect="Configuration Table"
-            width="27%"
-            onChange={handleOnChange}
-            selectedItemId={selectedTable}
-            withSearch
-          >
-            {renderDropdownListItemsByValue(allTableNames)}
-          </Dropdown>
-        </div>
+  // Set columnDefs with radio column first
+  setColumnDefs([radioColumn, ...metaColumns]);
 
-        <div className="ag-theme-alpine" style={{ height: 400, marginTop: 20 }}>
-          <AgGridReact
-            columnDefs={columnDefs}
-            rowData={rowData}
-            defaultColDef={{ flex: 1, minWidth: 120 }}
-          />
-        </div>
-      </div>
-    </>
-  );
+  // Fetch table data
+  const data = await attributeConfigurationService.getSelectedTableColumnData(tableName);
+  setRowData(data);
 };

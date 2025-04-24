@@ -1,3 +1,7 @@
+
+GET https://graph.microsoft.com/v1.0/groups?$filter=startswith(displayName,'MIM_ABT_GWG_APP_MTRM_')
+
+
 const handleOnChange = async (value: any) => {
   const tableName = value.selectedItemId;
   console.log('selectedDropdownValue', tableName);

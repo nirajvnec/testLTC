@@ -1,31 +1,20 @@
 function onChangeDelForm(value: any, index: any) {
-  // Instead of directly modifying the array (which might not trigger re-renders)
-  // Create a new copy of rows with the updated value
-  const newRows = [...rows];
-  newRows[index] = {
-    ...newRows[index],
-    reportDeliveryFormatValue: value,
-    reportDeliveryFormatKey: value
-  };
+  // Create a new copy of the row to ensure React detects the change
+  const updatedRow = { ...rows[index] };
+  updatedRow.reportDeliveryFormatValue = value;
+  updatedRow.reportDeliveryFormatKey = value;
   
-  // Now update your state with this new array
-  // This depends on how your component manages state
+  // Update the array with the new row object
+  rows[index] = updatedRow;
   
-  // For useState hooks
-  // setRows(newRows);
+  // Force unique values to ensure state updates are detected
+  setdelvFormat(`${value}_${Date.now()}`);
+  setdelvFormatKey(`${value}_${Date.now()}`);
   
-  // Or if using class component state
-  // this.setState({ rows: newRows });
-  
-  // Keep your existing state updates for the format values
-  setdelvFormat(value);
-  setdelvFormatKey(value);
-  
-  console.log(newRows[index].reportDeliveryFormatValue);
-  console.log(delFormat);
-  console.log(delFormatKey);
+  // If needed, extract the actual value when using these variables:
+  // const actualFormat = delvFormat.split('_')[0];
   
   if (selectedMeasure === 'Shared Folder') {
-    props.getSubsData(newRows);
+    props.getSubsData([...rows]); // Pass a new array to ensure changes are detected
   }
 }

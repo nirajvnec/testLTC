@@ -1,26 +1,26 @@
-function onChangeDelForm(value: any, index: number) {
+function onChangeDelForm(value: any, index: any) {
+  // Create a new array from the current rows
   const updatedRows = [...rows];
-
-  // Clear the value first (intermediate state)
+  
+  // Update only the specified row
   updatedRows[index] = {
     ...updatedRows[index],
-    drpdwnVal: '' // temp clear
+    reportDeliveryFormatValue: value,
+    reportDeliveryFormatKey: value
   };
-  setState(prev => ({
-    ...prev,
-    rows: updatedRows
-  }));
-
-  // Now reapply selected value
-  setTimeout(() => {
-    const finalRows = [...updatedRows];
-    finalRows[index] = {
-      ...finalRows[index],
-      drpdwnVal: value.selectedValue
-    };
-    setState(prev => ({
-      ...prev,
-      rows: finalRows
-    }));
-  }, 0);
+  
+  // Update state with the new array
+  setRows(updatedRows);
+  
+  // These other state updates might be redundant if you're only using rows for rendering
+  setdelvFormat(value);
+  setdelvFormatKey(value);
+  
+  // Debug logging
+  console.log(`Updated dropdown ${index} to ${value}`);
+  
+  // Your existing conditional logic
+  if (selectedMeasure === 'Shared Folder') {
+    props.getSubsData(updatedRows);
+  }
 }

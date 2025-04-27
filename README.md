@@ -1,3 +1,15 @@
+
+const columnOverrides: ColumnOverrides = {
+  id: { filter: false },
+  email: { sortable: false }
+};
+
+
+
+
+
+
+
 interface ColumnMeta {
   field: string;
   type: 'string' | 'number' | 'date';

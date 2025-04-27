@@ -1,4 +1,10 @@
 
+type ColumnOverrides = {
+  [fieldName: string]: Partial<ColDef>;
+};
+
+
+
 const columnOverrides: ColumnOverrides = {
   id: { filter: false },
   email: { sortable: false }

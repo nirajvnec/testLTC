@@ -1,28 +1,16 @@
-else if (tableName === 'reference.business_owner_region') {
-  const regions: Record<string, any>[] = [];
+else if (tableName === 'reference.attribute_filter_master_key') {
+  const attributes: Record<string, any>[] = [];
 
   for (let i = 1; i <= 60; i++) {
-    regions.push({
-      region_id: 2000 + i,
-      owner_name: `Owner_${i}`,
-      is_primary: i % 2 === 0 ? 'YES' : 'NO', // YES / NO format like you want
-      modified_at: `2024-02-${(i % 28) + 1}T11:30:00Z`
+    attributes.push({
+      attribute_filter_master_key: 5000 + i,
+      data_model_attribute_key: 6000 + i,
+      is_active: i % 2 === 0 ? 'YES' : 'NO', // YES / NO instead of true/false
+      created_at: `2023-12-${(i % 28) + 1}T08:00:00Z`,
+      created_by: `creator_${i}`,
+      attribute_name: `Attribute_${i}`
     });
   }
 
-  return regions;
-}
-else if (tableName === 'reference.owner_region') {
-  const ownerRegions: Record<string, any>[] = [];
-
-  for (let i = 1; i <= 60; i++) {
-    ownerRegions.push({
-      region_id: 3000 + i,
-      owner_name: `OwnerRegion_${i}`,
-      is_primary: i % 2 === 0 ? 'YES' : 'NO', // YES / NO
-      modified_at: `2024-03-${(i % 28) + 1}T14:45:00Z`
-    });
-  }
-
-  return ownerRegions;
+  return attributes;
 }

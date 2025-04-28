@@ -1,20 +1,14 @@
 else if (tableName === 'reference.user') {
-  const users: Record<string, any>[] = [];
-
-  for (let i = 1; i <= 60; i++) {
-    users.push({
-      user_id: 1000 + i,                                 // 1001, 1002, ...
-      username: `user_${i}`,                             // user_1, user_2, ...
-      email: `user${i}@example.com`,                     // user1@example.com
-      created_on: `2024-01-${(i % 28) + 1}T09:00:00Z`,    // Jan 1 - Jan 28
-      is_active: i % 2 === 0,                            // true/false alternate
-      first_name: `FirstName${i}`,                       // FirstName1, etc
-      last_name: `LastName${i}`,                         // LastName1, etc
-      phone_number: `90000000${i.toString().padStart(2, '0')}`, // Proper 10-digit number
-      role: (i % 3 === 0) ? 'Admin' : (i % 3 === 1) ? 'User' : 'Manager', // Rotate role
-      last_login: `2024-04-${(i % 28) + 1}T10:00:00Z`     // April 1 - 28
-    });
-  }
-
-  return users;
+  return [
+    { name: 'user_id', displayName: 'User ID', type: 'number', length: 10, isRequired: true, editable: false },
+    { name: 'username', displayName: 'Username', type: 'string', length: 50, isRequired: true, editable: true },
+    { name: 'email', displayName: 'Email', type: 'string', length: 100, isRequired: true, editable: true },
+    { name: 'created_on', displayName: 'Created On', type: 'date', isRequired: false, editable: false },
+    { name: 'is_active', displayName: 'Is Active', type: 'boolean', isRequired: true, editable: true },
+    { name: 'first_name', displayName: 'First Name', type: 'string', length: 50, isRequired: true, editable: true },
+    { name: 'last_name', displayName: 'Last Name', type: 'string', length: 50, isRequired: true, editable: true },
+    { name: 'phone_number', displayName: 'Phone Number', type: 'string', length: 20, isRequired: false, editable: true },
+    { name: 'role', displayName: 'Role', type: 'string', length: 30, isRequired: true, editable: true },
+    { name: 'last_login', displayName: 'Last Login', type: 'date', isRequired: false, editable: false }
+  ];
 }

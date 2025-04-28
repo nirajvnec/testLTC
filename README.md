@@ -1,14 +1,28 @@
-else if (tableName === 'reference.user') {
-  return [
-    { name: 'user_id', displayName: 'User ID', type: 'number', length: 10, isRequired: true, editable: false },
-    { name: 'username', displayName: 'Username', type: 'string', length: 50, isRequired: true, editable: true },
-    { name: 'email', displayName: 'Email', type: 'string', length: 100, isRequired: true, editable: true },
-    { name: 'created_on', displayName: 'Created On', type: 'date', isRequired: false, editable: false },
-    { name: 'is_active', displayName: 'Is Active', type: 'boolean', isRequired: true, editable: true },
-    { name: 'first_name', displayName: 'First Name', type: 'string', length: 50, isRequired: true, editable: true },
-    { name: 'last_name', displayName: 'Last Name', type: 'string', length: 50, isRequired: true, editable: true },
-    { name: 'phone_number', displayName: 'Phone Number', type: 'string', length: 20, isRequired: false, editable: true },
-    { name: 'role', displayName: 'Role', type: 'string', length: 30, isRequired: true, editable: true },
-    { name: 'last_login', displayName: 'Last Login', type: 'date', isRequired: false, editable: false }
-  ];
+else if (tableName === 'reference.business_owner_region') {
+  const regions: Record<string, any>[] = [];
+
+  for (let i = 1; i <= 60; i++) {
+    regions.push({
+      region_id: 2000 + i,
+      owner_name: `Owner_${i}`,
+      is_primary: i % 2 === 0 ? 'YES' : 'NO', // YES / NO format like you want
+      modified_at: `2024-02-${(i % 28) + 1}T11:30:00Z`
+    });
+  }
+
+  return regions;
+}
+else if (tableName === 'reference.owner_region') {
+  const ownerRegions: Record<string, any>[] = [];
+
+  for (let i = 1; i <= 60; i++) {
+    ownerRegions.push({
+      region_id: 3000 + i,
+      owner_name: `OwnerRegion_${i}`,
+      is_primary: i % 2 === 0 ? 'YES' : 'NO', // YES / NO
+      modified_at: `2024-03-${(i % 28) + 1}T14:45:00Z`
+    });
+  }
+
+  return ownerRegions;
 }

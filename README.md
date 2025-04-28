@@ -1,3 +1,16 @@
+export interface IColumnsInfo {
+  name: string;
+  displayName?: string;
+  type?: string;
+  length?: number;
+  numberOfDecimal?: number;
+  isRequired?: boolean;
+  editable?: boolean;
+}
+
+
+
+
 import { IAttributeConfigurationService } from '../IAttributeConfigurationService';
 import { IColumnsInfo, IConfigTable } from '../models/AttributeConfigurationModels';
 

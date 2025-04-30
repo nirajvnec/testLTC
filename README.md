@@ -1,1 +1,6 @@
-<h2>{props.actionType ? `${props.actionType} PBI Report` : 'PBI Report'}</h2>
+type ApproveRejectPopupProps = {
+  showPopup: boolean;
+  setShowPopup: (flag: boolean) => void;
+  actionType: 'Approve' | 'Reject' | null;
+  selectedRowData: any; // or define a proper type if available
+};

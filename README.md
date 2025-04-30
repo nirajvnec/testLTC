@@ -1,4 +1,8 @@
-onClick={() => {
-  params.api.selectNode(params.node, true); // this selects the row
-  handleOnApprove(params.data);
-}}
+function handleOnApprove(rowData: any) {
+  if (rowData) {
+    setSelectedRowData(rowData); // optional: if you need this elsewhere
+    setshowPopup(true);
+  } else {
+    console.warn('No row data provided to handleOnApprove');
+  }
+}

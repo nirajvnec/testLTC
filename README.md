@@ -6,3 +6,10 @@ function handleOnReject(rowData: any) { if (rowData) { setActionRowData(rowData)
 
 type ApproveRejectPopupProps = { showPopup: boolean; setShowPopup: (flag: boolean) => void; actionType: 'Approve' | 'Reject' | null; actionRowData: any; // or a defined type };
 
+
+<ApproveRejectPopup
+  showPopup={showPopup}
+  setShowPopup={showPopupDialog}
+  actionType={actionType}
+  actionRowData={actionRowData}
+/>

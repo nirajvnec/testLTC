@@ -1,13 +1,8 @@
-type ApproveRejectPopupProps = {
-  showPopup: boolean;
-  setShowPopup: (flag: boolean) => void;
-  actionType: 'Approve' | 'Reject' | null;
-  selectedRowData: any; // or define a proper type if available
-};
+const [actionRowData, setActionRowData] = useState<any | null>(null);
 
-<ApproveRejectPopup
-  showPopup={showPopup}
-  setShowPopup={showPopupDialog}
-  actionType={actionType}
-  selectedRowData={selectedRowData}
-/>
+function handleOnApprove(rowData: any) { if (rowData) { setActionRowData(rowData); setActionType('Approve'); setshowPopup(true); } }
+
+function handleOnReject(rowData: any) { if (rowData) { setActionRowData(rowData); setActionType('Reject'); setshowPopup(true); } }
+
+type ApproveRejectPopupProps = { showPopup: boolean; setShowPopup: (flag: boolean) => void; actionType: 'Approve' | 'Reject' | null; actionRowData: any; // or a defined type };
+

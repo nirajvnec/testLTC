@@ -1,15 +1,32 @@
-const [actionRowData, setActionRowData] = useState<any | null>(null);
+const handleSave = async () => {
+  const errors: string[] = [];
 
-function handleOnApprove(rowData: any) { if (rowData) { setActionRowData(rowData); setActionType('Approve'); setshowPopup(true); } }
+  if (!comment.trim()) {
+    errors.push('Comment is required.');
+  }
 
-function handleOnReject(rowData: any) { if (rowData) { setActionRowData(rowData); setActionType('Reject'); setshowPopup(true); } }
+  if (errors.length > 0) {
+    setValidationBody(errors);
+    setShowValidationOverlay(true);
+    return;
+  }
 
-type ApproveRejectPopupProps = { showPopup: boolean; setShowPopup: (flag: boolean) => void; actionType: 'Approve' | 'Reject' | null; actionRowData: any; // or a defined type };
+  const pbiReportApproveRejectInfo: PbiReportApproveRejectInfo = {
+    reportName: props.actionRowData?.reportName,
+    comment: comment,
+  };
 
+  try {
+    const response = await pbiReportService.approveRejectPbiReport(pbiReportApproveRejectInfo);
+    console.log(response);
 
-<ApproveRejectPopup
-  showPopup={showPopup}
-  setShowPopup={showPopupDialog}
-  actionType={actionType}
-  actionRowData={actionRowData}
-/>
+    // Replace with the actual check depending on your service's return format
+    if (response?.success || response?.status === 200) {
+      await refreshGrid(); // Call refreshGrid only if response is successful
+    } else {
+      console.error('Approval/Reject failed:', response);
+    }
+  } catch (error) {
+    console.error('Error calling approveRejectPbiReport:', error);
+  }
+};

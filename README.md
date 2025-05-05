@@ -1,3 +1,16 @@
+function showValidationMessages(
+  errors: string[],
+  setValidationBody: (errors: string[]) => void,
+  setShowValidationOverlay: (flag: boolean) => void
+): void {
+  if (errors.length > 0) {
+    setValidationBody(errors);
+    setShowValidationOverlay(true);
+  }
+}
+
+
+
 const handleSave = async () => {
   console.log('Inside handleSave');
   console.log('props.actionRowData?.reportName', props.actionRowData?.reportName);

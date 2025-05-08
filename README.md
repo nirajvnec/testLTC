@@ -15,3 +15,20 @@ return (
     }
   />
 );
+
+
+
+
+console.log('Rendering simple expand arrow (children already loaded)');
+return (
+  <ArrowRight12px
+    onClick={
+      !params.disabled
+        ? () => {
+            params.node.expanded = true;
+            params.api.onGroupExpandedOrCollapsed();
+          }
+        : undefined
+    }
+  />
+);

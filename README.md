@@ -47,3 +47,8 @@ export class Utilities {
     }
   }
 }
+
+
+catch (err) {
+  Utilities.handleAxiosError(err, 'onLevelChange', props.onError);
+}

@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 
+// Enum renamed to PBIReportStatus
+enum PBIReportStatus {
+  Approved = 'approved',
+  Declined = 'declined',
+}
+
 const PBIReport = () => {
-  const [status, setStatus] = useState('');
+  // State uses the updated enum
+  const [status, setStatus] = useState<PBIReportStatus | ''>('');
 
   return (
     <div>
@@ -10,10 +17,10 @@ const PBIReport = () => {
         <label>
           <input
             type="radio"
-            name="pbiStatus"
-            value="approved"
-            checked={status === 'approved'}
-            onChange={() => setStatus('approved')}
+            name="pbiReportStatus"
+            value={PBIReportStatus.Approved}
+            checked={status === PBIReportStatus.Approved}
+            onChange={() => setStatus(PBIReportStatus.Approved)}
           />
           <span style={{ color: 'green', marginLeft: '5px' }}>Approve PBI Report</span>
         </label>
@@ -21,10 +28,10 @@ const PBIReport = () => {
         <label>
           <input
             type="radio"
-            name="pbiStatus"
-            value="declined"
-            checked={status === 'declined'}
-            onChange={() => setStatus('declined')}
+            name="pbiReportStatus"
+            value={PBIReportStatus.Declined}
+            checked={status === PBIReportStatus.Declined}
+            onChange={() => setStatus(PBIReportStatus.Declined)}
           />
           <span style={{ color: 'red', marginLeft: '5px' }}>Decline PBI Report</span>
         </label>
@@ -32,7 +39,7 @@ const PBIReport = () => {
 
       <textarea placeholder="Enter your comment" style={{ width: '100%', height: '80px' }} />
       <div style={{ marginTop: '10px' }}>
-        <button>Submit</button>
+        <button disabled={!status}>Submit</button>
         <button style={{ marginLeft: '10px' }}>Cancel</button>
       </div>
     </div>

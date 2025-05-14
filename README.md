@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 
-// Enum renamed to PBIReportStatus
+// Enum
 enum PBIReportStatus {
   Approved = 'approved',
   Declined = 'declined',
 }
 
 const PBIReport = () => {
-  // State uses the updated enum
-  const [status, setStatus] = useState<PBIReportStatus | ''>('');
+  const [status, setStatus] = useState<PBIReportStatus | ''>(''); // no default
+  const [comment, setComment] = useState(''); // comment state
+
+  const isFormValid = status !== '' && comment.trim().length > 0;
 
   return (
-    <div>
-      <h3>PBI Report</h3>
-      <div style={{ display: 'flex', gap: '20px', marginBottom: '10px' }}>
+    <div className={styles.pageLayout}>
+      <div className={styles.firstRow}>
         <label>
           <input
             type="radio"
@@ -25,7 +26,7 @@ const PBIReport = () => {
           <span style={{ color: 'green', marginLeft: '5px' }}>Approve PBI Report</span>
         </label>
 
-        <label>
+        <label style={{ marginLeft: '20px' }}>
           <input
             type="radio"
             name="pbiReportStatus"
@@ -37,10 +38,22 @@ const PBIReport = () => {
         </label>
       </div>
 
-      <textarea placeholder="Enter your comment" style={{ width: '100%', height: '80px' }} />
-      <div style={{ marginTop: '10px' }}>
-        <button disabled={!status}>Submit</button>
-        <button style={{ marginLeft: '10px' }}>Cancel</button>
+      <div className={styles.secondRow}>
+        <textarea
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="Enter your comment"
+          style={{ width: '100%', height: '80px' }}
+        />
+      </div>
+
+      <div className={styles.buttonRow}>
+        <button onClick={() => {/* submit handler */}} disabled={!isFormValid}>
+          Submit
+        </button>
+        <button style={{ marginLeft: '10px' }}>
+          Cancel
+        </button>
       </div>
     </div>
   );

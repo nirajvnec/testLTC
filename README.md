@@ -63,3 +63,18 @@ const mockReportData: PbiReportDataInfo[] = [
     reportLink: 'https://example.com/report/01april2025_client',
   },
 ];
+
+
+export class PBIReportServiceMock implements IPBIReportService {
+  ...
+
+  private mockReportData: PbiReportDataInfo[] = [
+    // full mock data from above here
+  ];
+
+  async getAllPBIReport(): Promise<PbiReportDataInfo[]> {
+    return Promise.resolve(this.mockReportData);
+  }
+
+  ...
+}

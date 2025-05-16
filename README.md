@@ -1,3 +1,18 @@
+interface PbiReportDataInfo {
+  id: number;
+  reportName: string;
+  description: string;
+  status: 'Approved' | 'Pending Approval' | 'Rejected' | 'Draft' | 'Pending';
+  approvedBy: string;
+  comment: string;
+  canSendForApproval: boolean;
+  approvalStatus: 'PENDING' | 'APPROVED' | 'REJECTED';
+  hasAccess: boolean;
+  reportLink: string;
+}
+
+
+
 getAllPBIReport(): Promise<PbiReportDataInfo[]>;
 
 

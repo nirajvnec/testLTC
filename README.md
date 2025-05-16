@@ -93,3 +93,14 @@ export class PBIReportServiceMock implements IPBIReportService {
 
   ...
 }
+
+
+async getAllPBIReport(): Promise<PbiReportDataInfo[]> {
+  try {
+    const response = await this._apiClient.get<PbiReportDataInfo[]>('/pbiReports');
+    return response.data;
+  } catch (error) {
+    this._logger.error('Failed to fetch all PBI reports', error);
+    throw error;
+  }
+}

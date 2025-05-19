@@ -1,106 +1,102 @@
-interface PbiReportDataInfo {
-  id: number;
-  reportName: string;
-  description: string;
-  status: 'Approved' | 'Pending Approval' | 'Rejected' | 'Draft' | 'Pending';
-  approvedBy: string;
-  comment: string;
-  canSendForApproval: boolean;
-  approvalStatus: 'PENDING' | 'APPROVED' | 'REJECTED';
-  hasAccess: boolean;
-  reportLink: string;
-}
+export default function SBMImpactAnalysis() {
+  const rootContext = useRootContext();
+  const summaryTableRef = useRef<any>();
+  const segments = ["FX Linear", "FX FRTB IRT", "Segment Example"];
+  const [cobDate, setCobDate] = useState('');
+  const [currCobDate, setCurrCobDate] = useState('');
+  const [selectedSegments, setSelectedSegments] = useState<Array<any>>([]);
+  const [riskFactorClass, setRiskFactorClass] = useState('delta');
+  const [runWithPositions, setRunWithPositions] = useState(false);
+  const [selectedSegmentTab, setSelectedSegmentTab] = useState('');
+  const [selectedPositionTab, setSelectedPositionTab] = useState('');
+  const [dataTabs, setDataTabs] = useState<DataTabs>({});
+  const [result, setResult] = useState<Array<ResultData>>([]);
+  const [panelStates, setPanelStates] = useState<any>({});
 
+  const updateSelectedSegments = (value: any) => {
+    setDataTabs((prev: DataTabs) => {
+      const updatedDataTabs = { ...prev };
+      // logic to remove old segments
+      return updatedDataTabs;
+    });
 
+    if (value.length >= 1) {
+      setSelectedSegmentTab(value[value.length - 1]);
+    } else {
+      setRunWithPositions(false);
+    }
 
-getAllPBIReport(): Promise<PbiReportDataInfo[]>;
+    setSelectedSegments(value);
+  };
 
+  const onPositionAdd = (segmentName: string) => {
+    const newPositionKey = dataTabs[segmentName]?.length + 1 || 2;
+    const newTabData: TabData = {
+      metric: 'DELTA',
+      aggregationClass: '',
+      relevantAttributes: { risk: '' },
+    };
+    const newPos: PositionTab = {
+      key: newPositionKey,
+      icon: Account16px,
+      title: `Position ${newPositionKey}`,
+      content: SBMImpactAnalysisTabContent({
+        segmentName,
+        positionKey: newPositionKey,
+        tabData: newTabData,
+        updateTabData,
+      }),
+      segmentName,
+      tabData: newTabData,
+      isValid: validCheck(newTabData),
+    };
 
-const mockReportData: PbiReportDataInfo[] = [
-  {
-    id: 1,
-    reportName: 'Report_25March2025_01',
-    description: 'Report_25March2025_01 description',
-    status: 'Approved',
-    approvedBy: 'John Smith',
-    comment: 'Last updated by reviewer',
-    canSendForApproval: false,
-    approvalStatus: 'APPROVED',
-    hasAccess: false,
-    reportLink: 'https://example.com/report/25march2025_01',
-  },
-  {
-    id: 2,
-    reportName: 'Report_10March2025_01',
-    description: 'Report_10March2025_01 description',
-    status: 'Pending Approval',
-    approvedBy: 'John Smith',
-    comment: '',
-    canSendForApproval: true,
-    approvalStatus: 'PENDING',
-    hasAccess: true,
-    reportLink: 'https://example.com/report/10march2025_01',
-  },
-  {
-    id: 3,
-    reportName: 'Report_21March2025_Mail_Word',
-    description: 'Report_21March2025_Mail_Word description',
-    status: 'Rejected',
-    approvedBy: 'John Smith',
-    comment: 'Rejected due to missing attachment',
-    canSendForApproval: true,
-    approvalStatus: 'REJECTED',
-    hasAccess: true,
-    reportLink: 'https://example.com/report/21march2025_mail_word',
-  },
-  {
-    id: 4,
-    reportName: 'Report_15April2025_QA',
-    description: 'Report_15April2025_QA description',
-    status: 'Draft',
-    approvedBy: '',
-    comment: '',
-    canSendForApproval: true,
-    approvalStatus: 'PENDING',
-    hasAccess: false,
-    reportLink: 'https://example.com/report/15april2025_qa',
-  },
-  {
-    id: 5,
-    reportName: 'Report_01April2025_Client',
-    description: 'Report_01April2025_Client description',
-    status: 'Pending',
-    approvedBy: '',
-    comment: 'Awaiting client confirmation',
-    canSendForApproval: false,
-    approvalStatus: 'PENDING',
-    hasAccess: true,
-    reportLink: 'https://example.com/report/01april2025_client',
-  },
-];
+    setDataTabs((prev: DataTabs) => ({
+      ...prev,
+      [segmentName]: [...(prev[segmentName] || []), newPos],
+    }));
+    setSelectedPositionTab(newPositionKey.toString());
+  };
 
+  const deletePosition = (segment: string, key: string) => {
+    setDataTabs((prev: DataTabs) => {
+      const updatedSegment = (prev[segment] || []).filter((pos) => pos.key !== parseInt(key));
+      const renamedSegment = updatedSegment.map((pos, index) => ({
+        ...pos,
+        key: index + 1,
+        title: `Position ${index + 1}`,
+        content: SBMImpactAnalysisTabContent({
+          segmentName: segment,
+          positionKey: index + 1,
+          tabData: pos.tabData,
+          updateTabData,
+        }),
+      }));
+      return { ...prev, [segment]: renamedSegment };
+    });
+  };
 
-export class PBIReportServiceMock implements IPBIReportService {
-  ...
+  const updateTabData = (segmentName: string, positionKey: number, newData: TabData, isValid: boolean) => {
+    const newPos: PositionTab = {
+      key: positionKey,
+      icon: Account16px,
+      title: `Position ${positionKey}`,
+      content: SBMImpactAnalysisTabContent({
+        segmentName,
+        positionKey,
+        tabData: newData,
+        updateTabData,
+      }),
+      segmentName,
+      tabData: newData,
+      isValid,
+    };
 
-  private mockReportData: PbiReportDataInfo[] = [
-    // full mock data from above here
-  ];
-
-  async getAllPBIReport(): Promise<PbiReportDataInfo[]> {
-    return Promise.resolve(this.mockReportData);
-  }
-
-  ...
-}
-
-
-async getAllPBIReport(): Promise<PbiReportDataInfo[]> {
-  try {
-    const response = await this._apiClient.get<PbiReportDataInfo[]>('/pbiReports');
-    return response.data;
-  } catch (error) {
-    this._logger.error('Failed to fetch all PBI reports', error);
-    throw error;
-  }
+    setDataTabs((prev: DataTabs) => {
+      const updatedSegment = (prev[segmentName] || []).map((pos) =>
+        pos.key === positionKey ? newPos : pos
+      );
+      return { ...prev, [segmentName]: updatedSegment };
+    });
+  };
 }

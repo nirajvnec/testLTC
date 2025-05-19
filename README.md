@@ -99,4 +99,66 @@ export default function SBMImpactAnalysis() {
       return { ...prev, [segmentName]: updatedSegment };
     });
   };
+
+export default function SBMImpactAnalysis() {
+  const importPositionData = (importData: Array<any>) => {
+    const importedDataTabs: DataTabs = {};
+    const importedSegmentNames: Array<string> = [];
+
+    importData.forEach((item) => {
+      if (!item["Segment"]) return;
+      const segmentName = item["Segment"];
+      if (!importedDataTabs[segmentName]) {
+        importedDataTabs[segmentName] = [];
+        importedSegmentNames.push(segmentName);
+      }
+
+      const newPositionKey = importedDataTabs[segmentName]?.length + 1 || 1;
+      const newTabData: TabData = newImportTabData(item);
+
+      const position: PositionTab = {
+        key: newPositionKey,
+        title: `Position ${newPositionKey}`,
+        content: SBMImpactAnalysisTabContent({
+          tabData: newTabData,
+          updateTabData: updateTabData,
+          segmentName: segmentName,
+        }),
+      };
+
+      if (isValidCheck(newTabData)) {
+        importedDataTabs[segmentName].push(position);
+      }
+    });
+
+    if (
+      importedSegmentNames.length > 0 &&
+      Object.keys(importedDataTabs).length > 0
+    ) {
+      setSelectedPositionTab("1");
+      setSelectedSegments(importedSegmentNames);
+      setDataTabs(importedDataTabs);
+      rootContext?.showSuccess("Imported positions configuration from Excel.");
+    } else {
+      rootContext?.showError("Failed to import positions configuration from Excel.");
+    }
+  };
+
+  const importExcel = async (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const workbook = XLSX.read(event?.target?.result, { type: 'binary' });
+      let sheet = workbook.Sheets['Positions Summary'];
+
+      // fallback to first sheet
+      if (!sheet) {
+        const sheetName = workbook.SheetNames[0];
+        sheet = workbook.Sheets[sheetName];
+      }
+
+      // More logic to follow...
+    };
+  };
+}
+
 }

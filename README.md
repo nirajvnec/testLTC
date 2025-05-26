@@ -1,1 +1,3 @@
-https://localhost:44348/Marvel.DataHub.ApiHost/datahub/api/swagger
+"sourceMapPathOverrides": {
+  "webpack:///src/*": "${webRoot}/*"
+}

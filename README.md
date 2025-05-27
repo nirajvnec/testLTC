@@ -1,16 +1,19 @@
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Launch Chrome against localhost (apps)",
-      "type": "pwa-chrome",
-      "request": "launch",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/apps/marvel-core/src",
-      "sourceMaps": true,
-      "sourceMapPathOverrides": {
-        "webpack:///src/*": "${webRoot}/*"
-      }
-    }
-  ]
+export enum ReportStatus {
+  APPROVED = 'Approved',
+  PENDING_APPROVAL = 'Pending_Approval',
+  REJECTED = 'Rejected',
+  DRAFT = 'Draft',
+  PENDING = 'Pending',
+}
+
+export interface PbiReportDataInfo {
+  reportKey: number;
+  reportName: string;
+  reportDescription: string;
+  reportStatus: ReportStatus; // Use the enum here
+  approvedBy: string;
+  commentary: string;
+  sentForApproval: boolean;
+  hasAccess: boolean;
+  reportLink: string;
 }

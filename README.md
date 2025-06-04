@@ -1,3 +1,19 @@
+start-feature = "!f() { \
+  b=$(git symbolic-ref --short HEAD); \
+  if [ \"$b\" != \"development\" ]; then \
+    echo \"❗ You are on '$b'. Please checkout to 'development' branch first.\"; \
+    exit 1; \
+  fi; \
+  git stash push -m \"WIP - saving local changes before sync\" && \
+  git pull origin development && \
+  git checkout -b feature/$1; \
+}; f"
+
+
+
+
+
+
 make ThresholdValue nullable in entity model
 
 # 1. Make sure you're on the development branch

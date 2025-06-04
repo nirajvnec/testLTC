@@ -1,13 +1,15 @@
-start-feature = "!f() { \
-  b=$(git symbolic-ref --short HEAD); \
-  if [ \"$b\" != \"development\" ]; then \
-    echo \"❗ You are on '$b'. Please checkout to 'development' branch first.\"; \
-    exit 1; \
-  fi; \
-  git stash push -m \"WIP - saving local changes before sync\" && \
-  git pull origin development && \
-  git checkout -b feature/$1; \
-}; f"
+[alias]
+  start-feature = "!f() { \
+    curr=$(git rev-parse --abbrev-ref HEAD); \
+    if [ \"$curr\" != \"development\" ]; then \
+      echo \"❌ You are on '$curr'. Please switch to 'development' branch first (git checkout development).\"; \
+      exit 1; \
+    fi; \
+    t=$(date '+%Y-%m-%d %H:%M:%S'); \
+    git stash push -m \"AutoStash: $curr @ $t\" && \
+    git pull origin development && \
+    git checkout -b feature/$1; \
+  }; f"
 
 
 

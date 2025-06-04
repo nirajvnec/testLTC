@@ -1,3 +1,5 @@
+make ThresholdValue nullable in entity model
+
 # 1. Make sure you're on the development branch
 git checkout development
 

@@ -2,6 +2,15 @@ USE [at40482-mtrm-dev]
 GO
 
 UPDATE [config].[threshold]
+SET [threshold] = 1
+WHERE [threshold_key] = 14
+GO
+
+
+USE [at40482-mtrm-dev]
+GO
+
+UPDATE [config].[threshold]
 SET
     [node_id] = 656096,
     [measure_id] = 12,

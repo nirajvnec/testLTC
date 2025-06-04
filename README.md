@@ -1,3 +1,29 @@
+# 1. Make sure you're on the development branch
+git checkout development
+
+# 2. Stash your local changes (optional but safe)
+git stash push -m "WIP - saving local changes before sync"
+
+# 3. Pull the latest changes from remote development
+git pull origin development
+
+# 4. Create and switch to the new feature branch
+git checkout -b feature/threshold_enablenull
+
+# 5. Apply your previously stashed changes (without removing the stash)
+git stash apply
+
+# 6. Add all updated files
+git add .
+
+# 7. Commit your changes
+git commit -m "Added threshold_enablenull feature logic"
+
+# 8. Push the new branch to remote and set upstream
+git push -u origin feature/threshold_enablenull
+
+
+
 USE [at40482-mtrm-dev]
 GO
 

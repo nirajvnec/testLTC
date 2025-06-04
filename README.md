@@ -1,8 +1,2 @@
-const cardDetails: IStaticCardData = {
-  content: cardInfo.details, // directly use the HTML string
-  header: cardInfo.header,
-  backContent: "", // or set these as needed
-  backHeader: "",
-  imageHeight: "",
-  imageWidth: ""
-};
+ALTER TABLE config.threshold
+ALTER COLUMN threshold DECIMAL(18, 2) NULL;

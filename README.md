@@ -1,3 +1,12 @@
+await this.apiClient.get<ICardInfo>(
+  '/HomeDashboard/GetCardInfoById',
+  {
+    params: { cardId: id }
+  }
+);
+
+
+
 UPDATE [reference].[card_details]
 SET 
     card_details = '{ "content": "<div style=''text-align: left;''>Hi Test</div>" }',

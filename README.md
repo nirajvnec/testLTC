@@ -3,21 +3,21 @@ git stash apply "stash@{1}"
 
 git stash apply stash@{1}
 
-git start-feature threshold_enablenull
+git sf threshold_enablenull
 
 
-[alias]
-  start-feature = "!f() { \
-    curr=$(git rev-parse --abbrev-ref HEAD); \
-    if [ \"$curr\" != \"development\" ]; then \
-      echo \"❌ You are on '$curr'. Please switch to 'development' branch first (git checkout development).\"; \
-      exit 1; \
-    fi; \
-    t=$(date '+%Y-%m-%d %H:%M:%S'); \
-    git stash push -m \"AutoStash: $curr @ $t\" && \
-    git pull origin development && \
-    git checkout -b feature/$1; \
-  }; f"
+sf = "!f() { \
+  curr=$(git rev-parse --abbrev-ref HEAD); \
+  if [ \"$curr\" != 'development' ]; then \
+    echo \"❌ You are on '$curr'. Please switch to 'development' branch first (git checkout development).\"; \
+    exit 1; \
+  fi; \
+  t=$(date +%Y-%m-%d_%H:%M:%S); \
+  git stash push -m 'AutoStash: '$curr' @ '$t && \
+  git pull origin development && \
+  git checkout -b feature/$1 && \
+  git stash apply; \
+}; f"
 
 
 

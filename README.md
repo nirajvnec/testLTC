@@ -1,3 +1,11 @@
+UPDATE [reference].[card_details]
+SET 
+    card_details = '{ "content": "<div style=''text-align: left;''>Hi Test</div>" }',
+    card_header = 'Features Live on TRC Hub'
+WHERE card_key = 1;
+
+
+
 git stash apply "stash@{1}"
 
 

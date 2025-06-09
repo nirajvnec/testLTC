@@ -1,3 +1,10 @@
+refactor: update GetAvailableCards to return CardInfo for HTML detail support
+
+
+
+
+
+
 await this.apiClient.get<ICardInfo>(
   '/HomeDashboard/GetCardInfoById',
   {

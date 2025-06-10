@@ -1,41 +1,5 @@
 
-"I’m not sure if I have a COSA account. Could you please guide me on how to check this?"
 
-
-
-Subject: Interview Feedback – Tarun Kumar
-
-Hi Shiva,
-
-We have completed our evaluation of Tarun Kumar and find him to be a suitable candidate for the position.
-
-He brings strong experience in cloud technologies and API/backend development. In addition, he has worked with various front-end tools and libraries such as Kendo UI and Bootstrap. While he does not have prior hands-on experience with React, he has expressed a strong willingness to learn and work with it.
-
-Overall, we believe he would be a valuable addition to our team, and we recommend moving forward with him.
-
-Best regards,
-Niraj
-
-
-
-
-
-
-
-Subject: Interview Feedback – Vargavish Thakur
-
-Dear [Recipient's Name],
-
-We have completed our evaluation of Mr. Vargavish Thakur for the current role. After careful consideration, we have found that he is not a suitable fit for this position at this time.
-
-Both Nancy and I assessed him across front-end, back-end, and database areas. We appreciate his time and effort in participating in the interview process.
-
-We wish him all the very best in his future endeavors.
-
-Best regards,
-Shiva
-[Your Job Title]
-[Your Contact Info, if needed]
 
 
 

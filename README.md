@@ -1,3 +1,22 @@
+Subject: Interview Feedback – Tarun Kumar
+
+Hi Shiva,
+
+We have completed our evaluation of Tarun Kumar and find him to be a suitable candidate for the position.
+
+He brings strong experience in cloud technologies and API/backend development. In addition, he has worked with various front-end tools and libraries such as Kendo UI and Bootstrap. While he does not have prior hands-on experience with React, he has expressed a strong willingness to learn and work with it.
+
+Overall, we believe he would be a valuable addition to our team, and we recommend moving forward with him.
+
+Best regards,
+Niraj
+
+
+
+
+
+
+
 Subject: Interview Feedback – Vargavish Thakur
 
 Dear [Recipient's Name],

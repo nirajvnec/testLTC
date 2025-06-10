@@ -1,3 +1,8 @@
+
+"I’m not sure if I have a COSA account. Could you please guide me on how to check this?"
+
+
+
 Subject: Interview Feedback – Tarun Kumar
 
 Hi Shiva,

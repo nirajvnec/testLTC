@@ -1,3 +1,24 @@
+Subject: Interview Feedback – Vargavish Thakur
+
+Dear [Recipient's Name],
+
+We have completed our evaluation of Mr. Vargavish Thakur for the current role. After careful consideration, we have found that he is not a suitable fit for this position at this time.
+
+Both Nancy and I assessed him across front-end, back-end, and database areas. We appreciate his time and effort in participating in the interview process.
+
+We wish him all the very best in his future endeavors.
+
+Best regards,
+Shiva
+[Your Job Title]
+[Your Contact Info, if needed]
+
+
+
+
+
+
+
 refactor: update GetAvailableCards to return CardInfo for HTML detail support
 
 

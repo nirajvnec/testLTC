@@ -1,3 +1,19 @@
+import { ValueFormatterParams } from 'ag-grid-community';
+
+export class Utilities {
+  // ...existing stuff...
+
+  public static formatNullAsDash(params: ValueFormatterParams): string {
+    return params.value == null ? '-' : params.value;
+  }
+
+  // ...more methods...
+}
+
+
+
+
+
 {
   field: 'thresholdValue',
   headerName: 'Threshold',

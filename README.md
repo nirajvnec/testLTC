@@ -1,3 +1,7 @@
+.Where(kvp => kvp.Key.Contains("MarvelReportConfig"))
+
+
+
 Also, could you please share:
 
 One sample PBI report and one sample PG report, so I can test the upload/download functionality via Swagger?

@@ -1,3 +1,22 @@
+import { Utilities } from 'scripts/ts/utilities';
+
+{
+  field: 'thresholdValue',
+  headerName: 'Threshold',
+  filter: 'agTextColumnFilter',
+  sortable: true,
+  filterParams: {
+    buttons: ['reset', 'apply'],
+  },
+  valueFormatter: Utilities.formatNullAsDash,
+  cellStyle: () => textColumnStyle,
+  flex: 0.5,
+}
+
+
+
+
+
 import { ValueFormatterParams } from 'ag-grid-community';
 
 export class Utilities {

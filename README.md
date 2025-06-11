@@ -1,3 +1,14 @@
+Subject: Feedback on Shailesh's Evaluation
+
+Hi Siva,
+
+We completed the evaluation of Shailesh today. After careful consideration, we found that his skill set does not align with the requirements of the current role.
+
+The assessment was based on .NET and other relevant technologies commonly used in our projects. It appears that Shailesh does not have hands-on experience with some of the key technologies we rely on.
+
+As a result, we have decided not to move forward with his candidature. We wish him all the best in his future endeavors.
+
+
 import { Utilities } from 'scripts/ts/utilities';
 
 {

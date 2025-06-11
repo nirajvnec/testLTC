@@ -1,5 +1,27 @@
-
-
+{
+  field: 'thresholdValue',
+  headerName: 'Threshold',
+  filter: 'agTextColumnFilter',
+  sortable: true,
+  filterParams: {
+    buttons: ['reset', 'apply'],
+  },
+  valueFormatter: ({ value }) => value == null ? '-' : value,
+  cellStyle: () => textColumnStyle,
+  flex: 0.5,
+},
+{
+  field: 'standardDeviationCoeff',
+  headerName: 'Standard Deviation Coeff',
+  filter: 'agTextColumnFilter',
+  sortable: true,
+  filterParams: {
+    buttons: ['reset', 'apply'],
+  },
+  valueFormatter: ({ value }) => value == null ? '-' : value,
+  cellStyle: () => textColumnStyle,
+  flex: 1.2,
+},
 
 
 

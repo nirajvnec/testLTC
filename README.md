@@ -1,3 +1,17 @@
+Hi Harshit,
+
+I need some clarity on identifying the report type—whether it's a PBI or PG report. On the API side, I need to handle uploads and downloads based on the report type.
+
+If the report is a PG report, then it should be uploaded to or downloaded from the PG folder.
+
+If the report is a PBI report, then the action should target the PBI folder.
+
+
+Could you please let me know how we can distinguish between these two report types?
+
+
+
+
 Subject: Feedback on Shailesh's Evaluation
 
 Hi Siva,

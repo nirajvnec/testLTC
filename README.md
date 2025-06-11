@@ -1,3 +1,7 @@
+Do we need to refer to the file name or extension to identify whether it's a PBI or PG report?
+
+
+
 Hi Harshit,
 
 I need some clarity on identifying the report type—whether it's a PBI or PG report. On the API side, I need to handle uploads and downloads based on the report type.

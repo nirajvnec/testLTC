@@ -1,3 +1,12 @@
+Also, could you please share:
+
+One sample PBI report and one sample PG report, so I can test the upload/download functionality via Swagger?
+
+The Azure Storage container folder link where these files will appear after the upload?
+
+
+
+
 Do we need to refer to the file name or extension to identify whether it's a PBI or PG report?
 
 

@@ -7,24 +7,34 @@ public BlobServiceClient GetBlobServiceClient()
 
 #if DEBUG
     // Use local developer credentials (e.g., az login)
+    credential = new Def
+
+
+public BlobServiceClient GetBlobServiceClient()
+{
+    var tenantAuthority = $"https://login.microsoftonline.com/{_tenantId}";
+    string url = $"https://{_storageAccount}.blob.core.windows.net/";
+    Uri blobUri = new Uri(url);
+
+    TokenCredential credential;
+
+#if DEBUG
+    // Local development: use your AZ login credentials
     credential = new DefaultAzureCredential();
 #else
-    // Use ClientSecretCredential in non-debug environments
+    // Hosted environments (SIT, UAT, PROD): use app registration
     credential = new ClientSecretCredential(
         _tenantId,
         _clientId,
         _clientSecret,
         new TokenCredentialOptions
         {
-            AuthorityHost = new Uri($"https://login.microsoftonline.com/{_tenantId}")
+            AuthorityHost = new Uri(tenantAuthority)
         });
 #endif
 
     return new BlobServiceClient(blobUri, credential);
 }
-
-
-
 
 
 

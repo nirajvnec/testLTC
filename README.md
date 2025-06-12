@@ -1,3 +1,7 @@
+az storage account keys list --account-name mystorageaccount123 --query "[0].value" --output tsv
+
+
+
 az account set --subscription a4651752-c062-4446-9a4a-d0f245aa05f4
 
 

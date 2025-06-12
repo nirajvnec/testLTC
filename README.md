@@ -1,3 +1,38 @@
+public async Task<Stream> DownloadFileAsync(string fileName, string fileExtention, string folderPath = "")
+{
+    // Use the injected service to determine report type
+    string reportType = _reportTypeService.GetReportType(fileName);
+
+    // Adjust folder path based on report type
+    if (string.IsNullOrEmpty(folderPath))
+    {
+        folderPath = reportType; // Use PBI or PG as the path
+    }
+    else
+    {
+        folderPath = Path.Combine(folderPath, reportType); // Append PBI or PG
+    }
+
+    var blobServiceClient = GetBlobServiceClient();
+    var containerClient = blobServiceClient.GetBlobContainerClient(folderPath);
+
+    string fileN = fileName;
+    string localFilePath = Path.Combine("./", fileN);
+
+    var blobClient = containerClient.GetBlobClient(fileName + fileExtention);
+
+    BlobDownloadInfo download = await blobClient.DownloadAsync();
+    Stream stream = download.Content;
+
+    return stream;
+}
+
+
+
+
+
+
+
 public class ADLSService : IADLSService
 {
     private readonly RdlReportConfig _rdlConfig;

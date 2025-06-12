@@ -1,3 +1,15 @@
+
+Hi Siva,
+
+We conducted Ashutosh's interview today at around 2 PM. After evaluating his skills, we found that they do not align with our project requirements. Therefore, we will not be proceeding with his candidature.
+
+We wish him all the best in his future endeavors.
+
+Best regards,
+
+
+
+
 public BlobServiceClient GetBlobServiceClient()
 {
     var tenantAuthority = $"https://login.microsoftonline.com/{_tenantId}";

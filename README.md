@@ -1,3 +1,33 @@
+public BlobServiceClient GetBlobServiceClient()
+{
+    string url = $"https://{_storageAccount}.blob.core.windows.net/";
+    Uri blobUri = new Uri(url);
+
+    TokenCredential credential;
+
+#if DEBUG
+    // Use local developer credentials (e.g., az login)
+    credential = new DefaultAzureCredential();
+#else
+    // Use ClientSecretCredential in non-debug environments
+    credential = new ClientSecretCredential(
+        _tenantId,
+        _clientId,
+        _clientSecret,
+        new TokenCredentialOptions
+        {
+            AuthorityHost = new Uri($"https://login.microsoftonline.com/{_tenantId}")
+        });
+#endif
+
+    return new BlobServiceClient(blobUri, credential);
+}
+
+
+
+
+
+
 public async Task<Stream> DownloadFileAsync(string fileName, string fileExtention, string folderPath = "")
 {
     // Use the injected service to determine report type

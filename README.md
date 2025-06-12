@@ -1,3 +1,19 @@
+public class ReportTypeService : IReportTypeService
+{
+    public string GetReportType(string fileName)
+    {
+        if (fileName.StartsWith("PBI_", StringComparison.OrdinalIgnoreCase))
+            return "PBI";
+        else if (fileName.StartsWith("PG_", StringComparison.OrdinalIgnoreCase))
+            return "PG";
+        else
+            throw new InvalidOperationException("Unknown report type for file: " + fileName);
+    }
+}
+
+
+
+
 public async Task<Stream> DownloadFileAsync(string fileName, string fileExtention, string folderPath = "")
 {
     string reportType = GetReportType(fileName); // Determine report type: PBI or PG

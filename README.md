@@ -1,17 +1,5 @@
 public BlobServiceClient GetBlobServiceClient()
 {
-    string url = $"https://{_storageAccount}.blob.core.windows.net/";
-    Uri blobUri = new Uri(url);
-
-    TokenCredential credential;
-
-#if DEBUG
-    // Use local developer credentials (e.g., az login)
-    credential = new Def
-
-
-public BlobServiceClient GetBlobServiceClient()
-{
     var tenantAuthority = $"https://login.microsoftonline.com/{_tenantId}";
     string url = $"https://{_storageAccount}.blob.core.windows.net/";
     Uri blobUri = new Uri(url);

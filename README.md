@@ -1,7 +1,4 @@
-az role assignment list \
-  --scope "/subscriptions/a4651752-c062-4446-9a4a-d0faed180ed1/resourceGroups/rg-at40482-neu-dev-adls/providers/Microsoft.Storage/storageAccounts/cirrusplmtrcneudev02/blobServices/default/containers/mr-marvel-report" \
-  --output table
-
+az role assignment list --scope "/subscriptions/a4651752-c062-4446-9a4a-d0faed180ed1/resourceGroups/rg-at40482-neu-dev-adls/providers/Microsoft.Storage/storageAccounts/cirrusplmtrcneudev02/blobServices/default/containers/mr-marvel-report" --output table
 
 
 

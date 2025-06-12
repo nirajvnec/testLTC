@@ -1,3 +1,44 @@
+public class ADLSService : IADLSService
+{
+    private readonly RdlReportConfig _rdlConfig;
+    private readonly string _tenantId;
+    private readonly string _clientId;
+    private readonly string _clientSecret;
+    private readonly string _storageAccount;
+    private readonly string _containerName;
+    private readonly string _containerOutputName;
+
+    private readonly IReportTypeService _reportTypeService;
+
+    public ADLSService(
+        IOptions<RdlReportConfig> rdlConfig,
+        IOptions<MarvelPowerBI> marvelPowerBI,
+        IReportTypeService reportTypeService // ⬅️ Inject here
+    )
+    {
+        _rdlConfig = rdlConfig.Value;
+        _tenantId = _rdlConfig.TenantId.ToString();
+        _storageAccount = _rdlConfig.StorageAccount;
+        _containerName = _rdlConfig.ContainerName;
+        _containerOutputName = _rdlConfig.ContainerOutputName;
+
+        _clientId = !string.IsNullOrWhiteSpace(marvelPowerBI.Value.ClientId) 
+            ? marvelPowerBI.Value.ClientId 
+            : throw new Exception("Power BI Client ID is null.");
+
+        _clientSecret = !string.IsNullOrWhiteSpace(marvelPowerBI.Value.ClientSecret) 
+            ? marvelPowerBI.Value.ClientSecret 
+            : throw new Exception("Power BI Client secret is null.");
+
+        _reportTypeService = reportTypeService; // ⬅️ Assign to private field
+    }
+}
+
+
+
+
+
+
 public class ReportTypeService : IReportTypeService
 {
     public string GetReportType(string fileName)

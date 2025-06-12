@@ -1,4 +1,4 @@
-az storage account keys list --account-name mystorageaccount123 --query "[0].value" --output tsv
+az storage account keys list --account-name cirrusplmtrcneudev02 --query "[0].value" --output tsv
 
 
 

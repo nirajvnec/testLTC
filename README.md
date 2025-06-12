@@ -1,3 +1,45 @@
+public async Task<Stream> DownloadFileAsync(string fileName, string fileExtention, string folderPath = "")
+{
+    string reportType = GetReportType(fileName); // Determine report type: PBI or PG
+
+    // Adjust folder path based on report type
+    if (string.IsNullOrEmpty(folderPath))
+    {
+        folderPath = reportType; // Use PBI or PG as the path
+    }
+    else
+    {
+        folderPath = Path.Combine(folderPath, reportType); // Append PBI or PG
+    }
+
+    var blobServiceClient = GetBlobServiceClient();
+    var containerClient = blobServiceClient.GetBlobContainerClient(folderPath);
+
+    string fileN = fileName;
+    string localFilePath = Path.Combine("./", fileN);
+
+    var blobClient = containerClient.GetBlobClient(fileName + fileExtention);
+
+    BlobDownloadInfo download = await blobClient.DownloadAsync();
+    Stream stream = download.Content;
+
+    return stream;
+}
+
+// Determines the report type based on the file name
+private string GetReportType(string fileName)
+{
+    if (fileName.StartsWith("PBI_", StringComparison.OrdinalIgnoreCase))
+        return "PBI";
+    else if (fileName.StartsWith("PG_", StringComparison.OrdinalIgnoreCase))
+        return "PG";
+    else
+        throw new InvalidOperationException("Unknown report type for file: " + fileName);
+}
+
+
+
+
 .Where(kvp => kvp.Key.Contains("MarvelReportConfig"))
 
 

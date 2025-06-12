@@ -1,3 +1,8 @@
+az account set --subscription a4651752-c062-4446-9a4a-d0f245aa05f4
+
+
+
+
 az role assignment list --scope /subscriptions/a4651752-c062-4446-9a4a-d0f245aa05f4/resourceGroups/rg-ubscp-marvel-p-northeurope/providers/Microsoft.Storage/storageAccounts/cirrusplmtrcneudev02 --output table
 
 
